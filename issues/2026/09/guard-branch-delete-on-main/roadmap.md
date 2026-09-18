@@ -4,6 +4,7 @@ branch: issue/guard-branch-delete-on-main
 last-updated: 2026-09-18
 next-step: "1.1 add the exposing fixtures and confirm they fail"
 github-issue: "#47"
+artifact-pr: "#4"
 ```
 
 ## Phase 1: Expose the defect
