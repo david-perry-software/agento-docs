@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/artifact-history-migration
 last-updated: 2026-09-18
 next-step: ""
