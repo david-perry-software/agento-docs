@@ -2,13 +2,13 @@
 status: in-progress
 branch: feature/copyable-command-blocks
 last-updated: 2026-09-18
-next-step: "1.1 — confirm the §12 canary phrase is unused, then write policy §12"
+next-step: "1.2 — bump the section floor, add the canary, add the exposing §12 citation test"
 artifact-pr: "#3"
 ```
 
 ## Phase 1: Policy
 
-- [ ] 1.1 Confirm the planned canary phrase is unused, then add `## 12. Command presentation` to `.github/instructions/delivery-policy.instructions.md` after `## 11. Window check` (rule: one bare fenced block per command the user is asked to run, exactly that command, no language tag or extra text; the §9 result line unchanged and last with its `next:` repeated in a block directly above; §8 handoff items, pause resume commands, `rejected` receipt alternatives, `/agento continue`'s named command, `/agento next-feature`'s exact commands, `/agento ship`'s reject-back and teardown-pause commands, and the Build-in-this-worktree alternative all covered; descriptive mentions inline; repository prose excluded; agent-run shell commands never presented as blocks; execution order with one locating line per block), using the phrase `copyable command block` exactly once as the section's term, and append "command presentation" to the frontmatter `description` — verify: `grep -rl "copyable command block" .github/agents .github/prompts .github/instructions` lists only `delivery-policy.instructions.md` (before the edit: no files); `node --test 'tests/customizations.test.mjs'` passes
+- [x] 1.1 Confirm the planned canary phrase is unused, then add `## 12. Command presentation` to `.github/instructions/delivery-policy.instructions.md` after `## 11. Window check` (rule: one bare fenced block per command the user is asked to run, exactly that command, no language tag or extra text; the §9 result line unchanged and last with its `next:` repeated in a block directly above; §8 handoff items, pause resume commands, `rejected` receipt alternatives, `/agento continue`'s named command, `/agento next-feature`'s exact commands, `/agento ship`'s reject-back and teardown-pause commands, and the Build-in-this-worktree alternative all covered; descriptive mentions inline; repository prose excluded; agent-run shell commands never presented as blocks; execution order with one locating line per block), using the phrase `copyable command block` exactly once as the section's term, and append "command presentation" to the frontmatter `description` — verify: `grep -rl "copyable command block" .github/agents .github/prompts .github/instructions` lists only `delivery-policy.instructions.md` (before the edit: no files); `node --test 'tests/customizations.test.mjs'` passes
 - [ ] 1.2 In `tests/customizations.test.mjs`: bump the section floor to `sections.size >= 12`, add `/copyable command block/` to `canaries`, and add the test "every command and agent cites the §12 command presentation rule" (every prompt and agent body matches `§12\b`) — verify: `node --test 'tests/customizations.test.mjs'` now FAILS listing every agent and prompt as missing §12 (the exposing state) and no other test fails
 
 ## Phase 2: Agents
