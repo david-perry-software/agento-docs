@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/copyable-command-blocks
 last-updated: 2026-09-18
-next-step: "2.1 — cite §12 in the Builder, Reviewer, and Autopilot agents"
+next-step: "2.2 — cite §12 in the Planner, Architect, and Mechanic agents"
 artifact-pr: "#3"
 ```
 
@@ -13,7 +13,7 @@ artifact-pr: "#3"
 
 ## Phase 2: Agents
 
-- [ ] 2.1 Add the §12 citation to `.github/agents/delivery-builder.agent.md` (completion paragraph L126–130 and pause protocol L110–116: handoff commands and the resume command are emitted as blocks, first block being the `next:`), `.github/agents/delivery-reviewer.agent.md` (step 8, L106–110), and `.github/agents/delivery-autopilot.agent.md` (loop step 4 L80–83 and `## Reporting`; the L40–42 "never run ship" rule stays descriptive) — verify: `grep -n "§12" .github/agents/delivery-builder.agent.md .github/agents/delivery-reviewer.agent.md .github/agents/delivery-autopilot.agent.md` shows each; `node --test 'tests/customizations.test.mjs'` lists only the remaining uncited files
+- [x] 2.1 Add the §12 citation to `.github/agents/delivery-builder.agent.md` (completion paragraph L126–130 and pause protocol L110–116: handoff commands and the resume command are emitted as blocks, first block being the `next:`), `.github/agents/delivery-reviewer.agent.md` (step 8, L106–110), and `.github/agents/delivery-autopilot.agent.md` (loop step 4 L80–83 and `## Reporting`; the L40–42 "never run ship" rule stays descriptive) — verify: `grep -n "§12" .github/agents/delivery-builder.agent.md .github/agents/delivery-reviewer.agent.md .github/agents/delivery-autopilot.agent.md` shows each; `node --test 'tests/customizations.test.mjs'` lists only the remaining uncited files
 - [ ] 2.2 Add the §12 citation to `.github/agents/delivery-planner.agent.md` (step 9: Build-in-this-worktree offer with a `/agento build-<type> <slug>` block; `/agento close-session` mention stays descriptive), `.github/agents/initiative-architect.agent.md` (L133 `/agento next-feature <slug>` as a block), and `.github/agents/delivery-mechanic.agent.md` (citation in its receipt paragraph) — verify: `grep -c "§12" .github/agents/*.agent.md` is ≥ 1 for all six files; the §12 test no longer lists any agent
 
 ## Phase 3: Prompts and mirror
