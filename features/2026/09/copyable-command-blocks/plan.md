@@ -67,6 +67,15 @@ also emitted as blocks (the user is being offered those to run); the customizati
 test requires every agent and every prompt that names a command for the user to
 cite §12 and treats the section's distinctive wording as a canary.
 
+**Mid-build addition (2026-09-18), user's words verbatim:** "anytime we tell the
+build-feature or review-feature command we should also give a copyable block with
+ap". Derived: wherever a response offers `/agento build-<type> <slug>` or
+`/agento review-<type> <slug>` as a copyable block, it also offers
+`/agento ap <slug>` in its own block, introduced by one line naming it as the
+unattended alternative; the ap block is never added after `/agento ship`,
+`/agento start-session`, or any other command. Recorded as roadmap Phase 6
+(`added 2026-09-18`).
+
 ## Research
 
 Skills consulted: none — no matching domain (`ls -d .agents/skills` → absent;
