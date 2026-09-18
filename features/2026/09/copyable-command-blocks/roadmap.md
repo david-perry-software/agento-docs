@@ -3,6 +3,7 @@ status: planned
 branch: feature/copyable-command-blocks
 last-updated: 2026-09-18
 next-step: "1.1 — confirm the §12 canary phrase is unused, then write policy §12"
+artifact-pr: "#3"
 ```
 
 ## Phase 1: Policy
