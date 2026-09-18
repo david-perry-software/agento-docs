@@ -248,3 +248,35 @@ Affected files: `scripts/hooks/delivery-guard.sh`, `tests/guard-fixtures.txt`,
       reports `# fail 0` and `# pass` ≥ 206; both guard smoke variants exit 0.
 - [ ] `git diff --name-only origin/main...HEAD` in the product checkout lists only the
       nine files named in `## Approach`; the draft PR body starts with `Fixes #47`.
+
+## Resolution
+
+**Root cause.** In `scripts/hooks/delivery-guard.sh` the blanket rule
+`branch == default_branch and (is_commit or is_push or is_merge)` denied every
+`git push` while the tracked branch was the default, before the refspec was inspected.
+The only delete-specific rule (line 381) handles deleting the default branch itself,
+so `git push origin --delete <work-branch>` from the primary on `main` — the command
+`/agento ship` issues at teardown — never reached an allow.
+
+**What changed.** The blanket rule now computes `is_delete_push` for a push segment
+(`--delete <ref>`, `-d <ref>`, or a whitespace-preceded `:<ref>`) and exempts that
+form from the on-default clause only: `(branch == default_branch and (is_commit or
+(is_push and not is_delete_push) or is_merge)) or (is_push and push_to_default)`.
+Deleting the default branch stays denied by the untouched line-381 rule and by
+`push_to_default`; content pushes from the default (`HEAD:<ref>`, `src:dst`) stay
+denied because the `:<ref>` form requires leading whitespace. `/agento ship` now
+names the delete commands (`git push origin --delete <branch>` from the primary;
+`git -C <artifactsRoot> push origin --delete <branch>` for the companion) and notes
+`gh pr merge --delete-branch` is not an alternative; `docs/hooks.md` gained the
+clause; version bumped to `0.5.2` with an `(unreleased)` CHANGELOG entry.
+
+**Proof.** The exposing fixtures in `tests/guard-fixtures.txt` (block
+`#47 guard-branch-delete-on-main`) failed before the fix at product `e8f4da6`
+(`./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` → exit 1, 3 MISMATCH:
+`--delete feature/x`, `:feature/x`, `-d feature/x` denied) and pass after it at
+`38fb601` and at final HEAD `dbd9ddf` (exit 0, 0 MISMATCH over 110 fixture lines,
+with `--delete main`, `:main`, `HEAD:feature/x` still denied). Companion variant:
+exit 1 / 2 MISMATCH before, exit 0 / 0 MISMATCH after (48 lines). Direct on-`main`
+probe: [evidence/probe-after-fix.md](evidence/probe-after-fix.md). Full gate:
+shellcheck 0 findings, node 206/206, both smokes 0 MISMATCH — unchanged from the
+recorded baseline.

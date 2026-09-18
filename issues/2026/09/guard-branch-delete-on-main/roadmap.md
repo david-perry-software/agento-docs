@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: issue/guard-branch-delete-on-main
 last-updated: 2026-09-18
-next-step: "5.2 scope boundary check, merge origin/main into both halves, Resolution, in-review"
+next-step: "/agento review-issue guard-branch-delete-on-main"
 github-issue: "#47"
 artifact-pr: "#4"
 ```
@@ -30,7 +30,7 @@ artifact-pr: "#4"
 ## Phase 5: Gate and publish
 
 - [x] 5.1 Full gate against the recorded baseline (shellcheck exit 0 / 0 findings; 206 tests pass; both guard smokes exit 0 with 0 MISMATCH): `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh`; `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`; `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`; `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt` — verify: shellcheck exit 0, no findings; `# fail 0` and `# pass` ≥ 206; both smokes exit 0 with `grep -c MISMATCH` = 0; record all four results on this line — **recorded 2026-09-18:** shellcheck exit 0, 0 output lines (baseline: 0 findings); node `# tests 206`, `# pass 206`, `# fail 0` (baseline 206); guard smoke exit 0, MISMATCH 0 (110 fixture lines, was 104); companion smoke exit 0, MISMATCH 0 (48 fixture lines, was 45) — no new or undocumented findings versus the baseline
-- [ ] 5.2 Scope boundary and publish: `git diff --name-only origin/main...HEAD` lists exactly `scripts/hooks/delivery-guard.sh`, `tests/guard-fixtures.txt`, `tests/guard-fixtures-companion.txt`, `.github/prompts/ship.prompt.md`, `commands/ship.md`, `docs/hooks.md`, `CHANGELOG.md`, `package.json`, `.claude-plugin/plugin.json` and nothing else; `git merge origin/main` (never rebase) in the product half and `git -C <companion.path> merge origin/main` in the companion half; push both; write plan.md `## Resolution`; set `status: in-review` — verify: `gh pr view --json mergeStateStatus --jq .mergeStateStatus` is not `BEHIND`/`DIRTY` for the code PR; the code PR body starts with `Fixes #47`; `node scripts/agento.mjs session` reports `companion.dirty: false`, `companion.ahead: 0`
+- [x] 5.2 Scope boundary and publish: `git diff --name-only origin/main...HEAD` lists exactly `scripts/hooks/delivery-guard.sh`, `tests/guard-fixtures.txt`, `tests/guard-fixtures-companion.txt`, `.github/prompts/ship.prompt.md`, `commands/ship.md`, `docs/hooks.md`, `CHANGELOG.md`, `package.json`, `.claude-plugin/plugin.json` and nothing else; `git merge origin/main` (never rebase) in the product half and `git -C <companion.path> merge origin/main` in the companion half; push both; write plan.md `## Resolution`; set `status: in-review` — verify: `gh pr view --json mergeStateStatus --jq .mergeStateStatus` is not `BEHIND`/`DIRTY` for the code PR; the code PR body starts with `Fixes #47`; `node scripts/agento.mjs session` reports `companion.dirty: false`, `companion.ahead: 0` — **verified 2026-09-18:** diff lists exactly the nine files; `origin/main` already an ancestor of both halves (merges were no-ops); code PR #48 `mergeStateStatus: CLEAN`, body starts `Fixes #47`; `## Resolution` written; session check recorded in the completion report
 
 ## Follow-ups
 
