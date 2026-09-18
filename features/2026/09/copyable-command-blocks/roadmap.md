@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/copyable-command-blocks
 last-updated: 2026-09-18
-next-step: "5.2 — integrate both origin/main defaults, rerun the test suite, set status: in-review, push the companion half, hand off to the Reviewer"
+next-step: "Review — /agento review-feature copyable-command-blocks in this worktree window"
 artifact-pr: "#3"
 ```
 
@@ -31,7 +31,7 @@ artifact-pr: "#3"
 ## Phase 5: Gate and handoff
 
 - [x] 5.1 Integrate `origin/main` (product) and the companion `origin/main` by merge, then rerun the full lint baseline and record the exit codes and test count beside the plan.md baseline: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`; `shellcheck scripts/hooks/delivery-guard.sh scripts/hooks/replay-guard.sh scripts/hooks/session-context.sh scripts/wait-for-checks.sh`; `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`; `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt` — verify: all four exit 0, test count ≥ 205 with 0 failures, no finding absent from the plan.md baseline
-- [ ] 5.2 Set `status: in-review`, push both halves (product first, then companion; `agento.mjs session` shows `companion.dirty: false`, `companion.ahead: 0`), and hand off to the Reviewer per policy §8 — verify: `node scripts/agento.mjs session --pr` reports `lifecycle: in-review`, `pr` and `companionPr` both `OPEN`
+- [x] 5.2 Set `status: in-review`, push both halves (product first, then companion; `agento.mjs session` shows `companion.dirty: false`, `companion.ahead: 0`), and hand off to the Reviewer per policy §8 — verify: `node scripts/agento.mjs session --pr` reports `lifecycle: in-review`, `pr` and `companionPr` both `OPEN` (2026-09-18: product `origin/main` `1b874bd` and companion `origin/main` `a5d4919` both already ancestors, no merge needed; `node --test` exit 0, 206 pass / 0 fail)
 
 ## Phase 6: Unattended alternative (added 2026-09-18)
 
