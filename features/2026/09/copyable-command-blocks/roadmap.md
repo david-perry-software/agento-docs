@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/copyable-command-blocks
 last-updated: 2026-09-18
-next-step: "4.2 — rendered copy-button screenshot from /agento doctor in this worktree's chat"
+next-step: "4.2 (manual) — user sends /agento doctor in this worktree's chat, screenshots the one-command block with its copy button on hover, saves evidence/step-4-2-copy-button.png in the companion slug directory; then resume with /agento build-feature copyable-command-blocks (5.2 follows)"
 artifact-pr: "#3"
 ```
 
@@ -26,7 +26,7 @@ artifact-pr: "#3"
 ## Phase 4: Docs, changelog, rendered evidence
 
 - [x] 4.1 Add one sentence with a §12 reference to `docs/commands.md` `## Receipts` (commands the user is asked to run are also emitted as one-command fenced blocks so chat offers a copy button) and to `docs/architecture.md` L49–50; add `## 0.5.1 (unreleased)` to `CHANGELOG.md` describing the feature; set `version` to `0.5.1` in `package.json` and `.claude-plugin/plugin.json` — verify: `grep -n "§12" docs/commands.md docs/architecture.md` shows both; `grep -n "0.5.1" CHANGELOG.md package.json .claude-plugin/plugin.json` shows all three; `node --test 'tests/customizations.test.mjs'` passes (version equality and command-doc tests)
-- [ ] 4.2 Send `/agento doctor` in this worktree's chat window and capture the rendered response showing a one-command fenced block with its copy button visible on hover — verify: screenshot saved as `evidence/step-4-2-copy-button.png` in the companion slug directory and linked from this line; the block in the screenshot contains exactly one `/agento` command and no language tag
+- [ ] 4.2 (manual) Send `/agento doctor` in this worktree's chat window, hover the rendered one-command fenced block, and capture a screenshot with its copy button visible (added 2026-09-18: the Builder cannot drive the VS Code chat UI, so the capture is the user's) — verify: screenshot saved as `evidence/step-4-2-copy-button.png` in the companion slug directory and linked from this line; the block in the screenshot contains exactly one `/agento` command and no language tag
 
 ## Phase 5: Gate and handoff
 
