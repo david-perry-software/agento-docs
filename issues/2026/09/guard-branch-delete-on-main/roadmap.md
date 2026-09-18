@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: issue/guard-branch-delete-on-main
 last-updated: 2026-09-18
 next-step: "1.1 add the exposing fixtures and confirm they fail"
