@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/guard-branch-delete-on-main
 last-updated: 2026-09-18
-next-step: "3.1 name the delete command in ship.prompt.md and mirror to commands/ship.md"
+next-step: "4.1 bump to 0.5.2 and add the CHANGELOG entry"
 github-issue: "#47"
 artifact-pr: "#4"
 ```
@@ -20,8 +20,8 @@ artifact-pr: "#4"
 
 ## Phase 3: Ship path and docs
 
-- [ ] 3.1 In `.github/prompts/ship.prompt.md`, in the merge bullet ("Merge with a normal merge commit … and delete the remote work branch. In the primary: …") name the command: the delete is `git push origin --delete <branch>` run from the primary on `main` (the guard allows deleting a non-default branch there); add one clause that `gh pr merge --delete-branch` is not an alternative because it also deletes the local branch, which the owner worktree has checked out. In the companion-mode merge bullet ("… and delete its remote branch") name `git -C <artifactsRoot> push origin --delete <branch>`. Copy the file byte-identically to `commands/ship.md` — verify: `grep -c 'push origin --delete <branch>' .github/prompts/ship.prompt.md` is ≥ 2 (primary and companion forms); `grep -c 'delete-branch' .github/prompts/ship.prompt.md` ≥ 1; `cmp .github/prompts/ship.prompt.md commands/ship.md` exit 0; `node --test tests/customizations.test.mjs` exit 0
-- [ ] 3.2 In `docs/hooks.md` rules table, extend the `git push --delete <default>` / `:<default>` row (or the default-branch row) with one clause: deleting any **non-default** remote branch (`--delete <ref>` / `:<ref>`) is allowed even while the checkout is on the default branch (#47) — verify: `grep -n 'non-default' docs/hooks.md` hits inside the `| Rule | Decision |` table; the row still ends with `| deny |` for the default-branch delete
+- [x] 3.1 In `.github/prompts/ship.prompt.md`, in the merge bullet ("Merge with a normal merge commit … and delete the remote work branch. In the primary: …") name the command: the delete is `git push origin --delete <branch>` run from the primary on `main` (the guard allows deleting a non-default branch there); add one clause that `gh pr merge --delete-branch` is not an alternative because it also deletes the local branch, which the owner worktree has checked out. In the companion-mode merge bullet ("… and delete its remote branch") name `git -C <artifactsRoot> push origin --delete <branch>`. Copy the file byte-identically to `commands/ship.md` — verify: `grep -c 'push origin --delete <branch>' .github/prompts/ship.prompt.md` is ≥ 2 (primary and companion forms); `grep -c 'delete-branch' .github/prompts/ship.prompt.md` ≥ 1; `cmp .github/prompts/ship.prompt.md commands/ship.md` exit 0; `node --test tests/customizations.test.mjs` exit 0 — **verified 2026-09-18:** grep counts 2 and 1, `cmp` exit 0, customizations tests 22/22 pass
+- [x] 3.2 In `docs/hooks.md` rules table, extend the `git push --delete <default>` / `:<default>` row (or the default-branch row) with one clause: deleting any **non-default** remote branch (`--delete <ref>` / `:<ref>`) is allowed even while the checkout is on the default branch (#47) — verify: `grep -n 'non-default' docs/hooks.md` hits inside the `| Rule | Decision |` table; the row still ends with `| deny |` for the default-branch delete — **verified 2026-09-18:** hit at line 52, inside the table headed at line 48; row ends `| deny |`
 
 ## Phase 4: Release entry
 
