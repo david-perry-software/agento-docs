@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/guard-branch-delete-on-main
 last-updated: 2026-09-18
-next-step: "4.1 bump to 0.5.2 and add the CHANGELOG entry"
+next-step: "5.1 full gate against the recorded baseline"
 github-issue: "#47"
 artifact-pr: "#4"
 ```
@@ -25,7 +25,7 @@ artifact-pr: "#4"
 
 ## Phase 4: Release entry
 
-- [ ] 4.1 Set `"version": "0.5.2"` in `package.json` and `.claude-plugin/plugin.json`; add `## 0.5.2 (unreleased)` as the first entry of `CHANGELOG.md` (line 3) with a bold-lead **Fixed** bullet: the delivery guard no longer denies `git push --delete <branch>` / `:<branch>` of a non-default branch from the default branch, so `/agento ship`'s teardown runs from the primary; `/agento ship` now names the delete command; `#47` — verify: `node -e 'const p=require("./.claude-plugin/plugin.json"),k=require("./package.json");if(p.version!=="0.5.2"||k.version!=="0.5.2")process.exit(1)'` exit 0; `sed -n '3p' CHANGELOG.md` prints `## 0.5.2 (unreleased)`; `sed -n '3,12p' CHANGELOG.md | grep -c '#47'` ≥ 1
+- [x] 4.1 Set `"version": "0.5.2"` in `package.json` and `.claude-plugin/plugin.json`; add `## 0.5.2 (unreleased)` as the first entry of `CHANGELOG.md` (line 3) with a bold-lead **Fixed** bullet: the delivery guard no longer denies `git push --delete <branch>` / `:<branch>` of a non-default branch from the default branch, so `/agento ship`'s teardown runs from the primary; `/agento ship` now names the delete command; `#47` — verify: `node -e 'const p=require("./.claude-plugin/plugin.json"),k=require("./package.json");if(p.version!=="0.5.2"||k.version!=="0.5.2")process.exit(1)'` exit 0; `sed -n '3p' CHANGELOG.md` prints `## 0.5.2 (unreleased)`; `sed -n '3,12p' CHANGELOG.md | grep -c '#47'` ≥ 1 — **verified 2026-09-18:** version check exit 0; line 3 `## 0.5.2 (unreleased)`; `#47` count 1
 
 ## Phase 5: Gate and publish
 
