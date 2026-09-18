@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/copyable-command-blocks
 last-updated: 2026-09-18
-next-step: "Review — /agento review-feature copyable-command-blocks in this worktree window"
+next-step: "Shipped — PR #46 merged via /agento ship"
 artifact-pr: "#3"
 ```
 
