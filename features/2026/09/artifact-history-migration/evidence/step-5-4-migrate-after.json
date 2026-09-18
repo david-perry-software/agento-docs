@@ -1,0 +1,449 @@
+{
+  "status": "ok",
+  "mode": "applied",
+  "source": "/home/david/DP/agento-worktrees/plan-20260917-231812",
+  "destination": "/home/david/DP/agento-docs-worktrees/plan-20260917-231812",
+  "clone": "/home/david/DP/agento-docs",
+  "name": "agento-docs",
+  "configSet": true,
+  "roots": [
+    {
+      "rel": "features",
+      "files": 66,
+      "bytes": 952467
+    },
+    {
+      "rel": "issues",
+      "files": 8,
+      "bytes": 62118
+    },
+    {
+      "rel": "initiatives",
+      "files": 5,
+      "bytes": 54495
+    }
+  ],
+  "moved": [
+    "features",
+    "issues",
+    "initiatives"
+  ],
+  "configWritten": "/home/david/DP/agento-worktrees/plan-20260917-231812/.github/agento.json",
+  "readmeNoteAdded": true,
+  "records": {
+    "roadmaps": [
+      {
+        "type": "feature",
+        "slug": "artifact-history-migration",
+        "dir": "features/2026/09/artifact-history-migration",
+        "roadmap": "features/2026/09/artifact-history-migration/roadmap.md",
+        "plan": "features/2026/09/artifact-history-migration/plan.md",
+        "review": null,
+        "reviewVerdict": null,
+        "status": "in-progress",
+        "branch": "feature/artifact-history-migration",
+        "lastUpdated": "2026-09-18",
+        "nextStep": "5.4 run the move",
+        "githubIssue": null,
+        "artifactPr": null,
+        "initiative": "external-artifact-repo",
+        "steps": {
+          "ticked": 16,
+          "total": 24
+        },
+        "postShipPending": 1
+      },
+      {
+        "type": "feature",
+        "slug": "artifact-repo-config",
+        "dir": "features/2026/09/artifact-repo-config",
+        "roadmap": "features/2026/09/artifact-repo-config/roadmap.md",
+        "plan": "features/2026/09/artifact-repo-config/plan.md",
+        "review": "features/2026/09/artifact-repo-config/review.md",
+        "reviewVerdict": "approve",
+        "status": "complete",
+        "branch": "feature/artifact-repo-config",
+        "lastUpdated": "2026-09-16",
+        "nextStep": "",
+        "githubIssue": null,
+        "artifactPr": null,
+        "initiative": "external-artifact-repo",
+        "steps": {
+          "ticked": 11,
+          "total": 11
+        },
+        "postShipPending": 0
+      },
+      {
+        "type": "feature",
+        "slug": "artifact-repo-hooks",
+        "dir": "features/2026/09/artifact-repo-hooks",
+        "roadmap": "features/2026/09/artifact-repo-hooks/roadmap.md",
+        "plan": "features/2026/09/artifact-repo-hooks/plan.md",
+        "review": "features/2026/09/artifact-repo-hooks/review.md",
+        "reviewVerdict": "approve",
+        "status": "complete",
+        "branch": "feature/artifact-repo-hooks",
+        "lastUpdated": "2026-09-16",
+        "nextStep": "",
+        "githubIssue": null,
+        "artifactPr": null,
+        "initiative": "external-artifact-repo",
+        "steps": {
+          "ticked": 12,
+          "total": 12
+        },
+        "postShipPending": 0
+      },
+      {
+        "type": "feature",
+        "slug": "artifact-repo-init",
+        "dir": "features/2026/09/artifact-repo-init",
+        "roadmap": "features/2026/09/artifact-repo-init/roadmap.md",
+        "plan": "features/2026/09/artifact-repo-init/plan.md",
+        "review": "features/2026/09/artifact-repo-init/review.md",
+        "reviewVerdict": "approve",
+        "status": "complete",
+        "branch": "feature/artifact-repo-init",
+        "lastUpdated": "2026-09-16",
+        "nextStep": "",
+        "githubIssue": null,
+        "artifactPr": null,
+        "initiative": "external-artifact-repo",
+        "steps": {
+          "ticked": 9,
+          "total": 9
+        },
+        "postShipPending": 0
+      },
+      {
+        "type": "feature",
+        "slug": "canonical-commands",
+        "dir": "features/2026/09/canonical-commands",
+        "roadmap": "features/2026/09/canonical-commands/roadmap.md",
+        "plan": "features/2026/09/canonical-commands/plan.md",
+        "review": "features/2026/09/canonical-commands/review.md",
+        "reviewVerdict": "approve",
+        "status": "complete",
+        "branch": "feature/canonical-commands",
+        "lastUpdated": "2026-09-14",
+        "nextStep": "",
+        "githubIssue": null,
+        "artifactPr": null,
+        "initiative": "workflow-orchestration",
+        "steps": {
+          "ticked": 11,
+          "total": 11
+        },
+        "postShipPending": 0
+      },
+      {
+        "type": "feature",
+        "slug": "capability-preflight",
+        "dir": "features/2026/09/capability-preflight",
+        "roadmap": "features/2026/09/capability-preflight/roadmap.md",
+        "plan": "features/2026/09/capability-preflight/plan.md",
+        "review": "features/2026/09/capability-preflight/review.md",
+        "reviewVerdict": "approve",
+        "status": "complete",
+        "branch": "feature/capability-preflight",
+        "lastUpdated": "2026-09-14",
+        "nextStep": "",
+        "githubIssue": null,
+        "artifactPr": null,
+        "initiative": "workflow-orchestration",
+        "steps": {
+          "ticked": 12,
+          "total": 12
+        },
+        "postShipPending": 0
+      },
+      {
+        "type": "feature",
+        "slug": "command-receipts",
+        "dir": "features/2026/09/command-receipts",
+        "roadmap": "features/2026/09/command-receipts/roadmap.md",
+        "plan": "features/2026/09/command-receipts/plan.md",
+        "review": "features/2026/09/command-receipts/review.md",
+        "reviewVerdict": "approve",
+        "status": "complete",
+        "branch": "feature/command-receipts",
+        "lastUpdated": "2026-09-14",
+        "nextStep": "",
+        "githubIssue": null,
+        "artifactPr": null,
+        "initiative": "workflow-orchestration",
+        "steps": {
+          "ticked": 14,
+          "total": 14
+        },
+        "postShipPending": 0
+      },
+      {
+        "type": "feature",
+        "slug": "continue-command",
+        "dir": "features/2026/09/continue-command",
+        "roadmap": "features/2026/09/continue-command/roadmap.md",
+        "plan": "features/2026/09/continue-command/plan.md",
+        "review": "features/2026/09/continue-command/review.md",
+        "reviewVerdict": "approve",
+        "status": "complete",
+        "branch": "feature/continue-command",
+        "lastUpdated": "2026-09-15",
+        "nextStep": "",
+        "githubIssue": null,
+        "artifactPr": null,
+        "initiative": "workflow-orchestration",
+        "steps": {
+          "ticked": 11,
+          "total": 11
+        },
+        "postShipPending": 0
+      },
+      {
+        "type": "feature",
+        "slug": "initiative-workflow",
+        "dir": "features/2026/09/initiative-workflow",
+        "roadmap": "features/2026/09/initiative-workflow/roadmap.md",
+        "plan": "features/2026/09/initiative-workflow/plan.md",
+        "review": "features/2026/09/initiative-workflow/review.md",
+        "reviewVerdict": "approve",
+        "status": "complete",
+        "branch": "feature/initiative-workflow",
+        "lastUpdated": "2026-09-06",
+        "nextStep": "",
+        "githubIssue": null,
+        "artifactPr": null,
+        "initiative": null,
+        "steps": {
+          "ticked": 15,
+          "total": 15
+        },
+        "postShipPending": 0
+      },
+      {
+        "type": "feature",
+        "slug": "initiatives-core",
+        "dir": "features/2026/09/initiatives-core",
+        "roadmap": "features/2026/09/initiatives-core/roadmap.md",
+        "plan": "features/2026/09/initiatives-core/plan.md",
+        "review": "features/2026/09/initiatives-core/review.md",
+        "reviewVerdict": "approve",
+        "status": "complete",
+        "branch": "feature/initiatives-core",
+        "lastUpdated": "2026-09-05",
+        "nextStep": "",
+        "githubIssue": null,
+        "artifactPr": null,
+        "initiative": null,
+        "steps": {
+          "ticked": 18,
+          "total": 18
+        },
+        "postShipPending": 0
+      },
+      {
+        "type": "feature",
+        "slug": "install-skills",
+        "dir": "features/2026/09/install-skills",
+        "roadmap": "features/2026/09/install-skills/roadmap.md",
+        "plan": "features/2026/09/install-skills/plan.md",
+        "review": "features/2026/09/install-skills/review.md",
+        "reviewVerdict": "approve",
+        "status": "complete",
+        "branch": "feature/install-skills",
+        "lastUpdated": "2026-09-05",
+        "nextStep": "",
+        "githubIssue": null,
+        "artifactPr": null,
+        "initiative": null,
+        "steps": {
+          "ticked": 4,
+          "total": 4
+        },
+        "postShipPending": 0
+      },
+      {
+        "type": "feature",
+        "slug": "mirrored-artifact-branches",
+        "dir": "features/2026/09/mirrored-artifact-branches",
+        "roadmap": "features/2026/09/mirrored-artifact-branches/roadmap.md",
+        "plan": "features/2026/09/mirrored-artifact-branches/plan.md",
+        "review": "features/2026/09/mirrored-artifact-branches/review.md",
+        "reviewVerdict": "approve",
+        "status": "complete",
+        "branch": "feature/mirrored-artifact-branches",
+        "lastUpdated": "2026-09-17",
+        "nextStep": "",
+        "githubIssue": null,
+        "artifactPr": null,
+        "initiative": "external-artifact-repo",
+        "steps": {
+          "ticked": 14,
+          "total": 14
+        },
+        "postShipPending": 0
+      },
+      {
+        "type": "feature",
+        "slug": "paired-artifact-worktrees",
+        "dir": "features/2026/09/paired-artifact-worktrees",
+        "roadmap": "features/2026/09/paired-artifact-worktrees/roadmap.md",
+        "plan": "features/2026/09/paired-artifact-worktrees/plan.md",
+        "review": "features/2026/09/paired-artifact-worktrees/review.md",
+        "reviewVerdict": "approve",
+        "status": "complete",
+        "branch": "feature/paired-artifact-worktrees",
+        "lastUpdated": "2026-09-16",
+        "nextStep": "",
+        "githubIssue": null,
+        "artifactPr": null,
+        "initiative": "external-artifact-repo",
+        "steps": {
+          "ticked": 21,
+          "total": 21
+        },
+        "postShipPending": 0
+      },
+      {
+        "type": "feature",
+        "slug": "session-state-cli",
+        "dir": "features/2026/09/session-state-cli",
+        "roadmap": "features/2026/09/session-state-cli/roadmap.md",
+        "plan": "features/2026/09/session-state-cli/plan.md",
+        "review": "features/2026/09/session-state-cli/review.md",
+        "reviewVerdict": "approve",
+        "status": "complete",
+        "branch": "feature/session-state-cli",
+        "lastUpdated": "2026-09-14",
+        "nextStep": "",
+        "githubIssue": null,
+        "artifactPr": null,
+        "initiative": "workflow-orchestration",
+        "steps": {
+          "ticked": 10,
+          "total": 10
+        },
+        "postShipPending": 0
+      },
+      {
+        "type": "feature",
+        "slug": "ship-audit-first",
+        "dir": "features/2026/09/ship-audit-first",
+        "roadmap": "features/2026/09/ship-audit-first/roadmap.md",
+        "plan": "features/2026/09/ship-audit-first/plan.md",
+        "review": "features/2026/09/ship-audit-first/review.md",
+        "reviewVerdict": "approve",
+        "status": "complete",
+        "branch": "feature/ship-audit-first",
+        "lastUpdated": "2026-09-14",
+        "nextStep": "",
+        "githubIssue": null,
+        "artifactPr": null,
+        "initiative": "workflow-orchestration",
+        "steps": {
+          "ticked": 13,
+          "total": 13
+        },
+        "postShipPending": 0
+      },
+      {
+        "type": "feature",
+        "slug": "ship-dual-merge",
+        "dir": "features/2026/09/ship-dual-merge",
+        "roadmap": "features/2026/09/ship-dual-merge/roadmap.md",
+        "plan": "features/2026/09/ship-dual-merge/plan.md",
+        "review": "features/2026/09/ship-dual-merge/review.md",
+        "reviewVerdict": "approve",
+        "status": "complete",
+        "branch": "feature/ship-dual-merge",
+        "lastUpdated": "2026-09-17",
+        "nextStep": "",
+        "githubIssue": null,
+        "artifactPr": null,
+        "initiative": "external-artifact-repo",
+        "steps": {
+          "ticked": 11,
+          "total": 11
+        },
+        "postShipPending": 0
+      },
+      {
+        "type": "feature",
+        "slug": "window-aware-commands",
+        "dir": "features/2026/09/window-aware-commands",
+        "roadmap": "features/2026/09/window-aware-commands/roadmap.md",
+        "plan": "features/2026/09/window-aware-commands/plan.md",
+        "review": "features/2026/09/window-aware-commands/review.md",
+        "reviewVerdict": "approve",
+        "status": "complete",
+        "branch": "feature/window-aware-commands",
+        "lastUpdated": "2026-09-14",
+        "nextStep": "",
+        "githubIssue": null,
+        "artifactPr": null,
+        "initiative": "workflow-orchestration",
+        "steps": {
+          "ticked": 16,
+          "total": 16
+        },
+        "postShipPending": 0
+      },
+      {
+        "type": "issue",
+        "slug": "plugin-hooks-layout",
+        "dir": "issues/2026/09/plugin-hooks-layout",
+        "roadmap": "issues/2026/09/plugin-hooks-layout/roadmap.md",
+        "plan": "issues/2026/09/plugin-hooks-layout/plan.md",
+        "review": "issues/2026/09/plugin-hooks-layout/review.md",
+        "reviewVerdict": "approve",
+        "status": "complete",
+        "branch": "issue/plugin-hooks-layout",
+        "lastUpdated": "2026-09-16",
+        "nextStep": "",
+        "githubIssue": "#36",
+        "artifactPr": null,
+        "initiative": null,
+        "steps": {
+          "ticked": 10,
+          "total": 10
+        },
+        "postShipPending": 0
+      }
+    ],
+    "breakdowns": [
+      {
+        "slug": "external-artifact-repo",
+        "dir": "initiatives/2026/09/external-artifact-repo",
+        "breakdown": "initiatives/2026/09/external-artifact-repo/breakdown.md",
+        "features": [
+          "artifact-repo-config",
+          "artifact-repo-init",
+          "artifact-repo-hooks",
+          "paired-artifact-worktrees",
+          "mirrored-artifact-branches",
+          "ship-dual-merge",
+          "artifact-history-migration"
+        ]
+      },
+      {
+        "slug": "workflow-orchestration",
+        "dir": "initiatives/2026/09/workflow-orchestration",
+        "breakdown": "initiatives/2026/09/workflow-orchestration/breakdown.md",
+        "features": [
+          "session-state-cli",
+          "command-receipts",
+          "canonical-commands",
+          "capability-preflight",
+          "window-aware-commands",
+          "ship-audit-first",
+          "continue-command"
+        ]
+      }
+    ],
+    "identical": true,
+    "diff": []
+  },
+  "root": "/home/david/DP/agento-worktrees/plan-20260917-231812",
+  "configSource": null
+}
