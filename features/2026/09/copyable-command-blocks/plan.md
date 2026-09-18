@@ -178,6 +178,18 @@ count ≥ 203 plus the tests this delivery adds) at the end of every phase and b
 
 No finding absent from the baseline; the gate holds.
 
+**Step 6.4 rerun (2026-09-18, branch at product `f686f28`, `origin/main` still
+`1b874bd` and an ancestor of both halves):**
+
+| Command | Exit | Findings |
+| --- | --- | --- |
+| `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` | 0 | 206 tests, 206 pass, 0 fail (+1: build/review handoffs offer the ap alternative) |
+| `shellcheck scripts/hooks/delivery-guard.sh scripts/hooks/replay-guard.sh scripts/hooks/session-context.sh scripts/wait-for-checks.sh` | 0 | none |
+| `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` | 0 | all fixtures match |
+| `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt` | 0 | all fixtures match |
+
+No finding absent from the baseline; the gate holds.
+
 ### Concurrent deliveries
 
 `gh pr list --state open` in both the product and the companion repository → `[]`.
@@ -217,6 +229,15 @@ frontmatter `description` enumeration. Content, in the policy's register:
 - **Ordering.** When several blocks appear, they are in execution order and each is
   preceded by one line saying where/when to run it (e.g. "In this window:", "From
   the primary window, after approval:").
+- **Unattended alternative (added 2026-09-18).** Whenever a block holds
+  `/agento build-<type> <slug>` or `/agento review-<type> <slug>`, the response also
+  offers `/agento ap <slug>` in its own block directly after it, introduced by one
+  line naming it as the unattended alternative; never after `/agento ship`,
+  `/agento start-session`, or other commands; the `next:` stays the build/review
+  command. Applied in the Builder, Reviewer, Autopilot, and Planner agents and the
+  `next-feature`, `ship`, `continue`, `new-feature`, `new-issue` prompts; enforced
+  by the customizations test "build and review handoffs offer the /agento ap
+  alternative".
 
 ### 2. Agents (`.github/agents/*.agent.md`)
 
@@ -363,3 +384,11 @@ to `evidence/step-4-2-copy-button.png`; the Reviewer repeats it independently.
   scripts/hooks/session-context.sh scripts/wait-for-checks.sh` exit 0; both
   `replay-guard.sh` smoke runs exit 0 — verify: the commands' captured exit codes
   recorded on roadmap step 5.1.
+- [ ] (added 2026-09-18) Every build or review command block is followed by an
+  `/agento ap <slug>` block as the unattended alternative: policy §12 states the
+  rule; the Builder, Reviewer, Autopilot, and Planner agents and the `next-feature`,
+  `ship`, `continue`, `new-feature`, `new-issue` prompts apply it; `docs/commands.md`
+  `## Receipts` and the `CHANGELOG.md` 0.5.1 entry mention it — verify: the
+  customizations test "build and review handoffs offer the /agento ap alternative"
+  passes; `grep -n "/agento ap <slug>" .github/instructions/delivery-policy.instructions.md
+  docs/commands.md CHANGELOG.md` shows all three.
