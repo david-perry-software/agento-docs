@@ -3,6 +3,7 @@ status: planned
 branch: feature/cli-dashboard-json
 last-updated: 2026-09-18
 next-step: "1.1 generalise roadmap sources for status"
+artifact-pr: "#6"
 initiative: "agento-extension"
 ```
 
