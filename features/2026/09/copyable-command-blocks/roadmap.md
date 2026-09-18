@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/copyable-command-blocks
 last-updated: 2026-09-18
-next-step: "3.2 — add the next-feature one-command-per-block test"
+next-step: "3.3 — blocks + §12 in continue, ship, start-freehand, close-session prompts; mirror"
 artifact-pr: "#3"
 ```
 
@@ -19,7 +19,7 @@ artifact-pr: "#3"
 ## Phase 3: Prompts and mirror
 
 - [x] 3.1 Rewrite `.github/prompts/next-feature.prompt.md` step 4 (L40–51) as a numbered list with one locating line and one bare single-command block per step (`/agento start-session`; `/agento new-feature initiative:<initiative-slug>/<feature-slug>`; `/agento build-feature <feature-slug>` with the Build-in-this-worktree alternative in prose; `/agento review-feature <feature-slug>`; `/agento ship <feature-slug>`), emit one `/agento new-feature initiative:…` block per other ready member, and cite §12; copy to `commands/next-feature.md` — verify: no fenced block in the file contains two `/agento` lines or a `#` comment (`awk` over the fences or manual read); `diff .github/prompts/next-feature.prompt.md commands/next-feature.md` is empty
-- [ ] 3.2 Add the test "next-feature prints one command per fenced block" to `tests/customizations.test.mjs`: every fenced block in `next-feature.prompt.md` opens with a bare ` ``` ` (no language tag) and contains exactly one non-empty line, which starts with `/agento ` and has no `#` — verify: the test passes on the rewritten prompt and FAILS when run against `git show origin/main:.github/prompts/next-feature.prompt.md` (temporarily point it at a temp copy to confirm, then restore)
+- [x] 3.2 Add the test "next-feature prints one command per fenced block" to `tests/customizations.test.mjs`: every fenced block in `next-feature.prompt.md` opens with a bare ` ``` ` (no language tag) and contains exactly one non-empty line, which starts with `/agento ` and has no `#` — verify: the test passes on the rewritten prompt and FAILS when run against `git show origin/main:.github/prompts/next-feature.prompt.md` (temporarily point it at a temp copy to confirm, then restore)
 - [ ] 3.3 Rewrite the user-run commands as blocks and cite §12 in `.github/prompts/continue.prompt.md` (L72–76 `next.invocation`/`then` as a block; L101 example; step 5), `.github/prompts/ship.prompt.md` (L142–147 hard-reject `next:` command as a block; L223 teardown-pause resume command as a block — the `paused at teardown` canary sentence stays and stays only here), `.github/prompts/start-freehand.prompt.md` (L95–98), and `.github/prompts/close-session.prompt.md` (L129–132); mirror each to `commands/<name>.md` — verify: `node --test 'tests/customizations.test.mjs'` shows the mirror test and the teardown-pause canary test passing; the §12 test lists only the prompts not yet edited
 - [ ] 3.4 Rewrite and cite §12 in `.github/prompts/new-feature.prompt.md` (L66–70), `.github/prompts/new-issue.prompt.md` (L80–85), `.github/prompts/doctor.prompt.md` (L34–36), `.github/prompts/quick-fix.prompt.md` (L35: the named right command as a block), `.github/prompts/agento-init.prompt.md` (L57), and add the citation to every remaining prompt's receipt paragraph; mirror all to `commands/` — verify: `node --test 'tests/customizations.test.mjs'` passes in full (§12 citation test, canary test, mirror test, bare-command and suffix scans)
 
