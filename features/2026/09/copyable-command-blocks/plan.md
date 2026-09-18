@@ -157,6 +157,18 @@ delivery is the **full** baseline rerun (all four commands, same exit codes, tes
 count ≥ 203 plus the tests this delivery adds) at the end of every phase and before
 `status: in-review`. No scoped gate is needed.
 
+**Step 5.1 rerun (2026-09-18, branch at product `86b0821`, `origin/main` still
+`1b874bd` and an ancestor of both halves):**
+
+| Command | Exit | Findings |
+| --- | --- | --- |
+| `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` | 0 | 205 tests, 205 pass, 0 fail (+2: §12 citation, next-feature one-command-per-block) |
+| `shellcheck scripts/hooks/delivery-guard.sh scripts/hooks/replay-guard.sh scripts/hooks/session-context.sh scripts/wait-for-checks.sh` | 0 | none |
+| `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` | 0 | all fixtures match |
+| `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt` | 0 | all fixtures match |
+
+No finding absent from the baseline; the gate holds.
+
 ### Concurrent deliveries
 
 `gh pr list --state open` in both the product and the companion repository → `[]`.

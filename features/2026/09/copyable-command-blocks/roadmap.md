@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/copyable-command-blocks
 last-updated: 2026-09-18
-next-step: "5.1 — integrate both defaults, rerun the full lint baseline, record results beside the plan.md baseline"
+next-step: "4.2 — rendered copy-button screenshot from /agento doctor in this worktree's chat"
 artifact-pr: "#3"
 ```
 
@@ -30,5 +30,5 @@ artifact-pr: "#3"
 
 ## Phase 5: Gate and handoff
 
-- [ ] 5.1 Integrate `origin/main` (product) and the companion `origin/main` by merge, then rerun the full lint baseline and record the exit codes and test count beside the plan.md baseline: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`; `shellcheck scripts/hooks/delivery-guard.sh scripts/hooks/replay-guard.sh scripts/hooks/session-context.sh scripts/wait-for-checks.sh`; `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`; `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt` — verify: all four exit 0, test count ≥ 205 with 0 failures, no finding absent from the plan.md baseline
+- [x] 5.1 Integrate `origin/main` (product) and the companion `origin/main` by merge, then rerun the full lint baseline and record the exit codes and test count beside the plan.md baseline: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`; `shellcheck scripts/hooks/delivery-guard.sh scripts/hooks/replay-guard.sh scripts/hooks/session-context.sh scripts/wait-for-checks.sh`; `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`; `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt` — verify: all four exit 0, test count ≥ 205 with 0 failures, no finding absent from the plan.md baseline
 - [ ] 5.2 Set `status: in-review`, push both halves (product first, then companion; `agento.mjs session` shows `companion.dirty: false`, `companion.ahead: 0`), and hand off to the Reviewer per policy §8 — verify: `node scripts/agento.mjs session --pr` reports `lifecycle: in-review`, `pr` and `companionPr` both `OPEN`
