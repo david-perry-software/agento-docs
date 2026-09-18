@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: issue/guard-branch-delete-on-main
 last-updated: 2026-09-18
-next-step: "/agento review-issue guard-branch-delete-on-main"
+next-step: "Shipped — PR #48 merged via /agento ship"
 github-issue: "#47"
 artifact-pr: "#4"
 ```
