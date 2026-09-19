@@ -1,8 +1,8 @@
 ```yaml
-status: planned
+status: paused
 branch: feature/command-dispatch
 last-updated: 2026-09-19
-next-step: "1.1 Wait for and integrate the completed session-doctor-panel prerequisite"
+next-step: "1.1 Resume after session-doctor-panel reaches status: complete, then merge both origin/main branches and identify its shipped Session provider/model integration points"
 artifact-pr: "#11"
 initiative: "agento-extension"
 ```
