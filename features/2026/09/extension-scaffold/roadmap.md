@@ -1,7 +1,7 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/extension-scaffold
-last-updated: 2026-09-18
+last-updated: 2026-09-19
 next-step: "1.1 package skeleton"
 artifact-pr: "#7"
 initiative: "agento-extension"
