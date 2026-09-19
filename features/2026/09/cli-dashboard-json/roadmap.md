@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/cli-dashboard-json
 last-updated: 2026-09-18
-next-step: "3.2 final gate, integrate origin/main, push, set status: in-review"
+next-step: "review: /agento review-feature cli-dashboard-json"
 artifact-pr: "#6"
 initiative: "agento-extension"
 ```
@@ -23,7 +23,7 @@ initiative: "agento-extension"
 ## Phase 3: Documentation and finalisation
 
 - [x] 3.1 Update `docs/commands.md`: extend the `status [type] [slug]` clause with `[--pr]`, the per-item fields (`lifecycle`, `owner`, `workspace`, `companion`, `pr`, `companionPr`), the top-level `lifecycles[]` and `warnings[]`, the complete-item skip rule, and the roadmap-source precedence (managed halves/build worktrees before the artifact checkout; branch-matching copy wins); extend the `next [<slug>]` clause with `target { path, workspace } | null`; add a `## Unreleased` section at the top of `CHANGELOG.md` with one entry describing the additive JSON (no version bump) — verify: `grep -n "lifecycles\[\]\|target" docs/commands.md` shows both clauses; `grep -n "^## Unreleased" CHANGELOG.md` prints line 3; `grep -n '"version"' package.json .claude-plugin/plugin.json` both still `0.5.2`; `node --test tests/customizations.test.mjs` passes
-- [ ] 3.2 Final gate against the plan.md `## Research` baseline, integrate `origin/main` in both halves, push, set `status: in-review` — verify: `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` exit 0; `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` 0 failures and total > 206; `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` exit 0; `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt` exit 0; `git diff --stat origin/main` in the product half touches only `scripts/agento.mjs`, `scripts/session-state.mjs`, `scripts/agento.test.mjs`, `scripts/session-state.test.mjs`, `docs/commands.md`, `CHANGELOG.md`; `git diff --stat origin/main -- .github commands scripts/hooks templates` is empty; `node scripts/agento.mjs session` shows `companion.dirty: false`, `companion.ahead: 0`
+- [x] 3.2 Final gate against the plan.md `## Research` baseline, integrate `origin/main` in both halves, push, set `status: in-review` — verify: `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` exit 0; `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` 0 failures and total > 206; `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` exit 0; `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt` exit 0; `git diff --stat origin/main` in the product half touches only `scripts/agento.mjs`, `scripts/session-state.mjs`, `scripts/agento.test.mjs`, `scripts/session-state.test.mjs`, `docs/commands.md`, `CHANGELOG.md`; `git diff --stat origin/main -- .github commands scripts/hooks templates` is empty; `node scripts/agento.mjs session` shows `companion.dirty: false`, `companion.ahead: 0`
 
 ## Follow-ups
 
