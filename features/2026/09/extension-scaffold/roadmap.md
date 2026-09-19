@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/extension-scaffold
 last-updated: 2026-09-19
-next-step: "2.5 phase two integration gate"
+next-step: "3.1 Electron activation test"
 artifact-pr: "#7"
 initiative: "agento-extension"
 ```
@@ -21,7 +21,7 @@ initiative: "agento-extension"
 - [x] 2.2 Implement `extension/src/refreshScheduler.ts` per plan.md `## Approach` §3 (injectable timers, trailing debounce `max(3000, configured)`, `schedule(reason)`, `refreshNow(reason)`, `onDidRefresh` emitting `{ reasons }` once per window, `dispose()`) with `extension/test/unit/refreshScheduler.test.ts` (fake timers: three schedules → one emit with three reasons; 500 → clamped 3000; `refreshNow` cancels the pending timer; no emit after `dispose`) — verify: `cd extension && npm run test:unit` passes and names the scheduler tests
 - [x] 2.3 Implement `extension/src/gitDir.ts` (`resolveGitDir(folder)`: `.git` directory → `{ gitDir, commonDir: gitDir }`; `.git` file → `gitdir:` path and its `commondir` file resolved absolute) with `extension/test/unit/gitDir.test.ts` (real `git init` and `git worktree add` in `os.tmpdir()`), and `extension/src/watchers.ts` (`createWatchers({ roots, gitDirs, onEvent })` → `Disposable[]`: per root `**/roadmap.md` and `**/review.md`; per git dir `HEAD` and per common dir `refs/**` via `RelativePattern`; every create/change/delete calls `onEvent("<kind> <fsPath>")`; a watcher whose creation throws is logged and skipped) — verify: `cd extension && npm run test:unit` passes and names the gitDir tests; `npm run typecheck` exits 0
 - [x] 2.4 Write `extension/src/extension.ts` per plan.md `## Approach` §5: output channel "Agento", settings read, `CliClient` with `cliPath = <extensionPath>/cli/agento.mjs`, `RefreshScheduler`, commands `agento.refresh` (→ `refreshNow("command")`) and `agento.showOutput`, watchers over every workspace folder plus each folder's `config` `artifactsRoot` when it differs from the folder (rebuilt on `onDidChangeWorkspaceFolders`), the `onDidRefresh` handler that runs `session` for the first folder and logs `session: role=… lifecycle=… delivery=…` or the error, an initial `refreshNow("activate")`, and the exported API `{ client, scheduler, output }`; `deactivate` disposes via `context.subscriptions` — verify: `cd extension && npm run build && npm run typecheck` exit 0; `node -e 'const p=require("./extension/package.json"); const ids=p.contributes.commands.map(c=>c.command); if(!ids.includes("agento.refresh")||!ids.includes("agento.showOutput")) process.exit(1)'` exits 0; `grep -c "registerCommand" extension/src/extension.ts` ≥ 2 (behavioural proof is step 3.1's activation test)
-- [ ] 2.5 Integrate `origin/main` by merge in both halves, run the full gate, push both halves — verify: merges clean; shellcheck exit 0; root test command 0 failures; `cd extension && npm run test:unit` passes; `companion.dirty: false`, `companion.ahead: 0`
+- [x] 2.5 Integrate `origin/main` by merge in both halves, run the full gate, push both halves — verify: both defaults already ancestors; shellcheck exit 0; root tests passed 214/214; extension unit tests passed 10/10; companion clean and synchronized
 
 ## Phase 3: Electron activation test and packaging
 
