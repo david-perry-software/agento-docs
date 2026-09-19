@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/session-doctor-panel
 last-updated: 2026-09-19
-next-step: "2.1 Wire the latest-only Session & Doctor refresh snapshot"
+next-step: "2.2 Contribute the Session & Doctor view and status focus action"
 artifact-pr: "#10"
 initiative: "agento-extension"
 ```
@@ -15,7 +15,7 @@ initiative: "agento-extension"
 
 ## Phase 2: Extension integration and user-visible behavior
 
-- [ ] 2.1 Wire one latest-only refresh snapshot for `session --pr`, `doctor`, and `status --pr` into the existing scheduler; refresh on activation, first view visibility, workspace/watch events, and `agento.refresh` without polling; update the provider and status bar together — verify: `cd extension && npm run typecheck && npm run test:unit`; source/manifest tests prove no `setInterval`
+- [x] 2.1 Wire one latest-only refresh snapshot for `session --pr`, `doctor`, and `status --pr` into the existing scheduler; refresh on activation, first view visibility, workspace/watch events, and `agento.refresh` without polling; update the provider and status bar together — verify: `cd extension && npm run typecheck && npm run test:unit`; source/manifest tests prove no `setInterval`
 - [ ] 2.2 Contribute `agento.sessionDoctor` and its refresh title action under the Agento container, expose the panel/status item in the extension API for tests, and make the `Agento: <role> · <N> active` item focus the view without dispatching workflow or repair commands — verify: `cd extension && npm run test:unit`; manifest integration assertions pass
 - [ ] 2.3 Extend the Electron fixtures and suite for session/companion fields, CLI warnings, every doctor field, status text/focus, manual refresh, latest-result behavior, and inline failure/retry rendering — verify: `local:3157/4157 — cd extension && npm run test:electron`
 - [ ] 2.4 Integrate `origin/main` in both halves and push the verified extension behavior — verify: both default branches are ancestors; `cd extension && npm run typecheck && npm run test:unit && npm run test:electron` and shellcheck exit 0
