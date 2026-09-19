@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/extension-scaffold
 last-updated: 2026-09-19
-next-step: "3.3 Integration gate"
+next-step: "4.1 Documentation"
 artifact-pr: "#7"
 initiative: "agento-extension"
 ```
@@ -27,7 +27,7 @@ initiative: "agento-extension"
 
 - [x] 3.1 Add `extension/test/fixtures/workspace/` (`.github/agento.json` from `templates/agento.json`, a `features/.gitkeep`, no `.git`), `extension/test/electron/runTest.ts` (copies the fixture to `os.tmpdir()`, `git init -b main` + one commit there, then `runTests({ extensionDevelopmentPath, extensionTestsPath, version: <engines minor>.0, launchArgs: [tmpFixture, "--disable-extensions"] })`), and `extension/test/electron/suite.ts` (exported `run()`: extension found by id `david-perry-software.agento-dashboard`, `activate()` resolves and `isActive`; `commands.getCommands(true)` contains `agento.refresh` and `agento.showOutput`; `exports.client.run(["session"], fixture)` → `code 0`, string `role`; writing `features/2026/09/x/roadmap.md` in the fixture yields one `onDidRefresh` within `refreshDebounceMs + 2000` ms) — verify: `cd extension && npm run test:electron` exited 0; final summary: `Extension activation test passed: active, commands, CLI session, watcher refresh`
 - [x] 3.2 Package the VSIX — verify: `cd extension && npm run package` exited 0 and produced `agento-dashboard-0.5.2.vsix`; archive assertions found all required CLI/runtime/manifest/license/readme entries and no source, tests, dependencies, source maps, or duplicate `out/src/` entries; `git status --porcelain -- agento-dashboard-0.5.2.vsix` was empty
-- [ ] 3.3 Integrate `origin/main` by merge in both halves, run the full gate, push both halves — verify: merges clean; shellcheck exit 0; root test command 0 failures; `companion.dirty: false`, `companion.ahead: 0`
+- [x] 3.3 Integrate `origin/main` by merge in both halves, run the full gate, push both halves — verify: both defaults were ancestors; shellcheck exited 0; root tests passed 214/214; extension unit tests passed 10/10; companion was clean and synchronized
 
 ## Phase 4: Documentation and finalisation
 
