@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/extension-scaffold
 last-updated: 2026-09-19
-next-step: "3.1 Electron activation test"
+next-step: "3.2 Package the VSIX"
 artifact-pr: "#7"
 initiative: "agento-extension"
 ```
@@ -25,7 +25,7 @@ initiative: "agento-extension"
 
 ## Phase 3: Electron activation test and packaging
 
-- [ ] 3.1 Add `extension/test/fixtures/workspace/` (`.github/agento.json` from `templates/agento.json`, a `features/.gitkeep`, no `.git`), `extension/test/electron/runTest.ts` (copies the fixture to `os.tmpdir()`, `git init -b main` + one commit there, then `runTests({ extensionDevelopmentPath, extensionTestsPath, version: <engines minor>.0, launchArgs: [tmpFixture, "--disable-extensions"] })`), and `extension/test/electron/suite.ts` (exported `run()`: extension found by id `david-perry-software.agento-dashboard`, `activate()` resolves and `isActive`; `commands.getCommands(true)` contains `agento.refresh` and `agento.showOutput`; `exports.client.run(["session"], fixture)` → `code 0`, string `role`; writing `features/2026/09/x/roadmap.md` in the fixture yields one `onDidRefresh` within `refreshDebounceMs + 2000` ms) — verify: `cd extension && npm run test:electron` exits 0 (with `xvfb-run -a` when `DISPLAY` is unset); paste the run's final summary lines on this step
+- [x] 3.1 Add `extension/test/fixtures/workspace/` (`.github/agento.json` from `templates/agento.json`, a `features/.gitkeep`, no `.git`), `extension/test/electron/runTest.ts` (copies the fixture to `os.tmpdir()`, `git init -b main` + one commit there, then `runTests({ extensionDevelopmentPath, extensionTestsPath, version: <engines minor>.0, launchArgs: [tmpFixture, "--disable-extensions"] })`), and `extension/test/electron/suite.ts` (exported `run()`: extension found by id `david-perry-software.agento-dashboard`, `activate()` resolves and `isActive`; `commands.getCommands(true)` contains `agento.refresh` and `agento.showOutput`; `exports.client.run(["session"], fixture)` → `code 0`, string `role`; writing `features/2026/09/x/roadmap.md` in the fixture yields one `onDidRefresh` within `refreshDebounceMs + 2000` ms) — verify: `cd extension && npm run test:electron` exited 0; final summary: `Extension activation test passed: active, commands, CLI session, watcher refresh`
 - [ ] 3.2 Package the VSIX — verify: `cd extension && npm run package` exits 0 producing `agento-dashboard-0.5.2.vsix`; `unzip -l agento-dashboard-0.5.2.vsix` lists `extension/cli/agento.mjs`, `extension/cli/agento-config.mjs`, `extension/cli/session-state.mjs`, `extension/cli/delivery-roadmap-resolver.mjs`, `extension/out/extension.js`, `extension/package.json`, `extension/LICENSE`, `extension/README.md`, and no `extension/src/`, `extension/test/`, `extension/node_modules/`, or `.map` entries; `git status --porcelain` does not list the `.vsix` (ignored)
 - [ ] 3.3 Integrate `origin/main` by merge in both halves, run the full gate, push both halves — verify: merges clean; shellcheck exit 0; root test command 0 failures; `companion.dirty: false`, `companion.ahead: 0`
 
