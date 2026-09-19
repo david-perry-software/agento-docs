@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/extension-scaffold
 last-updated: 2026-09-19
-next-step: "1.5 phase 1 integration gate"
+next-step: "2.1 CLI client"
 artifact-pr: "#7"
 initiative: "agento-extension"
 ```
@@ -13,7 +13,7 @@ initiative: "agento-extension"
 - [x] 1.2 Write `extension/scripts/copy-cli.mjs` (copies `../scripts/{agento,agento-config,session-state,delivery-roadmap-resolver}.mjs` → `extension/cli/` and `../LICENSE` → `extension/LICENSE`, deletes any other file in `cli/`, prints the copied names) and run it; commit the generated `extension/cli/*` and `extension/LICENSE` — verify: copy, exact file-set check, byte comparisons, and bundled `session` JSON parse exited 0
 - [x] 1.3 `cd extension && npm install --save-dev typescript @types/vscode @types/node @vscode/vsce @vscode/test-electron` (pinning `@types/vscode` to the `engines.vscode` minor), commit `extension/package-lock.json`, add a minimal `src/extension.ts` (`activate` creates the output channel and logs `activated`; `deactivate` empty) and run the build — verify: `@types/vscode@1.132.0` was unpublished, so the documented fallback selected `@types/vscode@1.125.0` and `engines.vscode ^1.125.0` (added 2026-09-19); `npm ci`, build, output-file check, and typecheck exited 0; Git listed only the intended manifest, lockfile, and source changes
 - [x] 1.4 Add `tests/extension-bundle.test.mjs` (root node:test, no imports from `extension/`): exact four-file set in `extension/cli/`, `Buffer.equals` against `scripts/<name>`, `extension/LICENSE` equals `LICENSE`, `extension/package.json` has no non-empty `dependencies`, `engines.vscode` matches `/^\^1\.\d+\.\d+$/`; extend `tests/customizations.test.mjs` L471 so `extension/package.json` `version` must equal `package.json` and `.claude-plugin/plugin.json`, the message naming all three files — verify: focused tests passed; temporary CLI drift failed naming `extension/cli/agento.mjs`; temporary `0.5.3` version failed naming all three manifests; both were restored; full root suite passed 214/214
-- [ ] 1.5 Integrate `origin/main` by merge in both halves, run the full gate, push both halves (product first, companion second) — verify: `git merge origin/main` and `git -C <companion.path> merge origin/main` clean; `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` exit 0; root test command 0 failures; `node scripts/agento.mjs session` shows `companion.dirty: false`, `companion.ahead: 0`
+- [x] 1.5 Integrate `origin/main` by merge in both halves, run the full gate, push both halves (product first, companion second) — verify: both `origin/main` commits were ancestors; shellcheck exited 0; root suite passed 214/214; session showed `companion.dirty: false`, `companion.ahead: 0`
 
 ## Phase 2: CLI client, scheduler, watchers
 
