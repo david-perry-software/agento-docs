@@ -3,6 +3,7 @@ status: planned
 branch: feature/extension-scaffold
 last-updated: 2026-09-18
 next-step: "1.1 package skeleton"
+artifact-pr: "#7"
 initiative: "agento-extension"
 ```
 
