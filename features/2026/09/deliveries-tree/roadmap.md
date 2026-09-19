@@ -2,14 +2,14 @@
 status: in-progress
 branch: feature/deliveries-tree
 last-updated: 2026-09-19
-next-step: "1.1 Stabilize the Electron watcher baseline"
+next-step: "1.2 Add the delivery-tree model and focused tests"
 artifact-pr: "#8"
 initiative: "agento-extension"
 ```
 
 ## Phase 1: Reliable view foundation
 
-- [ ] 1.1 Stabilize the existing Electron fixture/watcher readiness path so roadmap create/change events reliably reach the scheduler before adding tree assertions; retain the behavioral assertion rather than replacing it with a delay — verify: four consecutive `cd extension && npm run test:electron` runs pass under VS Code 1.125.0 and each observes the expected roadmap event
+- [x] 1.1 Stabilize the existing Electron fixture/watcher readiness path so roadmap create/change events reliably reach the scheduler before adding tree assertions; retain the behavioral assertion rather than replacing it with a delay — verify: four consecutive `cd extension && npm run test:electron` runs pass under VS Code 1.125.0 and each observes the expected roadmap event
 - [ ] 1.2 Add a pure delivery-tree model for the minimum `status --pr` contract: non-empty groups in `lifecycles[]` order, compact row summaries, complete metadata for tooltips, preserved warnings, and explicit empty/malformed/error states; add focused node:test coverage — verify: `cd extension && npm run test:unit` passes and TAP names lifecycle ordering, omitted empty groups, metadata/null PRs, warnings, empty results, and malformed input cases
 - [ ] 1.3 Implement the Deliveries `TreeDataProvider`, delivery item command opening the CLI-supplied roadmap path in `ViewColumn.Beside`, and stale-refresh protection; expose the provider through `ExtensionApi` for host assertions — verify: `cd extension && npm run typecheck && npm run test:unit` exits 0 and focused tests prove an older request cannot overwrite a newer model
 
