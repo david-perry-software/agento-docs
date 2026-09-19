@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/initiatives-tree
 last-updated: 2026-09-19
-next-step: "1.2 Add and test the Initiatives TreeDataProvider"
+next-step: "2.1 Integrate the Initiatives view and shared refresh"
 artifact-pr: "#9"
 initiative: "agento-extension"
 ```
@@ -10,7 +10,7 @@ initiative: "agento-extension"
 ## Phase 1: Initiative model and provider
 
 - [x] 1.1 Add a pure initiative-tree model that validates `initiative` list/detail responses, preserves CLI initiative order, groups members as Ready, In flight, Blocked, and Complete from supplied fields, formats compact rows/tooltips, and retains errors/anomalies as diagnostics — verify: `cd extension && npm run test:unit` passes with named cases for list/detail validation, group precedence/order, metadata, diagnostics, empty data, and malformed responses
-- [ ] 1.2 Add the Initiatives `TreeDataProvider` with initiative, group, member, diagnostic, empty, and error nodes; activate initiative/member nodes to open the CLI-supplied `breakdown.md` beside the active editor — verify: `cd extension && npm run typecheck && npm run test:unit` exits 0 with provider tests for hierarchy, context values, icons, path resolution, and open command arguments
+- [x] 1.2 Add the Initiatives `TreeDataProvider` with initiative, group, member, diagnostic, empty, and error nodes; activate initiative/member nodes to open the CLI-supplied `breakdown.md` beside the active editor — verify: `cd extension && npm run typecheck && npm run test:unit` exits 0 with provider tests for hierarchy, context values, icons, path resolution, and open command arguments
 
 ## Phase 2: Extension integration and rendering
 
