@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/initiatives-tree
 last-updated: 2026-09-19
-next-step: "3.2 Run the complete integration, test, and package gate"
+next-step: ""
 artifact-pr: "#9"
 initiative: "agento-extension"
 ```
@@ -21,7 +21,7 @@ initiative: "agento-extension"
 ## Phase 3: Documentation and final gate
 
 - [x] 3.1 Document the read-only Initiatives view, hierarchy, metadata, breakdown navigation, refresh behavior, and diagnostics in `extension/README.md`; add an Unreleased changelog entry without changing versions — verify: documentation marker checks and `node --test tests/customizations.test.mjs` pass; all three manifests remain version `0.5.2`
-- [ ] 3.2 Integrate `origin/main` into both halves, recheck concurrent PR overlap, run the complete green lint/test/package gate, inspect scope, push product then companion, and set the roadmap to `in-review` — verify: `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` exits 0; `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` passes; both replay-guard commands pass; extension typecheck/unit tests pass; two consecutive Electron runs pass; `cd extension && npm run package` passes its archive assertion; diffs contain only planned extension/docs/artifact files; session reports both halves clean, synchronized, and `status: in-review`
+- [x] 3.2 Integrate `origin/main` into both halves, recheck concurrent PR overlap, run the complete green lint/test/package gate, inspect scope, push product then companion, and set the roadmap to `in-review` — verify: `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` exits 0; `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` passes; both replay-guard commands pass; extension typecheck/unit tests pass; two consecutive Electron runs pass; `cd extension && npm run package` passes its archive assertion; diffs contain only planned extension/docs/artifact files; session reports both halves clean, synchronized, and `status: in-review`
 
 ## Follow-ups
 
