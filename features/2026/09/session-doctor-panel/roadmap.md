@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/session-doctor-panel
 last-updated: 2026-09-19
-next-step: "3.3 Integrate both defaults and run the complete final gate"
+next-step: ""
 artifact-pr: "#10"
 initiative: "agento-extension"
 ```
@@ -24,7 +24,7 @@ initiative: "agento-extension"
 
 - [x] 3.1 Document the Session & Doctor view, manual refresh, read-only doctor output, and status-bar summary in `extension/README.md`; add the feature under `CHANGELOG.md` Unreleased — verify: documentation names `session --pr`, `doctor`, `status --pr`, and no repair behavior; `node --test tests/customizations.test.mjs` passes
 - [x] 3.2 Build and package the extension and verify the VSIX carries the new manifest contributions and runtime modules — verify: `cd extension && npm run typecheck && npm run test:unit && npm run test:electron && npm run package`
-- [ ] 3.3 Integrate both defaults, run the complete clean-baseline gate, audit the diff against this plan, push both halves, and set `status: in-review` — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`; both replay-guard smoke commands; shellcheck with zero findings; extension typecheck/unit/Electron/package checks; both PRs mergeable and both halves clean and synchronized
+- [x] 3.3 Integrate both defaults, run the complete clean-baseline gate, audit the diff against this plan, push both halves, and set `status: in-review` — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`; both replay-guard smoke commands; shellcheck with zero findings; extension typecheck/unit/Electron/package checks; both PRs mergeable and both halves clean and synchronized
 
 ## Follow-ups
 
