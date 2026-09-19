@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/extension-scaffold
 last-updated: 2026-09-19
-next-step: "5.1 Diagnose and repair the Electron roadmap watcher refresh failure"
+next-step: "5.2 Reconcile and automate the VSIX license archive assertion"
 artifact-pr: "#7"
 initiative: "agento-extension"
 ```
@@ -25,7 +25,7 @@ initiative: "agento-extension"
 
 ## Phase 3: Electron activation test and packaging
 
-- [ ] 3.1 Add `extension/test/fixtures/workspace/` (`.github/agento.json` from `templates/agento.json`, a `features/.gitkeep`, no `.git`), `extension/test/electron/runTest.ts` (copies the fixture to `os.tmpdir()`, `git init -b main` + one commit there, then `runTests({ extensionDevelopmentPath, extensionTestsPath, version: <engines minor>.0, launchArgs: [tmpFixture, "--disable-extensions"] })`), and `extension/test/electron/suite.ts` (exported `run()`: extension found by id `david-perry-software.agento-dashboard`, `activate()` resolves and `isActive`; `commands.getCommands(true)` contains `agento.refresh` and `agento.showOutput`; `exports.client.run(["session"], fixture)` → `code 0`, string `role`; writing `features/2026/09/x/roadmap.md` in the fixture yields one `onDidRefresh` within `refreshDebounceMs + 2000` ms) — verify: `cd extension && npm run test:electron` exited 0; final summary: `Extension activation test passed: active, commands, CLI session, watcher refresh`
+- [x] 3.1 Add `extension/test/fixtures/workspace/` (`.github/agento.json` from `templates/agento.json`, a `features/.gitkeep`, no `.git`), `extension/test/electron/runTest.ts` (copies the fixture to `os.tmpdir()`, `git init -b main` + one commit there, then `runTests({ extensionDevelopmentPath, extensionTestsPath, version: <engines minor>.0, launchArgs: [tmpFixture, "--disable-extensions"] })`), and `extension/test/electron/suite.ts` (exported `run()`: extension found by id `david-perry-software.agento-dashboard`, `activate()` resolves and `isActive`; `commands.getCommands(true)` contains `agento.refresh` and `agento.showOutput`; `exports.client.run(["session"], fixture)` → `code 0`, string `role`; writing `features/2026/09/x/roadmap.md` in the fixture yields one `onDidRefresh` within `refreshDebounceMs + 2000` ms) — verify: `cd extension && npm run test:electron` passed four consecutive VS Code 1.125.0 runs; each required the exact fixture roadmap create/change reason and printed `Extension activation test passed: active, commands, CLI session, watcher refresh`
 - [ ] 3.2 Package the VSIX — verify: `cd extension && npm run package` exited 0 and produced `agento-dashboard-0.5.2.vsix`; archive assertions found all required CLI/runtime/manifest/license/readme entries and no source, tests, dependencies, source maps, or duplicate `out/src/` entries; `git status --porcelain -- agento-dashboard-0.5.2.vsix` was empty
 - [x] 3.3 Integrate `origin/main` by merge in both halves, run the full gate, push both halves — verify: both defaults were ancestors; shellcheck exited 0; root tests passed 214/214; extension unit tests passed 10/10; companion was clean and synchronized
 
@@ -36,7 +36,7 @@ initiative: "agento-extension"
 
 ## Phase 5: Review remediation
 
-- [ ] 5.1 Diagnose and repair the Electron roadmap watcher refresh failure so the activation test passes reliably under the pinned VS Code host (added 2026-09-19) — verify: `cd extension && npm run test:electron` exits 0 on repeated runs and prints `Extension activation test passed: active, commands, CLI session, watcher refresh`
+- [x] 5.1 Diagnose and repair the Electron roadmap watcher refresh failure so the activation test passes reliably under the pinned VS Code host (added 2026-09-19) — verify: workspace roots now use VS Code's shared workspace glob watcher while external roots retain URI-relative watchers; four consecutive `cd extension && npm run test:electron` runs exited 0 under VS Code 1.125.0 and printed `Extension activation test passed: active, commands, CLI session, watcher refresh`
 - [ ] 5.2 Reconcile VSCE's `extension/LICENSE.txt` archive path with the acceptance contract and add an automated VSIX archive assertion that preserves license inclusion (added 2026-09-19) — verify: `cd extension && npm run package` exits 0 and the automated archive test confirms the expected license and required runtime entries while excluding source, tests, dependencies, and source maps
 
 ## Follow-ups
