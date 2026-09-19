@@ -1,39 +1,53 @@
 # Review: extension-scaffold
 
-Verdict: request-changes
+Verdict: approve
 
 ## Acceptance checklist results
 
-- **Pass** — `extension/package.json` has version `0.5.2`, publisher `david-perry-software`, engine `^1.125.0`, main `./out/extension.js`, no runtime dependencies, and exactly the five planned dev dependencies; `extension/package-lock.json` is tracked. Verified with manifest assertions and `git ls-files`.
-- **Pass** — `npm ci`, `npm run build`, and `npm run typecheck` exited 0; `extension/out/extension.js` was produced.
-- **Pass** — `node --test tests/extension-bundle.test.mjs` passed 4/4. In a disposable clean clone, appending one byte to `extension/cli/agento.mjs` made the suite fail 1/4, then the clone was discarded.
-- **Pass** — In a disposable clean clone, changing `extension/package.json` to `0.5.3` made `node --test tests/customizations.test.mjs` fail 1/22; the assertion in `tests/customizations.test.mjs` names `.claude-plugin/plugin.json`, `package.json`, and `extension/package.json`.
-- **Pass** — `cd extension && npm run test:unit` passed all 10 tests, including `CliClient` exit 0/3, malformed JSON, and spawn-failure behavior.
-- **Pass** — The same unit run passed all four `RefreshScheduler` tests for coalescing, the 3000 ms clamp, immediate refresh, and disposal.
-- **Fail** — `cd extension && npm run test:electron` failed twice. Both VS Code 1.125.0 launches timed out in `extension/test/electron/suite.ts` waiting for the roadmap watcher refresh; the required success summary was never printed.
-- **Fail** — `cd extension && npm run package` exited 0, but `unzip -Z1 agento-dashboard-0.5.2.vsix` contained `extension/LICENSE.txt`, not the required `extension/LICENSE`. All other required entries were present and no source, tests, dependencies, source maps, or duplicate `out/src/` paths were present.
-- **Pass** — `AGENTS.md`, `CHANGELOG.md`, `.gitignore`, and `extension/README.md` contain the planned command, scaffold, ignore, settings, and bundled-CLI documentation; the 22 customization tests passed as part of the root suite.
-- **Pass** — `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` exited 0; the root suite passed 214/214; both guard replay modes exited 0; `git diff --quiet origin/main -- scripts .github commands hooks templates` exited 0.
-- **Pass** — After `npm run build`, `npm run copy-cli`, Electron runs, and packaging, `git status --porcelain` was empty in the product half. The companion half was also clean before this review edit.
+- **Pass** — Manifest assertions confirmed version `0.5.2`, publisher `david-perry-software`, engine `^1.125.0`, main `./out/extension.js`, no runtime dependencies, exactly the five planned dev dependencies, both commands, and the 3000 ms configuration minimum. `git ls-files extension/package-lock.json` confirmed the lockfile is tracked.
+- **Pass** — `cd extension && npm ci && npm run build && npm run typecheck` exited 0 and produced `out/extension.js`.
+- **Pass** — The root suite passed the four bundle tests. In an isolated `git archive` copy, appending one byte to `extension/cli/agento.mjs` made `node --test tests/extension-bundle.test.mjs` fail 1/4 with `extension/cli/agento.mjs differs from scripts/agento.mjs`.
+- **Pass** — In a separate isolated archive, changing `extension/package.json` to `0.5.3` made `node --test tests/customizations.test.mjs` fail 1/22 with an assertion naming `.claude-plugin/plugin.json`, `package.json`, and `extension/package.json`.
+- **Pass** — `cd extension && npm run test:unit` passed 10/10, including `CliClient` exit 0/3 JSON behavior, malformed output, and missing-node diagnostics.
+- **Pass** — The same unit run passed all four scheduler checks: coalesced reasons, the 3000 ms clamp, immediate refresh cancellation, and no emission after disposal.
+- **Pass** — Four consecutive `cd extension && npm run test:electron` runs launched and validated VS Code 1.125.0, printed `Extension activation test passed: active, commands, CLI session, watcher refresh`, and exited 0. `extension/test/electron/suite.ts` only resolves that watcher check after observing the exact absolute roadmap path with a `create` or `change` reason.
+- **Pass** — `cd extension && npm run package` exited 0 and its automated archive assertion found all 13 required extension entries, byte-identical `extension/LICENSE.txt`, and clean exclusions. An independent `unzip -Z1` inspection found 15 total archive entries, no `src/`, `test/`, `node_modules/`, `out/src/`, or source maps; `cmp` confirmed generated `extension/LICENSE` equals the root `LICENSE` and archived `extension/LICENSE.txt` equals generated `extension/LICENSE`.
+- **Pass** — Direct manifest, grep, and ignore checks confirmed the extension layout and five commands in `AGENTS.md`, the Unreleased changelog entry, both settings and the bundled `PLUGIN_ROOT` note in `extension/README.md`, and all three generated paths ignored by `.gitignore`.
+- **Pass** — `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` exited 0; the root suite passed 214/214 in the product worktree; both replay-guard modes exited 0; and `git diff --quiet origin/main -- scripts .github commands hooks templates` exited 0.
+- **Pass** — After builds, four Electron runs, copy, and packaging, the product worktree remained clean. A detached checkout with no `extension/node_modules` or `extension/out` also passed the root suite 214/214, and the companion was clean and synchronized before this review edit.
 
 ## Plan vs implementation
 
 - The `@types/vscode` / engine fallback from 1.132 to 1.125 is documented on roadmap step 1.3 and follows the plan's stated risk mitigation.
-- The implementation otherwise stays within the planned file set.
-- Packaging deviates from the acceptance contract because VSCE renames the repository `LICENSE` to `extension/LICENSE.txt` in the archive. Either the package behavior or the explicit acceptance contract must be reconciled and verified.
+- VSCE canonicalizes the extensionless source license to `extension/LICENSE.txt`. The plan, roadmap, and automated package assertion now consistently require that archive path and verify its bytes, resolving the round-one contract mismatch.
+- The product diff is confined to `.gitignore`, `AGENTS.md`, `CHANGELOG.md`, `extension/`, and `tests/`; the protected `scripts`, `.github`, `commands`, `hooks`, and `templates` areas have no diff. No undocumented implementation scope was found.
+- Skills consulted: none — no matching domain, consistent with the plan's recorded skills research.
 
 ## Roadmap audit
 
-- Unticked step 3.1 because its verification fails reproducibly in the reviewer environment.
-- Unticked step 3.2 because its claimed archive assertion is false for the generated VSIX.
-- Unticked step 4.2 because the final gate is not green while required Electron and packaging acceptance checks fail.
-- The remaining ticked steps are supported by the implementation, commit history, and focused or repository-wide checks. There are no manual or post-ship steps.
+- **1.1 pass** — manifest, contribution, ignore, README, TypeScript, and media files exist and focused invariants passed.
+- **1.2 pass** — copy script regenerated exactly four CLI files plus `LICENSE`; byte guards passed and the worktree stayed clean.
+- **1.3 pass** — lockfile install, build, output-file check, and typecheck passed with the documented 1.125 fallback.
+- **1.4 pass** — bundle and version guards passed normally and failed under both isolated negative probes with the expected messages.
+- **1.5 pass** — phase-one artifacts remain represented in the current green, synchronized branch; both defaults are ancestors.
+- **2.1 pass** — all `CliClient` unit and integration behaviors passed.
+- **2.2 pass** — all scheduler timing and disposal behaviors passed.
+- **2.3 pass** — real repository/worktree git-dir resolution passed; watcher implementation and typecheck passed.
+- **2.4 pass** — activation wiring, command contributions, build, and typecheck passed; the host test exercised the exported API.
+- **2.5 pass** — phase-two artifacts remain represented in the current green, synchronized branch; both defaults are ancestors.
+- **3.1 pass** — four consecutive pinned-host activation runs passed and each required the expected roadmap watcher event reason.
+- **3.2 pass** — package command, automated archive assertion, independent archive listing, license byte checks, and exclusion checks passed.
+- **3.3 pass** — phase-three artifacts remain represented in the current green, synchronized branch; both defaults are ancestors.
+- **4.1 pass** — direct documentation checks passed and the root suite includes 22/22 customization tests.
+- **4.2 pass** — shellcheck, root 214/214, clean-checkout 214/214, both guards, extension typecheck/unit tests, repeated Electron tests, packaging, diff scope, and synchronization all passed.
+- **5.1 pass** — the workspace-glob watcher remediation passed four consecutive VS Code 1.125.0 runs with the exact expected path reason.
+- **5.2 pass** — the package assertion codifies VSCE's canonical license path, verifies byte identity, and rejects the planned exclusions.
+- All 17 ticks are truthful. No roadmap repairs, missing-work steps, manual steps, or post-ship exceptions were found.
 
 ## Findings
 
-- **Major — roadmap watcher behavior fails its activation test.** `extension/test/electron/suite.ts` creates a roadmap after activation and waits for `RefreshScheduler.onDidRefresh`, but two independent `npm run test:electron` runs timed out. This leaves the scaffold's user-visible file-change refresh behavior unverified and currently failing under the pinned VS Code host. Repair the watcher/test interaction and make the required command pass reliably.
-- **Moderate — the packaged license path contradicts acceptance and the ticked roadmap evidence.** `npm run package` emits `extension/LICENSE.txt`; roadmap step 3.2 claimed the required license entry was found, while plan acceptance requires `extension/LICENSE`. Add a packaging assertion to automation and reconcile the expected archive path.
+- None. The two round-one findings are remediated and independently verified.
 
 ## Follow-ups
 
-- None. Both findings are required delivery work, not deferred follow-ups.
+- None.
