@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-dashboard-json
 last-updated: 2026-09-18
-next-step: "2.1 resolveNextTarget in session-state.mjs"
+next-step: "2.2 wire next.target into case next"
 artifact-pr: "#6"
 initiative: "agento-extension"
 ```
@@ -16,7 +16,7 @@ initiative: "agento-extension"
 
 ## Phase 2: `next.target`
 
-- [ ] 2.1 Add and export `resolveNextTarget({ next, worktrees, primaryPath, branch, workspaceFor })` in `scripts/session-state.mjs` per plan.md `## Approach` §5 (`null` for a null `next` or `window: here`; `{ path: primaryPath, workspace: null }` for `primary`; the managed `repo: "product"` entry on `branch` as `{ path, workspace: workspaceFor(entry) }` for `secondary`, else `null`) — verify: new table test in `scripts/session-state.test.mjs` covers each cell (including `secondary` with only a `repo: "companion"` entry on the branch → `null`) and passes
+- [x] 2.1 Add and export `resolveNextTarget({ next, worktrees, primaryPath, branch, workspaceFor })` in `scripts/session-state.mjs` per plan.md `## Approach` §5 (`null` for a null `next` or `window: here`; `{ path: primaryPath, workspace: null }` for `primary`; the managed `repo: "product"` entry on `branch` as `{ path, workspace: workspaceFor(entry) }` for `secondary`, else `null`) — verify: new table test in `scripts/session-state.test.mjs` covers each cell (including `secondary` with only a `repo: "companion"` entry on the branch → `null`) and passes
 - [ ] 2.2 Wire it into `case "next"` in `scripts/agento.mjs` after `deriveNext`, setting `result.next.target` with `worktrees: classified`, `primaryPath: worktrees[0]?.path ?? root`, `branch: target?.branch ?? delivery?.branch ?? null`, `workspaceFor: (w) => describeWorkspace(w, sessionWorktreesDir)`; update the `next [<slug>]` usage line's parenthetical to mention `target` — verify: new assertions in `scripts/agento.test.mjs` pass: build worktree (`makeWorktreeRepo`) with `in-review` + `Verdict: approve` → `next.next.window === "primary"` and `next.next.target` deep-equals `{ path: repo, workspace: null }`; the same worktree `in-progress` → `target === null`; primary with a ready initiative member → `target === null`; companion-mode build worktree approved → `target.path` is the product primary and `workspace: null`; `node scripts/agento.mjs next` in this promoted worktree prints `"target": null`
 - [ ] 2.3 Integrate `origin/main` by merge in both halves, run the full gate, push both halves — verify: merges clean; shellcheck exit 0; `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` 0 failures; `companion.dirty: false`, `companion.ahead: 0`
 
