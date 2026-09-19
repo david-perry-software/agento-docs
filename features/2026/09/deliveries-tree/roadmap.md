@@ -3,6 +3,7 @@ status: planned
 branch: feature/deliveries-tree
 last-updated: 2026-09-19
 next-step: "1.1 Stabilize the Electron watcher baseline"
+artifact-pr: "#8"
 initiative: "agento-extension"
 ```
 
