@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/deliveries-tree
 last-updated: 2026-09-19
-next-step: "2.1 Integrate the Deliveries view and scheduler refresh"
+next-step: "2.2 Add in-repo and companion Electron rendering scenarios"
 artifact-pr: "#8"
 initiative: "agento-extension"
 ```
@@ -15,7 +15,7 @@ initiative: "agento-extension"
 
 ## Phase 2: Extension integration and rendering evidence
 
-- [ ] 2.1 Replace the placeholder Overview contribution with the Deliveries view, register its provider/open command in `extension/src/extension.ts`, and refresh it from the existing scheduler via `status --pr` while logging CLI warnings/errors verbatim — verify: `cd extension && npm run build && npm run typecheck` exits 0 and manifest/unit assertions find the view, command, scheduler subscription, and no polling API
+- [x] 2.1 Replace the placeholder Overview contribution with the Deliveries view, register its provider/open command in `extension/src/extension.ts`, and refresh it from the existing scheduler via `status --pr` while logging CLI warnings/errors verbatim — verify: `cd extension && npm run build && npm run typecheck` exits 0 and manifest/unit assertions find the view, command, scheduler subscription, and no polling API
 - [ ] 2.2 Extend the Electron harness with deterministic in-repo and companion-layout fixture repositories carrying lifecycle, progress, PR, companion PR, ownership, and initiative examples; assert non-empty group order and compact row/tooltip metadata — verify: local:no-ports — `cd extension && npm run test:electron` passes both named layout scenarios and asserts companion PR metadata in the companion scenario
 - [ ] 2.3 Extend Electron coverage for roadmap activation beside the active editor, refresh after roadmap mutation, and explicit empty/error rows; preserve the existing activation, CLI, command, and watcher checks — verify: local:no-ports — four consecutive `cd extension && npm run test:electron` runs pass under VS Code 1.125.0 with assertions for beside-open, refreshed tree data, empty state, and error state
 
