@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/initiatives-tree
 last-updated: 2026-09-19
 next-step: "1.1 Add and test the pure initiative tree model"
