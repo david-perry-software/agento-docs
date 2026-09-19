@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/deliveries-tree
 last-updated: 2026-09-19
 next-step: "1.1 Stabilize the Electron watcher baseline"
