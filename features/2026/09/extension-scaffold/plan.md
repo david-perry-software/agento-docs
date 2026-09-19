@@ -136,6 +136,9 @@ before this session reserved it.
   without a `LICENSE` file in non-interactive mode unless `--skip-license` is given,
   and `--no-dependencies` skips the `npm list` production-dependency walk (correct
   here: there are none).
+- `@vscode/vsce`'s `LicenseProcessor` appends `.txt` when an extension-root license
+  has no extension, so the generated `extension/LICENSE` source is intentionally
+  archived as `extension/LICENSE.txt`; the package assertion compares their bytes.
 
 ## Approach
 
@@ -163,6 +166,8 @@ extension/
   scripts/copy-cli.mjs  copies ../scripts/{agento,agento-config,session-state,
                         delivery-roadmap-resolver}.mjs → cli/ and ../LICENSE → LICENSE;
                         removes any other file in cli/; the only writer of cli/
+  scripts/assert-vsix.mjs  checks packaged runtime files and exclusions, including
+                          byte-identical extension/LICENSE.txt license content
   cli/                  the four bundled modules, committed
   src/extension.ts      activate/deactivate; exports the API { client, scheduler, output }
   src/cliClient.ts      CliClient + pure helpers buildCliArgs, parseCliOutput
@@ -179,7 +184,8 @@ copy-cli && tsc -p ./`), `watch` (`tsc -w -p ./`), `typecheck` (`tsc --noEmit -p
 ./`), `test:unit` (`npm run build && node --test 'out/test/unit/**/*.test.js'`),
 `test:electron` (`npm run build && node out/test/electron/runTest.js`), `test`
 (`npm run test:unit && npm run test:electron`), `package` (`vsce package
---no-dependencies`), `vscode:prepublish` (`npm run build`).
+--no-dependencies && node scripts/assert-vsix.mjs`), `vscode:prepublish` (`npm run
+build`).
 
 Contributions: `viewsContainers.activitybar` `agento` (title "Agento", icon
 `$(checklist)` via a codicon-referencing SVG or `media/agento.svg`), `views.agento`
@@ -376,9 +382,11 @@ tests can reach them. `deactivate()` disposes through `context.subscriptions`.
 - [ ] `cd extension && npm run package` exits 0 and the VSIX lists
   `extension/cli/agento.mjs`, `extension/cli/agento-config.mjs`,
   `extension/cli/session-state.mjs`, `extension/cli/delivery-roadmap-resolver.mjs`,
-  `extension/out/extension.js`, `extension/package.json`, `extension/LICENSE`, and no
-  `extension/src/`, `extension/test/`, or `extension/node_modules/` entries — verify:
-  `unzip -l agento-dashboard-0.5.2.vsix`.
+  every compiled runtime module, `extension/package.json`, and VSCE's canonical
+  `extension/LICENSE.txt` entry byte-identical to the generated `extension/LICENSE`,
+  with no `extension/src/`, `extension/test/`, `extension/node_modules/`, source-map,
+  or duplicate `extension/out/src/` entries — verify: the automated assertion run by
+  `npm run package`.
 - [ ] `AGENTS.md` `## Commands` lists the extension's install, build, unit-test,
   activation-test, and package commands and the layout section has an `extension/`
   bullet; `CHANGELOG.md` `## Unreleased` has the scaffold entry; `.gitignore`
