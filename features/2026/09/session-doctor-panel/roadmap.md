@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/session-doctor-panel
 last-updated: 2026-09-19
 next-step: "1.1 Add and test the Session & Doctor CLI response model"
