@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/session-doctor-panel
 last-updated: 2026-09-19
-next-step: "1.2 Add the Session & Doctor tree provider"
+next-step: "1.3 Integrate defaults and verify the model/provider phase"
 artifact-pr: "#10"
 initiative: "agento-extension"
 ```
@@ -10,7 +10,7 @@ initiative: "agento-extension"
 ## Phase 1: State models and presentation
 - [x] 1.1 Add a pure model for `session --pr`, `doctor`, and `status --pr` that validates required fields, preserves warnings/detail/fallback text, formats optional companion/workspace state explicitly, and derives `Agento: <role> · <resumable.length> active` — verify: `cd extension && npm run build && tsc -p tsconfig.test.json && node --test out/test/unit/sessionDoctorModel.test.js`
 - [ ] 1.1 Add a pure model for `session --pr`, `doctor`, and `status --pr` that validates required fields, preserves warnings/detail/fallback text, formats optional companion/workspace state explicitly, and derives `Agento: <role> · <resumable.length> active` — verify: `cd extension && npm run build && tsc -p tsconfig.test.json && node --test out/test/unit/sessionDoctorModel.test.js`
-- [ ] 1.2 Add the disposable Session & Doctor tree provider with grouped session, companion, warning, and doctor rows plus an inline error row whose command retries through `agento.refresh` — verify: `cd extension && npm run typecheck && npm run test:unit`
+- [x] 1.2 Add the disposable Session & Doctor tree provider with grouped session, companion, warning, and doctor rows plus an inline error row whose command retries through `agento.refresh` — verify: `cd extension && npm run typecheck && npm run test:unit`
 - [ ] 1.3 Integrate `origin/main` in both halves and push the verified model/provider step — verify: both default branches are ancestors; focused unit tests and `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` exit 0
 
 ## Phase 2: Extension integration and user-visible behavior
