@@ -3,6 +3,7 @@ status: planned
 branch: feature/command-dispatch
 last-updated: 2026-09-19
 next-step: "1.1 Wait for and integrate the completed session-doctor-panel prerequisite"
+artifact-pr: "#11"
 initiative: "agento-extension"
 ```
 
