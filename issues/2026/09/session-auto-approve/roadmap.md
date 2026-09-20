@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/session-auto-approve
 last-updated: 2026-09-20
-next-step: "3.1 Add the electron workspace scenario for workspace-scoped settings"
+next-step: "4.1 Run the full verification gate before the manual reload-and-screenshot check"
 github-issue: "#58"
 artifact-pr: "#15"
 ```
@@ -25,7 +25,7 @@ artifact-pr: "#15"
 
 ## Phase 3: Prove VS Code honours the block
 
-- [ ] 3.1 Add a third electron scenario `workspace` to `extension/test/electron/runTest.ts`: build the companion fixture as today, run `node <extensionDevelopmentPath>/cli/agento.mjs workspace plan e2e --write --root <product>` to produce `<worktrees.dir>/plan-e2e.code-workspace`, and launch with `launchArgs: [<that file>, "--disable-extensions", "--disable-workspace-trust"]`; in `extension/test/electron/suite.ts` under `AGENTO_ELECTRON_SCENARIO === "workspace"` assert that `vscode.workspace.workspaceFile?.fsPath` is that file and that `vscode.workspace.getConfiguration().inspect(key)?.workspaceValue` deep-equals `SESSION_WORKSPACE_SETTINGS[key]` for each of the four keys — verify: `cd extension && npm run build && npm run test:electron; echo "exit=$?"` prints `exit=0` and the run log shows the `workspace` scenario's assertions passing
+- [x] 3.1 Add a third electron scenario `workspace` to `extension/test/electron/runTest.ts`: build the companion fixture as today, run `node <extensionDevelopmentPath>/cli/agento.mjs workspace plan e2e --write --root <product>` to produce `<worktrees.dir>/plan-e2e.code-workspace`, and launch with `launchArgs: [<that file>, "--disable-extensions", "--disable-workspace-trust"]`; in `extension/test/electron/suite.ts` under `AGENTO_ELECTRON_SCENARIO === "workspace"` assert that `vscode.workspace.workspaceFile?.fsPath` is that file and that `vscode.workspace.getConfiguration().inspect(key)?.workspaceValue` deep-equals `SESSION_WORKSPACE_SETTINGS[key]` for each of the four keys — verify: `cd extension && npm run build && npm run test:electron; echo "exit=$?"` prints `exit=0` and the run log shows the `workspace` scenario's assertions passing
 - [ ] 3.2 (manual) After step 2.8, run *Developer: Reload Window* in this session window (`plan-20260920-162232.code-workspace`); in a **new** chat with the permission level set to **Manual permissions** (not Autopilot / Allow all), ask the agent to run `git fetch origin && gh pr view --json number --jq .number` and then `node scripts/agento.mjs session`; if a one-time *Enable terminal auto approve?* dialog appears, choose **Enable** (this is the application-scoped acceptance, not a per-session prompt); take a screenshot of the chat showing both commands' output with no *Allow / Skip* confirmation, and save it as `evidence/step-3-2-no-prompts.png` in the companion half — verify: the screenshot shows the terminal tool results rendered without a confirmation widget, and `node scripts/agento.mjs doctor --for start-session` still reports `session-workspace` `ok`
 
 ## Phase 4: Gate and publish
