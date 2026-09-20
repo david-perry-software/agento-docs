@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: issue/autopilot-in-review-handoff
 last-updated: 2026-09-20
-next-step: "Run /agento review-issue autopilot-in-review-handoff in this worktree"
+next-step: "none — shipped"
 github-issue: "#60"
 artifact-pr: "#16"
 ```
