@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: issue/session-auto-approve
 last-updated: 2026-09-20
-next-step: "4.1 Run the full verification gate before the manual reload-and-screenshot check"
+next-step: "3.2 (manual) reload the plan-20260920-162232.code-workspace window, confirm terminal auto-approve in a new Manual permissions chat, and attach evidence/step-3-2-no-prompts.png"
 github-issue: "#58"
 artifact-pr: "#15"
 ```
@@ -30,7 +30,7 @@ artifact-pr: "#15"
 
 ## Phase 4: Gate and publish
 
-- [ ] 4.1 Full gate against the recorded baseline (shellcheck exit 0 / 0 findings; 214 tests pass): `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh`; `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`; `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`; `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`; `cd extension && npm ci && npm run build && npm run test:unit && npm run test:electron` — verify: shellcheck exit 0 with no findings; tests report `# fail 0` with `# pass` ≥ 214 + the tests added in 1.1, 1.2, 2.1, 2.2, 2.4, 2.5; both guard smokes exit 0; every extension command exits 0; record all results on this line
+- [x] 4.1 Full gate against the recorded baseline (shellcheck exit 0 / 0 findings; 214 tests pass): `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh`; `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`; `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`; `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`; `cd extension && npm ci && npm run build && npm run test:unit && npm run test:electron` — verify: shellcheck exit 0 with no findings; tests report `# pass 220`, `# fail 0`; both guard smokes exit 0; `extension` `npm run build`, `npm run test:unit`, and `npm run test:electron` exit 0, including the new `workspace` electron scenario
 - [ ] 4.2 Scope boundary and publish: `git diff --name-only origin/main...HEAD | grep -E 'hooks/|\.vscode/|\.code-workspace$'` prints nothing; `git merge origin/main` in the product half and `git -C <companion.path> merge origin/main` in the companion half (never rebase); push both; set `status: in-review`; write plan.md `## Resolution` (root cause, what changed, proof the #58 tests pass) — verify: `gh pr view --json mergeStateStatus --jq .mergeStateStatus` is not `BEHIND`/`DIRTY` for the code PR and `cd <companion.path> && gh pr view --json mergeStateStatus --jq .mergeStateStatus` likewise; code PR body starts with `Fixes #58`; `node scripts/agento.mjs session --pr` reports both `pr` and `companionPr` with the companion half `dirty: false`, `ahead: 0`
 
 ## Follow-ups
