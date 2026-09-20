@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/command-dispatch
 last-updated: 2026-09-19
-next-step: "1.3 Copy changed CLI modules into the extension bundle and document action metadata"
+next-step: "2.1 Implement validated CLI action projection"
 artifact-pr: "#11"
 initiative: "agento-extension"
 ```
@@ -11,7 +11,7 @@ initiative: "agento-extension"
 
 - [x] 1.1 Wait for `session-doctor-panel` to reach `status: complete`, then merge both `origin/main` branches and identify its shipped Session provider/model integration points — verify: `node scripts/agento.mjs initiative agento-extension` reports `session-doctor-panel` state `complete`, and product plus companion branches contain both defaults
 - [x] 1.2 Add `/agento ap <slug>` to applicable CLI permission rows and expose per-delivery `allowed[]`/`elsewhere[]` from `status --pr` without changing existing fields or exit codes — verify: focused `scripts/session-state.test.mjs` and `scripts/agento.test.mjs` cases pass for every affected role/lifecycle and status item
-- [ ] 1.3 Copy the changed CLI modules into the extension bundle and document the additive action metadata — verify: `npm --prefix extension run build` and `node --test tests/extension-bundle.test.mjs` pass
+- [x] 1.3 Copy the changed CLI modules into the extension bundle and document the additive action metadata — verify: `npm --prefix extension run build` and `node --test tests/extension-bundle.test.mjs` pass
 
 ## Phase 2: Pure action and routing model
 
