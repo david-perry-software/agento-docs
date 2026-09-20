@@ -1,30 +1,40 @@
 # Review: pr-cross-linking-deprecation
 
-Verdict: request-changes
+Verdict: approve
 
 ## Acceptance checklist results
 
 - [x] The exposing regression test in `tests/customizations.test.mjs` fails before the fix and passes after it.
-  - Evidence: replaying the branch test against an isolated `origin/main` archive exits 1 with `23` passing and the new test failing on the three stale guidance locations; the current branch exits 0 with `24` passing.
+  - Evidence: the branch test copied into an isolated `origin/main` archive exited 1 with `23` passing and `2` failing, identifying three stale `gh pr edit --body` locations and zero REST PATCH examples; the branch run exited 0 with `25` passing and `0` failing.
 - [x] No prompt or agent guidance instructs `gh pr edit --body` for PR cross-linking.
-  - Evidence: the current branch's literal roadmap search returns no matches, and `tests/customizations.test.mjs` enforces the absence across every prompt and agent.
-- [ ] The replacement instructions include an idempotent REST PATCH example.
-  - Evidence: the examples guard with `grep -Fq`, but their body expression is malformed: evaluating `body="${current_body}$'\n\nCompanion PR: ...'"` yields the literal text `$'\n\nCompanion PR: ...'` instead of newline-separated body content.
+  - Evidence: an independent scan of `.github/prompts`, `.github/agents`, and `commands` found neither `gh pr edit --body` nor the prior malformed `body="${current_body}$...` form. The focused suite enforces the prompt and agent rule.
+- [x] The replacement instructions include an idempotent REST PATCH example.
+  - Evidence: all nine examples guard the append with `grep -Fq`. An independent evaluator discovered the five source examples and four command mirrors, rendered each expression in both Bash and Zsh, and confirmed `Existing body` is followed by two real newline bytes and the expected label, with no literal ANSI-C quote syntax. Each command mirror's PATCH expression matches its source prompt.
 - [x] `node --test tests/customizations.test.mjs` exits 0.
-  - Evidence: independent fresh run on 2026-09-20 reported `24` passing, `0` failing.
+  - Evidence: the independent round-two run reported `25` passing, `0` failing.
 
 ## Plan vs implementation
 
-The implementation is scoped to the planned prompt, agent, command-mirror, and regression-test files. It removes the deprecated command and uses REST PATCH behind a URL-presence guard, but the shell quoting does not produce the intended body text. The full Node suite passes (`222/222`), shellcheck exits 0, and `git diff --check` exits 0; none exercises the rendered REST body.
+The implementation matches the plan and remains confined to the planner agent, four prompt sources, four command mirrors, and the customization regression suite. The REST PATCH examples preserve the existing body, avoid duplicate links, and now place ANSI-C newline quoting outside the double-quoted body word. No undocumented source changes were found.
+
+Verification on 2026-09-20:
+
+- `node --test tests/customizations.test.mjs` -> exit 0, `25/25` passing.
+- `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` -> exit 0, `223/223` passing.
+- `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` -> exit 0.
+- `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` -> exit 0.
+- `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt` -> exit 0.
+- `git diff --check origin/main...HEAD` -> exit 0.
+- PR #63 `ci/test` -> successful, with no failing or pending checks.
 
 ## Roadmap audit
 
-Steps 4.1-4.3 are supported by the artifact history and the fresh focused test run. Steps 2.1 and 2.2 named grep patterns containing `pulls/.*/-X`, which both exited 1 even though the implementation was present; their verification text was repaired to the matching `pulls/.* -X` form and re-run successfully. Added unticked step 4.4 for the newly discovered body-rendering defect. No manual or post-ship steps are present.
+All ten ticked steps are supported by the implementation, artifact history, and fresh verification. Step 4.4 is specifically supported by the nine-example Bash/Zsh rendering assertion, the stale-pattern scan, source-to-mirror expression comparison, and focused suite. The exact roadmap grep checks for steps 2.1 and 2.2 both exit 0. No false ticks, missing-work steps, manual steps, or post-ship exceptions were found; `roadmap.md` was not changed and remains `status: in-review`.
 
 ## Findings
 
-- [ ] Major: every new REST PATCH example constructs the body with ANSI-C quoting inside a double-quoted word, for example `.github/agents/delivery-planner.agent.md:174` and `.github/prompts/ship.prompt.md:158`. In zsh this renders `Existing body$'\n\nCompanion PR: ...'`, so the workflow writes shell syntax into the PR body instead of the intended blank line and label. The same defect is copied into all four command mirrors. Move the ANSI-C quoted segment outside the double quotes (or construct the body with `printf`) and add a regression check that evaluates the rendered value.
+None.
 
 ## Follow-ups
 
-- None.
+None.
