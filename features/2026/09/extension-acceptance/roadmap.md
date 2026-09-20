@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/extension-acceptance
 last-updated: 2026-09-20
 next-step: ""
