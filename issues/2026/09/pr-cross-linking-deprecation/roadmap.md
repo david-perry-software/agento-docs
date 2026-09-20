@@ -4,6 +4,7 @@ branch: issue/pr-cross-linking-deprecation
 last-updated: 2026-09-20
 next-step: ""
 github-issue: "#62"
+artifact-pr: "#17"
 ```
 
 ## Phase 1: Reproduce and isolate
