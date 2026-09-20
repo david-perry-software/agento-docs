@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: issue/session-auto-approve
 last-updated: 2026-09-20
 next-step: "1.1 Add the exposing CLI regression test for the missing workspace command"
