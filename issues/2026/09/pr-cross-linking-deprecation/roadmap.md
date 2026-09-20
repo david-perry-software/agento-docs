@@ -1,8 +1,8 @@
 ```yaml
-status: complete
+status: in-progress
 branch: issue/pr-cross-linking-deprecation
 last-updated: 2026-09-20
-next-step: ""
+next-step: "Add each review finding as a roadmap step, execute the corrective pass, and rerun the focused validation before restoring the approved verdict."
 github-issue: "#62"
 artifact-pr: "#17"
 ```
@@ -24,9 +24,9 @@ artifact-pr: "#17"
 
 ## Phase 4: Address the review findings
 
-- [x] 4.1 Record the explicit review findings in `review.md` and keep the verdict aligned with the actual review state while the corrective pass is in progress — verify: inspect the findings list and confirm the `request-changes` status is intentional
-- [x] 4.2 Add the corresponding roadmap step for the review-remediation work itself so the issue record captures the missing processing step — verify: `grep -n "Phase 4: Address the review findings\|4.1\|4.2" roadmap.md`
-- [x] 4.3 Re-run the focused customizations suite to confirm the remediation itself did not regress the fix — verify: `node --test tests/customizations.test.mjs` → exit 0, `24` passing, `0` failing
+- [ ] 4.1 Record the explicit review findings in `review.md` and keep the verdict aligned with the actual review state while the corrective pass is in progress — verify: inspect the findings list and confirm the `request-changes` status is intentional
+- [ ] 4.2 Add the corresponding roadmap step for the review-remediation work itself so the issue record captures the missing processing step — verify: `grep -n "Phase 4: Address the review findings\|4.1\|4.2" roadmap.md`
+- [ ] 4.3 Re-run the focused customizations suite to confirm the remediation itself did not regress the fix — verify: `node --test tests/customizations.test.mjs` → exit 0, `24` passing, `0` failing
 
 ## Follow-ups
 
