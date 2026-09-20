@@ -1,0 +1,3 @@
+57:2. Read roadmap.md. If `status: in-review`, skip straight to the review phase. If a
+71:   - `status: in-review` → proceed to review.
+88:     `status: in-review`", then loop back to step 2.

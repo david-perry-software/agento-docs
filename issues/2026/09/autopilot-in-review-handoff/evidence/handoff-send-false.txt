@@ -1,0 +1,4 @@
+.github/agents/delivery-builder.agent.md:9:handoffs:
+.github/agents/delivery-builder.agent.md:13:    send: false
+.github/agents/delivery-reviewer.agent.md:9:handoffs:
+.github/agents/delivery-reviewer.agent.md:13:    send: false

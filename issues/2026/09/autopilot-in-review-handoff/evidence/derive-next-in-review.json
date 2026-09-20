@@ -1,0 +1,15 @@
+{
+  "status": "ok",
+  "next": {
+    "command": "review-feature",
+    "args": [
+      "widget"
+    ],
+    "invocation": "/agento review-feature widget",
+    "window": "here",
+    "then": null,
+    "reason": "status in-review with no verdict yet: the Reviewer runs in this window"
+  },
+  "candidates": [],
+  "reason": "status in-review with no verdict yet: the Reviewer runs in this window"
+}
