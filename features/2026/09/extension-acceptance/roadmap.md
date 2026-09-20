@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/extension-acceptance
 last-updated: 2026-09-20
-next-step: "2.2 Verify registered command dispatch boundaries"
+next-step: "2.3 Add isolated-profile VSIX smoke coverage"
 artifact-pr: "#13"
 initiative: "agento-extension"
 ```
@@ -14,7 +14,7 @@ initiative: "agento-extension"
 ## Phase 2: End-to-end extension coverage
 
 - [x] 2.1 Drive the contributed Deliveries and Initiatives trees, Session & Doctor view, and status bar in both generated layouts and assert the CLI-supplied lifecycle, progress, PR/companion PR, initiative, worktree, warning, doctor, and companion state — verify: `cd extension && npm run test:electron` passes both in-repo and companion scenarios (local: VS Code Electron, no ports)
-- [ ] 2.2 Drive contributed delivery actions and generic/initiative new-plan entry points through their registered commands, asserting exact canonical `/agento ...` text and the CLI-selected current-window dispatch target without executing agents or reading chat output — verify: `cd extension && npm run test:electron` passes dispatch-boundary assertions in both layouts (local: VS Code Electron, no ports)
+- [x] 2.2 Drive contributed delivery actions and generic/initiative new-plan entry points through their registered commands, asserting exact canonical `/agento ...` text and the CLI-selected current-window dispatch target without executing agents or reading chat output — verify: `cd extension && npm run test:electron` passes dispatch-boundary assertions in both layouts (local: VS Code Electron, no ports)
 - [ ] 2.3 Add a bounded package smoke test that installs the generated VSIX into temporary user-data and extensions directories, launches it against a generated fixture, proves activation and expected Agento command/view contributions, and cleans the isolated profile — verify: `cd extension && npm run package && npm run test:vsix` passes with `agento-dashboard-0.6.0.vsix` (local: isolated VS Code profile, no ports)
 
 ## Phase 3: Documentation and release metadata
