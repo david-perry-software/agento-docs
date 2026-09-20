@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: issue/autopilot-in-review-handoff
 last-updated: 2026-09-20
-next-step: "3.3 Re-run lint baseline and confirm no new findings"
+next-step: "Run /agento review-issue autopilot-in-review-handoff in this worktree"
 github-issue: "#60"
 artifact-pr: "#16"
 ```
@@ -21,5 +21,5 @@ artifact-pr: "#16"
 
 - [x] 3.1 Re-run targeted command-dispatch tests for touched extension routing/handoff behavior — verify: `cd extension && npm run test:unit`
 - [x] 3.2 Re-run full repository script tests — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`
-- [ ] 3.3 Re-run lint baseline and confirm no new findings — verify: `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh`
-- [ ] 3.4 Set roadmap to `status: in-review`, update `next-step`, and publish final build commit set for review handoff — verify: `node scripts/agento.mjs session --pr`
+- [x] 3.3 Re-run lint baseline and confirm no new findings — verify: `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh`
+- [x] 3.4 Set roadmap to `status: in-review`, update `next-step`, and publish final build commit set for review handoff — verify: `node scripts/agento.mjs session --pr`

@@ -105,4 +105,18 @@ Primary likely touch points:
 - [ ] Relevant test suites for touched areas pass in CI-equivalent local commands documented in roadmap.
 
 ## Resolution
-Pending implementation.
+Root cause:
+
+- The in-review transition for `/agento ap <slug>` resolves to a `review-<type>` command, but Builder and Reviewer handoff metadata was configured with `send: false`, so re-sent autopilot could surface a manual review command path instead of continuing unattended.
+
+What changed and why:
+
+- Added CLI regression coverage in `scripts/agento.test.mjs` for issue `#60` to lock expected unattended in-review reviewer chaining behavior.
+- Added extension dispatch coverage in `extension/test/unit/dispatchRouting.test.ts` and adjusted routing/handoff behavior in `extension/src/dispatchRouting.ts` so stale cross-window dispatch in in-review state refreshes to the correct unattended action.
+- Updated delivery agent handoff metadata in `.github/agents/delivery-builder.agent.md` and `.github/agents/delivery-reviewer.agent.md` to preserve unattended chaining semantics without changing ship authority boundaries.
+
+Proof the exposing regression test now passes:
+
+- `node --test scripts/agento.test.mjs --test-name-pattern "60|autopilot|in-review|review"` passes after the fix.
+- `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` passes, confirming no regression in the touched script surface.
+- `cd extension && npm run test:unit` passes for the touched dispatch/routing behavior.
