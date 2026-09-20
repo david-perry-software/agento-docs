@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/initiatives-tree
 last-updated: 2026-09-19
-next-step: "2.4 Diagnose and stabilize the companion Electron roadmap watcher across consecutive suite runs"
+next-step: "3.2 Run the complete gate, integrate defaults, and return the roadmap to in-review"
 artifact-pr: "#9"
 initiative: "agento-extension"
 ```
@@ -16,8 +16,8 @@ initiative: "agento-extension"
 
 - [x] 2.1 Contribute `agento.initiatives` and its open-breakdown command, register and expose the provider from `extension/src/extension.ts`, and atomically refresh list plus concurrent detail calls from the shared scheduler with independent stale-result protection and output logging — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exits 0; manifest/integration tests assert the view, command, exact CLI calls, stale-result rejection, retained Deliveries refresh, and absence of polling APIs
 - [x] 2.2 Extend the Electron in-repo and companion fixtures with valid initiative breakdowns and member roadmaps; assert initiative counts plus Ready, In flight, Blocked, and Complete member rendering, tooltip blockers/waves/next, anomaly diagnostics, and opening `breakdown.md` beside the active editor — verify: local:no-ports — `cd extension && npm run test:electron` passes both named layout scenarios with the initiative rendering and beside-open assertions
-- [ ] 2.3 Extend Electron coverage for initiative refresh after a member roadmap mutation and explicit empty, malformed/error, and partially invalid detail states while retaining every Deliveries assertion — verify: local:no-ports — two consecutive `cd extension && npm run test:electron` runs pass for both layouts and report initiative refresh plus diagnostic-state assertions
-- [ ] 2.4 Diagnose and stabilize the companion Electron roadmap watcher so create/change events survive consecutive suite runs (added 2026-09-19) — verify: local:no-ports — the focused watcher test passes and two consecutive `cd extension && npm run test:electron` runs pass for both layouts without a missing roadmap event
+- [x] 2.3 Extend Electron coverage for initiative refresh after a member roadmap mutation and explicit empty, malformed/error, and partially invalid detail states while retaining every Deliveries assertion — verify: local:no-ports — two consecutive `cd extension && npm run test:electron` runs pass for both layouts and report initiative refresh plus diagnostic-state assertions
+- [x] 2.4 Diagnose and stabilize the companion Electron roadmap watcher so create/change events survive consecutive suite runs (added 2026-09-19) — verify: local:no-ports — the focused watcher test passes and two consecutive `cd extension && npm run test:electron` runs pass for both layouts without a missing roadmap event
 
 ## Phase 3: Documentation and final gate
 
