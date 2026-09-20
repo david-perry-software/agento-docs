@@ -1,5 +1,5 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/new-plan-flow
 last-updated: 2026-09-19
 next-step: ""
