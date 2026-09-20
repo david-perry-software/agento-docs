@@ -2,14 +2,14 @@
 status: in-review
 branch: feature/new-plan-flow
 last-updated: 2026-09-19
-next-step: ""
+next-step: "1.1 Add missing focus-recovery unit coverage, then 3.1 drive both contributed Electron commands"
 artifact-pr: "#12"
 initiative: "agento-extension"
 ```
 
 ## Phase 1: Orchestration
 
-- [x] 1.1 Add focused unit tests for validated generic and initiative requests, primary routing, new managed-plan-worktree detection, companion workspace preference, timeout, cancellation, ambiguity, and retry/focus recovery — verify: `cd extension && npm run test:unit` passes with the new plan-flow cases listed
+- [ ] 1.1 Add focused unit tests for validated generic and initiative requests, primary routing, new managed-plan-worktree detection, companion workspace preference, timeout, cancellation, ambiguity, and retry/focus recovery — verify: `cd extension && npm run test:unit` passes with the new plan-flow cases listed
 - [x] 1.2 Implement the dependency-injected bounded new-plan orchestrator by composing CLI session reads, canonical Chat submission, target-specific pending dispatch, and workspace opening without parsing chat output or mutating worktrees — verify: `cd extension && npm run typecheck && npm run test:unit`
 
 ## Phase 2: User entry points
@@ -19,5 +19,5 @@ initiative: "agento-extension"
 
 ## Phase 3: Integration and verification
 
-- [x] 3.1 Add an Electron scenario for the generic command and ready initiative-member action, asserting the exact canonical follow-up reaches the dispatch integration — verify: `cd extension && npm run test:electron` passes for in-repo and companion scenarios
+- [ ] 3.1 Add an Electron scenario for the generic command and ready initiative-member action, asserting the exact canonical follow-up reaches the dispatch integration — verify: `cd extension && npm run test:electron` passes for in-repo and companion scenarios
 - [x] 3.2 Run the complete scoped gate and package assertion, fixing only regressions introduced by this feature — verify: `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh`; `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` reports at least 214 passing; both `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` and `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt` exit 0; `cd extension && npm run typecheck && npm run test:unit && npm run test:electron && npm run package` exits 0
