@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/new-plan-flow
 last-updated: 2026-09-19
-next-step: "2.2 Add ready initiative-member planning"
+next-step: "3.1 Add Electron new-plan flow coverage"
 artifact-pr: "#12"
 initiative: "agento-extension"
 ```
@@ -15,7 +15,7 @@ initiative: "agento-extension"
 ## Phase 2: User entry points
 
 - [x] 2.1 Add the guided Feature/Issue and one-line-description QuickInput flow, register `Agento: New Plan`, and contribute it to the Command Palette and Agento view-title menus — verify: `cd extension && npm run typecheck && npm run test:unit`
-- [ ] 2.2 Preserve CLI-provided initiative/member identity in ready member elements and add the ready-member Plan action that starts the same flow with `/agento new-feature initiative:<initiative>/<member>` — verify: `cd extension && npm run test:unit` passes manifest and initiative presentation assertions
+- [x] 2.2 Preserve CLI-provided initiative/member identity in ready member elements and add the ready-member Plan action that starts the same flow with `/agento new-feature initiative:<initiative>/<member>` — verify: `cd extension && npm run test:unit` passes manifest and initiative presentation assertions
 
 ## Phase 3: Integration and verification
 
