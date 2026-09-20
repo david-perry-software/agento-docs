@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/extension-acceptance
 last-updated: 2026-09-20
-next-step: "4.1 Run the complete release gate"
+next-step: ""
 artifact-pr: "#13"
 initiative: "agento-extension"
 ```
@@ -25,4 +25,4 @@ initiative: "agento-extension"
 
 ## Phase 4: Release gate
 
-- [ ] 4.1 Run the complete release gate and fix only regressions introduced by this feature — verify: `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh`; `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`; `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`; `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`; and `cd extension && npm run typecheck && npm run test:unit && npm run test:electron && npm run package && npm run test:vsix` all exit 0, the bundled CLI is byte-identical, all versions are `0.6.0`, and `git status --short` shows no generated profile or package debris beyond the intended VSIX policy
+- [x] 4.1 Run the complete release gate and fix only regressions introduced by this feature — verify: `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh`; `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`; `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`; `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`; and `cd extension && npm run typecheck && npm run test:unit && npm run test:electron && npm run package && npm run test:vsix` all exit 0, the bundled CLI is byte-identical, all versions are `0.6.0`, and `git status --short` shows no generated profile or package debris beyond the intended VSIX policy
