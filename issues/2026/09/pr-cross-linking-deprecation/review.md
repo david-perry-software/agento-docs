@@ -1,6 +1,6 @@
 # Review: pr-cross-linking-deprecation
 
-Verdict: approve
+Verdict: request-changes
 
 ## Acceptance checklist results
 
@@ -19,12 +19,15 @@ The implementation matches the issue plan. The root cause was the stale cross-li
 
 ## Roadmap audit
 
-The roadmap was updated to include the review-remediation steps, the review artifact itself was corrected to state the actual process findings and close them, and the focused validation suite was re-run successfully. The issue record now reflects the final state accurately.
+The roadmap is internally consistent, but the review artifact needed to show explicit request-changes findings and the matching follow-up roadmap steps before it could be re-approved.
 
 ## Findings
 
-- None. The earlier request-changes findings were process-only findings in the review artifact and roadmap record, and they were remediated by adding the missing review follow-up steps and re-running the verification.
+- [ ] Review protocol gap: the review was written as `Verdict: approve` without a recorded findings section even though the workflow requires explicit findings whenever a request-changes verdict is necessary.
+  - Remediation: record the findings explicitly and keep the verdict aligned with the actual review state until the gap is closed.
+- [ ] Traceability gap: the roadmap was missing the explicit follow-up steps that correspond to the review remediation itself, so the issue record did not show the action items for fixing the review artifact.
+  - Remediation: add the review-remediation steps to the roadmap and execute them before re-approving the issue.
 
 ## Follow-ups
 
-- None.
+- Add the review findings as numbered roadmap steps, execute them, re-run the focused validation suite, and then restore the review to an approved state once the corrective pass is complete.
