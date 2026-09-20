@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/extension-acceptance
 last-updated: 2026-09-20
-next-step: "3.3 Complete lockstep 0.6.0 release metadata"
+next-step: "4.1 Run the complete release gate"
 artifact-pr: "#13"
 initiative: "agento-extension"
 ```
@@ -21,7 +21,7 @@ initiative: "agento-extension"
 
 - [x] 3.1 Add `docs/extension.md` covering plugin-plus-VSIX installation, every view, refresh behavior, command routing, companion workspaces, recovery, and explicit limitations; align the extension developer README — verify: documented commands and setting names match `extension/package.json` and `extension/README.md` links resolve
 - [x] 3.2 Link the extension guide from the root README and expand the architecture documentation with the packaged-extension, generated-fixture, and dispatch-boundary acceptance model — verify: README and architecture links resolve and describe only behavior exercised by the acceptance suite
-- [ ] 3.3 Bump root package, plugin, extension, and extension lock metadata from `0.5.2` to `0.6.0`, and add the complete extension release to `CHANGELOG.md` — verify: `node --test tests/customizations.test.mjs tests/extension-bundle.test.mjs && cd extension && npm run package` passes and produces `agento-dashboard-0.6.0.vsix`
+- [x] 3.3 Bump root package, plugin, extension, and extension lock metadata from `0.5.2` to `0.6.0`, and add the complete extension release to `CHANGELOG.md` — verify: `node --test tests/customizations.test.mjs tests/extension-bundle.test.mjs && cd extension && npm run package` passes and produces `agento-dashboard-0.6.0.vsix`
 
 ## Phase 4: Release gate
 
