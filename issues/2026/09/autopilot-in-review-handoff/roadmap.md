@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/autopilot-in-review-handoff
 last-updated: 2026-09-20
-next-step: "2.1 Update autopilot in-review orchestration so /agento ap <slug> directly invokes Reviewer unattended instead of surfacing a manual review command"
+next-step: "2.2 Align Builder/Reviewer handoff metadata and related routing semantics required for Autopilot chaining, without changing ship authority boundaries"
 github-issue: "#60"
 artifact-pr: "#16"
 ```
@@ -14,7 +14,7 @@ artifact-pr: "#16"
 
 ## Phase 2: Implement targeted fix
 
-- [ ] 2.1 Update autopilot in-review orchestration so `/agento ap <slug>` directly invokes Reviewer unattended instead of surfacing a manual review command — verify: `node --test scripts/agento.test.mjs --test-name-pattern "in-review|autopilot|review"`
+- [x] 2.1 Update autopilot in-review orchestration so `/agento ap <slug>` directly invokes Reviewer unattended instead of surfacing a manual review command — verify: `node --test scripts/agento.test.mjs --test-name-pattern "in-review|autopilot|review"`
 - [ ] 2.2 Align Builder/Reviewer handoff metadata and related routing semantics required for Autopilot chaining, without changing ship authority boundaries — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`
 
 ## Phase 3: Validate policy and regression safety
