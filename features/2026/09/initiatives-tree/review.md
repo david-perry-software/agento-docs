@@ -1,37 +1,39 @@
 # Review: initiatives-tree
 
-Verdict: request-changes
+Verdict: approve
 
 ## Acceptance checklist results
 
-- Pass — The Initiatives view loads the list and detail CLI calls in order and renders CLI-supplied progress and validity. Evidence: `extension/src/extension.ts`, `extension/src/initiativeTreeModel.ts`; `cd extension && npm run typecheck && npm run test:unit` passed 32/32 tests; the first Electron run passed both layouts.
-- Pass — Members are grouped by supplied state/readiness with slug-first descriptions and complete metadata tooltips. Evidence: `extension/src/initiativeTreeModel.ts`, `extension/src/initiativeTreePresentation.ts`; focused unit tests and the first Electron run passed.
-- Pass — Per-initiative errors and anomalies remain visible while healthy initiatives remain usable, and explicit list empty/error states render. Evidence: model tests passed; the first Electron run passed partial-invalid, malformed, empty, and error assertions in both layouts.
-- Pass — Initiative and member activation opens the CLI-supplied breakdown beside the active editor in both layouts. Evidence: provider unit tests and the first Electron in-repo and companion scenarios passed.
-- Pass — The shared scheduler refreshes both trees, stale initiative results are rejected independently, and Deliveries remains populated. Evidence: unit stale-refresh test passed; roadmap-driven initiative refresh and retained Deliveries assertions passed in both layouts before the later companion timeout.
-- Pass — Unit coverage includes list/detail validation, grouping precedence/order, metadata, diagnostics, explicit states, manifest wiring, and stale refresh. Evidence: `npm run test:unit` passed 32/32 tests.
-- Fail — The Electron suite is not stable across the required repeated execution. Evidence: the first `npm run test:electron` passed both layouts; on the immediately repeated command, in-repo passed but companion failed with `Timed out waiting for roadmap refresh; observed: none` from `waitForRoadmapRefresh` in `extension/test/electron/suite.ts`.
-- Pass — Documentation and changelog describe the read-only view, and VSIX packaging includes the manifest contribution plus model, presentation, and provider runtime files. Evidence: all three manifests report `0.5.2`; `npm run package` and its 13-entry archive assertion passed.
-- Fail — The complete gate requires two consecutive Electron passes, but the second run exited 1 in the companion scenario. Other gate components passed: shellcheck, 214 root tests, both replay-guard modes, extension typecheck/unit tests, VSIX packaging, and diff whitespace validation.
+- Pass — The Initiatives view loads `initiative` and concurrent `initiative <slug>` detail calls, preserves CLI order, and renders CLI-supplied progress and validity. Evidence: `extension/src/extension.ts`, `extension/src/initiativeTreeModel.ts`; `npm run typecheck` and 36/36 unit tests passed; both Electron suites passed both layouts.
+- Pass — Members are grouped from supplied state/readiness with slug-first labels and wave, blocker, readiness, state, and next metadata. Evidence: `extension/src/initiativeTreeModel.ts`, `extension/src/initiativeTreePresentation.ts`; focused model/presentation tests and both Electron suites passed.
+- Pass — Per-initiative errors and anomalies remain visible with healthy initiatives, while malformed lists, empty lists, and transport errors have explicit states. Evidence: model tests passed; both Electron suites passed the partial-invalid, malformed, empty, and error assertions in both layouts.
+- Pass — Initiative and member activation opens the CLI-supplied breakdown beside the active editor in both layouts. Evidence: provider tests passed; both Electron suites verified the path against the in-repo or companion artifact root and opened it in `ViewColumn.Two`.
+- Pass — Existing scheduler and watcher events refresh both trees without polling, stale initiative detail fan-out cannot replace newer state, and Deliveries remains populated. Evidence: `extension/src/extension.ts`; scheduler and stale-refresh unit tests passed; both Electron suites passed roadmap-driven initiative and delivery refresh assertions in both layouts.
+- Pass — Unit coverage exercises list/detail validation, grouping precedence and order, metadata, diagnostics, empty/error states, manifest wiring, and stale refresh. Evidence: `cd extension && npm run test:unit` passed 36/36 tests.
+- Pass — Electron coverage is stable for in-repo and companion fixtures. Evidence: two immediately consecutive `cd extension && npm run test:electron` commands exited 0; each reported both named scenarios passing initiatives, deliveries, roadmap refresh, diagnostics, stale/error handling, and breakdown navigation.
+- Pass — Documentation and changelog describe the read-only view, and the packaged VSIX contains its contribution and runtime files. Evidence: `extension/README.md` and `CHANGELOG.md`; all three manifests remain `0.5.2`; `npm run package` passed, direct archive inspection found `initiativeTreeModel.js`, `initiativeTreePresentation.js`, and `initiativeTreeProvider.js`, and the packaged manifest contains `agento.initiatives` plus `agento.openBreakdown`.
+- Pass — The complete gate is green. Evidence: shellcheck exited 0; 214/214 root tests passed; both replay-guard modes exited 0; extension typecheck and 36/36 unit tests passed; two consecutive Electron suites exited 0; packaging and direct VSIX assertions passed; `git diff --check origin/main...HEAD` exited 0.
 
 ## Plan vs implementation
 
-The implementation matches the planned model/provider/integration/documentation scope, including the additional `initiativeTreePresentation.ts` extraction. No CLI semantics, hooks, prompts, templates, or version numbers changed. The only unmet plan requirement is repeatable Electron verification across both layouts.
+The implementation matches the planned model, provider, integration, Electron coverage, and documentation scope. The additional `initiativeTreePresentation.ts` extraction keeps VS Code-independent presentation logic unit-testable. No CLI semantics, hooks, prompts, templates, or version numbers changed.
+
+Round 2 repairs the prior companion watcher test defect in commit `0814768`: the create-event probe now writes under `expectedArtifactRoot` instead of always writing under the product fixture, and the watched `features/2026/09/x` directory exists before extension activation. The assertion still requires a real create/change reason from the configured watcher. This exercises the external companion `RelativePattern` path without racing directory discovery and does not weaken production watcher behavior or the test timeout.
 
 Skills consulted: none — no matching domain. The repository has no `.agents/skills/` directory and no `## Agento` skills table in `AGENTS.md`.
 
 ## Roadmap audit
 
-- Steps 1.1, 1.2, 2.1, 2.2, and 3.1 remain supported by code inspection and reviewer-run checks.
-- Step 2.3 was falsely ticked because its verify clause requires two consecutive Electron passes; unticked after the second reviewer run failed in the companion scenario.
-- Step 3.2 was falsely ticked because the complete gate includes the same consecutive Electron requirement; unticked and `next-step` now names the failed stability check.
-- No manual or post-ship steps exist, and no missing roadmap step was found.
+- All eight ticks are supported by code inspection and reviewer-run checks; no roadmap repair was required.
+- Step 2.4 is satisfied independently: its focused `waitForRoadmapRefresh` create-event assertion passed for both layouts in each of two consecutive full Electron suite runs, including the external companion artifact root.
+- Steps 2.3 and 3.2 are now correctly ticked because the same two consecutive Electron suites and the complete gate passed.
+- The product and companion branches contain `origin/main`; both worktrees were clean before this review edit, the companion matched its remote, PR #52 was `CLEAN` with its CI check successful, and the other open product PR had no changed-file overlap.
+- No manual or post-ship steps exist, and no missing-work step was found.
 
 ## Findings
 
-- Major — The required Electron stability gate is flaky in the companion layout. The second consecutive `cd extension && npm run test:electron` run exited 1 after `waitForRoadmapRefresh` observed no create/change event across three writes (`extension/test/electron/suite.ts`, `waitForRoadmapRefresh`; watcher registration in `extension/src/watchers.ts`). This blocks approval because roadmap steps 2.3 and 3.2 explicitly require two consecutive passes and a missing verification is a failed verification. Stabilize the watcher/test interaction and demonstrate two consecutive green runs.
-- No additional correctness, path-handling, or security findings were identified in the model, provider, refresh fan-out, or breakdown-opening paths.
+- None. No correctness, regression, path-handling, security, or verification findings remain.
 
 ## Follow-ups
 
-- None. The blocking Electron stability work belongs in this delivery.
+- None.
