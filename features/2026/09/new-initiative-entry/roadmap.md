@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/new-initiative-entry
 last-updated: 2026-09-20
 next-step: "1.1 Add focused tests for initiative request construction, primary target resolution, and repository-relative file validation"
