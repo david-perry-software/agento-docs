@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: issue/pr-cross-linking-deprecation
 last-updated: 2026-09-20
-next-step: "Commit and push the verified steps 4.1-4.3 remediation, then transition the roadmap to in-review for a fresh review."
+next-step: "Run /agento review-issue pr-cross-linking-deprecation for a fresh review."
 github-issue: "#62"
 artifact-pr: "#17"
 ```
