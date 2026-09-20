@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/command-dispatch
 last-updated: 2026-09-19
-next-step: "4.4 Confirm the clean pushed branch and PR test check"
+next-step: ""
 artifact-pr: "#11"
 initiative: "agento-extension"
 ```
@@ -30,4 +30,4 @@ initiative: "agento-extension"
 - [x] 4.1 Document command sources, routing, pending expiry, companion behavior, and cross-window limitations in extension and architecture docs; add an unreleased changelog entry without changing version `0.5.2` — verify: documentation references match the implemented commands/settings and all three version sources remain `0.5.2`
 - [x] 4.2 Run the full repository and extension gate, package the VSIX, and compare with the green planning baseline — verify: shellcheck exits 0; 214+ root tests pass; both replay-guard modes exit 0; extension typecheck and unit tests pass; both Electron scenarios pass; `npm --prefix extension run package` passes
 - [x] 4.3 Preserve the current delivery slug when dispatching Session-view actions so cross-window choices revalidate and route instead of rejecting — verify: focused unit and Electron tests prove a Session cross-window action loads `next <slug>` and opens the CLI target (added 2026-09-19)
-- [ ] 4.4 Commit the AP-aware session-context expectation and prove the clean pushed branch preserves the full green gate — verify: `git status --short` is clean, the 214+ root suite passes from committed HEAD, and PR #54's `test` check succeeds (added 2026-09-19)
+- [x] 4.4 Commit the AP-aware session-context expectation and prove the clean pushed branch preserves the full green gate — verify: `git status --short` is clean, the 214+ root suite passes from committed HEAD, and PR #54's `test` check succeeds (added 2026-09-19)
