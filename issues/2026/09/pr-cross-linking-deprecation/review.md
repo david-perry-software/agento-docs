@@ -5,29 +5,26 @@ Verdict: request-changes
 ## Acceptance checklist results
 
 - [x] The exposing regression test in `tests/customizations.test.mjs` fails before the fix and passes after it.
-  - Evidence: the bespoke regression test `prompts and agents never direct users to gh pr edit --body` is present in [tests/customizations.test.mjs](tests/customizations.test.mjs) and the suite passes with `24` tests passing, `0` failing.
+  - Evidence: replaying the branch test against an isolated `origin/main` archive exits 1 with `23` passing and the new test failing on the three stale guidance locations; the current branch exits 0 with `24` passing.
 - [x] No prompt or agent guidance instructs `gh pr edit --body` for PR cross-linking.
-  - Evidence: `grep -RIn "gh pr edit" .github/prompts .github/agents .` only finds the guard test plus historical `CHANGELOG.md` references; the live guidance files use the REST PATCH pattern instead.
-- [x] The replacement instructions include an idempotent REST PATCH example.
-  - Evidence: the updated prompt/agent text includes a guarded `grep -Fq` check before appending the URL.
+  - Evidence: the current branch's literal roadmap search returns no matches, and `tests/customizations.test.mjs` enforces the absence across every prompt and agent.
+- [ ] The replacement instructions include an idempotent REST PATCH example.
+  - Evidence: the examples guard with `grep -Fq`, but their body expression is malformed: evaluating `body="${current_body}$'\n\nCompanion PR: ...'"` yields the literal text `$'\n\nCompanion PR: ...'` instead of newline-separated body content.
 - [x] `node --test tests/customizations.test.mjs` exits 0.
-  - Evidence: fresh run output reported `24` pass, `0` fail.
+  - Evidence: independent fresh run on 2026-09-20 reported `24` passing, `0` failing.
 
 ## Plan vs implementation
 
-The implementation matches the issue plan. The root cause was the stale cross-link guidance in the planner agent and prompts, and the fix replaced it with the GitHub REST PATCH pattern in idempotent form. No unrelated source-code change was introduced; the modification is limited to the delivery guidance and regression guard.
+The implementation is scoped to the planned prompt, agent, command-mirror, and regression-test files. It removes the deprecated command and uses REST PATCH behind a URL-presence guard, but the shell quoting does not produce the intended body text. The full Node suite passes (`222/222`), shellcheck exits 0, and `git diff --check` exits 0; none exercises the rendered REST body.
 
 ## Roadmap audit
 
-The roadmap needs to reflect the explicit review-remediation work before the issue record can be closed as approved.
+Steps 4.1-4.3 are supported by the artifact history and the fresh focused test run. Steps 2.1 and 2.2 named grep patterns containing `pulls/.*/-X`, which both exited 1 even though the implementation was present; their verification text was repaired to the matching `pulls/.* -X` form and re-run successfully. Added unticked step 4.4 for the newly discovered body-rendering defect. No manual or post-ship steps are present.
 
 ## Findings
 
-- [ ] Review protocol gap: the issue record was still marked as `approve` even though the review flow requires the explicit request-changes findings to be recorded when the artifact state is being corrected.
-  - Remediation: write the findings explicitly and keep the verdict aligned with the actual review state during the corrective pass.
-- [ ] Traceability gap: the roadmap was missing the explicit follow-up steps for the review-remediation work itself, so the issue record did not show the action items needed to finish the review cycle.
-  - Remediation: add each finding as an ordered roadmap step and execute the required pass before re-issuing approval.
+- [ ] Major: every new REST PATCH example constructs the body with ANSI-C quoting inside a double-quoted word, for example `.github/agents/delivery-planner.agent.md:174` and `.github/prompts/ship.prompt.md:158`. In zsh this renders `Existing body$'\n\nCompanion PR: ...'`, so the workflow writes shell syntax into the PR body instead of the intended blank line and label. The same defect is copied into all four command mirrors. Move the ANSI-C quoted segment outside the double quotes (or construct the body with `printf`) and add a regression check that evaluates the rendered value.
 
 ## Follow-ups
 
-- Add the review findings as roadmap steps, complete the corrective pass, re-run the focused validation, and then restore the final verdict to `approve` once the issue record is consistent.
+- None.
