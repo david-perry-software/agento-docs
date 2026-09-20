@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/command-dispatch
 last-updated: 2026-09-19
-next-step: "4.1 Document command dispatch behavior"
+next-step: "4.2 Run the full repository and extension gate"
 artifact-pr: "#11"
 initiative: "agento-extension"
 ```
@@ -27,5 +27,5 @@ initiative: "agento-extension"
 
 ## Phase 4: Documentation and full verification
 
-- [ ] 4.1 Document command sources, routing, pending expiry, companion behavior, and cross-window limitations in extension and architecture docs; add an unreleased changelog entry without changing version `0.5.2` — verify: documentation references match the implemented commands/settings and all three version sources remain `0.5.2`
+- [x] 4.1 Document command sources, routing, pending expiry, companion behavior, and cross-window limitations in extension and architecture docs; add an unreleased changelog entry without changing version `0.5.2` — verify: documentation references match the implemented commands/settings and all three version sources remain `0.5.2`
 - [ ] 4.2 Run the full repository and extension gate, package the VSIX, and compare with the green planning baseline — verify: shellcheck exits 0; 214+ root tests pass; both replay-guard modes exit 0; extension typecheck and unit tests pass; both Electron scenarios pass; `npm --prefix extension run package` passes
