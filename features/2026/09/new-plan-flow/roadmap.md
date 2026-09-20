@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/new-plan-flow
 last-updated: 2026-09-19
-next-step: "Rerun the complete scoped gate and package assertion"
+next-step: ""
 artifact-pr: "#12"
 initiative: "agento-extension"
 ```
