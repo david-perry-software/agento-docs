@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: issue/pr-cross-linking-deprecation
 last-updated: 2026-09-20
-next-step: "Complete step 4.4: correct and test rendered REST PATCH body newlines."
+next-step: "Run /agento review-issue pr-cross-linking-deprecation for a fresh review."
 github-issue: "#62"
 artifact-pr: "#17"
 ```
@@ -27,7 +27,7 @@ artifact-pr: "#17"
 - [x] 4.1 Record the explicit review findings in `review.md` and keep the verdict aligned with the actual review state while the corrective pass is in progress — verify: inspect the findings list and confirm the `request-changes` status is intentional
 - [x] 4.2 Add the corresponding roadmap step for the review-remediation work itself so the issue record captures the missing processing step — verify: `grep -n "Phase 4: Address the review findings\|4.1\|4.2" roadmap.md`
 - [x] 4.3 Re-run the focused customizations suite to confirm the remediation itself did not regress the fix — verify: `node --test tests/customizations.test.mjs` → exit 0, `24` passing, `0` failing
-- [ ] 4.4 (added 2026-09-20) Correct the REST PATCH examples so ANSI-C newline quoting is evaluated outside double quotes, update every command mirror, and add regression coverage for the rendered body — verify: the shell expression renders real newlines without literal `$'\n\n…'`, command mirrors match, and `node --test tests/customizations.test.mjs` exits 0
+- [x] 4.4 (added 2026-09-20) Correct the REST PATCH examples so ANSI-C newline quoting is evaluated outside double quotes, update every command mirror, and add regression coverage for the rendered body — verify: explicit shell rendering assertion passed; malformed-pattern scan returned no matches; command mirrors matched; `node --test tests/customizations.test.mjs` exited 0 with `25` passing, `0` failing
 
 ## Follow-ups
 

@@ -69,6 +69,7 @@ The root cause was the guidance itself: the customizations were telling the work
 
 Evidence for the completed state:
 
-- `node --test tests/customizations.test.mjs` → pass, 24 tests passed, 0 failed.
-- The relevant guidance files were updated to use the REST PATCH idempotent pattern.
-- The customization test now asserts that `gh pr edit --body` does not appear in prompt/agent guidance.
+- `node --test tests/customizations.test.mjs` → pass, 25 tests passed, 0 failed.
+- `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` → pass, 223 tests passed, 0 failed.
+- The relevant guidance files and command mirrors use adjacent shell words so ANSI-C quoting renders a real blank line in the REST PATCH body.
+- The customization tests reject `gh pr edit --body` and evaluate every rendered REST PATCH body to prevent literal ANSI-C syntax from reaching GitHub.
