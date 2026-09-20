@@ -2,14 +2,14 @@
 status: in-progress
 branch: feature/new-plan-flow
 last-updated: 2026-09-19
-next-step: "1.1 Add focused orchestration tests"
+next-step: "1.2 Integrate the bounded new-plan orchestrator"
 artifact-pr: "#12"
 initiative: "agento-extension"
 ```
 
 ## Phase 1: Orchestration
 
-- [ ] 1.1 Add focused unit tests for validated generic and initiative requests, primary routing, new managed-plan-worktree detection, companion workspace preference, timeout, cancellation, ambiguity, and retry/focus recovery — verify: `cd extension && npm run test:unit` passes with the new plan-flow cases listed
+- [x] 1.1 Add focused unit tests for validated generic and initiative requests, primary routing, new managed-plan-worktree detection, companion workspace preference, timeout, cancellation, ambiguity, and retry/focus recovery — verify: `cd extension && npm run test:unit` passes with the new plan-flow cases listed
 - [ ] 1.2 Implement the dependency-injected bounded new-plan orchestrator by composing CLI session reads, canonical Chat submission, target-specific pending dispatch, and workspace opening without parsing chat output or mutating worktrees — verify: `cd extension && npm run typecheck && npm run test:unit`
 
 ## Phase 2: User entry points
