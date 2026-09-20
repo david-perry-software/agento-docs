@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/new-initiative-entry
 last-updated: 2026-09-20
-next-step: "2.2 Verify both intake forms route through the existing primary-target dispatcher"
+next-step: "3.1 Drive both intake choices through the contributed command in Extension Host fixtures"
 artifact-pr: "#14"
 ```
 
@@ -13,7 +13,7 @@ artifact-pr: "#14"
 
 ## Phase 2: Extension integration
 - [x] 2.1 Contribute and register `Agento: New Initiative`, replace New Plan only in the Initiatives title bar, and implement the Enter brief plus Pick a file interactions — verify: `cd extension && npm run typecheck && npm run test:unit` passes manifest, prompt, cancellation, and validation assertions
-- [ ] 2.2 Dispatch both intake forms to the fresh CLI-reported primary target through `dispatchCommandToTarget()`, preserving exact text/path arguments and existing pending/focus behavior — verify: focused dispatcher and initiative-flow unit tests pass for current-primary, cross-window, missing-primary, and failed-dispatch cases
+- [x] 2.2 Dispatch both intake forms to the fresh CLI-reported primary target through `dispatchCommandToTarget()`, preserving exact text/path arguments and existing pending/focus behavior — verify: focused dispatcher and initiative-flow unit tests pass for current-primary, cross-window, missing-primary, and failed-dispatch cases
 
 ## Phase 3: User-visible verification
 
