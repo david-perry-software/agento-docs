@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/session-auto-approve
 last-updated: 2026-09-20
-next-step: "1.2 Add the prompt contract exposing test for workspace writing"
+next-step: "2.1 Add shared workspace settings helpers in session-state"
 github-issue: "#58"
 artifact-pr: "#15"
 ```
@@ -10,7 +10,7 @@ artifact-pr: "#15"
 ## Phase 1: Expose the defect
 
 - [x] 1.1 Add a `test(...)` to `scripts/agento.test.mjs` named `workspace command writes the session pair's .code-workspace with the auto-approve settings block (#58 session-auto-approve)` that, in a companion-mode fixture (reuse the existing pair helpers near the `feature-widget.code-workspace` cases), runs `agento.mjs workspace plan <id> --write --root <product half>` and asserts: `status: "ok"`; `path` equals `paths plan <id>`'s `workspace`; the written file parses to `folders` `[{ path: <product half> }, { path: <companion half> }]` (product first) and `settings` deep-equal to `SESSION_WORKSPACE_SETTINGS` imported from `./session-state.mjs`; a second `--write` returns `written: false` and leaves the bytes identical; with `.github/agento.json` `worktrees.autoApprove: false` the `settings` is `{}`; from an in-repo fixture the command returns `status: "not-applicable"` and creates no file — verify: `node --test scripts/agento.test.mjs; echo "exit=$?"` prints `exit=1` and the TAP output names exactly that test `not ok` (today: `SyntaxError`/import failure for `SESSION_WORKSPACE_SETTINGS` or `usage-error unknown command workspace`), every other test still `ok`
-- [ ] 1.2 Add a `test(...)` to `tests/customizations.test.mjs` named `start-session and start-freehand write the workspace file through agento.mjs workspace (#58 session-auto-approve)` asserting that `.github/prompts/start-session.prompt.md` and `.github/prompts/start-freehand.prompt.md` (and their `commands/` mirrors) contain no literal `settings: {}` and each contains `agento.mjs workspace` — verify: `node --test tests/customizations.test.mjs; echo "exit=$?"` prints `exit=1` with exactly that test `not ok`
+- [x] 1.2 Add a `test(...)` to `tests/customizations.test.mjs` named `start-session and start-freehand write the workspace file through agento.mjs workspace (#58 session-auto-approve)` asserting that `.github/prompts/start-session.prompt.md` and `.github/prompts/start-freehand.prompt.md` (and their `commands/` mirrors) contain no literal `settings: {}` and each contains `agento.mjs workspace` — verify: `node --test tests/customizations.test.mjs; echo "exit=$?"` prints `exit=1` with exactly that test `not ok`
 
 ## Phase 2: Make the CLI author the workspace file
 
