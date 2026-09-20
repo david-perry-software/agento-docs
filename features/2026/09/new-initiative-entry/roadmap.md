@@ -2,14 +2,14 @@
 status: in-progress
 branch: feature/new-initiative-entry
 last-updated: 2026-09-20
-next-step: "1.2 Implement the dependency-injected initiative-intake model without shell execution or lifecycle logic"
+next-step: "2.1 Contribute and register Agento: New Initiative with Enter brief and Pick a file interactions"
 artifact-pr: "#14"
 ```
 
 ## Phase 1: Intake model
 
 - [x] 1.1 Add focused tests for initiative request construction, primary target resolution, multi-line preservation, repository-relative path normalization/containment, cancellation, and invalid input — verify: `cd extension && npm run test:unit` runs the new initiative-intake cases with the expected assertions
-- [ ] 1.2 Implement the dependency-injected initiative-intake model without shell execution or lifecycle logic — verify: `cd extension && npm run typecheck && npm run test:unit`
+- [x] 1.2 Implement the dependency-injected initiative-intake model without shell execution or lifecycle logic — verify: `cd extension && npm run typecheck && npm run test:unit`
 
 ## Phase 2: Extension integration
 - [ ] 2.1 Contribute and register `Agento: New Initiative`, replace New Plan only in the Initiatives title bar, and implement the Enter brief plus Pick a file interactions — verify: `cd extension && npm run typecheck && npm run test:unit` passes manifest, prompt, cancellation, and validation assertions
