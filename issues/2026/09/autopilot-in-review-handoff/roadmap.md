@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: issue/autopilot-in-review-handoff
 last-updated: 2026-09-20
 next-step: "1.1 Add exposing regression coverage for in-review /agento ap re-send behavior"
