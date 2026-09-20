@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/new-plan-flow
 last-updated: 2026-09-19
-next-step: "4.3 Reverify the distinct Focus target recovery unit case"
+next-step: "Rerun the complete scoped gate and package assertion"
 artifact-pr: "#12"
 initiative: "agento-extension"
 ```
@@ -26,4 +26,4 @@ initiative: "agento-extension"
 
 - [x] 4.1 Prevent cross-window startup from hanging before timeout or cancellation by making the focus notification non-blocking or bounding submission, with regression coverage (added 2026-09-19) — verify: `cd extension && npm run test:unit` passes a pending focus-notification regression case
 - [x] 4.2 Drive both contributed user-facing commands in Electron tests instead of calling the exported helper (added 2026-09-19) — verify: `cd extension && npm run test:electron` passes for in-repo and companion scenarios
-- [ ] 4.3 Add distinct Focus target recovery unit coverage (added 2026-09-19) — verify: `cd extension && npm run test:unit` passes a dedicated Focus target recovery case
+- [x] 4.3 Add distinct Focus target recovery unit coverage (added 2026-09-19) — verify: `cd extension && npm run test:unit` passes a dedicated Focus target recovery case
