@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/command-dispatch
 last-updated: 2026-09-19
-next-step: "2.3 Implement target-keyed pending dispatch records"
+next-step: "3.1 Register dynamic delivery and Session actions"
 artifact-pr: "#11"
 initiative: "agento-extension"
 ```
@@ -17,7 +17,7 @@ initiative: "agento-extension"
 
 - [x] 2.1 Implement validated action projection that preserves CLI command order, window, and reason with no lifecycle-command matrix in TypeScript — verify: focused extension unit tests pass for allowed, elsewhere, AP, empty, and malformed records
 - [x] 2.2 Implement pure dispatch routing for here, primary, and secondary targets, including `.code-workspace` preference, primary-only ship, and cross-window `/agento continue <slug>` preference — verify: focused extension unit tests pass for every target and rejection outcome
-- [ ] 2.3 Implement target-keyed pending records with atomic consumption and a five-minute expiry — verify: focused extension unit tests pass for activation/focus consumption, duplicate prevention, stale, malformed, and mismatched records
+- [x] 2.3 Implement target-keyed pending records with atomic consumption and a five-minute expiry — verify: focused extension unit tests pass for activation/focus consumption, duplicate prevention, stale, malformed, and mismatched records
 
 ## Phase 3: VS Code integration
 
