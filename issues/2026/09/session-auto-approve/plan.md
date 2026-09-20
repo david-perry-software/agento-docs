@@ -386,3 +386,26 @@ Affected files: `scripts/session-state.mjs`, `scripts/agento.mjs`,
       `.code-workspace` file, and no user-settings edit are part of the change —
       verify: `git diff --name-only origin/main...HEAD | grep -E
       'hooks/|\.vscode/|\.code-workspace$'` prints nothing.
+
+## Resolution
+
+The root cause was that managed session `.code-workspace` files were created with an
+empty `settings` object, and Agento had no CLI-owned way to generate or refresh the
+workspace-scoped approval settings its own agents need. That left managed session
+windows using VS Code's stock terminal approval rules, which still prompt for the
+remote-mutating `git` and `gh` commands Agento is required to run itself.
+
+The fix made the CLI the canonical writer for managed session workspace files.
+`scripts/agento.mjs` now exposes `workspace <kind> <id> [--write]`,
+`scripts/session-state.mjs` exports the canonical auto-approve settings block,
+managed-session prompts call the CLI writer instead of embedding hand-written JSON,
+and session/doctor output now reports whether a session workspace is current. The
+delivery also added the `worktrees.autoApprove` config knob, documentation updates,
+and regression coverage across the CLI, session-state helpers, prompt contract tests,
+and the extension electron harness.
+
+Proof that the `#58` regression now passes:
+
+- The exposing regression test in `scripts/agento.test.mjs` for `workspace command writes the session pair's .code-workspace with the auto-approve settings block (#58 session-auto-approve)` was observed failing before the fix and passes in the final state.
+- `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` finished green with `# pass 220` and `# fail 0`, so the full repository test run covers the `#58` path successfully.
+- `cd extension && npm run build && npm run test:electron` passed with the added `workspace` scenario, and the manual evidence at `evidence/step-3-2-no-prompts.png` shows the session window running terminal commands without approval prompts after reload.
