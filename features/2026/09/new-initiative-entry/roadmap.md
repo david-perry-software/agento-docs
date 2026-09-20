@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: in-progress
 branch: feature/new-initiative-entry
 last-updated: 2026-09-20
 next-step: "2.3 Reject a closed untitled brief before dispatch"
