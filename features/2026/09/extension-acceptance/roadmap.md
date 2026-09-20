@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/extension-acceptance
 last-updated: 2026-09-20
 next-step: "1.1 Extend the generated Electron scenarios"
