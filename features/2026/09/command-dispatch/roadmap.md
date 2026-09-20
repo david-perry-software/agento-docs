@@ -1,15 +1,15 @@
 ```yaml
-status: paused
+status: in-progress
 branch: feature/command-dispatch
 last-updated: 2026-09-19
-next-step: "1.1 Resume after session-doctor-panel reaches status: complete, then merge both origin/main branches and identify its shipped Session provider/model integration points"
+next-step: "1.2 Add CLI permission and per-delivery action metadata"
 artifact-pr: "#11"
 initiative: "agento-extension"
 ```
 
 ## Phase 1: Prerequisite and CLI contract
 
-- [ ] 1.1 Wait for `session-doctor-panel` to reach `status: complete`, then merge both `origin/main` branches and identify its shipped Session provider/model integration points — verify: `node scripts/agento.mjs initiative agento-extension` reports `session-doctor-panel` state `complete`, and product plus companion branches contain both defaults
+- [x] 1.1 Wait for `session-doctor-panel` to reach `status: complete`, then merge both `origin/main` branches and identify its shipped Session provider/model integration points — verify: `node scripts/agento.mjs initiative agento-extension` reports `session-doctor-panel` state `complete`, and product plus companion branches contain both defaults
 - [ ] 1.2 Add `/agento ap <slug>` to applicable CLI permission rows and expose per-delivery `allowed[]`/`elsewhere[]` from `status --pr` without changing existing fields or exit codes — verify: focused `scripts/session-state.test.mjs` and `scripts/agento.test.mjs` cases pass for every affected role/lifecycle and status item
 - [ ] 1.3 Copy the changed CLI modules into the extension bundle and document the additive action metadata — verify: `npm --prefix extension run build` and `node --test tests/extension-bundle.test.mjs` pass
 
