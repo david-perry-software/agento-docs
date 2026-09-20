@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/command-dispatch
 last-updated: 2026-09-19
-next-step: "4.2 Run the full repository and extension gate"
+next-step: "3.3 Verify cross-window handoff in real Extension Hosts"
 artifact-pr: "#11"
 initiative: "agento-extension"
 ```
@@ -23,9 +23,11 @@ initiative: "agento-extension"
 
 - [x] 3.1 Register generic dynamic action commands and add delivery context-menu plus shipped Session-view action surfaces backed only by CLI records — verify: extension manifest/integration unit tests prove both surfaces expose CLI-ordered commands and no static lifecycle menu
 - [x] 3.2 Submit same-window actions through `workbench.action.chat.open` in agent mode and report failures without executing lifecycle work — verify: `local:no-ports` Electron in-repo and companion fixtures submit the exact selected canonical query
-- [x] 3.3 Persist cross-window handoffs, open/focus the CLI target folder or workspace, consume on target activation/focus, and offer a focus-target affordance — verify: routing/adapter unit tests pass and `local:no-ports` exploratory Extension Host checks cover primary and companion workspace targets with no stale submission
+- [ ] 3.3 Persist cross-window handoffs, open/focus the CLI target folder or workspace, consume on target activation/focus, and offer a focus-target affordance — verify: routing/adapter unit tests pass and `local:no-ports` exploratory Extension Host checks cover primary and companion workspace targets with no stale submission
 
 ## Phase 4: Documentation and full verification
 
 - [x] 4.1 Document command sources, routing, pending expiry, companion behavior, and cross-window limitations in extension and architecture docs; add an unreleased changelog entry without changing version `0.5.2` — verify: documentation references match the implemented commands/settings and all three version sources remain `0.5.2`
 - [ ] 4.2 Run the full repository and extension gate, package the VSIX, and compare with the green planning baseline — verify: shellcheck exits 0; 214+ root tests pass; both replay-guard modes exit 0; extension typecheck and unit tests pass; both Electron scenarios pass; `npm --prefix extension run package` passes
+- [ ] 4.3 Preserve the current delivery slug when dispatching Session-view actions so cross-window choices revalidate and route instead of rejecting — verify: focused unit and Electron tests prove a Session cross-window action loads `next <slug>` and opens the CLI target (added 2026-09-19)
+- [ ] 4.4 Commit the AP-aware session-context expectation and prove the clean pushed branch preserves the full green gate — verify: `git status --short` is clean, the 214+ root suite passes from committed HEAD, and PR #54's `test` check succeeds (added 2026-09-19)
