@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/new-initiative-entry
 last-updated: 2026-09-20
-next-step: "3.1 Drive both intake choices through the contributed command in Extension Host fixtures"
+next-step: "3.2 Run the complete repository and extension gate and compare with the green planning baseline"
 artifact-pr: "#14"
 ```
 
@@ -17,5 +17,5 @@ artifact-pr: "#14"
 
 ## Phase 3: User-visible verification
 
-- [ ] 3.1 Drive the contributed title command through both intake choices and assert the exact Agent-mode query and primary target behavior in supported Extension Host fixtures — verify: `local:no-ports` `cd extension && npm run test:electron` passes in-repo and companion scenarios
+- [x] 3.1 Drive the contributed title command through both intake choices and assert the exact Agent-mode query and primary target behavior in supported Extension Host fixtures — verify: `local:no-ports` `cd extension && npm run test:electron` passes in-repo and companion scenarios
 - [ ] 3.2 Run the complete repository and extension gate and compare it with the green planning baseline — verify: `npm run lint:hooks`; `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`; both `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` and `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`; `cd extension && npm run typecheck && npm run test:unit && npm run test:electron && npm run package` all exit 0
