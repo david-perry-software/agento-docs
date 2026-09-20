@@ -1,0 +1,25 @@
+```yaml
+status: complete
+branch: feature/new-initiative-entry
+last-updated: 2026-09-20
+next-step: ""
+artifact-pr: "#14"
+```
+
+## Phase 1: Intake model
+
+- [x] 1.1 Add focused tests for initiative request construction, primary target resolution, multi-line preservation, repository-relative path normalization/containment, cancellation, and invalid input — verify: `cd extension && npm run test:unit` runs the new initiative-intake cases with the expected assertions
+- [x] 1.2 Implement the dependency-injected initiative-intake model without shell execution or lifecycle logic — verify: `cd extension && npm run typecheck && npm run test:unit`
+
+## Phase 2: Extension integration
+- [x] 2.1 Contribute and register `Agento: New Initiative`, replace New Plan only in the Initiatives title bar, and implement the Enter brief plus Pick a file interactions — verify: `cd extension && npm run typecheck && npm run test:unit` passes manifest, prompt, cancellation, and validation assertions
+- [x] 2.2 Dispatch both intake forms to the fresh CLI-reported primary target through `dispatchCommandToTarget()`, preserving exact text/path arguments and existing pending/focus behavior — verify: focused dispatcher and initiative-flow unit tests pass for current-primary, cross-window, missing-primary, and failed-dispatch cases
+- [x] 2.3 Reject a closed untitled brief visibly before reading or dispatching its stale content, with focused regression coverage (added 2026-09-20) — verify: `cd extension && npm run typecheck && npm run test:unit && npm run test:electron` proves closing the captured document before Submit produces a visible error and no Chat or pending dispatch
+
+## Phase 3: User-visible verification
+
+- [x] 3.1 Drive the contributed title command through both intake choices and assert the exact Agent-mode query and primary target behavior in supported Extension Host fixtures — verify: `local:no-ports` `cd extension && npm run test:electron` passes in-repo and companion scenarios
+- [x] 3.2 Run the complete repository and extension gate and compare it with the green planning baseline — verify: `npm run lint:hooks`; `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`; both `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` and `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`; `cd extension && npm run typecheck && npm run test:unit && npm run test:electron && npm run package` all exit 0
+## Follow-ups (accepted at ship)
+
+- No `CHANGELOG.md` entry under `## Unreleased` for the `Agento: New Initiative` command; accepted by the user at ship on 2026-09-20. Add the line with the next extension change.
