@@ -1,0 +1,27 @@
+{
+  "status": "usage-error",
+  "message": "unknown command workspace",
+  "usage": [
+    "Agento CLI: the deterministic half of the delivery workflow. Prompts call this",
+    "instead of re-deriving slug resolution, status listings, and config lookups in",
+    "prose. Always prints one JSON document; exit 0 when the result is usable, 1 on a",
+    "usage error, 3 when the resolution itself failed (conflict, mismatch, missing).",
+    "",
+    "  node scripts/agento.mjs config",
+    "  node scripts/agento.mjs resolve <feature|issue> <slug>",
+    "  node scripts/agento.mjs find <slug>                 (type-agnostic)",
+    "  node scripts/agento.mjs status [feature|issue] [slug] [--pr]   (--pr adds pr + companionPr per non-complete item)",
+    "  node scripts/agento.mjs close-decision <feature|issue> <slug>",
+    "  node scripts/agento.mjs ship-preflight <feature|issue> <slug> [--pr]   (--pr adds pr + companionPr + warnings; companion PR gaps join companionGaps)",
+    "  node scripts/agento.mjs ports <slug>",
+    "  node scripts/agento.mjs paths <feature|issue|plan|freehand> <slug|session-id>   (+ companion half and .code-workspace in companion mode)",
+    "  node scripts/agento.mjs initiative [<slug>]",
+    "  node scripts/agento.mjs session [--pr]             (role, worktree, worktrees, companion, workspace, delivery, lifecycle, allowed; hosted flag; --pr adds pr + companionPr)",
+    "  node scripts/agento.mjs next [<slug>]              (the one legal transition: command, args, window, target { path, workspace }, dispatch paths)",
+    "  node scripts/agento.mjs doctor [--for <command>]   (environment checks: ok | warn | fail, with fallbacks)",
+    "  node scripts/agento.mjs migrate <companion-checkout> [--apply]   (move in-repo artifact roots into the companion; dry run without --apply)",
+    "",
+    "Options: --root <dir> (default: the git toplevel of the cwd; a companion clone or",
+    "companion half re-anchors on its product checkout)."
+  ]
+}

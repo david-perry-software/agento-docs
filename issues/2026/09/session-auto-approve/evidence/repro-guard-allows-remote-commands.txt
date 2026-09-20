@@ -1,0 +1,9 @@
+git push -u origin issue/x                                                  -> allow
+git -C /tmp/companion push -u origin issue/x                                -> allow
+gh pr create --draft --title x --body y                                     -> allow
+gh pr edit 12 --body z                                                      -> allow
+gh issue create --title x --body y                                          -> allow
+git fetch origin && git merge origin/main                                   -> allow
+node scripts/agento.mjs session                                             -> allow
+npm run build                                                               -> allow
+scripts/wait-for-checks.sh pr 12                                            -> allow
