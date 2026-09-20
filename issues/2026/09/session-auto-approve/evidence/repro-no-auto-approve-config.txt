@@ -1,0 +1,36 @@
+# Reproduction: session windows carry no terminal auto-approval configuration
+# captured 2026-09-20T16:40:44Z in /home/david/DP/agento-worktrees/plan-20260920-162232 at 0b82a87
+
+## 1. Generated session workspace file (written by /agento start-session, step 4): settings is empty
+{
+  "folders": [
+    { "path": "/home/david/DP/agento-worktrees/plan-20260920-162232" },
+    { "path": "/home/david/DP/agento-docs-worktrees/plan-20260920-162232" }
+  ],
+  "settings": {}
+}
+
+## 2. Prompt text that produces it
+.github/prompts/start-session.prompt.md:60:   `settings: {}`; overwrite a stale file with the same content on resume. Unless
+.github/prompts/start-freehand.prompt.md:79:   <companion worktree> }]` (absolute paths, product first) and `settings: {}`;
+commands/start-session.md:60:   `settings: {}`; overwrite a stale file with the same content on resume. Unless
+commands/start-freehand.md:79:   <companion worktree> }]` (absolute paths, product first) and `settings: {}`;
+
+## 3. No autoApprove configuration anywhere the session window reads
+user settings matches:  0
+0
+repo .vscode/settings.json (primary checkout):
+{
+    "chat.pluginLocations": {
+        "/home/david/DP/agento": false
+    }
+}
+workspace-tracked settings files in this checkout: 0
+templates scaffolded by agento-init: agento.json
+AGENTS-section.md
+companion-README.md
+project.instructions.md
+autoApprove mentions in repo (docs, templates, scripts, extension src): 0
+
+## 4. VS Code version
+1.132.0
