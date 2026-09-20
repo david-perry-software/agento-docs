@@ -19,11 +19,11 @@ The implementation matches the issue plan. The root cause was the stale cross-li
 
 ## Roadmap audit
 
-The roadmap is consistent with the final implementation. All steps are ticked and there are no false positives or drifted requirements. The issue branch remained on the planned branch and the companion artifact branch remained clean with no uncommitted changes.
+The roadmap was updated to include the review-remediation steps, the review artifact itself was corrected to state the actual process findings and close them, and the focused validation suite was re-run successfully. The issue record now reflects the final state accurately.
 
 ## Findings
 
-- None. The fix is narrow, evidenced, and verified, and it eliminates the deprecated `gh pr edit --body` path that was blocking companion PR cross-linking.
+- None. The earlier request-changes findings were process-only findings in the review artifact and roadmap record, and they were remediated by adding the missing review follow-up steps and re-running the verification.
 
 ## Follow-ups
 
