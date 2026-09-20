@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: issue/session-auto-approve
 last-updated: 2026-09-20
-next-step: "/agento review-issue session-auto-approve"
+next-step: "none — shipped"
 github-issue: "#58"
 artifact-pr: "#15"
 ```
