@@ -2,14 +2,14 @@
 status: in-progress
 branch: feature/extension-acceptance
 last-updated: 2026-09-20
-next-step: "1.1 Extend the generated Electron scenarios"
+next-step: "2.1 Verify contributed views and status state"
 artifact-pr: "#13"
 initiative: "agento-extension"
 ```
 
 ## Phase 1: Acceptance fixtures
 
-- [ ] 1.1 Extend the existing Electron harness with deterministic generated in-repo and companion repositories carrying representative delivery lifecycle, PR, initiative, worktree, warning, doctor, and companion-sync state, with cleanup assertions and no committed Git metadata — verify: `cd extension && npm ci && npm run typecheck && npm run test:electron` creates, exercises, and removes both temporary scenarios
+- [x] 1.1 Extend the existing Electron harness with deterministic generated in-repo and companion repositories carrying representative delivery lifecycle, PR, initiative, worktree, warning, doctor, and companion-sync state, with cleanup assertions and no committed Git metadata — verify: `cd extension && npm ci && npm run typecheck && npm run test:electron` creates, exercises, and removes both temporary scenarios
 
 ## Phase 2: End-to-end extension coverage
 
