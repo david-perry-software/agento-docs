@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/new-plan-flow
 last-updated: 2026-09-19
-next-step: "3.1 Drive the generic and ready-member contributed commands in Electron tests"
+next-step: "4.1 Make cross-window focus notification non-blocking and add its regression test"
 artifact-pr: "#12"
 initiative: "agento-extension"
 ```
@@ -19,7 +19,7 @@ initiative: "agento-extension"
 
 ## Phase 3: Integration and verification
 
-- [ ] 3.1 Add an Electron scenario for the generic command and ready initiative-member action, asserting the exact canonical follow-up reaches the dispatch integration — verify: `cd extension && npm run test:electron` passes for in-repo and companion scenarios
+- [x] 3.1 Add an Electron scenario for the generic command and ready initiative-member action, asserting the exact canonical follow-up reaches the dispatch integration — verify: `cd extension && npm run test:electron` passes for in-repo and companion scenarios
 - [x] 3.2 Run the complete scoped gate and package assertion, fixing only regressions introduced by this feature — verify: `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh`; `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` reports at least 214 passing; both `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` and `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt` exit 0; `cd extension && npm run typecheck && npm run test:unit && npm run test:electron && npm run package` exits 0
 
 ## Phase 4: Review repairs
