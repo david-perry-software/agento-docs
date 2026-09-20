@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/new-plan-flow
 last-updated: 2026-09-19
 next-step: "1.1 Add focused orchestration tests"
