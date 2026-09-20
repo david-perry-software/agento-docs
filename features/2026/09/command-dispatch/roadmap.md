@@ -23,7 +23,7 @@ initiative: "agento-extension"
 
 - [x] 3.1 Register generic dynamic action commands and add delivery context-menu plus shipped Session-view action surfaces backed only by CLI records — verify: extension manifest/integration unit tests prove both surfaces expose CLI-ordered commands and no static lifecycle menu
 - [x] 3.2 Submit same-window actions through `workbench.action.chat.open` in agent mode and report failures without executing lifecycle work — verify: `local:no-ports` Electron in-repo and companion fixtures submit the exact selected canonical query
-- [ ] 3.3 Persist cross-window handoffs, open/focus the CLI target folder or workspace, consume on target activation/focus, and offer a focus-target affordance — verify: routing/adapter unit tests pass and `local:no-ports` exploratory Extension Host checks cover primary and companion workspace targets with no stale submission
+- [ ] 3.3 Persist cross-window handoffs, open/focus the CLI target folder or workspace, consume on target activation/focus, and offer a focus-target affordance — verify: routing/adapter unit tests pass and `local:no-ports` exploratory Extension Host checks cover primary and companion workspace targets with no stale submission (added 2026-09-19)
 
 ## Phase 4: Documentation and full verification
 
