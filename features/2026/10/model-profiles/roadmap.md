@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profiles
 last-updated: 2026-10-01
-next-step: "2.1 Add the /agento models prompt and command mirror and register it"
+next-step: "2.2 Add docs/model-profiles.md, install.md Updating paragraph, and Mechanic agent lines"
 artifact-pr: "#18"
 ```
 
@@ -20,7 +20,7 @@ artifact-pr: "#18"
 
 ## Phase 2: Slash command, policy, docs
 
-- [ ] 2.1 Add `.github/prompts/models.prompt.md` and byte-identical `commands/models.md` (`agent: "agent"`, `tools: [read, execute]`, `Needs: terminal`, `Fallback: none — every need is hard`, §9/§11 role `any`/§12, args `[list | show <name> | apply <name> | clear | init]`, quotes `active`/`changed[]`/`hint`, reload-window advice, never hand-edits frontmatter) and register `/agento models` in command-invocation.instructions.md, the delivery-policy §9 idempotency table, README.md, and docs/commands.md (table, `## Invocation`, CLI paragraph incl. `--plugin-root` and the `model-profile` check) — verify: `cmp commands/models.md .github/prompts/models.prompt.md` and `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0
+- [x] 2.1 Add `.github/prompts/models.prompt.md` and byte-identical `commands/models.md` (`agent: "agent"`, `tools: [read, execute]`, `Needs: terminal`, `Fallback: none — every need is hard`, §9/§11 role `any`/§12, args `[list | show <name> | apply <name> | clear | init]`, quotes `active`/`changed[]`/`hint`, reload-window advice, never hand-edits frontmatter) and register `/agento models` in command-invocation.instructions.md, the delivery-policy §9 idempotency table, README.md, and docs/commands.md (table, `## Invocation`, CLI paragraph incl. `--plugin-root` and the `model-profile` check) — verify: `cmp commands/models.md .github/prompts/models.prompt.md` and `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0 (2026-10-01: cmp equal; 258/258 pass)
 - [ ] 2.2 Add `docs/model-profiles.md` (schema, resolution rules, clear → `git pull` → apply, skip-worktree semantics, Agento-development worktree caveat), `templates/model-profiles.json` (one `mixed` profile, `<…>` placeholders), the docs/install.md `## Updating` paragraph, and one file-list line plus one Known-pitfalls line in `.github/agents/copilot-mechanic.agent.md` — verify: `node -e 'JSON.parse(require("fs").readFileSync("templates/model-profiles.json","utf8"))'` exit 0 and full test suite exit 0
 - [ ] 2.3 Rename CHANGELOG `## Unreleased` to `## 0.7.0 (unreleased)` with an **Added** entry; bump `package.json`, `.claude-plugin/plugin.json`, `extension/package.json`, and `extension/package-lock.json` root entries to 0.7.0 — verify: `grep -n '"version"' package.json .claude-plugin/plugin.json extension/package.json` all 0.7.0 and `node --test tests/customizations.test.mjs` exit 0
 
