@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profiles
 last-updated: 2026-10-01
-next-step: "4.2 End-to-end on a temp clone"
+next-step: "4.3 Extension release checks"
 artifact-pr: "#18"
 ```
 
@@ -33,7 +33,7 @@ artifact-pr: "#18"
 ## Phase 4: Verification
 
 - [x] 4.1 Run the full gate: `git ls-files '*.sh' | xargs pnpm dlx shellcheck` (exit 0, baseline had no findings), `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` (exit 0), `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` and `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt` (unchanged results); record the comparison on this line — verify: all exit 0 (2026-10-01 at `483c207`: shellcheck exit 0, no findings, same as baseline; tests exit 0, 258/258 vs. baseline 229/229 — the 29 new cases are this delivery's; replay-guard exit 0 and companion replay exit 0, no mismatches, fixtures unchanged; extension typecheck exit 0)
-- [ ] 4.2 End-to-end on a temp clone of this branch with `AGENTO_CONFIG_HOME` set to a temp dir: `models init`, fill `mixed` with real names, `apply mixed` → `git status --porcelain` empty and `grep -l '^model:' .github/agents/*.agent.md` lists six; `cmp` every `commands/<n>.md` with its prompt; `list` → `active: "mixed"`; repeat apply → `changed: []`; `clear` → `git diff --quiet` and `git ls-files -v | grep '^S'` empty; `doctor` → `model-profile ok`; hand-edit one agent's model → `doctor` → `model-profile warn` (custom); record the transcript summary on this line — verify: every listed check holds
+- [x] 4.2 End-to-end on a temp clone of this branch with `AGENTO_CONFIG_HOME` set to a temp dir: `models init`, fill `mixed` with real names, `apply mixed` → `git status --porcelain` empty and `grep -l '^model:' .github/agents/*.agent.md` lists six; `cmp` every `commands/<n>.md` with its prompt; `list` → `active: "mixed"`; repeat apply → `changed: []`; `clear` → `git diff --quiet` and `git ls-files -v | grep '^S'` empty; `doctor` → `model-profile ok`; hand-edit one agent's model → `doctor` → `model-profile warn` (custom); record the transcript summary on this line — verify: every listed check holds (2026-10-01, temp clone of `feature/model-profiles`, temp `AGENTO_CONFIG_HOME`: init created=true; apply on the unfilled template exit 3; filled `mixed` apply → changed=56 (6 agents + 25 prompts + 25 mirrors), skipWorktree=56, `git status --porcelain` empty, 6 of 6 agents carry `model:`, every mirror `cmp`-equal; list active=mixed; re-apply changed=0; doctor `model-profile` ok "mixed applied"; hand-edited builder model → warn "match no profile"; clear changed=56 active=null, `git diff --quiet` 0, no `S` bits; doctor ok "no profile applied")
 - [ ] 4.3 Extension release checks: `cd extension && npm run copy-cli && npm run typecheck && npm run test:unit && npm run test:electron && npm run package` — verify: all exit 0 and `node --test tests/extension-bundle.test.mjs` exit 0
 - [ ] 4.4 Run `node scripts/agento.mjs models init` with the real home directory (creates `~/.config/agento/model-profiles.json` only if absent) and report its path — verify: `models list` shows profile `mixed` and `profilesFile.exists: true`
 - [ ] 4.5 (manual) Replace every `<…>` placeholder of `mixed` in `~/.config/agento/model-profiles.json` with model names from your chat picker (e.g. a strong model for planner/reviewer/architect, a cheaper one as `default`) — verify: `node scripts/agento.mjs models show mixed` exits 0 with no `errors`
