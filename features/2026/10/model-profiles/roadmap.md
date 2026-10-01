@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profiles
 last-updated: 2026-10-01
-next-step: "3.4 Name the configured path when agento.pluginRoot is set but invalid (review finding 2)"
+next-step: "3.5 Re-run the full gate for the review fixes"
 artifact-pr: "#18"
 ```
 
@@ -31,7 +31,7 @@ artifact-pr: "#18"
 - [x] 3.1 Add pure `extension/src/modelProfiles.ts` (`resolvePluginRoot` with setting → `chat.pluginLocations` precedence, `~` expansion, `plugin.json` name check; `toQuickPickItems`; `selectionToArgs`) and `extension/test/unit/modelProfiles.test.ts` — verify: `cd extension && npm run typecheck && npm run test:unit` exit 0 (2026-10-01: typecheck 0; 84/84 unit pass; also `summarizeModelsResult` for the info/error message)
 - [x] 3.2 Contribute `agento.selectModelProfile` ("Agento: Select Model Profile") and setting `agento.pluginRoot` in `extension/package.json`; register the command in `extension/src/extension.ts` via the bundled `CliClient` (info message with `changed.length` and the reload hint; errors to the Agento output channel); append `--plugin-root` to the Session & Doctor `doctor` call when a root resolves; assert the command id in `extension/test/electron/suite.ts` — verify: `cd extension && npm run typecheck && npm run test:unit && npm run test:electron` exit 0 (2026-10-01: typecheck 0; 84/84 unit; electron in-repo, companion, and workspace scenarios passed; `extensionIntegration.test.ts` source-shape assertions updated for the `--plugin-root` doctor call and the new command)
 - [x] 3.3 Add one paragraph each to `extension/README.md` and `docs/extension.md` (command and `agento.pluginRoot` setting) — verify: `grep -n "Select Model Profile" extension/README.md docs/extension.md` matches both
-- [ ] 3.4 When `agento.pluginRoot` is set but is not an Agento plugin clone, *Agento: Select Model Profile* names the configured path in its error instead of the generic "set agento.pluginRoot …" message; unit test in `extension/test/unit/modelProfiles.test.ts` (review finding 2) (added 2026-10-01) — verify: `cd extension && npm run typecheck && npm run test:unit` exit 0
+- [x] 3.4 When `agento.pluginRoot` is set but is not an Agento plugin clone, *Agento: Select Model Profile* names the configured path in its error instead of the generic "set agento.pluginRoot …" message; unit test in `extension/test/unit/modelProfiles.test.ts` (review finding 2) (added 2026-10-01) — verify: `cd extension && npm run typecheck && npm run test:unit` exit 0 (2026-10-01: typecheck 0; 85/85 unit pass; new pure `missingPluginRootMessage` used by `extension.ts`)
 - [ ] 3.5 Re-run the full gate for the review fixes: `git ls-files '*.sh' | xargs pnpm dlx shellcheck`, `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`, both replay-guard runs, `cd extension && npm run copy-cli && npm run typecheck && npm run test:unit`, `node --test tests/extension-bundle.test.mjs`; record the comparison on this line (added 2026-10-01) — verify: all exit 0
 
 ## Phase 4: Verification
