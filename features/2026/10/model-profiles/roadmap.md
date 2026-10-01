@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/model-profiles
 last-updated: 2026-10-01
 next-step: "1.1 Add scripts/model-profiles.mjs profile path resolution and schema validation with tests"
