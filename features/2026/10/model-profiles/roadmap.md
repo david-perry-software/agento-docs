@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profiles
 last-updated: 2026-10-01
-next-step: "1.9 Add the no-committed-model: test to tests/customizations.test.mjs"
+next-step: "2.1 Add the /agento models prompt and command mirror and register it"
 artifact-pr: "#18"
 ```
 
@@ -16,7 +16,7 @@ artifact-pr: "#18"
 - [x] 1.6 Implement `models apply <name>` and `models clear`: rewrite agents, prompts, and `commands/<name>.md` mirrors identically; `git update-index --skip-worktree` / `--no-skip-worktree`; refuse dirty targets (exit 3, `status: "dirty"`); non-git roots rewrite without flags (`skipWorktree: null`); idempotent `changed[]`; agento.test.mjs cases (apply → files + mirrors + `S` bits, `git status --porcelain` empty; re-apply → `changed: []`; clear → `git diff --quiet` and no `S` bits; dirty refusal; shipped template → exit 3 placeholder errors) — verify: `node --test scripts/agento.test.mjs` exit 0 (2026-10-01: 76/76 pass)
 - [x] 1.7 Add the `model-profile` doctor check (honors `--plugin-root`; `ok` no clone / none applied / `<name>` applied; `warn` invalid file or `custom` with the clear → pull → apply fallback), keep it out of `CAPABILITY_CHECKS`, add `COMMAND_NEEDS.models = ["terminal"]`; update the full-run check-id assertion (agento.test.mjs line ~1237) and add warn-on-custom and `--for models` cases — verify: `node --test scripts/agento.test.mjs` exit 0 and `node scripts/agento.mjs doctor --for models` prints `needs: ["terminal"]` (2026-10-01: 78/78 pass; the gh-missing test's all-ok status list also gained the ninth check)
 - [x] 1.8 Add `model-profiles.mjs` to `extension/scripts/copy-cli.mjs` and `tests/extension-bundle.test.mjs`; run `cd extension && npm run copy-cli` — verify: `node --test tests/extension-bundle.test.mjs` exit 0
-- [ ] 1.9 Add the "committed agents and prompts carry no `model:` line" test to `tests/customizations.test.mjs` (reads `git show HEAD:<file>` for every agent, prompt, and command mirror; message names `models clear`) — verify: `node --test tests/customizations.test.mjs` exit 0, and a temporary local commit adding `model:` to one agent makes it fail (then reset that local, unpushed commit)
+- [x] 1.9 Add the "committed agents and prompts carry no `model:` line" test to `tests/customizations.test.mjs` (reads `git show HEAD:<file>` for every agent, prompt, and command mirror; message names `models clear`) — verify: `node --test tests/customizations.test.mjs` exit 0, and a temporary local commit adding `model:` to one agent makes it fail (then reset that local, unpushed commit) (2026-10-01: 28/28 pass; probe commit on delivery-builder.agent.md failed the test with the `models clear` message, then `git reset HEAD~1` + checkout restored it)
 
 ## Phase 2: Slash command, policy, docs
 
