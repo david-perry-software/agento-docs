@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: feature/model-profiles
 last-updated: 2026-10-01
-next-step: "4.5 (manual) Replace every <…> placeholder of mixed in ~/.config/agento/model-profiles.json with model names from the chat picker"
+next-step: "1.10 models apply refuses a linked-worktree plugin root (review finding 1)"
 artifact-pr: "#18"
 ```
 
@@ -17,18 +17,22 @@ artifact-pr: "#18"
 - [x] 1.7 Add the `model-profile` doctor check (honors `--plugin-root`; `ok` no clone / none applied / `<name>` applied; `warn` invalid file or `custom` with the clear → pull → apply fallback), keep it out of `CAPABILITY_CHECKS`, add `COMMAND_NEEDS.models = ["terminal"]`; update the full-run check-id assertion (agento.test.mjs line ~1237) and add warn-on-custom and `--for models` cases — verify: `node --test scripts/agento.test.mjs` exit 0 and `node scripts/agento.mjs doctor --for models` prints `needs: ["terminal"]` (2026-10-01: 78/78 pass; the gh-missing test's all-ok status list also gained the ninth check)
 - [x] 1.8 Add `model-profiles.mjs` to `extension/scripts/copy-cli.mjs` and `tests/extension-bundle.test.mjs`; run `cd extension && npm run copy-cli` — verify: `node --test tests/extension-bundle.test.mjs` exit 0
 - [x] 1.9 Add the "committed agents and prompts carry no `model:` line" test to `tests/customizations.test.mjs` (reads `git show HEAD:<file>` for every agent, prompt, and command mirror; message names `models clear`) — verify: `node --test tests/customizations.test.mjs` exit 0, and a temporary local commit adding `model:` to one agent makes it fail (then reset that local, unpushed commit) (2026-10-01: 28/28 pass; probe commit on delivery-builder.agent.md failed the test with the `models clear` message, then `git reset HEAD~1` + checkout restored it)
+- [ ] 1.10 `models apply` refuses (exit 3, `status: "worktree"`, `primaryCheckout`, message naming `--plugin-root <primary>`) when the plugin root is a linked git worktree (an Agento development worktree) rather than the registered clone, so skip-worktree never hides edits in a dev worktree; `clear` still runs there (it only unpins); agento.test.mjs case on a fixture with a linked worktree (review finding 1) (added 2026-10-01) — verify: `node --test scripts/agento.test.mjs` exit 0
 
 ## Phase 2: Slash command, policy, docs
 
 - [x] 2.1 Add `.github/prompts/models.prompt.md` and byte-identical `commands/models.md` (`agent: "agent"`, `tools: [read, execute]`, `Needs: terminal`, `Fallback: none — every need is hard`, §9/§11 role `any`/§12, args `[list | show <name> | apply <name> | clear | init]`, quotes `active`/`changed[]`/`hint`, reload-window advice, never hand-edits frontmatter) and register `/agento models` in command-invocation.instructions.md, the delivery-policy §9 idempotency table, README.md, and docs/commands.md (table, `## Invocation`, CLI paragraph incl. `--plugin-root` and the `model-profile` check) — verify: `cmp commands/models.md .github/prompts/models.prompt.md` and `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0 (2026-10-01: cmp equal; 258/258 pass)
 - [x] 2.2 Add `docs/model-profiles.md` (schema, resolution rules, clear → `git pull` → apply, skip-worktree semantics, Agento-development worktree caveat), `templates/model-profiles.json` (one `mixed` profile, `<…>` placeholders), the docs/install.md `## Updating` paragraph, and one file-list line plus one Known-pitfalls line in `.github/agents/copilot-mechanic.agent.md` — verify: `node -e 'JSON.parse(require("fs").readFileSync("templates/model-profiles.json","utf8"))'` exit 0 and full test suite exit 0 (2026-10-01: JSON parses; 258/258 pass; the template itself landed in 1.5)
 - [x] 2.3 Rename CHANGELOG `## Unreleased` to `## 0.7.0 (unreleased)` with an **Added** entry; bump `package.json`, `.claude-plugin/plugin.json`, `extension/package.json`, and `extension/package-lock.json` root entries to 0.7.0 — verify: `grep -n '"version"' package.json .claude-plugin/plugin.json extension/package.json` all 0.7.0 and `node --test tests/customizations.test.mjs` exit 0 (2026-10-01: all three manifests and both lockfile root entries 0.7.0; 28/28 pass)
+- [ ] 2.4 Teach `.github/prompts/models.prompt.md` (and byte-identical `commands/models.md`) the `worktree` finding (quote `message` and `primaryCheckout`; apply from the primary window) and update docs/model-profiles.md "Developing Agento" (review finding 1) (added 2026-10-01) — verify: `cmp commands/models.md .github/prompts/models.prompt.md` and `node --test tests/customizations.test.mjs` exit 0
 
 ## Phase 3: Extension
 
 - [x] 3.1 Add pure `extension/src/modelProfiles.ts` (`resolvePluginRoot` with setting → `chat.pluginLocations` precedence, `~` expansion, `plugin.json` name check; `toQuickPickItems`; `selectionToArgs`) and `extension/test/unit/modelProfiles.test.ts` — verify: `cd extension && npm run typecheck && npm run test:unit` exit 0 (2026-10-01: typecheck 0; 84/84 unit pass; also `summarizeModelsResult` for the info/error message)
 - [x] 3.2 Contribute `agento.selectModelProfile` ("Agento: Select Model Profile") and setting `agento.pluginRoot` in `extension/package.json`; register the command in `extension/src/extension.ts` via the bundled `CliClient` (info message with `changed.length` and the reload hint; errors to the Agento output channel); append `--plugin-root` to the Session & Doctor `doctor` call when a root resolves; assert the command id in `extension/test/electron/suite.ts` — verify: `cd extension && npm run typecheck && npm run test:unit && npm run test:electron` exit 0 (2026-10-01: typecheck 0; 84/84 unit; electron in-repo, companion, and workspace scenarios passed; `extensionIntegration.test.ts` source-shape assertions updated for the `--plugin-root` doctor call and the new command)
 - [x] 3.3 Add one paragraph each to `extension/README.md` and `docs/extension.md` (command and `agento.pluginRoot` setting) — verify: `grep -n "Select Model Profile" extension/README.md docs/extension.md` matches both
+- [ ] 3.4 When `agento.pluginRoot` is set but is not an Agento plugin clone, *Agento: Select Model Profile* names the configured path in its error instead of the generic "set agento.pluginRoot …" message; unit test in `extension/test/unit/modelProfiles.test.ts` (review finding 2) (added 2026-10-01) — verify: `cd extension && npm run typecheck && npm run test:unit` exit 0
+- [ ] 3.5 Re-run the full gate for the review fixes: `git ls-files '*.sh' | xargs pnpm dlx shellcheck`, `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`, both replay-guard runs, `cd extension && npm run copy-cli && npm run typecheck && npm run test:unit`, `node --test tests/extension-bundle.test.mjs`; record the comparison on this line (added 2026-10-01) — verify: all exit 0
 
 ## Phase 4: Verification
 
@@ -42,3 +46,6 @@ artifact-pr: "#18"
 - [ ] 4.8 Clear the runtime profile: `node scripts/agento.mjs models clear --plugin-root /home/david/DP/agento` — verify: `git -C /home/david/DP/agento diff --quiet` exit 0 and `git -C /home/david/DP/agento ls-files -v | grep '^S'` prints nothing
 
 ## Follow-ups
+
+- Review finding 3 (info), decision 2026-10-01: no change. The `model-profile` doctor check warning on the shipped placeholders right after `models init` is the planned behavior ("warn when the profiles file is invalid"); it clears once the user fills the file (step 4.5).
+- Review finding 4 (info), decision 2026-10-01: no change. `modelsState` computing `dirty` on every verb costs ~230 ms on `models list`; acceptable today, revisit only if the target set grows or the dashboard refresh becomes slow.
