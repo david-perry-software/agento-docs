@@ -2,14 +2,14 @@
 status: in-progress
 branch: feature/model-profiles
 last-updated: 2026-10-01
-next-step: "1.2 Add AGENT_ALIASES, agent-name lookup, and resolveTargets with tests"
+next-step: "1.3 Add readModel/setModel byte-exact frontmatter editing with tests"
 artifact-pr: "#18"
 ```
 
 ## Phase 1: CLI core
 
 - [x] 1.1 Add `scripts/model-profiles.mjs` with `profilesFile(env)` (`AGENTO_CONFIG_HOME` → `$XDG_CONFIG_HOME/agento` → `~/.config/agento`) and `parseProfiles(text)` (schema, `[a-z0-9-]+` names, string | non-empty string[] values, `<`/`>` and control-character rejection, unknown alias/key errors), plus `scripts/model-profiles.test.mjs` covering each error — verify: `node --test scripts/model-profiles.test.mjs` exit 0
-- [ ] 1.2 Add `AGENT_ALIASES` (planner, builder, reviewer, autopilot, mechanic, architect → agent files), agent-name lookup, and `resolveTargets({ profile, agents, prompts })` implementing the resolution table (custom-agent prompts inherit; `prompts.<name>` on them is an error; built-in prompts use `prompts.<name>` ?? `default`; missing → `null`; unknown prompt key is an error), with tests — verify: `node --test scripts/model-profiles.test.mjs` exit 0
+- [x] 1.2 Add `AGENT_ALIASES` (planner, builder, reviewer, autopilot, mechanic, architect → agent files), agent-name lookup, and `resolveTargets({ profile, agents, prompts })` implementing the resolution table (custom-agent prompts inherit; `prompts.<name>` on them is an error; built-in prompts use `prompts.<name>` ?? `default`; missing → `null`; unknown prompt key is an error), with tests — verify: `node --test scripts/model-profiles.test.mjs` exit 0
 - [ ] 1.3 Add `readModel(text)` / `setModel(text, value|null)` editing exactly one top-level `model:` line (insert after `argument-hint:`, else after `description:`; replace; remove; JSON-quoted scalar or flow list; CRLF and all other bytes preserved), with byte-exact tests including arrays — verify: `node --test scripts/model-profiles.test.mjs` exit 0
 - [ ] 1.4 Add `detectActive({ profiles, current })` (`null` | profile name | `"custom"`) and a pure "differs from HEAD beyond the model line" comparator for dirty detection, with tests — verify: `node --test scripts/model-profiles.test.mjs` exit 0
 - [ ] 1.5 Add `case "models"` verbs `list` (default), `show <name>`, `init` to `scripts/agento.mjs`; `parseArgs` accepts `--plugin-root <dir>` (usage error without `<dir>/.github/agents`); output carries `profilesFile { path, exists }`, `pluginRoot`, `active`, `skipWorktree`, `dirty`, `hint`; add the usage header line and widen the `usage()` slice to `(1, 24)`; agento.test.mjs cases on a temp plugin fixture with `AGENTO_CONFIG_HOME` (list without file, init creates once then `created: false`, show unknown → exit 3, usage lists `models` and the full Options paragraph) — verify: `node --test scripts/agento.test.mjs` exit 0
