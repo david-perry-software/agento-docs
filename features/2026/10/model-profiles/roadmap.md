@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/model-profiles
 last-updated: 2026-10-01
-next-step: "3.5 Re-run the full gate for the review fixes"
+next-step: "4.5 (manual) Replace every <…> placeholder of mixed in ~/.config/agento/model-profiles.json with model names from the chat picker"
 artifact-pr: "#18"
 ```
 
@@ -32,7 +32,7 @@ artifact-pr: "#18"
 - [x] 3.2 Contribute `agento.selectModelProfile` ("Agento: Select Model Profile") and setting `agento.pluginRoot` in `extension/package.json`; register the command in `extension/src/extension.ts` via the bundled `CliClient` (info message with `changed.length` and the reload hint; errors to the Agento output channel); append `--plugin-root` to the Session & Doctor `doctor` call when a root resolves; assert the command id in `extension/test/electron/suite.ts` — verify: `cd extension && npm run typecheck && npm run test:unit && npm run test:electron` exit 0 (2026-10-01: typecheck 0; 84/84 unit; electron in-repo, companion, and workspace scenarios passed; `extensionIntegration.test.ts` source-shape assertions updated for the `--plugin-root` doctor call and the new command)
 - [x] 3.3 Add one paragraph each to `extension/README.md` and `docs/extension.md` (command and `agento.pluginRoot` setting) — verify: `grep -n "Select Model Profile" extension/README.md docs/extension.md` matches both
 - [x] 3.4 When `agento.pluginRoot` is set but is not an Agento plugin clone, *Agento: Select Model Profile* names the configured path in its error instead of the generic "set agento.pluginRoot …" message; unit test in `extension/test/unit/modelProfiles.test.ts` (review finding 2) (added 2026-10-01) — verify: `cd extension && npm run typecheck && npm run test:unit` exit 0 (2026-10-01: typecheck 0; 85/85 unit pass; new pure `missingPluginRootMessage` used by `extension.ts`)
-- [ ] 3.5 Re-run the full gate for the review fixes: `git ls-files '*.sh' | xargs pnpm dlx shellcheck`, `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`, both replay-guard runs, `cd extension && npm run copy-cli && npm run typecheck && npm run test:unit`, `node --test tests/extension-bundle.test.mjs`; record the comparison on this line (added 2026-10-01) — verify: all exit 0
+- [x] 3.5 Re-run the full gate for the review fixes: `git ls-files '*.sh' | xargs pnpm dlx shellcheck`, `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`, both replay-guard runs, `cd extension && npm run copy-cli && npm run typecheck && npm run test:unit`, `node --test tests/extension-bundle.test.mjs`; record the comparison on this line (added 2026-10-01) — verify: all exit 0 (2026-10-01, product HEAD containing `origin/main`: shellcheck exit 0, no findings, same as baseline; tests exit 0, 259/259 vs. 258/258 at review — the one new case is 1.10's; replay-guard exit 0 and companion replay exit 0, fixtures unchanged; copy-cli 0, typecheck 0, test:unit 85/85 vs. 84/84 — the new case is 3.4's; bundle test 4/4; tree clean)
 
 ## Phase 4: Verification
 
