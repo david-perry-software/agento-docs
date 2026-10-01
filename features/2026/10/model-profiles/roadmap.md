@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profiles
 last-updated: 2026-10-01
-next-step: "3.1 Add extension/src/modelProfiles.ts with unit tests"
+next-step: "3.2 Contribute and register agento.selectModelProfile and agento.pluginRoot"
 artifact-pr: "#18"
 ```
 
@@ -26,7 +26,7 @@ artifact-pr: "#18"
 
 ## Phase 3: Extension
 
-- [ ] 3.1 Add pure `extension/src/modelProfiles.ts` (`resolvePluginRoot` with setting → `chat.pluginLocations` precedence, `~` expansion, `plugin.json` name check; `toQuickPickItems`; `selectionToArgs`) and `extension/test/unit/modelProfiles.test.ts` — verify: `cd extension && npm run typecheck && npm run test:unit` exit 0
+- [x] 3.1 Add pure `extension/src/modelProfiles.ts` (`resolvePluginRoot` with setting → `chat.pluginLocations` precedence, `~` expansion, `plugin.json` name check; `toQuickPickItems`; `selectionToArgs`) and `extension/test/unit/modelProfiles.test.ts` — verify: `cd extension && npm run typecheck && npm run test:unit` exit 0 (2026-10-01: typecheck 0; 84/84 unit pass; also `summarizeModelsResult` for the info/error message)
 - [ ] 3.2 Contribute `agento.selectModelProfile` ("Agento: Select Model Profile") and setting `agento.pluginRoot` in `extension/package.json`; register the command in `extension/src/extension.ts` via the bundled `CliClient` (info message with `changed.length` and the reload hint; errors to the Agento output channel); append `--plugin-root` to the Session & Doctor `doctor` call when a root resolves; assert the command id in `extension/test/electron/suite.ts` — verify: `cd extension && npm run typecheck && npm run test:unit && npm run test:electron` exit 0
 - [ ] 3.3 Add one paragraph each to `extension/README.md` and `docs/extension.md` (command and `agento.pluginRoot` setting) — verify: `grep -n "Select Model Profile" extension/README.md docs/extension.md` matches both
 
