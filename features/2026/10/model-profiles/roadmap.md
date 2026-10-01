@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/model-profiles
 last-updated: 2026-10-01
-next-step: "4.6 Apply mixed to the registered plugin clone /home/david/DP/agento"
+next-step: "4.7 (manual) Reload the window, confirm the model picker pins for Planner and Builder, and attach a screenshot"
 artifact-pr: "#18"
 ```
 
@@ -41,7 +41,7 @@ artifact-pr: "#18"
 - [x] 4.3 Extension release checks: `cd extension && npm run copy-cli && npm run typecheck && npm run test:unit && npm run test:electron && npm run package` — verify: all exit 0 and `node --test tests/extension-bundle.test.mjs` exit 0 (2026-10-01: copy-cli, typecheck, test:unit 84/84, test:electron (3 scenarios), package → agento-dashboard-0.7.0.vsix (33 files), bundle test — all exit 0; tree clean)
 - [x] 4.4 Run `node scripts/agento.mjs models init` with the real home directory (creates `~/.config/agento/model-profiles.json` only if absent) and report its path — verify: `models list` shows profile `mixed` and `profilesFile.exists: true` (2026-10-01: file was absent, no XDG/AGENTO overrides; init created=true at `/home/david/.config/agento/model-profiles.json`; list → profiles=mixed, exists=true, active=null)
 - [x] 4.5 (manual) Replace every `<…>` placeholder of `mixed` in `~/.config/agento/model-profiles.json` with model names from your chat picker (e.g. a strong model for planner/reviewer/architect, a cheaper one as `default`) — verify: `node scripts/agento.mjs models show mixed` exits 0 with no `errors` (2026-10-01: the user chose the names in chat, confirmed the exact picker spellings, and asked the agent to write the file: `default` and `builder` DeepSeek V4 Pro, `planner` and `architect` Claude Opus 5.5, `reviewer` Claude Fable 5.1; `models show mixed` exit 0, `errors: []`, 56 targets; evidence: [step-4-5-profiles-filled.png](evidence/step-4-5-profiles-filled.png))
-- [ ] 4.6 Apply to the registered plugin clone: confirm `/home/david/DP/agento` is clean, then `node scripts/agento.mjs models apply mixed --plugin-root /home/david/DP/agento` — verify: `changed[]` lists the agents/prompts/mirrors, `git -C /home/david/DP/agento status --porcelain` empty, `models list --plugin-root /home/david/DP/agento` → `active: "mixed"`
+- [x] 4.6 Apply to the registered plugin clone: confirm `/home/david/DP/agento` is clean, then `node scripts/agento.mjs models apply mixed --plugin-root /home/david/DP/agento` — verify: `changed[]` lists the agents/prompts/mirrors, `git -C /home/david/DP/agento status --porcelain` empty, `models list --plugin-root /home/david/DP/agento` → `active: "mixed"` (2026-10-01: clone clean on `main`, no `S` bits before; apply exit 0, changed=54 (6 agents + 24 prompts + 24 mirrors; `main` has no `models` prompt yet), skipWorktree=54, dirty=[]; `git status --porcelain` empty; planner `model: "Claude Opus 5.5"`, builder `model: "DeepSeek V4 Pro"`, reviewer `model: "Claude Fable 5.1"`; list active=mixed; every `commands/<n>.md` `cmp`-equal)
 - [ ] 4.7 (manual) Run *Developer: Reload Window*, open a non-Agento repository, select 📋 Agento Planner and confirm the model picker shows the pinned model; then trigger a handoff to 🔨 Agento Builder (or select it) and confirm the model switches to the Builder's pin; attach a screenshot showing the picker — verify: screenshot saved as `evidence/step-4-7-model-picker.png` and linked here; if the handoff ignored the Builder's `model:`, a follow-up for `handoffs[].model` is recorded below
 - [ ] 4.8 Clear the runtime profile: `node scripts/agento.mjs models clear --plugin-root /home/david/DP/agento` — verify: `git -C /home/david/DP/agento diff --quiet` exit 0 and `git -C /home/david/DP/agento ls-files -v | grep '^S'` prints nothing
 
