@@ -3,17 +3,17 @@
 Verdict: request-changes
 
 Re-review on 2026-10-01 at product `330c7bb` (feature/model-profiles, PR #71), with the
-companion artifacts on feature/model-profiles (PR #18). Both halves contain `origin/main`
-and match their remotes. The roadmap is `status: paused` at 4.5 (manual), with 23 of 27
-steps ticked. The first review was at `483c207`.
+companion artifacts at `85c8e58` on feature/model-profiles (PR #18). Both halves contain
+`origin/main` and match their remotes. The roadmap is `status: paused` at 4.7 (manual),
+with 25 of 27 steps ticked. Earlier reviews were at `483c207` and `330c7bb`, before the
+4.5 and 4.6 ticks.
 
-The fix round resolved both minor findings from the first review, and every automated
-check passes. The verdict is still request-changes for one reason only: the plan's last
-acceptance item, the VS Code runtime check (roadmap steps 4.5–4.8), has not been done.
-Those steps are `(manual)` steps scheduled before review, not a policy §4 post-ship
-exception, so the item scores fail, not `deferred to post-ship`. No code changes are
-required. Once you finish 4.5 and 4.7, the Builder completes 4.6 and 4.8, and the
-delivery can be reviewed again for approval.
+The product code is unchanged since the last review, and every automated check still
+passes. Steps 4.5 and 4.6 are now done and verified. The verdict is still
+request-changes for one reason only: the runtime check in VS Code (4.7) has not run,
+and the cleanup (4.8) has not either. Those are pre-review steps, not a policy §4
+post-ship exception. No code changes are required. Once you finish 4.7 and the Builder
+clears the profile in 4.8, the delivery can be reviewed again for approval.
 
 ## Acceptance checklist results
 
@@ -81,11 +81,18 @@ delivery can be reviewed again for approval.
       (baseline 229, first review 258; the one new test belongs to 1.10).
     - `replay-guard.sh` exit 0, and with `REPLAY_COMPANION=1` exit 0.
     - Extension typecheck exit 0.
-11. **fail**: the runtime check in VS Code has not run. Steps 4.5 (manual), 4.6, 4.7
-    (manual), and 4.8 are unticked; there is no `evidence/step-4-7-model-picker.png`.
-    `node scripts/agento.mjs models show mixed` still exits 3 with four placeholder
-    errors in `~/.config/agento/model-profiles.json`. Until it runs, it is unproven that VS Code honors `model:` on plugin-mode
-    `commands/*.md` and through a handoff.
+11. **fail** (partly done): the runtime check is incomplete.
+    - Done: 4.5 and 4.6 are ticked and hold. `models show mixed` exits 0 with
+      `errors: []`. `/home/david/DP/agento` has 54 skip-worktree bits, 6 of 6 agents
+      carry `model:`, `git status --porcelain` is empty, `models list` reports
+      `active: mixed`, and `doctor --plugin-root /home/david/DP/agento` reports
+      `model-profile ok "mixed applied"`, which is the doctor check working against a
+      real clone.
+    - Outstanding: 4.7 (manual) is unticked, and there is no
+      `evidence/step-4-7-model-picker.png`. The newest file in `~/Pictures/Screenshots`
+      is from 11:45, before this run. 4.8 (clear) is also unticked.
+    - Still unproven: that VS Code honors `model:` on plugin-mode `commands/*.md` and
+      through a handoff.
 
 ## Plan vs implementation
 
@@ -120,8 +127,14 @@ delivery can be reviewed again for approval.
   the registrations, the versions, the extension contribution and setting, and the
   real `~/.config/agento/model-profiles.json` existing for 4.4. No falsely ticked
   boxes.
-- `status: paused` with `next-step: "4.5 (manual) …"` is the correct pause kind under
+- `status: paused` with `next-step: "4.7 (manual) …"` is the correct pause kind under
   policy §3.
+- 4.5 (manual) is ticked with linked evidence, `evidence/step-4-5-profiles-filled.png`,
+  a capture of the `models show mixed` output. The line records that the user chose
+  and confirmed the names in chat and asked the agent to write the file. That meets
+  §3 for a configuration step.
+- 4.6 is ticked, and its recorded numbers match the live clone: 54 changed and 54 `S`
+  bits. `main` does not have the `models` prompt yet, which is why it is not 56.
 - The roadmap Follow-ups record the Builder's decisions on findings 3 and 4 (no
   change).
 - No falsely ticked boxes; no repairs needed.
@@ -140,6 +153,11 @@ No open findings above informational.
    until the user fills them in. Accepted as planned behavior (roadmap Follow-ups).
 4. **info**: `dirty` is computed on every verb, costing about 230 ms on
    `models list`. Accepted for now (roadmap Follow-ups).
+5. **info**: until 4.8 runs, the primary clone `/home/david/DP/agento` is pinned (54
+   skip-worktree files). A `git pull` there, or the `main` sync in `/agento ship`,
+   stops with "would be overwritten" whenever a merged change touches a pinned file.
+   That is the documented, safe behavior, but finish 4.8 before any other ship from
+   the primary window.
 
 Security: profile values reject control characters and `<`/`>` and are serialized
 with JSON escaping. An injected `"x\"\ntools: [execute]"` value was rejected (exit 3).
