@@ -1,0 +1,52 @@
+Extracted 2026-10-02 by the planner (read-only) from the soshiki window
+plan-20261002-213543 (workspace storage d8f8087a25de51c2b43f460bb22c5af2,
+chat cdb2d7fb-53c7-48ef-b0b6-2c4c370e40ce.jsonl). VS Code 1.136.0, Copilot Chat
+0.64.0, Local harness (chat input shows "Local"). Times are EDT.
+
+Profile applied to /home/david/DP/agento (`agento.mjs models list` → active: "mixed"):
+  delivery-autopilot.agent.md  model: "DeepSeek V4 Pro (deepseek)"
+  delivery-builder.agent.md    model: "DeepSeek V4 Pro (deepseek)"
+  copilot-mechanic.agent.md    model: "DeepSeek V4 Pro (deepseek)"
+  delivery-planner.agent.md    model: "Claude Opus 5.5 (copilot)"
+  initiative-architect.agent.md model: "Claude Opus 5.5 (copilot)"
+  delivery-reviewer.agent.md   model: "Claude Fable 5.1 (copilot)"
+No handoffs[] entry carries model:.
+
+Requests (record index, agent, request modelId):
+  rec 2    17:36:46  📋 Agento Planner   /agento new-feature initiative:codebase-modularization/api-shared-kernel  copilot/claude-opus-5.5
+  rec 45   ~17:51    📋 Agento Planner   (follow-up)                                                              copilot/claude-opus-5.5
+  rec 102  18:44:54  🤖 Agento Autopilot /agento ap api-shared-kernel                                              deepseek/deepseek-v4-pro
+  rec 137  19:10:40  🤖 Agento Autopilot (follow-up)                                                              deepseek/deepseek-v4-pro
+  rec 155  19:14:13  🤖 Agento Autopilot /agento ap api-shared-kernel                                              deepseek/deepseek-v4-pro
+
+runSubagent invocations (toolSpecificData kind=subagent):
+  rec 21/31  agentName "search" (Explore)          modelName "Copilot Agent A (Preview)"   (Planner request)
+  rec 102    agentName "🔨 Agento Builder"          modelName "DeepSeek V4 Pro"
+             arguments: {"agentName":"🔨 Agento Builder","description":"Build api-shared-kernel roadmap","prompt":"Slug: api-shared-kernel …"}  — no "model" argument
+  rec 164    agentName "🔨 Agento Builder"          modelName "DeepSeek V4 Pro"   ("Resume api-shared-kernel build")  — no "model" argument
+
+No "🔍 Agento Reviewer" subagent invocation in this transcript (the run had not
+reached review). A search of every chatSessions/*.jsonl under
+~/.config/Code/User/workspaceStorage found Reviewer subagent runs only in
+plan-20260926-034653 (2026-09-26, before any profile existed: Reviewer and
+Builder both on "Claude Fable 5.1", the picker model).
+
+Conclusion: the Builder-on-DeepSeek runs do not discriminate (the Builder's own
+pin and the Autopilot's model are both DeepSeek V4 Pro). The reported
+Reviewer-on-DeepSeek behaviour is unreproduced at planning time; roadmap phase 1
+runs the discriminating live test.
+
+VS Code docs (code.visualstudio.com/docs/agents/run/subagents, page dated
+2026-09-30), "Select the model for a subagent" (Local harness):
+  "Local subagents select a model in this order:
+   1 An explicit model parameter supplied by the main agent to the runSubagent tool.
+   2 The selected custom agent's model property …
+   3 Auto, when chat.subagents.defaultToAuto is enabled …
+   4 The model running the main conversation."
+  "Explicit and agent-configured model selections are checked against the main
+   model's cost tier. If a selection exceeds that tier, the subagent doesn't run
+   and reports which models are available."
+  "Subagents of a bring your own key model continue to use that model unless you
+   specify a different one."
+Custom agents docs: "handoffs.model — Optional language model to use when the
+handoff executes. Use the qualified model name in the format Model Name (vendor)".
