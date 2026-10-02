@@ -1,0 +1,5 @@
+{
+  "kind": "error",
+  "message": "Invalid Session & Doctor response: branch must be a non-empty string",
+  "statusBarText": "Agento: unavailable"
+}

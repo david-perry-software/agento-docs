@@ -1,0 +1,41 @@
+Reviewer verification re-run — 2026-10-02 (issue/session-doctor-detached-companion)
+
+All commands run in the product half
+(/home/david/DP/agento-worktrees/plan-20261002-155631) at HEAD 84399c1,
+branch issue/session-doctor-detached-companion, origin/main an ancestor of HEAD.
+
+1. cd extension && npm run typecheck
+   exit=0 (tsc --noEmit -p ./)
+
+2. cd extension && npm run test:unit
+   exit=0 — # tests 86, # pass 86, # fail 0
+   includes: "session doctor model renders a detached companion as \"detached\"
+   (#75 session-doctor-detached-companion)" → ok
+
+3. node <companion>/issues/2026/10/session-doctor-detached-companion/evidence/repro-detached-companion.mjs
+   exit=0 — "kind": "ready", companion."branch": "detached",
+   companion."state": "registered, detached, clean"
+   (captured to review-repro-output.json)
+
+4. node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'
+   exit=0 — # tests 259, # pass 259, # fail 0
+
+5. cd extension && npm run test:electron
+   exit=0 — all three scenarios passed:
+   - Electron in-repo scenario passed
+   - Electron companion scenario passed
+   - Electron workspace scenario passed
+
+6. npm run lint:hooks
+   exit=127 — "shellcheck: not found" (command -v shellcheck empty; unchanged
+   from the recorded baseline). Product diff contains no scripts/hooks/ or
+   scripts/wait-for-checks.sh file.
+
+7. git diff --name-only origin/main...HEAD
+   CHANGELOG.md
+   extension/src/sessionDoctorModel.ts
+   extension/test/unit/sessionDoctorModel.test.ts
+   (exactly the three files the plan names)
+
+8. git diff --stat origin/main...HEAD -- extension/src
+   extension/src/sessionDoctorModel.ts | 2 +-  (one insertion, one deletion)

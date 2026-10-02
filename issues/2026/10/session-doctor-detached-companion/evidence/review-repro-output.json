@@ -1,0 +1,49 @@
+{
+  "kind": "ready",
+  "session": {
+    "role": "plan",
+    "lifecycle": "no-delivery",
+    "deliverySlug": null,
+    "worktreePath": "/home/david/DP/agento-worktrees/plan-20261002-155631",
+    "branch": "detached",
+    "workspace": "/home/david/DP/agento-worktrees/plan-20261002-155631.code-workspace (exists)"
+  },
+  "companion": {
+    "path": "/home/david/DP/agento-docs-worktrees/plan-20261002-155631",
+    "branch": "detached",
+    "state": "registered, detached, clean",
+    "sync": "ahead 0, behind 0"
+  },
+  "warnings": [],
+  "checks": [
+    {
+      "id": "node",
+      "status": "ok",
+      "detail": "node v22.23.2",
+      "fallback": null
+    }
+  ],
+  "actions": [
+    {
+      "command": "/agento continue",
+      "window": "here",
+      "reason": null
+    },
+    {
+      "command": "/agento new-feature",
+      "window": "here",
+      "reason": null
+    },
+    {
+      "command": "/agento new-issue",
+      "window": "here",
+      "reason": null
+    },
+    {
+      "command": "/agento delivery-status",
+      "window": "here",
+      "reason": null
+    }
+  ],
+  "statusBarText": "Agento: plan · 0 active"
+}
