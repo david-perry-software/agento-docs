@@ -4,6 +4,7 @@ branch: issue/autopilot-subagent-model-pins
 last-updated: 2026-10-02
 next-step: "1.1 (manual) capture Run A: the api-shared-kernel Autopilot's Reviewer subagent model"
 github-issue: "#79"
+artifact-pr: "#22"
 ```
 
 ## Phase 1: Live reproduction
