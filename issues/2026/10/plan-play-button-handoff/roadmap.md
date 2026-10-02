@@ -2,14 +2,14 @@
 status: in-progress
 branch: issue/plan-play-button-handoff
 last-updated: 2026-10-02
-next-step: "1.1 Add the exposing regression tests in extension/test/unit/planPlayButtonHandoff.test.ts and verify they fail"
+next-step: "2.1 In-window routing: extend Session/parseSession with role and worktree and submit request.command in-window for a plan-role detached session"
 github-issue: "#77"
 artifact-pr: "#21"
 ```
 
 ## Phase 1: Expose the defect
 
-- [ ] 1.1 Export `NEW_PLAN_FLOW_DEFAULTS` from `extension/src/newPlanFlow.ts` with today's
+- [x] 1.1 Export `NEW_PLAN_FLOW_DEFAULTS` from `extension/src/newPlanFlow.ts` with today's
   unchanged value `{ pollIntervalMs: 1000, timeoutMs: 120000 }` and use it as
   `startNewPlan`'s default in `extension/src/extension.ts` (pure hoist, no behaviour
   change); add `extension/test/unit/planPlayButtonHandoff.test.ts` whose header comment
