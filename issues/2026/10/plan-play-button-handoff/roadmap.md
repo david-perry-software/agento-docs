@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/plan-play-button-handoff
 last-updated: 2026-10-02
-next-step: "2.1 In-window routing: extend Session/parseSession with role and worktree and submit request.command in-window for a plan-role detached session"
+next-step: "2.2 Command-file attachment: add resolveCommandFile and wire the commandFile dependency into every dispatcher dependency set"
 github-issue: "#77"
 artifact-pr: "#21"
 ```
@@ -26,7 +26,7 @@ artifact-pr: "#21"
 
 ## Phase 2: Fix
 
-- [ ] 2.1 In-window routing: extend `Session`/`parseSession` in
+- [x] 2.1 In-window routing: extend `Session`/`parseSession` in
   `extension/src/newPlanFlow.ts` with `role` and `worktree { path, detached }` (absent →
   `null`, malformed → throw) and, when `role === "plan"` and `worktree.detached === true`,
   submit `request.command` to `{ kind: "folder", path: worktree.path }` and return
