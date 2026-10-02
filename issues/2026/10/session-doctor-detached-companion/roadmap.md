@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/session-doctor-detached-companion
 last-updated: 2026-10-02
-next-step: "2.2 rebuild and prove the exposing test and the captured reproduction pass"
+next-step: "2.3 add the Fixed CHANGELOG bullet for the detached companion fix"
 github-issue: "#75"
 artifact-pr: "#20"
 ```
@@ -14,7 +14,7 @@ artifact-pr: "#20"
 ## Phase 2: Fix the parser
 
 - [x] 2.1 In `extension/src/sessionDoctorModel.ts` `parseCompanion()`, change `branch: requiredString(companion, "branch")` to `branch: nullableString(companion, "branch") ?? "detached"`; leave `CompanionSummary`, `sessionDoctorProvider.ts`, and every other file untouched — verify: `cd extension && npm run typecheck` exits 0 and `git diff --stat origin/main...HEAD -- extension/src` lists only `sessionDoctorModel.ts` with a one-line change
-- [ ] 2.2 Rebuild and prove the exposing test and the captured reproduction now pass — verify: `cd extension && npm run test:unit; echo "exit=$?"` prints `exit=0` with `# tests 86`, `# fail 0`, and step 1.1's test `ok`; `node <companion.path>/issues/2026/10/session-doctor-detached-companion/evidence/repro-detached-companion.mjs` prints `"kind": "ready"` and, under `companion`, `"branch": "detached"` and `"state": "registered, detached, clean"`
+- [x] 2.2 Rebuild and prove the exposing test and the captured reproduction now pass — verify: `cd extension && npm run test:unit; echo "exit=$?"` prints `exit=0` with `# tests 86`, `# fail 0`, and step 1.1's test `ok`; `node <companion.path>/issues/2026/10/session-doctor-detached-companion/evidence/repro-detached-companion.mjs` prints `"kind": "ready"` and, under `companion`, `"branch": "detached"` and `"state": "registered, detached, clean"`
 - [ ] 2.3 Add a **Fixed** bullet under `## Unreleased` in `CHANGELOG.md` (insert the `## Unreleased` heading above `## 0.7.0 (2026-10-02)` if absent; keep it if PR #74 has already added it) stating that the extension's Session & Doctor view rendered `Invalid Session & Doctor response: branch must be a non-empty string` in companion-mode planning windows whose companion half was detached, and now shows the companion `Branch` row as `detached` like the session worktree row (`#75`) — verify: `grep -n '#75' CHANGELOG.md` hits one line and `sed -n '1,6p' CHANGELOG.md` shows `## Unreleased` before `## 0.7.0`
 
 ## Phase 3: Gate and publish
