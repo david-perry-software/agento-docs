@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: issue/session-doctor-detached-companion
 last-updated: 2026-10-02
-next-step: "review"
+next-step: ""
 github-issue: "#75"
 artifact-pr: "#20"
 ```
