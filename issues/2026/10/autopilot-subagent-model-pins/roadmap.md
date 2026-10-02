@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/autopilot-subagent-model-pins
 last-updated: 2026-10-02
-next-step: "2.1 add the exposing regression test (manual steps sequenced late per directive)"
+next-step: "3.1 add handoff-pin helpers to model-profiles.mjs (manual steps sequenced late per directive)"
 github-issue: "#79"
 artifact-pr: "#22"
 ```
