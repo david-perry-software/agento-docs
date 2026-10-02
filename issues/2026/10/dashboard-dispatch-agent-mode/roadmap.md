@@ -82,7 +82,7 @@ artifact-pr: "#19"
 - [x] 4.2 Full gate (policy §5): `git ls-files '*.sh' | xargs pnpm dlx shellcheck`
   exit 0 (no findings, 4 scripts); `node --test 'scripts/**/*.test.mjs'
   'tests/**/*.test.mjs'` 259 pass / 0 fail; `cd extension && npm run typecheck`
-  exit 0; `cd extension && npm run test:unit` 96 pass / 0 fail; no new findings
+  exit 0; `cd extension && npm run test:unit` 97 pass / 0 fail; no new findings
   versus the plan.md baseline — verify: the recorded statuses are all 0.
 - [x] 4.3 Write plan.md `## Resolution` (root cause, what changed, proof the 1.1
   test passes), merge `origin/main` into the product branch and the companion's
