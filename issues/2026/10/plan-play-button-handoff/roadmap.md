@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/plan-play-button-handoff
 last-updated: 2026-10-02
-next-step: "2.2 Command-file attachment: add resolveCommandFile and wire the commandFile dependency into every dispatcher dependency set"
+next-step: "2.3 Timeout: change NEW_PLAN_FLOW_DEFAULTS to timeoutMs 300000"
 github-issue: "#77"
 artifact-pr: "#21"
 ```
@@ -34,7 +34,7 @@ artifact-pr: "#21"
   `newPlanFlow.test.ts` (non-plan roles and attached `plan` keep the start-session path)
   — verify: `cd extension && npm run test:unit` — test (a) passes, all existing
   `newPlanFlow.test.ts` cases pass, (b) and (c) still fail.
-- [ ] 2.2 Command-file attachment: add `resolveCommandFile` to
+- [x] 2.2 Command-file attachment: add `resolveCommandFile` to
   `extension/src/commandAgent.ts` (with `commandAgent.test.ts` cases for non-canonical,
   no plugin root, missing file, resolved path); add the required `commandFile`
   dependency to `extension/src/commandDispatcher.ts` (`CommandDispatcherDependencies`,
