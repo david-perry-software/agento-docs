@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dashboard-dispatch-agent-mode
 last-updated: 2026-10-02
-next-step: "2.1 create commandAgent.ts and its unit tests"
+next-step: "2.2 thread chatMode through the dispatcher"
 github-issue: "#73"
 artifact-pr: "#19"
 ```
@@ -22,7 +22,7 @@ artifact-pr: "#19"
 
 ## Phase 2: Fix the dispatcher
 
-- [ ] 2.1 Create `extension/src/commandAgent.ts` with `commandName`,
+- [x] 2.1 Create `extension/src/commandAgent.ts` with `commandName`,
   `readCommandAgent`, and `resolveChatMode` as designed in plan.md `## Approach`
   (quoted or bare `agent:` scalar; missing `agent:` or `"agent"` → `"agent"`;
   `pluginRoot === null` or unreadable file → `{ mode: null, reason }`), plus
