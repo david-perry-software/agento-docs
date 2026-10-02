@@ -4,6 +4,7 @@ branch: issue/dashboard-dispatch-agent-mode
 last-updated: 2026-10-02
 next-step: "1.1 add the exposing regression test and verify it fails"
 github-issue: "#73"
+artifact-pr: "#19"
 ```
 
 ## Phase 1: Expose the defect
