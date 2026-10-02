@@ -1,171 +1,176 @@
 # Review: model-profiles
 
-Verdict: request-changes
+Verdict: approve
 
-Re-review on 2026-10-01 at product `330c7bb` (feature/model-profiles, PR #71), with the
-companion artifacts at `85c8e58` on feature/model-profiles (PR #18). Both halves contain
-`origin/main` and match their remotes. The roadmap is `status: paused` at 4.7 (manual),
-with 25 of 27 steps ticked. Earlier reviews were at `483c207` and `330c7bb`, before the
-4.5 and 4.6 ticks.
+Re-review on 2026-10-01 at product `afc5114` (feature/model-profiles, PR #71), with the
+companion artifacts at `09cc0b2` on feature/model-profiles (PR #18). Both halves match
+their remotes and contain their `origin/main`. The roadmap is `status: in-review` with
+28 of 28 steps ticked. Earlier reviews were at `483c207` and `330c7bb`; the last one
+requested changes only because the runtime check (4.7) and the cleanup (4.8) were
+outstanding.
 
-The product code is unchanged since the last review, and every automated check still
-passes. Steps 4.5 and 4.6 are now done and verified. The verdict is still
-request-changes for one reason only: the runtime check in VS Code (4.7) has not run,
-and the cleanup (4.8) has not either. Those are pre-review steps, not a policy §4
-post-ship exception. No code changes are required. Once you finish 4.7 and the Builder
-clears the profile in 4.8, the delivery can be reviewed again for approval.
+Since then, 4.5–4.8 are done and a new step, 4.9, makes the guidance require
+vendor-qualified model names. Attempt 1 of 4.7 found that VS Code ignores an
+unqualified pin for a non-Copilot model. The only product change since `330c7bb` is
+`afc5114` (4.9): four documentation and template files. Every automated check passes
+again, the runtime evidence is in place, and the primary clone is clean. Every
+acceptance item passes and there are no findings above informational.
+
+Skills consulted: none — no matching domain (the repository has no `.agents/skills/`
+and AGENTS.md has no `## Agento` skills table).
 
 ## Acceptance checklist results
 
 1. **pass**: `scripts/model-profiles.test.mjs` covers schema errors, the resolution
-   table, byte-exact insert/replace/remove (including the `description:` and closing
-   `---` fallbacks, CRLF, and collapsing duplicate or block-list keys), array values,
-   and active detection (17 tests, lines 9–191). They pass inside the full run: 259/259.
-2. **pass**: `agento.test.mjs` covers apply/clear against a temp fixture: files,
-   mirrors, `S` bits, `changed: []` on repeat, `git diff --quiet` after clear, dirty
-   refusal, non-git roots, `init` creating the file once, and (new in 1.10) the
-   linked-worktree refusal (tests at lines 2508–2707). The first review's independent
-   end-to-end run on a temp clone (`/tmp/rv-e2e.sh`, temp `AGENTO_CONFIG_HOME`)
-   matched:
-   - `init` gave `created=true`, then `created=false`.
-   - Applying the unfilled template exits 3.
-   - `apply mixed` changed 56 files and set 56 skip-worktree bits, `active=mixed`,
-     `git status --porcelain` stayed empty, and 6 of 6 agents were pinned.
-   - Every `commands/<n>.md` is `cmp`-equal to its prompt.
-   - Re-apply gave `changed=[]`. An edit beyond the `model:` line gave
-     `status=dirty`, exit 3.
-   - `clear` changed 56 files, `active=null`, `git diff --quiet` returned 0, and no
-     `S` bits remained.
-3. **pass**: `doctor` lists `model-profile`:
-   - `ok` "mixed applied".
-   - `warn` "match no profile" after a hand edit.
-   - `warn` for an invalid file.
-
-   `doctor --for models` prints `{"command":"models","needs":["terminal"]}` and the
-   unchanged terminal check set `node,python3,worktrees-dir,session-workspace,artifact-repo`.
-4. **pass**: usage header test (agento.test.mjs line 2579). `usage()` now uses
-   `.slice(1, 24)`, so the `// Options:` paragraph stays whole.
-5. **pass**: the no-pin test (`tests/customizations.test.mjs`, last test) reads
-   `git show HEAD:<file>`. The Builder's probe commit failed it with the
-   `models clear` message (roadmap 1.9). `/agento models` is registered in
-   command-invocation, the §9 idempotency table, README.md, and docs/commands.md, all
-   enforced by the full suite (259/259).
-6. **pass**:
-   - `docs/model-profiles.md` covers schema, resolution, apply/clear, updating, and
-     the Agento-development caveat, now including the worktree refusal.
-   - `templates/model-profiles.json` has one `mixed` profile with placeholders,
-     rejected by the agento.test.mjs line 2665 case.
-   - docs/install.md has the `## Updating` paragraph.
-   - The Mechanic agent has its file-list and Known-pitfalls lines.
-7. **pass**: CHANGELOG has `## 0.7.0 (unreleased)` with an **Added** entry.
-   `package.json`, `.claude-plugin/plugin.json`, and `extension/package.json`
-   (plus the lockfile's root entries) read 0.7.0, and the customizations version test
-   passes.
-8. **pass**: `cd extension`, then (rerun at `330c7bb`):
-   - `npm run copy-cli` leaves `cli/` unchanged.
+   table, byte-exact insert/replace/remove (including CRLF and the `description:`
+   fallback), array values, and active detection. It passes inside the full run,
+   259/259.
+2. **pass**: the `agento.test.mjs` apply/clear cases (files, mirrors, `S` bits,
+   `changed: []` on repeat, `git diff --quiet` after clear, dirty refusal, non-git
+   roots, `init` once, linked-worktree refusal) pass inside the full run. The code
+   is unchanged since the reviewer's independent temp-clone end-to-end run at
+   `483c207`.
+3. **pass**: `node scripts/agento.mjs doctor --plugin-root /home/david/DP/agento`
+   reports `model-profile` `ok` "no profile applied to /home/david/DP/agento".
+   `doctor --for models` reports `needs: ["terminal"]`. The warn cases are covered by
+   agento.test.mjs (259/259).
+4. **pass**: the usage assertion (`usage()` `.slice(1, 24)`) passes in the full run.
+5. **pass**: the no-pin test in `tests/customizations.test.mjs` passes. Registrations
+   are enforced by the suite. `cmp commands/models.md .github/prompts/models.prompt.md`
+   gives exit 0 after the 4.9 edit.
+6. **pass**: `docs/model-profiles.md`, `templates/model-profiles.json`, the
+   docs/install.md Updating paragraph, and the Mechanic lines are present. The
+   template still parses (`node -e 'JSON.parse(…)'` exit 0). Its 4.9 placeholders
+   still contain `<…>`, so the shipped-template case (exit 3, placeholder errors)
+   still passes.
+7. **pass**: CHANGELOG `## 0.7.0 (unreleased)` with **Added**; all three manifests
+   are 0.7.0; the customizations version test passes.
+8. **pass** (rerun at `afc5114`): `cd extension`, then:
+   - `npm run copy-cli` exit 0, leaving the tree clean.
    - `npm run typecheck` exit 0.
-   - `npm run test:unit` exit 0 (85/85, including the new `missingPluginRootMessage`
-     case).
-   - `npm run test:electron` exit 0 (3 scenarios passed).
-   - `npm run package` exit 0 (agento-dashboard-0.7.0.vsix, 33 files, VSIX assertion
-     passed).
+   - `npm run test:unit` exit 0, 85/85.
+   - `node --test tests/extension-bundle.test.mjs` exit 0.
 
-   The doctor call appends `--plugin-root` when a root resolves
-   (`extension/src/extension.ts`).
-9. **pass**: the Builder's transcript in roadmap 4.2 matches the reviewer's independent
-   run (item 2).
-10. **pass**: full gate rerun by the reviewer at `330c7bb`:
-    - `git ls-files '*.sh' | xargs pnpm dlx shellcheck` exit 0 with no findings, the
+   The extension sources have not changed since `330c7bb`, where `test:electron` and
+   `package` were rerun by the reviewer (exit 0, agento-dashboard-0.7.0.vsix).
+9. **pass**: the 4.2 transcript matches the reviewer's independent temp-clone run
+   (code unchanged since).
+10. **pass**: full gate rerun by the reviewer at `afc5114`:
+    - `git ls-files '*.sh' | xargs pnpm dlx shellcheck` exit 0 with empty output, the
       same as the baseline.
-    - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0, 259/259
-      (baseline 229, first review 258; the one new test belongs to 1.10).
-    - `replay-guard.sh` exit 0, and with `REPLAY_COMPANION=1` exit 0.
+    - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0, 259 tests,
+      259 pass, 0 fail (baseline 229; same count as at `330c7bb`, since 4.9 adds no
+      tests).
+    - `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` exit 0.
+    - `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`
+      exit 0.
     - Extension typecheck exit 0.
-11. **fail** (partly done): the runtime check is incomplete.
-    - Done: 4.5 and 4.6 are ticked and hold. `models show mixed` exits 0 with
-      `errors: []`. `/home/david/DP/agento` has 54 skip-worktree bits, 6 of 6 agents
-      carry `model:`, `git status --porcelain` is empty, `models list` reports
-      `active: mixed`, and `doctor --plugin-root /home/david/DP/agento` reports
-      `model-profile ok "mixed applied"`, which is the doctor check working against a
-      real clone.
-    - Outstanding: 4.7 (manual) is unticked, and there is no
-      `evidence/step-4-7-model-picker.png`. The newest file in `~/Pictures/Screenshots`
-      is from 11:45, before this run. 4.8 (clear) is also unticked.
-    - Still unproven: that VS Code honors `model:` on plugin-mode `commands/*.md` and
-      through a handoff.
+    - GitHub check `test` on PR #71 at `afc5114`: pass.
+11. **pass**: runtime check in VS Code.
+    - 4.6 applied `mixed` to `/home/david/DP/agento`; 4.9 re-applied it with
+      qualified names. The user's `~/.config/agento/model-profiles.json` now reads
+      `DeepSeek V4 Pro (deepseek)` for default and builder, `Claude Opus 5.5
+      (copilot)` for planner and architect, and `Claude Fable 5.1 (copilot)` for
+      reviewer. `models show mixed` gives `errors: []`.
+    - [evidence/step-4-7-planner.png](evidence/step-4-7-planner.png) (20:02:32) shows
+      📋 Agento Planner with Claude Opus 5.5 in the picker.
+      [evidence/step-4-7-model-picker.png](evidence/step-4-7-model-picker.png)
+      (20:03:13) shows 🔨 Agento Builder with DeepSeek V4 Pro. Both are in a window
+      with no folder open, so no workspace `.github/agents` competes with the plugin.
+    - The attempt-1 captures ([planner](evidence/step-4-7-attempt-1-planner.png),
+      [builder](evidence/step-4-7-attempt-1-builder.png), 19:58) show the Builder
+      staying on Opus. The VS Code log `~/.config/Code/logs/20261001T094453` has one
+      warning, `19:58:27.273 [warning] [chat] … "DeepSeek V4 Pro" not found. Use
+      format "<name> (<vendor>)"`, and none after 20:00. The only later match is a
+      20:04 terminal-command echo, not a warning.
+    - Cleared afterwards (4.8), checked independently:
+      - `git -C /home/david/DP/agento diff --quiet` exit 0.
+      - `status --porcelain` is empty.
+      - `ls-files -v | grep -c '^S'` gives 0.
+      - No `^model:` line remains in any agent, prompt, or mirror.
+      - `models list --plugin-root /home/david/DP/agento` gives `active: null`.
+      - The clone is on `main`.
+    - Agents were switched by selection, not by a handoff button. Roadmap 4.7 allows
+      "(or select it)", and the plan's Risks call for a follow-up when the handoff is
+      unproven. That follow-up is recorded (finding 6).
 
 ## Plan vs implementation
 
-- `templates/model-profiles.json` landed in 1.5 instead of 2.2, because `init` and
-  its tests need it. Recorded on both roadmap lines; harmless.
-- The CLI has an extra `summarizeModelsResult` helper and an updated
-  `extensionIntegration.test.ts` source-shape assertion. Both are recorded in 3.1/3.2
-  and within scope.
-- The planned decision to fold "stale" into `custom` is implemented and documented
-  (the doctor detail says "hand-edited, or the profile changed after it was applied").
-- No undocumented changes: the 31 changed files match the plan's affected-files list,
-  plus the generated `extension/cli/*` copies and the expected test files.
-- The fix round added steps 1.10, 2.4, 3.4, and 3.5, each marked `(added 2026-10-01)`
-  and tied to a review finding. Its diff (`483c207..330c7bb`, 9 files, +85/−11) touches
-  only those concerns, plus the generated `extension/cli/agento.mjs` copy.
-- The worktree refusal does not block step 4.6: that step applies to
-  `/home/david/DP/agento`, which is the main checkout.
+- 4.9 `(added 2026-10-01)` came out of 4.7 attempt 1. Its diff (`330c7bb..afc5114`,
+  4 files, +19/−11) is limited to its stated scope:
+  - `docs/model-profiles.md`: the value rule, the log message, and how to read the
+    vendor from the model id.
+  - `templates/model-profiles.json`: the placeholders.
+  - `.github/prompts/models.prompt.md` and `commands/models.md`: the `init`
+    instruction, byte-identical.
+
+  No code, test, or extension change. The docs' example profile already used the
+  qualified form, and a search finds no unqualified model-name examples left in the
+  product.
+- Model-name validation stays pass-through (decision 2, "no vendor-suffix warning" is
+  out of scope). The failure mode is now documented, and the warning is a recorded
+  follow-up rather than a scope change.
+- Everything else is as recorded in the earlier reviews: the template landed early
+  in 1.5; the `summarizeModelsResult` helper; "stale" folded into `custom`; fix-round
+  steps 1.10, 2.4, 3.4, and 3.5. The 31 files changed against `origin/main` match the
+  plan's affected-files list plus generated and test files.
 
 ## Roadmap audit
 
-- Spot-checked the fix-round steps:
-  - 1.10: `primaryCheckoutOf` in `scripts/agento.mjs` and its agento.test.mjs case.
-    Also checked against this real worktree with a throwaway `AGENTO_CONFIG_HOME`:
-    exit 3, `status: "worktree"`, `primaryCheckout: /home/david/DP/agento`, no files
-    changed, no `S` bits set.
-  - 2.4: `cmp commands/models.md .github/prompts/models.prompt.md` reports them equal.
-  - 3.4: `missingPluginRootMessage` is used in `extension/src/extension.ts`.
-  - 3.5: the recorded gate numbers match my rerun.
-- Spot-checked every earlier ticked step (1.1–4.4) against the code and against fresh runs:
-  test names, the `usage()` slice, `COMMAND_NEEDS.models`, the doctor ids, the bundle
-  lists in `extension/scripts/copy-cli.mjs` and `tests/extension-bundle.test.mjs`,
-  the registrations, the versions, the extension contribution and setting, and the
-  real `~/.config/agento/model-profiles.json` existing for 4.4. No falsely ticked
-  boxes.
-- `status: paused` with `next-step: "4.7 (manual) …"` is the correct pause kind under
-  policy §3.
-- 4.5 (manual) is ticked with linked evidence, `evidence/step-4-5-profiles-filled.png`,
-  a capture of the `models show mixed` output. The line records that the user chose
-  and confirmed the names in chat and asked the agent to write the file. That meets
-  §3 for a configuration step.
-- 4.6 is ticked, and its recorded numbers match the live clone: 54 changed and 54 `S`
-  bits. `main` does not have the `models` prompt yet, which is why it is not 56.
-- The roadmap Follow-ups record the Builder's decisions on findings 3 and 4 (no
-  change).
-- No falsely ticked boxes; no repairs needed.
+- 4.5 (manual): ticked, linked evidence
+  [step-4-5-profiles-filled.png](evidence/step-4-5-profiles-filled.png) exists, and
+  `models show mixed` currently gives `errors: []`.
+- 4.6: the recorded numbers (changed=54, skipWorktree=54) were verified live in the
+  previous review.
+- 4.7 (manual): ticked, with both attempts recorded. All four linked screenshots exist
+  under `evidence/`. The required `evidence/step-4-7-model-picker.png` is present
+  and linked. The log claim checks out.
+- 4.9: `cmp` equal, template parses, 259/259, and the requalified profile matches the
+  line. The re-apply itself is no longer observable, because 4.8 cleared it.
+- 4.8: every verify claim holds against the live clone (see item 11).
+- Steps 1.1–4.4 are unchanged since the previous audit, which spot-checked each one.
+  `afc5114` touches none of their code.
+- The header is `status: in-review` with `next-step: ""`, which is correct for a
+  fully ticked roadmap.
+- No `(manual, post-ship)` steps.
+- No falsely ticked boxes; no repairs made.
 
 ## Findings
 
-No open findings above informational.
+No findings above informational.
 
-1. **resolved**: linked-worktree plugin roots. `apply` now refuses with
-   `status: "worktree"` and names the clone; `clear` still runs there
-   (`scripts/agento.mjs` `primaryCheckoutOf`, `.github/prompts/models.prompt.md`
-   step 4).
-2. **resolved**: an invalid `agento.pluginRoot` is now named in the error
-   (`extension/src/modelProfiles.ts` `missingPluginRootMessage`).
-3. **info**: the doctor `model-profile` check warns on the template placeholders
-   until the user fills them in. Accepted as planned behavior (roadmap Follow-ups).
-4. **info**: `dirty` is computed on every verb, costing about 230 ms on
-   `models list`. Accepted for now (roadmap Follow-ups).
-5. **info**: until 4.8 runs, the primary clone `/home/david/DP/agento` is pinned (54
-   skip-worktree files). A `git pull` there, or the `main` sync in `/agento ship`,
-   stops with "would be overwritten" whenever a merged change touches a pinned file.
-   That is the documented, safe behavior, but finish 4.8 before any other ship from
-   the primary window.
+Open findings come first, then resolved ones. Numbers are kept from earlier reviews.
 
-Security: profile values reject control characters and `<`/`>` and are serialized
-with JSON escaping. An injected `"x\"\ntools: [execute]"` value was rejected (exit 3).
-Prompt keys are matched against discovered files and never joined into paths. `init`
-uses `COPYFILE_EXCL`. The new worktree check only reads `git rev-parse` output. No
-secrets are involved.
+- **3, info**: the doctor check warns on template placeholders until the user fills
+   them in. Accepted as planned behavior (roadmap Follow-ups).
+- **4, info**: `dirty` is computed on every verb, about 230 ms on `models list`.
+   Accepted (roadmap Follow-ups).
+- **6, info**: a mid-conversation handoff (Planner → Builder button) was not
+   exercised, so whether a handoff honors the target agent's `model:` is still
+   unproven. Recorded as a roadmap follow-up for `handoffs[].model`.
+- **7, info**: an unqualified name for a non-Copilot model is accepted by `models
+   apply` and silently ignored by VS Code, apart from a log warning. The docs, the
+   template, and `/agento models init` now say to qualify names. A
+   `models show`/doctor warning for values without a `(vendor)` suffix is a recorded
+   follow-up.
+- **8, info**: runtime evidence covers agent pins only. Pins on built-in-agent prompts
+   (`commands/*.md` in plugin mode) were not exercised at runtime; the user's
+   per-command overrides are pending (roadmap Follow-ups). The acceptance item does
+   not require it.
+- **1, resolved**: linked-worktree plugin roots (1.10, 2.4).
+- **2, resolved**: invalid `agento.pluginRoot` named in the error (3.4).
+- **5, resolved**: the primary clone pinned during verification. 4.8 cleared it, so
+   `/agento ship` can sync `main` in the primary.
+
+Security: 4.9 changes only documentation and template text. The input validation
+(control characters, `<`/`>`, JSON escaping, prompt keys matched against discovered
+files) is unchanged and was checked in the earlier reviews. No secrets appear in the
+evidence screenshots.
 
 ## Follow-ups
 
 - Consider teaching `/agento ship`'s `main` sync to detect pinned skip-worktree files
   and suggest clear → pull → apply (plan Risks).
+- Exercise a Planner → Builder handoff with a profile applied on the next real
+  delivery (roadmap Follow-ups).
+- Optional vendor-suffix warning in `models show`/doctor (roadmap Follow-ups).
