@@ -1,8 +1,8 @@
 ```yaml
-status: planned
+status: in-progress
 branch: issue/autopilot-subagent-model-pins
 last-updated: 2026-10-02
-next-step: "1.1 (manual) capture Run A: the api-shared-kernel Autopilot's Reviewer subagent model"
+next-step: "2.1 add the exposing regression test (manual steps sequenced late per directive)"
 github-issue: "#79"
 artifact-pr: "#22"
 ```
