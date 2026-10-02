@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/autopilot-subagent-model-pins
 last-updated: 2026-10-02
-next-step: "3.2 write and remove handoff lines in models apply/clear"
+next-step: "3.3 add the read-only models pins verb"
 github-issue: "#79"
 artifact-pr: "#22"
 ```
@@ -78,12 +78,16 @@ artifact-pr: "#22"
   **Result (2026-10-02):** exit 0 — 24 tests, 24 pass. Fixed two in-flight bugs:
   replace-in-place re-applies the item's key indentation, and the handoff key regex
   now tolerates a trailing `\r` so CRLF files parse.
-- [ ] 3.2 In `scripts/agento.mjs`, `models apply`/`clear` write and remove the
+- [x] 3.2 In `scripts/agento.mjs`, `models apply`/`clear` write and remove the
   handoff lines. A file counts as pinned for skip-worktree when it carries a
   top-level or a handoff pin. `modelsState` `active`/`dirty` count handoff lines
   (dirty refusal test: an edit beyond both kinds of line still refuses) — verify:
   `node --test --test-name-pattern "issue #79" scripts/agento.test.mjs` exit 0 and
   `node --test scripts/agento.test.mjs` exit 0.
+  **Result (2026-10-02):** exposing test passes after the fix; full
+  `scripts/agento.test.mjs` 81 tests, 81 pass. Added
+  `models apply ignores handoff model: lines in dirty detection and still refuses
+  other edits`.
 - [ ] 3.3 Add the read-only verb `models pins` (no argument; honors
   `--plugin-root`). It emits `pins: { <alias>: { name, file, model, subagentModel } }`
   read from the plugin root's current files, plus `warnings` and the usual
