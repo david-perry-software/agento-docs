@@ -46,7 +46,7 @@ artifact-pr: "#22"
 
 ## Phase 2: Exposing regression test
 
-- [ ] 2.1 Add to `scripts/agento.test.mjs` the test `issue #79
+- [x] 2.1 Add to `scripts/agento.test.mjs` the test `issue #79
   autopilot-subagent-model-pins: models apply pins handoffs[].model to the target
   agent's model; clear removes it`. It runs on `modelsFixture` with a profile
   pinning `planner`, `builder`, `reviewer` (a two-entry list), and `autopilot` to
@@ -57,6 +57,11 @@ artifact-pr: "#22"
   `git diff --quiet` passes. Record the failure output on this line — verify:
   `node --test --test-name-pattern "issue #79" scripts/agento.test.mjs` exits
   non-zero, and the failure is the missing handoff `model:` assertion.
+  **Result (2026-10-02):** exit 1, 1 fail — `AssertionError: The input did not
+  match the regular expression /^    model: "Builder Model \(copilot\)"$/m` on
+  `.github/agents/delivery-planner.agent.md` (top-level `model: "Planner Model
+  (copilot)"` present, nested handoff `model:` absent) — the missing handoff
+  `model:` assertion, as expected.
 
 ## Phase 3: CLI fix
 
