@@ -373,3 +373,62 @@ evidence directory. It has three tests:
   `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0; both guard
   smokes exit 0; `cd extension && npm run typecheck && npm run test:unit && npm run test:electron`
   exit 0.
+
+## Resolution
+
+Root cause — three defects in the New Plan flow, all behind the initiative member
+play button and New Feature / New Issue:
+
+1. `extension/src/newPlanFlow.ts` `runNewPlanFlow` always submitted
+   `/agento start-session` to the primary checkout and polled for a new `plan-*`
+   worktree, even when the window it ran in was already an unpromoted planning
+   session. `parseSession` dropped the record's `role` and `worktree`, so the flow
+   could not tell it was already in a plan window; each press created another
+   worktree and handed the plan there.
+2. `extension/src/commandDispatcher.ts` `chatOpenOptions` built only `{ query }`
+   (no attachment). The agent then searched the plugin clone for
+   `commands/start-session.md`, which took ~40 s in the observed 20:35 run.
+3. `extension/src/extension.ts` `startNewPlan` defaulted the handoff poll to
+   120 000 ms. A normal ~2 min start-session outran that deadline by ~2 s (submit
+   20:35:14 + 120 s = 20:37:14; the workspace file landed 20:37:16.5), so the user
+   got "Timed out waiting for a new planning worktree." even though the session was
+   created.
+
+What changed:
+
+- `newPlanFlow.ts` parses `role` and `worktree { path, detached }` into `Session`
+  (absent → `null`, malformed → throw) and `runNewPlanFlow` routes in-window —
+  submits `request.command` to the current worktree path and returns `complete`
+  with no start-session, polling, or pending state — when
+  `role === "plan" && worktree.detached === true`. Every other role keeps the
+  start-session path unchanged.
+- `commandAgent.ts` gained `resolveCommandFile`; `commandDispatcher.ts` gained a
+  required `commandFile` dependency and its `chatOpenOptions` now attaches
+  `commands/<name>.md` (as a `vscode.Uri`) on every dispatch, or logs
+  `dispatch: no command file for <name>: <reason>` and omits the attachment when
+  the plugin root is unresolved or the file is missing. `extension.ts` wires the
+  production resolver into every dispatcher dependency set.
+- `newPlanFlow.ts` exports `NEW_PLAN_FLOW_DEFAULTS`, used as `startNewPlan`'s
+  default and now `{ pollIntervalMs: 1000, timeoutMs: 300000 }`. Retry / Focus
+  target recovery is unchanged.
+
+Proof the exposing tests pass:
+
+- Step 1.1 recorded the three failing assertions of
+  `extension/test/unit/planPlayButtonHandoff.test.ts` before any fix.
+- Final re-run (2026-10-02): `cd extension && npm run typecheck` exit 0;
+  `npm run test:unit` → 106 tests, 106 pass, 0 fail — including
+  (a) "a plan-role detached session submits the new-feature / new-issue command in
+  the current window", (b) "chat.open options attach the command file, and the
+  no-file fallback logs the omission", and (c) "a start-session finishing at
+  20:37:16.546Z after a 20:35:14.000Z submit completes under
+  NEW_PLAN_FLOW_DEFAULTS".
+- Repo suite re-run: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`
+  → 259 tests, 259 pass, exit 0.
+- Step 4.2's full gate recorded every status 0 (shellcheck, guard smokes,
+  `npm run test:electron`).
+- Local verification: step 3.2
+  [evidence/step-3-2-plan-window-in-place.png](evidence/step-3-2-plan-window-in-place.png)
+  and step 3.3
+  [evidence/step-3-3-start-session-attached.png](evidence/step-3-3-start-session-attached.png),
+  documented on the roadmap step lines.

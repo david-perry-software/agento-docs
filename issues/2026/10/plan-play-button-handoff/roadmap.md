@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: issue/plan-play-button-handoff
 last-updated: 2026-10-02
-next-step: "4.3 Write plan.md ## Resolution (root cause, what changed, proof the 1.1 tests pass), merge origin/main into the product branch and the companion's origin/main into the companion branch, push both, and set this roadmap to status: in-review with next-step: \"\""
+next-step: ""
 github-issue: "#77"
 artifact-pr: "#21"
 ```
@@ -106,11 +106,14 @@ artifact-pr: "#21"
   exit 0; `cd extension && npm run typecheck && npm run test:unit && npm run test:electron`
   exit 0 — verify: every recorded status is 0 and there are no findings beyond the
   plan.md baseline (none).
-- [ ] 4.3 Write plan.md `## Resolution` (root cause, what changed, proof the 1.1 tests
+- [x] 4.3 Write plan.md `## Resolution` (root cause, what changed, proof the 1.1 tests
   pass), merge `origin/main` into the product branch and the companion's `origin/main`
   into the companion branch, push both, and set this roadmap to `status: in-review`
   with `next-step: ""` — verify: `node <agento-root>/scripts/agento.mjs session --pr`
   shows the companion half `dirty: false`, `ahead: 0` and both PRs open.
+  ✅ 2026-10-02 — plan.md `## Resolution` written; `git merge origin/main` in both halves
+  reported `Already up to date.`; both branches pushed; `session --pr` confirmed
+  companion `dirty: false`, `ahead: 0` and both PRs open.
 
 ## Follow-ups
 
