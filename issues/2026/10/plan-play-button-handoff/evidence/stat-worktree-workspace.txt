@@ -1,0 +1,4 @@
+# stat of the start-session outputs from transcript 0577c775 (2026-10-02, captured by the Planner)
+/home/david/DP/soshiki-worktrees/plan-20261002-203631 | birth=2026-10-02 20:37:05.099813916 +0000 | modify=2026-10-02 20:37:05.383819261 +0000
+/home/david/DP/soshiki-docs-worktrees/plan-20261002-203631 | birth=2026-10-02 20:37:11.806940104 +0000 | modify=2026-10-02 20:37:12.383642050 +0000
+/home/david/DP/soshiki-worktrees/plan-20261002-203631.code-workspace | birth=2026-10-02 20:37:17.603049084 +0000 | modify=2026-10-02 20:37:17.603049084 +0000

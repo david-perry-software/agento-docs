@@ -1,0 +1,11 @@
+# node evidence/repro-plan-play-button.mjs <agento worktree> at d736a58, extension built with npm run test:unit
+DEFECT 1 — plan-role detached window, play button:
+  submitted: [{"command":"/agento start-session","target":{"kind":"folder","path":"/repo"}}]
+  result: complete {"kind":"folder","path":"/repo-worktrees/plan-new"}
+  expected: one submit of the /agento new-feature command to the current window, no /agento start-session
+DEFECT 2 — in-window dispatch of /agento start-session:
+  chat.open args: [["workbench.action.chat.open",{"query":"/agento start-session","mode":"agent"}]]
+  attachFiles present: false
+DEFECT 3 — production default {"pollIntervalMs":1000,"timeoutMs":120000} against a start-session that finishes at 20:37:16.546Z:
+  deadline: 2026-10-02T20:37:14.000Z
+  result: timeout — Timed out waiting for a new planning worktree.
