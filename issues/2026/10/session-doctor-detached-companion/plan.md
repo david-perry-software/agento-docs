@@ -226,3 +226,44 @@ two-commit rule.
 - [ ] Code PR body starts with `Fixes #75`; companion PR is linked from it; both PRs
   carry `origin/main` merged in, with the companion half `dirty: false`, `ahead: 0`
   — verify: `gh pr view --json body`, `node scripts/agento.mjs session --pr`.
+
+## Resolution
+
+Root cause: `parseCompanion()` in `extension/src/sessionDoctorModel.ts` built
+`CompanionSummary.branch` with `requiredString(companion, "branch")`, which throws
+`branch must be a non-empty string` whenever `companion.branch` is `null` — the
+shape `agento.mjs session` reports for a detached companion half
+(`companion.detached: true`), which is the normal state of a fresh planning pair.
+Because `createSessionDoctorModel()` wraps the entire parse in one `try`, that one
+throw collapsed the whole Session & Doctor view into `{ kind: "error" }`, hiding
+the session rows, doctor checks, and command actions.
+
+Change: exactly one line in `parseCompanion()` —
+`branch: requiredString(companion, "branch")` became
+`branch: nullableString(companion, "branch") ?? "detached"`, mirroring the session
+worktree's existing `branch ?? "detached"` treatment. `CompanionSummary`,
+`sessionDoctorProvider.ts`, and every other file are untouched; `nullableString()`
+still rejects `undefined` and non-strings, so the malformed-record contract holds.
+
+Proof:
+
+- Step 1.1 exposing test
+  (`session doctor model renders a detached companion as "detached" (#75
+  session-doctor-detached-companion)` in `extension/test/unit/sessionDoctorModel.test.ts`)
+  failed before the fix — `cd extension && npm run test:unit; echo "exit=$?"` →
+  `exit=1`, TAP `not ok 83 - session doctor model renders a detached companion as
+  "detached" (#75 session-doctor-detached-companion)` with failure detail
+  `Invalid Session & Doctor response: branch must be a non-empty string`, and the
+  other 85 tests `ok`.
+- Step 2.2 `cd extension && npm run test:unit; echo "exit=$?"` → `exit=0`,
+  `# tests 86`, `# fail 0`, with the #75 test `ok 83`.
+- Step 2.2
+  `node issues/2026/10/session-doctor-detached-companion/evidence/repro-detached-companion.mjs`
+  → `"kind": "ready"` and, under `companion`, `"branch": "detached"` and
+  `"state": "registered, detached, clean"`.
+- Step 3.1 scoped gate: `npm run typecheck` exit 0; `test:unit` exit 0 (`# tests
+  86`, `# fail 0`); `test:electron` exit 0 (all three scenarios passed);
+  `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` → `# pass 259`,
+  `# fail 0`; `npm run lint:hooks` exit 127 (`shellcheck: not found`, unchanged
+  from baseline) with the diff touching no `scripts/hooks/` or
+  `scripts/wait-for-checks.sh` file.
