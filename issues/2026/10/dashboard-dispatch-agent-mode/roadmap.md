@@ -1,15 +1,15 @@
 ```yaml
-status: planned
+status: in-progress
 branch: issue/dashboard-dispatch-agent-mode
 last-updated: 2026-10-02
-next-step: "1.1 add the exposing regression test and verify it fails"
+next-step: "2.1 create commandAgent.ts and its unit tests"
 github-issue: "#73"
 artifact-pr: "#19"
 ```
 
 ## Phase 1: Expose the defect
 
-- [ ] 1.1 Add the exposing regression test to
+- [x] 1.1 Add the exposing regression test to
   `extension/test/unit/commandDispatcher.test.ts` — one test named for issue #73 /
   `dashboard-dispatch-agent-mode` that injects a `chatMode` dependency returning
   `{ mode: "📋 Agento Planner" }` for `/agento new-feature widget` and
