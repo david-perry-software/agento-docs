@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dashboard-dispatch-agent-mode
 last-updated: 2026-10-02
-next-step: "2.2 thread chatMode through the dispatcher"
+next-step: "2.3 wire the production chatMode in extension.ts"
 github-issue: "#73"
 artifact-pr: "#19"
 ```
@@ -29,7 +29,7 @@ artifact-pr: "#19"
   `extension/test/unit/commandAgent.test.ts` covering each branch — verify:
   `cd extension && npm run typecheck` exit 0 and the new unit file passes under
   `npm run test:unit` (the 1.1 test still fails).
-- [ ] 2.2 Thread `chatMode` through `CommandDispatcherDependencies` in
+- [x] 2.2 Thread `chatMode` through `CommandDispatcherDependencies` in
   `extension/src/commandDispatcher.ts`, add a single `chatOpenOptions(command)`
   builder used by all three `workbench.action.chat.open` calls, and append
   `dispatch: no mode for <command>: <reason>` to the output channel when it falls
