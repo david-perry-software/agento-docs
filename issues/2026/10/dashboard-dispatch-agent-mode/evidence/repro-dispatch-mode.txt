@@ -1,0 +1,6 @@
+# node repro-dispatch-mode.mjs — run 2026-10-02 against extension built at a90fc9a
+{"command":"workbench.action.chat.open","options":{"query":"/agento new-feature widget"},"hasMode":false}
+{"command":"workbench.action.chat.open","options":{"query":"/agento review-feature widget"},"hasMode":false}
+{"command":"workbench.action.chat.open","options":{"query":"/agento new-issue widget"},"hasMode":false}
+3/3 chat.open submissions carry no mode (expected 0 once fixed)
+exit=1
