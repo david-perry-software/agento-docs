@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: issue/plan-play-button-handoff
 last-updated: 2026-10-02
-next-step: "4.2 Full gate: shellcheck, node tests, guard smokes, extension typecheck/unit/electron"
+next-step: "3.2 (manual) In an unpromoted planning window, press the initiative member play button and capture the in-window new-feature dispatch as evidence/step-3-2-plan-window-in-place.png"
 github-issue: "#77"
 artifact-pr: "#21"
 ```
@@ -83,7 +83,7 @@ artifact-pr: "#21"
   **Fixed** entry citing #77 under `CHANGELOG.md` `## Unreleased` — verify:
   `grep -n 'no command file' docs/extension.md`, `grep -n '300' docs/extension.md`,
   `grep -n '#77' CHANGELOG.md`, and `node --test 'tests/**/*.test.mjs'` exit 0.
-- [ ] 4.2 Full gate (policy §5): `git ls-files '*.sh' | xargs pnpm dlx shellcheck`
+- [x] 4.2 Full gate (policy §5): `git ls-files '*.sh' | xargs pnpm dlx shellcheck`
   exit 0; `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0;
   `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` and
   `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`
