@@ -1,0 +1,34 @@
+{
+  "_source": "node scripts/agento.mjs session — captured 2026-10-02 in plan-20261002-155631 while detached at origin/main (before issue/session-doctor-detached-companion existed); non-relevant fields elided",
+  "status": "ok",
+  "role": "plan",
+  "hosted": false,
+  "worktree": {
+    "path": "/home/david/DP/agento-worktrees/plan-20261002-155631",
+    "branch": null,
+    "detached": true,
+    "isPrimary": false,
+    "isManaged": true,
+    "dirPrefix": "plan",
+    "id": "20261002-155631"
+  },
+  "companion": {
+    "path": "/home/david/DP/agento-docs-worktrees/plan-20261002-155631",
+    "branch": null,
+    "detached": true,
+    "dirty": false,
+    "ahead": 0,
+    "behind": 0,
+    "registered": true
+  },
+  "workspace": {
+    "path": "/home/david/DP/agento-worktrees/plan-20261002-155631.code-workspace",
+    "exists": true,
+    "current": true
+  },
+  "delivery": null,
+  "lifecycle": "no-delivery",
+  "allowed": ["/agento continue", "/agento new-feature", "/agento new-issue", "/agento delivery-status"],
+  "elsewhere": [],
+  "warnings": []
+}
