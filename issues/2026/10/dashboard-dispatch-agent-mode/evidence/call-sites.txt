@@ -1,0 +1,3 @@
+33:    await dependencies.executeCommand("workbench.action.chat.open", { query: command });
+66:    await executeCommand("workbench.action.chat.open", { query: route.command });
+101:      await dependencies.executeCommand("workbench.action.chat.open", { query: result.command });
