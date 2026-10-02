@@ -1,0 +1,18 @@
+# Timeline extracted from transcript-20261002-2035-start-session.jsonl (timestamps UTC)
+2026-10-02T20:35:13.979Z L2 user.message content='/agento start-session' attachments=[]
+2026-10-02T20:35:18.760Z L7 run_in_terminal: node /home/david/DP/agento/scripts/agento.mjs --help 2>&1 | head -100
+2026-10-02T20:35:36.522Z L12 run_in_terminal: ls -la /home/david/DP/agento/ 2>&1; echo "---SCRIPTS---"; ls -la /home/david/DP/agento/scripts/ 2>&1; echo "---PROMPTS---"; find /home/david
+2026-10-02T20:35:40.349Z L17 run_in_terminal: ls -la /home/david/DP/agento/commands/ 2>&1
+2026-10-02T20:35:44.547Z L22 read_file: /home/david/DP/agento/commands/start-session.md
+2026-10-02T20:35:53.556Z L27 run_in_terminal: find /home/david/DP/agento -name "delivery-policy*" 2>/dev/null; echo "---"; find /home/david/DP/soshiki/.github -name "*.instructions.md" 2
+2026-10-02T20:35:57.826Z L32 read_file: /home/david/DP/agento/.github/instructions/delivery-policy.instructions.md
+2026-10-02T20:36:04.295Z L37 run_in_terminal: node /home/david/DP/agento/scripts/agento.mjs doctor --for start-session; echo "DOCTOR_EXIT=$?"
+2026-10-02T20:36:08.879Z L42 run_in_terminal: node /home/david/DP/agento/scripts/agento.mjs session
+2026-10-02T20:36:17.677Z L47 run_in_terminal: pwd; cd /home/david/DP/soshiki && node /home/david/DP/agento/scripts/agento.mjs session
+2026-10-02T20:36:30.874Z L52 run_in_terminal: date -u +%Y%m%d-%H%M%S; echo "---"; cd /home/david/DP/soshiki && git worktree list --porcelain; echo "---companion---"; git -C /home/david/D
+2026-10-02T20:36:40.351Z L57 run_in_terminal: cd /home/david/DP/soshiki && git fetch origin 2>&1 && echo "FETCH_OK" && git status --porcelain --untracked-files=all && echo "STATUS_END" &
+2026-10-02T20:36:49.421Z L62 run_in_terminal: cd /home/david/DP/soshiki && node /home/david/DP/agento/scripts/agento.mjs paths plan 20261002-203631
+2026-10-02T20:36:57.377Z L67 run_in_terminal: test ! -e /home/david/DP/soshiki-worktrees/plan-20261002-203631 && echo "PRODUCT_PATH_FREE"; test ! -e /home/david/DP/soshiki-docs-worktrees
+2026-10-02T20:37:04.083Z L72 run_in_terminal: cd /home/david/DP/soshiki && git worktree add --detach /home/david/DP/soshiki-worktrees/plan-20261002-203631 origin/main 2>&1 && echo "---VE
+2026-10-02T20:37:10.200Z L77 run_in_terminal: git -C /home/david/DP/soshiki-docs fetch origin 2>&1 && git -C /home/david/DP/soshiki-docs worktree add --detach /home/david/DP/soshiki-docs
+2026-10-02T20:37:16.546Z L82 run_in_terminal: cd /home/david/DP/soshiki && node /home/david/DP/agento/scripts/agento.mjs workspace plan 20261002-203631 --write
