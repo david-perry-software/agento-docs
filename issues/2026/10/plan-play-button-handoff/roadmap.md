@@ -4,6 +4,7 @@ branch: issue/plan-play-button-handoff
 last-updated: 2026-10-02
 next-step: "1.1 Add the exposing regression tests in extension/test/unit/planPlayButtonHandoff.test.ts and verify they fail"
 github-issue: "#77"
+artifact-pr: "#21"
 ```
 
 ## Phase 1: Expose the defect
