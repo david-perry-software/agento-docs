@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/plan-play-button-handoff
 last-updated: 2026-10-02
-next-step: "3.1 Package the fixed extension and install it into the local VS Code"
+next-step: "4.1 Update docs/extension.md Command routing and CHANGELOG.md Unreleased"
 github-issue: "#77"
 artifact-pr: "#21"
 ```
@@ -54,7 +54,7 @@ artifact-pr: "#21"
 
 ## Phase 3: Verify locally
 
-- [ ] 3.1 Package the fixed extension and install it into the local VS Code
+- [x] 3.1 Package the fixed extension and install it into the local VS Code
   (`cd extension && npm run package && code --install-extension agento-dashboard-*.vsix --force`)
   — verify: `code --list-extensions --show-versions | grep agento-dashboard` shows the
   packaged version.
