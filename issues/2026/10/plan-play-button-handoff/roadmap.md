@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/plan-play-button-handoff
 last-updated: 2026-10-02
-next-step: "4.1 Update docs/extension.md Command routing and CHANGELOG.md Unreleased"
+next-step: "4.2 Full gate: shellcheck, node tests, guard smokes, extension typecheck/unit/electron"
 github-issue: "#77"
 artifact-pr: "#21"
 ```
@@ -77,7 +77,7 @@ artifact-pr: "#21"
 
 ## Phase 4: Docs, changelog, gate
 
-- [ ] 4.1 Update `docs/extension.md` "Command routing" (command-file attachment and its
+- [x] 4.1 Update `docs/extension.md` "Command routing" (command-file attachment and its
   `dispatch: no command file` fallback; New Plan stays in an unpromoted plan window,
   otherwise starts a session and waits up to 300 s with Retry / Focus target) and add a
   **Fixed** entry citing #77 under `CHANGELOG.md` `## Unreleased` — verify:
