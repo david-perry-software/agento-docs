@@ -306,3 +306,43 @@ a model profile applied, the picker shows the Planner's pinned model.
       exit 0; `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` all
       pass; `cd extension && npm run typecheck && npm run test:unit` exit 0 —
       verify: recorded exit statuses in roadmap step 4.1.
+
+## Resolution
+
+Root cause: every `workbench.action.chat.open` call in
+`extension/src/commandDispatcher.ts` passed only `{ query }` — no `mode` — so VS
+Code submitted the command in whatever agent the chat widget had selected. A
+dashboard-dispatched `/agento new-feature` therefore ran in the Builder or the
+built-in agent instead of the Planner, and the Planner's `model:` pin from the
+active model profile never applied.
+
+Change: new `extension/src/commandAgent.ts` (`commandName`, `readCommandAgent`,
+`resolveChatMode`) reads the command's `agent:` frontmatter from
+`commands/<name>.md` under the resolved plugin root; `commandDispatcher.ts` gained
+a single `chatOpenOptions(command)` builder — used by all three chat.open call
+sites — that passes the resolved agent as `mode` (`"agent"` for built-in-agent
+commands, including commands whose file carries no `agent:` line) and falls back
+to `{ query }` plus one `dispatch: no mode for <command>: <reason>` output-channel
+line when no plugin root resolves or the file is unreadable. `extension.ts` wires
+the production `chatMode` from `pluginRoot()` + `fs.readFileSync` into
+`dispatchAction`, `productionNewPlanDependencies.submitCommand`, and
+`consumePending`.
+
+Proof:
+
+- Step 1.1 exposing test (`dashboard dispatch submits the command's agent as
+  chat.open mode (issue #73 / dashboard-dispatch-agent-mode)` in
+  `extension/test/unit/commandDispatcher.test.ts`) failed before the fix — the
+  dispatcher submitted `{ query }` with no `mode` on all three paths.
+- Step 2.2 `cd extension && npm run test:unit` → exit 0 with the #73 test passing.
+- Final gate re-run: `cd extension && npm run test:unit` → `# tests 97`,
+  `# pass 97`, `# fail 0`, including
+  `ok 20 - dashboard dispatch submits the command's agent as chat.open mode
+  (issue #73 / dashboard-dispatch-agent-mode)`.
+- Steps 3.2/3.3 local verification:
+  [evidence/step-3-2-planner-mode.png](evidence/step-3-2-planner-mode.png) shows
+  the chat switched to `📋 Agento Planner` (Claude Opus 5.5) with no
+  `dispatch: no mode` line, and
+  [evidence/step-3-3-built-in-agent.png](evidence/step-3-3-built-in-agent.png)
+  shows `/agento delivery-status` submitted in the built-in Agent mode (DeepSeek
+  V4 Pro).

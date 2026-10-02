@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-review
 branch: issue/dashboard-dispatch-agent-mode
 last-updated: 2026-10-02
-next-step: "3.2 (manual) Capture the planner-agent chat switch in the local VS Code and attach evidence/step-3-2-planner-mode.png"
+next-step: ""
 github-issue: "#73"
 artifact-pr: "#19"
 ```
@@ -84,12 +84,12 @@ artifact-pr: "#19"
   'tests/**/*.test.mjs'` 259 pass / 0 fail; `cd extension && npm run typecheck`
   exit 0; `cd extension && npm run test:unit` 96 pass / 0 fail; no new findings
   versus the plan.md baseline — verify: the recorded statuses are all 0.
-- [ ] 4.3 Write plan.md `## Resolution` (root cause, what changed, proof the 1.1
+- [x] 4.3 Write plan.md `## Resolution` (root cause, what changed, proof the 1.1
   test passes), merge `origin/main` into the product branch and the companion's
   `origin/main` into the companion branch, push both, and set the roadmap to
   `status: in-review` with `next-step: ""` — verify: `node <agento-root>/scripts/agento.mjs
   session --pr` shows `dirty: false`, `ahead: 0` for the companion half and both
-  PRs open.
+  PRs open. Completed 2026-10-02.
 
 ## Follow-ups
 
