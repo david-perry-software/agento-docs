@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: complete
 branch: issue/dashboard-dispatch-agent-mode
 last-updated: 2026-10-02
 next-step: ""
