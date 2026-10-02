@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: issue/plan-play-button-handoff
 last-updated: 2026-10-02
-next-step: "3.2 (manual) In an unpromoted planning window, press the initiative member play button and capture the in-window new-feature dispatch as evidence/step-3-2-plan-window-in-place.png"
+next-step: "3.3 (manual) In the primary window, run New Plan (feature) and let the handoff run to completion; capture the primary window's chat showing /agento start-session with start-session.md attached as evidence/step-3-3-start-session-attached.png"
 github-issue: "#77"
 artifact-pr: "#21"
 ```
@@ -58,7 +58,7 @@ artifact-pr: "#21"
   (`cd extension && npm run package && code --install-extension agento-dashboard-*.vsix --force`)
   — verify: `code --list-extensions --show-versions | grep agento-dashboard` shows the
   packaged version.
-- [ ] 3.2 (manual) In an unpromoted planning window (`/agento start-session` from the
+- [x] 3.2 (manual) In an unpromoted planning window (`/agento start-session` from the
   primary, Session & Doctor shows `role: plan`, detached) of a project with a ready
   initiative member and the plugin clone resolvable (`agento.pluginRoot` or
   `chat.pluginLocations`), press the member's play button in the Initiatives view;
@@ -67,6 +67,13 @@ artifact-pr: "#21"
   as `evidence/step-3-2-plan-window-in-place.png` — verify: `local` — screenshot linked
   here; `git worktree list` in the primary shows no new `plan-*` entry; the Agento
   output channel shows no `dispatch: no command file` line.
+  ✅ 2026-10-02 —
+  [evidence/step-3-2-plan-window-in-place.png](evidence/step-3-2-plan-window-in-place.png):
+  plan window `plan-20261002-213543` (`role: plan`, detached, `no-delivery`); pressing
+  the play button on `codebase-modularization/api-shared-kernel` dispatched
+  `/agento new-feature initiative:codebase-modularization/api-shared-kernel` in the same
+  window under Agento Planner with the `new-feature.md` chip attached. No new session
+  spawned, no `dispatch: no command file` line, and `git worktree list` is unchanged.
 - [ ] 3.3 (manual) In the primary window, run **Agento: New Plan** (feature) and let the
   handoff run to completion; capture the primary window's chat showing
   `/agento start-session` with `start-session.md` attached as
