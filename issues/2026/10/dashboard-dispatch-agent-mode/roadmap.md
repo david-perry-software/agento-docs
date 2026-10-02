@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: issue/dashboard-dispatch-agent-mode
 last-updated: 2026-10-02
-next-step: "4.2 run the full lint/test/typecheck gate"
+next-step: "3.2 (manual) Capture the planner-agent chat switch in the local VS Code and attach evidence/step-3-2-planner-mode.png"
 github-issue: "#73"
 artifact-pr: "#19"
 ```
@@ -51,7 +51,7 @@ artifact-pr: "#19"
   (`cd extension && npm run package && code --install-extension
   agento-dashboard-*.vsix --force`) — verify: `code --list-extensions --show-versions
   | grep agento-dashboard` shows the packaged version.
-- [ ] 3.2 In a VS Code window on an initialized Agento project with the plugin clone
+- [ ] 3.2 (manual, added 2026-10-02) In a VS Code window on an initialized Agento project with the plugin clone
   resolvable (`agento.pluginRoot` or `chat.pluginLocations`), select a non-planner
   agent in Chat, then dispatch a planner action (`/agento new-feature …` or
   `/agento new-issue …`) from the Deliveries or Session view; capture the chat
@@ -59,9 +59,10 @@ artifact-pr: "#19"
   the Planner's pinned model in the picker) as `evidence/step-3-2-planner-mode.png`
   in the companion artifact directory — verify: `local` — screenshot linked here and
   the Agento output channel shows no `dispatch: no mode` line for that command.
-- [ ] 3.3 Dispatch a built-in-agent action (`/agento delivery-status`) from the
-  Session view in the same window — verify: `local` — Chat is in the built-in Agent
-  mode when the request is submitted; note the observation on this line.
+- [ ] 3.3 (manual, added 2026-10-02) Dispatch a built-in-agent action
+  (`/agento delivery-status`) from the Session view in the same window — verify:
+  `local` — Chat is in the built-in Agent mode when the request is submitted; note
+  the observation on this line.
 
 ## Phase 4: Docs, changelog, gate
 
@@ -72,11 +73,11 @@ artifact-pr: "#19"
   byte-identical), and `CHANGELOG.md` (new `## Unreleased` **Fixed** entry
   referencing #73) — verify: `grep -n 'no-op' docs/model-profiles.md`, `grep -n
   '#73' CHANGELOG.md`, and `node --test 'tests/**/*.test.mjs'` exit 0.
-- [ ] 4.2 Full gate (policy §5): `git ls-files '*.sh' | xargs pnpm dlx shellcheck`
-  exit 0; `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` all pass
-  (≥ 259); `cd extension && npm run typecheck && npm run test:unit` exit 0; record
-  each exit status on this line and compare against the plan.md baseline (no new
-  findings) — verify: the recorded statuses are all 0.
+- [x] 4.2 Full gate (policy §5): `git ls-files '*.sh' | xargs pnpm dlx shellcheck`
+  exit 0 (no findings, 4 scripts); `node --test 'scripts/**/*.test.mjs'
+  'tests/**/*.test.mjs'` 259 pass / 0 fail; `cd extension && npm run typecheck`
+  exit 0; `cd extension && npm run test:unit` 96 pass / 0 fail; no new findings
+  versus the plan.md baseline — verify: the recorded statuses are all 0.
 - [ ] 4.3 Write plan.md `## Resolution` (root cause, what changed, proof the 1.1
   test passes), merge `origin/main` into the product branch and the companion's
   `origin/main` into the companion branch, push both, and set the roadmap to
