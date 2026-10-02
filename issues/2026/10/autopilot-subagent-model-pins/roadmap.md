@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/autopilot-subagent-model-pins
 last-updated: 2026-10-02
-next-step: "3.1 add handoff-pin helpers to model-profiles.mjs (manual steps sequenced late per directive)"
+next-step: "3.2 write and remove handoff lines in models apply/clear"
 github-issue: "#79"
 artifact-pr: "#22"
 ```
@@ -65,7 +65,7 @@ artifact-pr: "#22"
 
 ## Phase 3: CLI fix
 
-- [ ] 3.1 In `scripts/model-profiles.mjs`, add handoff-pin helpers. They read, set,
+- [x] 3.1 In `scripts/model-profiles.mjs`, add handoff-pin helpers. They read, set,
   replace in place, and remove the nested `model:` line of each `handoffs:` list
   item, using the item's key indentation and inserting after the item's last key.
   They use JSON-quoted rendering and preserve CRLF and every other byte. Extend the
@@ -75,6 +75,9 @@ artifact-pr: "#22"
   byte-exact tests (insert, replace, remove, CRLF, list → first entry, unpinned
   target) to `scripts/model-profiles.test.mjs` — verify:
   `node --test scripts/model-profiles.test.mjs` exit 0.
+  **Result (2026-10-02):** exit 0 — 24 tests, 24 pass. Fixed two in-flight bugs:
+  replace-in-place re-applies the item's key indentation, and the handoff key regex
+  now tolerates a trailing `\r` so CRLF files parse.
 - [ ] 3.2 In `scripts/agento.mjs`, `models apply`/`clear` write and remove the
   handoff lines. A file counts as pinned for skip-worktree when it carries a
   top-level or a handoff pin. `modelsState` `active`/`dirty` count handoff lines
