@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/plan-play-button-handoff
 last-updated: 2026-10-02
-next-step: "2.3 Timeout: change NEW_PLAN_FLOW_DEFAULTS to timeoutMs 300000"
+next-step: "3.1 Package the fixed extension and install it into the local VS Code"
 github-issue: "#77"
 artifact-pr: "#21"
 ```
@@ -47,7 +47,7 @@ artifact-pr: "#21"
   `cd extension && npm run typecheck` exit 0; `npm run test:unit` — (a) and (b) pass,
   (c) still fails; `grep -c 'workbench.action.chat.open' extension/src/commandDispatcher.ts`
   prints 1; `npm run test:electron` exit 0.
-- [ ] 2.3 Timeout: change `NEW_PLAN_FLOW_DEFAULTS` to
+- [x] 2.3 Timeout: change `NEW_PLAN_FLOW_DEFAULTS` to
   `{ pollIntervalMs: 1000, timeoutMs: 300000 }`, leaving the Retry / Focus target
   recovery untouched — verify: `cd extension && npm run test:unit` exit 0 with all three
   `planPlayButtonHandoff.test.ts` tests passing.
