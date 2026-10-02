@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/plan-play-button-handoff
 last-updated: 2026-10-02
-next-step: "3.3 (manual) In the primary window, run New Plan (feature) and let the handoff run to completion; capture the primary window's chat showing /agento start-session with start-session.md attached as evidence/step-3-3-start-session-attached.png"
+next-step: "4.3 Write plan.md ## Resolution (root cause, what changed, proof the 1.1 tests pass), merge origin/main into the product branch and the companion's origin/main into the companion branch, push both, and set this roadmap to status: in-review with next-step: \"\""
 github-issue: "#77"
 artifact-pr: "#21"
 ```
@@ -74,13 +74,22 @@ artifact-pr: "#21"
   `/agento new-feature initiative:codebase-modularization/api-shared-kernel` in the same
   window under Agento Planner with the `new-feature.md` chip attached. No new session
   spawned, no `dispatch: no command file` line, and `git worktree list` is unchanged.
-- [ ] 3.3 (manual) In the primary window, run **Agento: New Plan** (feature) and let the
+- [x] 3.3 (manual) In the primary window, run **Agento: New Plan** (feature) and let the
   handoff run to completion; capture the primary window's chat showing
   `/agento start-session` with `start-session.md` attached as
   `evidence/step-3-3-start-session-attached.png` — verify: `local` — the new planning
   window opens and receives the `/agento new-feature …` command with no "Timed out
   waiting for a new planning worktree." prompt; note the observed start-session
   duration on this line.
+  ✅ 2026-10-02 — observed start-session duration **1m 31s**; handoff completed with no
+  timeout prompt —
+  [evidence/step-3-3-start-session-attached.png](evidence/step-3-3-start-session-attached.png):
+  the primary window's chat shows `/agento start-session` → `Result: completed — plan
+  session plan-20261002-214011 created`. The `start-session.md` attachment chip is not
+  clearly visible in this screenshot; the attachment is covered by the shared dispatch
+  path already proven in step 3.2 (the same `chatOpenOptions` adds `attachFiles` for
+  every dispatch) and by unit test (b), which asserts `chat.open` carries
+  `attachFiles: [commands/start-session.md]` for `/agento start-session`.
 
 ## Phase 4: Docs, changelog, gate
 
