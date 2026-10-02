@@ -51,18 +51,24 @@ artifact-pr: "#19"
   (`cd extension && npm run package && code --install-extension
   agento-dashboard-*.vsix --force`) — verify: `code --list-extensions --show-versions
   | grep agento-dashboard` shows the packaged version.
-- [ ] 3.2 (manual, added 2026-10-02) In a VS Code window on an initialized Agento project with the plugin clone
+- [x] 3.2 (manual, added 2026-10-02) In a VS Code window on an initialized Agento project with the plugin clone
   resolvable (`agento.pluginRoot` or `chat.pluginLocations`), select a non-planner
   agent in Chat, then dispatch a planner action (`/agento new-feature …` or
   `/agento new-issue …`) from the Deliveries or Session view; capture the chat
   header showing `📋 Agento Planner` selected (and, if a model profile is applied,
-  the Planner's pinned model in the picker) as `evidence/step-3-2-planner-mode.png`
-  in the companion artifact directory — verify: `local` — screenshot linked here and
-  the Agento output channel shows no `dispatch: no mode` line for that command.
-- [ ] 3.3 (manual, added 2026-10-02) Dispatch a built-in-agent action
+  the Planner's pinned model in the picker) as
+  [evidence/step-3-2-planner-mode.png](evidence/step-3-2-planner-mode.png) in the
+  companion artifact directory — verify: `local` — screenshot linked here and the
+  Agento output channel shows no `dispatch: no mode` line for that command.
+  Completed 2026-10-02: dispatching `/agento new-feature` from the Deliveries view
+  switched Chat to `📋 Agento Planner` (Claude Opus 5.5); the Agento output channel
+  showed no `dispatch: no mode` line for the command.
+- [x] 3.3 (manual, added 2026-10-02) Dispatch a built-in-agent action
   (`/agento delivery-status`) from the Session view in the same window — verify:
   `local` — Chat is in the built-in Agent mode when the request is submitted; note
-  the observation on this line.
+  the observation on this line. Completed 2026-10-02: the request submitted in the
+  built-in Agent mode (DeepSeek V4 Pro) —
+  [evidence/step-3-3-built-in-agent.png](evidence/step-3-3-built-in-agent.png).
 
 ## Phase 4: Docs, changelog, gate
 
