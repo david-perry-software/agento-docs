@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dashboard-dispatch-agent-mode
 last-updated: 2026-10-02
-next-step: "3.1 package and install the fixed extension"
+next-step: "4.2 run the full lint/test/typecheck gate"
 github-issue: "#73"
 artifact-pr: "#19"
 ```
@@ -47,7 +47,7 @@ artifact-pr: "#19"
 
 ## Phase 3: Verify the behaviour locally
 
-- [ ] 3.1 Package the fixed extension and install it into the local VS Code
+- [x] 3.1 Package the fixed extension and install it into the local VS Code
   (`cd extension && npm run package && code --install-extension
   agento-dashboard-*.vsix --force`) — verify: `code --list-extensions --show-versions
   | grep agento-dashboard` shows the packaged version.
@@ -65,7 +65,7 @@ artifact-pr: "#19"
 
 ## Phase 4: Docs, changelog, gate
 
-- [ ] 4.1 Update `docs/extension.md` ("Command routing": agent-mode dispatch with its
+- [x] 4.1 Update `docs/extension.md` ("Command routing": agent-mode dispatch with its
   fallback and the `agento.pluginRoot` hint), `docs/model-profiles.md`
   ("Resolution": `commands/*.md` `model:` pins are no-ops for plugin commands; the
   agent's `model:` applies through the dispatch's agent switch; mirrors stay
