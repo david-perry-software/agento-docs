@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: complete
 branch: issue/plan-play-button-handoff
 last-updated: 2026-10-02
 next-step: ""
