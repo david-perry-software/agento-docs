@@ -2,14 +2,14 @@
 status: in-progress
 branch: issue/session-doctor-detached-companion
 last-updated: 2026-10-02
-next-step: "1.1 add the failing regression test for a detached companion"
+next-step: "2.1 fix parseCompanion() to render a null companion branch as detached"
 github-issue: "#75"
 artifact-pr: "#20"
 ```
 
 ## Phase 1: Expose the defect
 
-- [ ] 1.1 Add a `test(...)` to `extension/test/unit/sessionDoctorModel.test.ts` named `session doctor model renders a detached companion as "detached" (#75 session-doctor-detached-companion)` that calls `createSessionDoctorModel({ ...session, companion: { ...session.companion, branch: null, detached: true, ahead: 0, behind: 0 } }, doctor, status)` and asserts `model.kind === "ready"`, `model.companion` deep-equals `{ path: "/repo/docs-worktree", branch: "detached", state: "registered, detached, clean", sync: "ahead 0, behind 0" }`, `model.session.branch === "feature/session-doctor-panel"`, `model.checks.length === 3`, and `model.actions.length === 4` — verify: `cd extension && npm run test:unit; echo "exit=$?"` prints `exit=1`, the TAP output names exactly that test `not ok` with `branch must be a non-empty string` in its failure detail, and every other test (85) is still `ok`
+- [x] 1.1 Add a `test(...)` to `extension/test/unit/sessionDoctorModel.test.ts` named `session doctor model renders a detached companion as "detached" (#75 session-doctor-detached-companion)` that calls `createSessionDoctorModel({ ...session, companion: { ...session.companion, branch: null, detached: true, ahead: 0, behind: 0 } }, doctor, status)` and asserts `model.kind === "ready"`, `model.companion` deep-equals `{ path: "/repo/docs-worktree", branch: "detached", state: "registered, detached, clean", sync: "ahead 0, behind 0" }`, `model.session.branch === "feature/session-doctor-panel"`, `model.checks.length === 3`, and `model.actions.length === 4` — verify: `cd extension && npm run test:unit; echo "exit=$?"` prints `exit=1`, the TAP output names exactly that test `not ok` with `branch must be a non-empty string` in its failure detail, and every other test (85) is still `ok`
 
 ## Phase 2: Fix the parser
 
