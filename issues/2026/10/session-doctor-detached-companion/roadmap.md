@@ -4,6 +4,7 @@ branch: issue/session-doctor-detached-companion
 last-updated: 2026-10-02
 next-step: "1.1 add the failing regression test for a detached companion"
 github-issue: "#75"
+artifact-pr: "#20"
 ```
 
 ## Phase 1: Expose the defect
