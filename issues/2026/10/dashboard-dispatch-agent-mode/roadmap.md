@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dashboard-dispatch-agent-mode
 last-updated: 2026-10-02
-next-step: "2.3 wire the production chatMode in extension.ts"
+next-step: "3.1 package and install the fixed extension"
 github-issue: "#73"
 artifact-pr: "#19"
 ```
@@ -37,7 +37,7 @@ artifact-pr: "#19"
   pending-command tests to exercise the fallback — verify: `cd extension && npm run
   test:unit` exit 0 including the 1.1 test; `grep -c 'workbench.action.chat.open'
   extension/src/commandDispatcher.ts` reports exactly one literal.
-- [ ] 2.3 Wire the production `chatMode` in `extension/src/extension.ts` from
+- [x] 2.3 Wire the production `chatMode` in `extension/src/extension.ts` from
   `pluginRoot()` and `fs.readFileSync` for `dispatchAction`,
   `productionNewPlanDependencies.submitCommand`, and `consumePending`; add a
   comment to the `deepEqual` assertions in `extension/test/electron/suite.ts`
