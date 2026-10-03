@@ -2,7 +2,7 @@
 status: paused
 branch: issue/autopilot-subagent-model-pins
 last-updated: 2026-10-03
-next-step: "1.2 (manual) Run B — built-in Agent caller on a Copilot model; screenshot the Reviewer subagent pill"
+next-step: "1.3 (manual) Run C — built-in Agent caller on DeepSeek V4 Pro; screenshot the Reviewer subagent pill"
 github-issue: "#79"
 artifact-pr: "#22"
 ```
@@ -26,7 +26,7 @@ artifact-pr: "#22"
   workspace `d8f8087a25de51c2b43f460bb22c5af2`. Verified `active: "mixed"`
   under the primary checkout's CLI. Screenshot:
   [evidence/step-1-1-run-a-reviewer.png](evidence/step-1-1-run-a-reviewer.png).
-- [ ] 1.2 (manual) Run B — in a new chat in the same soshiki window, select the
+- [x] 1.2 (manual) Run B — in a new chat in the same soshiki window, select the
   built-in Agent role and set the picker to a Copilot model that is not Claude
   Fable 5.1 and whose cost tier is at least Fable 5.1's. Send: "Use the 🔍 Agento
   Reviewer subagent with this task: reply with one line naming the model you are
@@ -35,6 +35,13 @@ artifact-pr: "#22"
   `evidence/step-1-2-run-b-copilot-caller.png` and linked here, with the caller
   model named. The Reviewer subagent's `modelName` from the new chat's transcript
   is recorded on this line.
+  **Result (2026-10-03):** Caller: built-in Agent on
+  `Claude Opus 5.5 (copilot)` (not Fable 5.1; tier ≥ Fable 5.1). Reviewer
+  subagent ran on its own pin — `modelName: "Claude Fable 5.1"` (pin honored; no
+  fallback, no tier refusal), read from
+  `chatSessions/c639341d-308c-4c73-8a67-810ec0a58f66.jsonl` in workspace
+  `d8f8087a25de51c2b43f460bb22c5af2`. Screenshot:
+  [evidence/step-1-2-run-b-copilot-caller.png](evidence/step-1-2-run-b-copilot-caller.png).
 - [ ] 1.3 (manual) Run C (control) — repeat 1.2 in a new chat with the picker on
   DeepSeek V4 Pro and take a screenshot of the subagent pill — verify: the
   screenshot is saved as `evidence/step-1-3-run-c-byok-caller.png` and linked here.
