@@ -2,7 +2,7 @@
 status: in-review
 branch: issue/initiative-member-play-button
 last-updated: 2026-10-03
-next-step: "Run /agento review-issue initiative-member-play-button for a fresh review."
+next-step: "Approved (review round 2) — run /agento ship initiative-member-play-button from the primary window."
 github-issue: "#82"
 artifact-pr: "#24"
 ```

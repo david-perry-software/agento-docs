@@ -1,22 +1,30 @@
 # Review: initiative-member-play-button
 
-Verdict: request-changes
+Verdict: approve
 
-Reviewed 2026-10-03, product branch `issue/initiative-member-play-button` at
-`5de7202` (code PR #83), companion branch at `61e73f4` (artifact PR #24), issue #82.
-`origin/main` is an ancestor of both HEADs (`git merge-base --is-ancestor`, exit 0).
+Review round 2, 2026-10-03. Product branch `issue/initiative-member-play-button` at
+`506b39c` (code PR #83, draft, open), companion branch at `d55adf9` (artifact PR #24,
+draft, open), issue #82. After `git fetch origin` in both halves, `origin/main` is an
+ancestor of both HEADs (`git merge-base --is-ancestor`, exit 0); both halves are level
+with their remote branches; session record `companion.dirty: false`, `ahead: 0`.
+
+Round 1 (`request-changes`) raised Finding 1 (medium: no message-path assertion for
+acceptance item 4), Finding 2 (minor: README reflow), and an undocumented deviation.
+The Builder addressed them in roadmap steps 5.1–5.4 (product commits `77fe7cf`,
+`506b39c`; companion commits `c6f1da9`..`d55adf9`).
 
 Skills consulted: none — no matching domain (no `.agents/skills/` in the repository
 and no `## Agento` skills table in AGENTS.md).
 
-Verification re-run by the Reviewer (product checkout, 2026-10-03):
+Verification re-run by the Reviewer at `506b39c` (product checkout, 2026-10-03):
 
 | Check | Exit | Result |
 | --- | --- | --- |
 | `cd extension && npm run typecheck` | 0 | no findings |
 | `cd extension && npm run test:unit` | 0 | 110 tests, 110 pass, 0 fail (incl. `initiativeMemberActions.test.ts`) |
-| `cd extension && npm run test:electron` | 0 | in-repo, companion, workspace scenarios passed |
+| `cd extension && npm run test:electron` | 0 | "Electron in-repo scenario passed", "Electron companion scenario passed", "Electron workspace scenario passed"; no `AssertionError` |
 | `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` | 0 | 274 tests, 274 pass, 0 fail |
+| `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` | 0 | guard smoke green (no hook changes in this delivery) |
 | `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` | n/a | `command -v shellcheck` exit 1 — not installed; matches the recorded 127 baseline; no shell files changed |
 
 Lint gate (§5): baseline green for everything runnable, full gate planned; fresh
@@ -45,14 +53,20 @@ results identical to the baseline — no new findings.
    The `element?.kind === "member"` branch in `extension/src/extension.ts`
    (`registerCommand("agento.showActions", …)`) never reaches the session fallback.
 4. **No matching delivery → informational message naming the slug, nothing
-   dispatched — fail (verification incomplete).** The verify line requires "unit test
-   asserts empty `actions`; electron/unit assertion on the message path". The first
-   half exists ("in-flight member without a matching delivery resolves to empty
-   actions"). No test asserts the message path: `grep -rn "No Agento actions"
-   extension/test` returns nothing, and no test executes `agento.showActions` with a
-   member element. The slug-naming message and the early `return` before
-   `pickCommandAction` are verified only by code reading. A missing verification is a
-   failing verification.
+   dispatched — pass.** Unit half: "in-flight member without a matching delivery
+   resolves to empty actions". Message path (new in `77fe7cf`):
+   `assertOrphanMemberShowsMessage` in `extension/test/electron/suite.ts` clones the
+   in-flight `building-delivery` member with slug `orphan-delivery`, asserts the
+   resolver returns `{ slug, actions: [] }`, replaces `vscode.window.showInformationMessage`
+   and `vscode.window.showQuickPick` with recorders (restored in `finally`), executes
+   `agento.showActions` with the element, and asserts exactly one message
+   `No Agento actions are available for orphan-delivery in this window.` and no
+   picker. The recorder can only capture the message if the stub reaches the
+   extension's `vscode` API object, so the passing `deepEqual` also proves the stub is
+   effective. Dispatch is reachable only through `pickCommandAction` →
+   `showQuickPick` (`extension/src/actionPicker.ts`), so "no picker" implies nothing
+   dispatched. Called from `run()`, it executes in the in-repo and companion
+   scenarios, both passing in the Reviewer's run.
 5. **Ready / Blocked / Complete unchanged — pass.** Manifest `deepEqual` keeps the
    `planInitiativeMember` ready entry and adds no blocked/complete entry; the resolver
    returns `null` for ready/blocked/complete members (unit test "other members and
@@ -60,7 +74,7 @@ results identical to the baseline — no new findings.
    the 110/110 unit run.
 6. **Docs describe the in-flight play action — pass.** `docs/extension.md`
    (Initiatives paragraph), `extension/README.md` (Initiatives and Commands
-   sections), `CHANGELOG.md` **Fixed** entry referencing #82.
+   sections, the latter now reflowed), `CHANGELOG.md` **Fixed** entry referencing #82.
 7. **Full gate — pass.** Exit codes in the table above, re-run by the Reviewer.
 
 ## Plan vs implementation
@@ -68,44 +82,44 @@ results identical to the baseline — no new findings.
 - Matches `## Approach` steps 1–7: vscode-free resolver
   (`extension/src/initiativeMemberActions.ts`), command wiring, manifest entry,
   regression test, electron assertion, docs/changelog, no `extension/cli/` change.
-- Deviation (benign, undocumented): the empty-actions message now names the slug for
-  **Deliveries** rows too (`source?.slug` is set by `deliveryActionSource`), not only
-  for initiative members. Harmless and arguably better; worth one line in the
-  Resolution.
-- Deviation (benign): `deliveryActionSource` in `extension/src/actionPicker.ts` was
-  widened to accept `InitiativeTreeElement`; it still matches only
-  `kind: "delivery"`. Documented in the Resolution.
-- Gap: the plan's "electron/unit assertion on the message path" (acceptance item 4)
-  was not carried into any roadmap step — step 2.2's verify is typecheck + source
-  regexes only.
+- Deviation (benign, now documented): the empty-actions message names the slug for
+  **Deliveries** rows too (`source?.slug` is set by `deliveryActionSource`). plan.md
+  `## Resolution` line 230 records it (step 5.3).
+- Deviation (benign, documented): `deliveryActionSource` in
+  `extension/src/actionPicker.ts` was widened to accept `InitiativeTreeElement`; it
+  still matches only `kind: "delivery"`.
+- Round-1 gap closed: the message-path assertion is now roadmap step 5.1 and is in
+  the electron suite.
+- Source unchanged since round 1: `git diff 5de7202..506b39c` touches only
+  `extension/test/electron/suite.ts` and `extension/README.md`.
 
 ## Roadmap audit
 
-- Spot-checked all 11 ticked steps against the code and commits: 1.1/1.2
-  (`9809449`, body quotes the failure), 2.1 (`b92e606`), 2.2 (`a83444a`), 2.3
-  (`4394f73`), 3.1 (`c90dcbe`), 3.2 (`runTest.ts` iterates three scenarios; Reviewer
-  run printed 3 "scenario passed" lines), 4.1 (`691e7ab`), 4.2 (`5de7202`), 4.3
-  (exit codes reproduced), 4.4 (Resolution written, both halves integrated and
-  pushed, `companion.dirty: false`, `ahead: 0`). No falsely ticked boxes.
-- Added step 5.1 `(added 2026-10-03)` for the missing message-path assertion and
-  updated `next-step`; `status` stays `in-review`.
+- Steps 1.1–4.4: audited in round 1 (commits `9809449`..`5de7202`); the code they
+  cover is unchanged since, and the Reviewer's gate run reproduces their exit codes.
+- 5.1: `77fe7cf` adds `assertOrphanMemberShowsMessage` (+23 lines,
+  `extension/test/electron/suite.ts` only) and calls it after the existing
+  `building-delivery` assertions; electron exit 0 reproduced.
+- 5.2: `506b39c` — `git diff --word-diff=porcelain 77fe7cf..506b39c --
+  extension/README.md` shows no added or removed words; the paragraph's lines are
+  83–85 characters with the last line `dispatch.`.
+- 5.3: plan.md `## Resolution` line 230 reads "The slug-named message applies to
+  Deliveries rows too, since `deliveryActionSource` also supplies a slug."
+- 5.4: gate exit codes reproduced (table above); `origin/main` an ancestor of both
+  HEADs; both halves pushed; `companion.dirty: false`, `ahead: 0`.
+- All 15 ticked steps hold. No falsely ticked boxes and no `(manual)` steps.
+  Roadmap repair: `next-step` updated to the ship handoff; `status` stays `in-review`.
 
 ## Findings
 
-1. **Medium — acceptance item 4 lacks its planned verification.** No automated test
-   covers `agento.showActions` with an in-flight member that has no Deliveries row:
-   neither the slug-naming information message nor the "dispatches nothing" early
-   return is asserted. Suggested fix (electron suite, which already holds the
-   `vscode` API): construct an in-flight `member` element whose slug has no
-   Deliveries row, temporarily replace `vscode.window.showInformationMessage` with a
-   recorder, `await vscode.commands.executeCommand("agento.showActions", element)`,
-   restore it, and assert one message equal to `No Agento actions are available for
-   <slug> in this window.` and that no picker/dispatch occurred. Optionally the same
-   harness can assert that a member with a matching delivery does not use the
-   session's actions.
-2. **Minor — `extension/README.md` Commands paragraph reflow.** The edit leaves a
-   short line ("…or the Session &\nDoctor title opens a picker in\nthe exact order…").
-   Cosmetic; reflow when touching the file.
+None open.
+
+Round-1 findings resolved:
+
+1. Medium — acceptance item 4 lacked its message-path verification → resolved by
+   step 5.1 (`77fe7cf`); see acceptance item 4.
+2. Minor — `extension/README.md` Commands paragraph short line → resolved by
+   step 5.2 (`506b39c`), whitespace-only.
 
 No security findings: the change reads in-memory tree state only, executes no shell,
 and the dispatched commands remain CLI-derived and revalidated with
