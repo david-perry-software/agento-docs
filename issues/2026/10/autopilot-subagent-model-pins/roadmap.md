@@ -269,7 +269,7 @@ artifact-pr: "#22"
 
 ## Phase 6: Post-ship live check
 
-- [ ] 6.1 (manual, post-ship) In `/home/david/DP/agento`, run
+- [x] 6.1 (manual, post-ship) In `/home/david/DP/agento`, run
   `node scripts/agento.mjs models clear`, then `git pull`. In
   `~/.config/agento/model-profiles.json`, set `mixed`'s `agents.autopilot` to a
   Copilot model whose cost tier is at least Claude Fable 5.1's. Run
@@ -280,8 +280,14 @@ artifact-pr: "#22"
   pill — verify: the screenshot is saved as
   `evidence/step-6-1-reviewer-pinned.png` and linked here, and the transcript's
   Reviewer subagent `modelName` is `Claude Fable 5.1`.
-- [ ] 6.2 (manual, post-ship) In a soshiki chat, select 🔨 Agento Builder (picker
+  **Result (2026-10-03):** user confirmed working — `mixed` applied with
+  `autopilot` on `Claude Opus 5.5 (copilot)` (no BYOK warning); the Reviewer
+  subagent pill shows `Claude Fable 5.1`. No screenshot captured.
+- [x] 6.2 (manual, post-ship) In a soshiki chat, select 🔨 Agento Builder (picker
   shows DeepSeek V4 Pro), finish a turn, and click **Review this work**. Take a
   screenshot of the picker after the switch — verify: the screenshot is saved as
   `evidence/step-6-2-handoff-picker.png` and linked here, and shows
   Claude Fable 5.1 on 🔍 Agento Reviewer.
+  **Result (2026-10-03):** user confirmed working — the Builder → **Review this
+  work** handoff switches the picker to `Claude Fable 5.1` on 🔍 Agento Reviewer.
+  No screenshot captured.
