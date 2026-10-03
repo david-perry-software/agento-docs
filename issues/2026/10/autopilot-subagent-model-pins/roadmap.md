@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/autopilot-subagent-model-pins
 last-updated: 2026-10-02
-next-step: "3.4 add the BYOK tier warning"
+next-step: "3.5 refresh the extension bundle"
 github-issue: "#79"
 artifact-pr: "#22"
 ```
@@ -98,7 +98,7 @@ artifact-pr: "#22"
   `subagentModel` is the first entry; `pins extra` → exit 1 — verify:
   `node --test scripts/agento.test.mjs` exit 0.
   **Result (2026-10-02):** exit 0 — 82 tests, 82 pass.
-- [ ] 3.4 Add the BYOK tier warning. A pure helper reads the vendor from a
+- [x] 3.4 Add the BYOK tier warning. A pure helper reads the vendor from a
   `<name> (<vendor>)` value and warns when `autopilot`'s pin is a non-`copilot`
   vendor while `builder` or `reviewer` pins a `copilot` vendor. The message names
   the pins and says to pin `autopilot` at least as high as the highest-tier model
@@ -107,6 +107,8 @@ artifact-pr: "#22"
   check returns `warn` with that detail when the applied pins trigger it. Add unit,
   CLI, and doctor tests — verify: `node --test scripts/model-profiles.test.mjs
   scripts/agento.test.mjs` exit 0.
+  **Result (2026-10-02):** exit 0 — 108 tests, 108 pass. Added CLI show/apply/pins
+  warning test and a doctor model-profile warning test.
 - [ ] 3.5 Refresh the extension bundle: `cd extension && npm run copy-cli` —
   verify: `node --test tests/extension-bundle.test.mjs` exit 0 and
   `cmp scripts/model-profiles.mjs extension/cli/model-profiles.mjs` and
