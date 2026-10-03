@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/autopilot-subagent-model-pins
 last-updated: 2026-10-02
-next-step: "5.4 end-to-end check on a temporary clone"
+next-step: "5.5 run the full gate"
 github-issue: "#79"
 artifact-pr: "#22"
 ```
@@ -185,7 +185,7 @@ artifact-pr: "#22"
   `grep -n "#79" CHANGELOG.md` matches under `## Unreleased`.
   **Result (2026-10-02):** matches — `CHANGELOG.md:12`, under `## Unreleased`
   (line 3).
-- [ ] 5.4 Run an end-to-end check on a temporary clone of this branch, with
+- [x] 5.4 Run an end-to-end check on a temporary clone of this branch, with
   `AGENTO_CONFIG_HOME` set to a temporary copy of `~/.config/agento/model-profiles.json`:
   - `models apply mixed`: three handoff `model:` lines carrying the target pins,
     `warnings[]` naming the BYOK `autopilot` vs the Copilot `reviewer`, and
@@ -197,6 +197,14 @@ artifact-pr: "#22"
   - `clear`: `git diff --quiet` and no `S` bits.
 
   Record the transcript summary on this line — verify: every listed check holds.
+  **Result (2026-10-02):** every check holds on a temp clone of the pushed branch
+  with a temp copy of the profile. apply: three handoff `model:` lines (planner →
+  `DeepSeek V4 Pro (deepseek)`, builder → `Claude Fable 5.1 (copilot)`, reviewer →
+  `DeepSeek V4 Pro (deepseek)`), `warnings[]` naming the BYOK `autopilot` vs the
+  Copilot `reviewer`, `git status --porcelain` empty. pins: builder
+  `DeepSeek V4 Pro (deepseek)`, reviewer `Claude Fable 5.1 (copilot)`. doctor:
+  `model-profile` warn. re-apply: `changed: []`. clear: `git diff --quiet` exit 0
+  and no `S` bits.
 - [ ] 5.5 Run the full gate:
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0 (≥ 259
     tests, 0 fail);
