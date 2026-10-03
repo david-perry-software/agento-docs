@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/autopilot-subagent-model-pins
 last-updated: 2026-10-03
-next-step: "1.5 Post the classified result on issue #79"
+next-step: "5.2 Update docs/model-profiles.md per Decision 5 (no defect reproduced)"
 github-issue: "#79"
 artifact-pr: "#22"
 ```
@@ -67,9 +67,13 @@ artifact-pr: "#22"
   (reproduction steps, observed vs expected, three screenshots; "Status:
   unreproduced" → "Status: no defect reproduced"). `grep -n "Run A\|Run B\|Run C"
   plan.md` shows each run's model.
-- [ ] 1.5 Post the classified result on the issue with links to the evidence on the
+- [x] 1.5 Post the classified result on the issue with links to the evidence on the
   companion branch: `gh issue comment 79 --body-file <tmp>` — verify:
   `gh issue view 79 --comments` shows the comment with all three runs.
+  **Result (2026-10-03):** comment posted —
+  [issue #79 #issuecomment-5970149015](https://github.com/david-perry-software/agento/issues/79#issuecomment-5970149015).
+  `gh issue view 79 --comments` shows Run A, Run B, Run C and the three
+  `step-1-*.png` links on the companion branch.
 
 ## Phase 2: Exposing regression test
 
