@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/initiative-member-play-button
 last-updated: 2026-10-03
-next-step: "2.1 create extension/src/initiativeMemberActions.ts resolver"
+next-step: "2.2 wire agento.showActions for initiative member elements"
 github-issue: "#82"
 artifact-pr: "#24"
 ```
@@ -14,7 +14,7 @@ artifact-pr: "#24"
 
 ## Phase 2: Fix
 
-- [ ] 2.1 Create `extension/src/initiativeMemberActions.ts` (no `vscode` import) exporting `initiativeMemberActionSource(element: InitiativeTreeElement | undefined, model: DeliveryTreeModel)` per plan.md `## Approach` step 1 — verify: `cd extension && npm run typecheck` exit 0
+- [x] 2.1 Create `extension/src/initiativeMemberActions.ts` (no `vscode` import) exporting `initiativeMemberActionSource(element: InitiativeTreeElement | undefined, model: DeliveryTreeModel)` per plan.md `## Approach` step 1 — verify: `cd extension && npm run typecheck` exit 0
 - [ ] 2.2 Wire `agento.showActions` in `extension/src/extension.ts` to accept `DeliveryTreeElement | InitiativeTreeElement`, resolving `deliveryActionSource(element) ?? initiativeMemberActionSource(element, deliveries.current.model) ?? <session fallback>`, and make the empty-actions message name the slug when known (e.g. `No Agento actions are available for <slug> in this window.`), without falling through to session actions for a member element — verify: `npm run typecheck` exit 0; `extensionIntegration.test.ts` source regexes still match
 - [ ] 2.3 Add the `view/item/context` inline entry for `agento.showActions` on `viewItem == agento.initiativeMember.in-flight` to `extension/package.json` and update the `deepEqual` in `extension/test/unit/extensionIntegration.test.ts` to the three-entry array — verify: `cd extension && npm run test:unit` exit 0 (the 1.1 regression test now passes)
 
