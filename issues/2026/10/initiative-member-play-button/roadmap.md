@@ -2,15 +2,15 @@
 status: in-progress
 branch: issue/initiative-member-play-button
 last-updated: 2026-10-03
-next-step: "1.1 add the exposing regression test and confirm it fails"
+next-step: "2.1 create extension/src/initiativeMemberActions.ts resolver"
 github-issue: "#82"
 artifact-pr: "#24"
 ```
 
 ## Phase 1: Expose the defect
 
-- [ ] 1.1 Add `extension/test/unit/initiativeMemberActions.test.ts` with header comment `// Regression test for #82 initiative-member-play-button`, importing `initiativeMemberActionSource` from `../../src/initiativeMemberActions.js` and asserting: (a) `package.json` `view/item/context` contains `{ command: "agento.showActions", when: "view == agento.initiatives && viewItem == agento.initiativeMember.in-flight", group: "inline" }`; (b) an in-flight member element resolves to the matching delivery's `actions` by slug; (c) an in-flight member with no matching delivery resolves to `{ slug, actions: [] }`; (d) ready/blocked/complete members and non-member elements resolve to `null` — verify: `cd extension && npm run test:unit` exits nonzero and the failure names this test file (missing module / manifest entry)
-- [ ] 1.2 Commit the test on its own (`test(extension): expose #82 initiative-member-play-button`) with the failing assertion text quoted in the commit body — verify: `git log -1 --format=%B` quotes the failure
+- [x] 1.1 Add `extension/test/unit/initiativeMemberActions.test.ts` with header comment `// Regression test for #82 initiative-member-play-button`, importing `initiativeMemberActionSource` from `../../src/initiativeMemberActions.js` and asserting: (a) `package.json` `view/item/context` contains `{ command: "agento.showActions", when: "view == agento.initiatives && viewItem == agento.initiativeMember.in-flight", group: "inline" }`; (b) an in-flight member element resolves to the matching delivery's `actions` by slug; (c) an in-flight member with no matching delivery resolves to `{ slug, actions: [] }`; (d) ready/blocked/complete members and non-member elements resolve to `null` — verify: `cd extension && npm run test:unit` exits nonzero and the failure names this test file (missing module / manifest entry)
+- [x] 1.2 Commit the test on its own (`test(extension): expose #82 initiative-member-play-button`) with the failing assertion text quoted in the commit body — verify: `git log -1 --format=%B` quotes the failure
 
 ## Phase 2: Fix
 
