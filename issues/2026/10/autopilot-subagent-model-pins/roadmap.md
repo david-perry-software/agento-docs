@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: issue/autopilot-subagent-model-pins
 last-updated: 2026-10-02
-next-step: "5.5 run the full gate"
+next-step: "1.1 (manual) Run A — screenshot the Reviewer subagent pill showing its model"
 github-issue: "#79"
 artifact-pr: "#22"
 ```
@@ -205,7 +205,7 @@ artifact-pr: "#22"
   `DeepSeek V4 Pro (deepseek)`, reviewer `Claude Fable 5.1 (copilot)`. doctor:
   `model-profile` warn. re-apply: `changed: []`. clear: `git diff --quiet` exit 0
   and no `S` bits.
-- [ ] 5.5 Run the full gate:
+- [x] 5.5 Run the full gate:
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0 (≥ 259
     tests, 0 fail);
   - `git ls-files '*.sh' | xargs pnpm dlx shellcheck` exit 0 with no findings
@@ -214,6 +214,10 @@ artifact-pr: "#22"
 
   Compare the results with the baseline in plan.md `## Research` — verify: all
   three exit 0, and the comparison is recorded on this line.
+  **Result (2026-10-02):** all three exit 0. Tests: 273 pass, 0 fail (baseline 259,
+  green — the full gate, no scoped gate). Shellcheck: exit 0, no findings (baseline
+  0). Extension: `npm run typecheck` exit 0; `npm run test:unit` exit 0 (106 unit
+  tests).
 - [ ] 5.6 Write plan.md `## Resolution` (root cause per phase 1, what changed, the
   exposing test passing). Integrate `origin/main` in both halves, set
   `status: in-review`, and push product and companion — verify:
