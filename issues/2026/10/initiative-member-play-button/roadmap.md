@@ -4,6 +4,7 @@ branch: issue/initiative-member-play-button
 last-updated: 2026-10-03
 next-step: "1.1 add the exposing regression test and confirm it fails"
 github-issue: "#82"
+artifact-pr: "#24"
 ```
 
 ## Phase 1: Expose the defect
