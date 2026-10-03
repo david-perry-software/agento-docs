@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/autopilot-subagent-model-pins
 last-updated: 2026-10-02
-next-step: "3.5 refresh the extension bundle"
+next-step: "4.1 pass runSubagent model pins in the Autopilot body"
 github-issue: "#79"
 artifact-pr: "#22"
 ```
@@ -109,10 +109,11 @@ artifact-pr: "#22"
   scripts/agento.test.mjs` exit 0.
   **Result (2026-10-02):** exit 0 — 108 tests, 108 pass. Added CLI show/apply/pins
   warning test and a doctor model-profile warning test.
-- [ ] 3.5 Refresh the extension bundle: `cd extension && npm run copy-cli` —
+- [x] 3.5 Refresh the extension bundle: `cd extension && npm run copy-cli` —
   verify: `node --test tests/extension-bundle.test.mjs` exit 0 and
   `cmp scripts/model-profiles.mjs extension/cli/model-profiles.mjs` and
   `cmp scripts/agento.mjs extension/cli/agento.mjs` both exit 0.
+  **Result (2026-10-02):** exit 0 — 4 tests, 4 pass; both `cmp` exit 0.
 
 ## Phase 4: Autopilot and committed-file guard
 
