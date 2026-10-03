@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/autopilot-subagent-model-pins
 last-updated: 2026-10-02
-next-step: "5.1 document handoff pins, models pins, and the tier warning"
+next-step: "5.3 add the CHANGELOG Unreleased entry"
 github-issue: "#79"
 artifact-pr: "#22"
 ```
@@ -155,7 +155,7 @@ artifact-pr: "#22"
 
 ## Phase 5: Docs, end-to-end, and gate
 
-- [ ] 5.1 In `docs/model-profiles.md`:
+- [x] 5.1 In `docs/model-profiles.md`:
   - Add a handoff row to the `## Resolution` table: target agent's pin, first entry
     of a list.
   - Describe handoff lines under `## Applying and clearing`.
@@ -164,6 +164,8 @@ artifact-pr: "#22"
 
   Then add `pins` to the `docs/commands.md` CLI line (~141) — verify:
   `grep -n "models pins" docs/model-profiles.md docs/commands.md` matches both.
+  **Result (2026-10-02):** matches both (model-profiles.md line 99, commands.md line
+  147).
 - [ ] 5.2 (requires 1.4) Replace the `## Limits` bullet ``handoffs[].model` is not
   written…`` with a `## Subagents and handoffs` section per Decision 5, worded to
   phase 1's classified results. It covers:
