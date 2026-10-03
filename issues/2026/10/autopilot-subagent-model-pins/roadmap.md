@@ -1,15 +1,15 @@
 ```yaml
 status: paused
 branch: issue/autopilot-subagent-model-pins
-last-updated: 2026-10-02
-next-step: "1.1 (manual) Run A — screenshot the Reviewer subagent pill showing its model"
+last-updated: 2026-10-03
+next-step: "1.2 (manual) Run B — built-in Agent caller on a Copilot model; screenshot the Reviewer subagent pill"
 github-issue: "#79"
 artifact-pr: "#22"
 ```
 
 ## Phase 1: Live reproduction
 
-- [ ] 1.1 (manual) Run A — keep `mixed` applied to `/home/david/DP/agento`
+- [x] 1.1 (manual) Run A — keep `mixed` applied to `/home/david/DP/agento`
   unchanged. When the soshiki `plan-20261002-213543` `/agento ap api-shared-kernel`
   run invokes the 🔍 Agento Reviewer subagent, take a screenshot of the subagent
   pill showing its model. If that run has already ended, re-run
@@ -20,6 +20,12 @@ artifact-pr: "#22"
   from `~/.config/Code/User/workspaceStorage/d8f8087a25de51c2b43f460bb22c5af2/chatSessions/*.jsonl`
   (`toolSpecificData.kind == "subagent"`, `agentName` "🔍 Agento Reviewer") and
   recorded on this line.
+  **Result (2026-10-03):** Reviewer subagent ran on its own pin —
+  `modelName: "Claude Fable 5.1"` (pin honored; no fallback, no tier refusal),
+  read from `chatSessions/cdb2d7fb-53c7-48ef-b0b6-2c4c370e40ce.jsonl` in
+  workspace `d8f8087a25de51c2b43f460bb22c5af2`. Verified `active: "mixed"`
+  under the primary checkout's CLI. Screenshot:
+  [evidence/step-1-1-run-a-reviewer.png](evidence/step-1-1-run-a-reviewer.png).
 - [ ] 1.2 (manual) Run B — in a new chat in the same soshiki window, select the
   built-in Agent role and set the picker to a Copilot model that is not Claude
   Fable 5.1 and whose cost tier is at least Fable 5.1's. Send: "Use the 🔍 Agento
