@@ -2,7 +2,7 @@
 status: in-review
 branch: issue/initiative-member-play-button
 last-updated: 2026-10-03
-next-step: "review: /agento review-issue initiative-member-play-button"
+next-step: "Complete step 5.1, then run /agento review-issue initiative-member-play-button for a fresh review."
 github-issue: "#82"
 artifact-pr: "#24"
 ```
@@ -29,3 +29,7 @@ artifact-pr: "#24"
 - [x] 4.2 Add a **Fixed** entry to `CHANGELOG.md` under the unreleased/current section referencing #82 — verify: `grep -n "#82" CHANGELOG.md`
 - [x] 4.3 Full gate: `cd extension && npm run typecheck`, `npm run test:unit`, `npm run test:electron`; repo root `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`; `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` if available (record 127 otherwise, matching the baseline) — verify: all recorded exit codes are 0 (shellcheck 127 permitted per baseline), compared against plan.md `## Research` — 2026-10-03: typecheck 0; test:unit 0 (110/110); test:electron 0 (in-repo, companion, workspace passed); node --test 0 (274/274); shellcheck 127 (not installed, matches baseline)
 - [x] 4.4 Write plan.md `## Resolution` (root cause, what changed, proof the #82 regression test passes), merge `origin/main` into the product branch and the companion's `origin/main` into the companion branch, push both, and set `status: in-review` — verify: `node scripts/agento.mjs session --pr` reports both PRs, `companion.dirty: false`, `companion.ahead: 0`
+
+## Phase 5: Address review findings
+
+- [ ] 5.1 (added 2026-10-03) In `extension/test/electron/suite.ts`, execute `agento.showActions` with an in-flight member element whose slug has no Deliveries row while `vscode.window.showInformationMessage` is temporarily replaced by a recorder; assert exactly one message `No Agento actions are available for <slug> in this window.` and that no picker or dispatch occurred (acceptance item 4's message-path assertion, review.md Finding 1) — verify: `cd extension && npm run test:electron` exit 0 with all three scenarios passed; `npm run typecheck` and `npm run test:unit` exit 0
