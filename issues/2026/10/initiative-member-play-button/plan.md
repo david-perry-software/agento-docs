@@ -227,6 +227,8 @@ fallen back to the session's actions.
   Initiatives elements; a member element resolves through the new resolver and
   never falls back to session actions; the empty-actions message names the slug
   (`No Agento actions are available for <slug> in this window.`).
+  The slug-named message applies to Deliveries rows too, since
+  `deliveryActionSource` also supplies a slug.
   `extension/src/actionPicker.ts` `deliveryActionSource` accepts either element
   type (still matching only `kind: "delivery"`).
 - `extension/package.json`: inline `agento.showActions` (`$(play)`) for
@@ -234,7 +236,9 @@ fallen back to the session's actions.
   `extensionIntegration.test.ts` updated to the three-entry array.
 - Electron suite asserts the In flight member `building-delivery` has
   `contextValue` `agento.initiativeMember.in-flight` and resolves to the same
-  `actions` as the Deliveries row `building-delivery`.
+  `actions` as the Deliveries row `building-delivery`, and that
+  `agento.showActions` on an in-flight member with no Deliveries row shows only
+  the slug-named message and opens no picker (review Finding 1).
 - `docs/extension.md`, `extension/README.md`, `CHANGELOG.md` (**Fixed**, #82).
 
 **Proof.** `extension/test/unit/initiativeMemberActions.test.ts` (`// Regression
