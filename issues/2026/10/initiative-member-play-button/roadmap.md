@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/initiative-member-play-button
 last-updated: 2026-10-03
-next-step: "4.1 document the in-flight member play action"
+next-step: "4.2 add the CHANGELOG Fixed entry for #82"
 github-issue: "#82"
 artifact-pr: "#24"
 ```
@@ -25,7 +25,7 @@ artifact-pr: "#24"
 
 ## Phase 4: Docs and gate
 
-- [ ] 4.1 Update `docs/extension.md` (Initiatives section) and `extension/README.md` to describe the play action on in-flight members (opens the delivery's actions picker; informational message when no delivery matches) — verify: `grep -n "in flight\|In flight\|in-flight" docs/extension.md extension/README.md` shows the new wording
+- [x] 4.1 Update `docs/extension.md` (Initiatives section) and `extension/README.md` to describe the play action on in-flight members (opens the delivery's actions picker; informational message when no delivery matches) — verify: `grep -n "in flight\|In flight\|in-flight" docs/extension.md extension/README.md` shows the new wording
 - [ ] 4.2 Add a **Fixed** entry to `CHANGELOG.md` under the unreleased/current section referencing #82 — verify: `grep -n "#82" CHANGELOG.md`
 - [ ] 4.3 Full gate: `cd extension && npm run typecheck`, `npm run test:unit`, `npm run test:electron`; repo root `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`; `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` if available (record 127 otherwise, matching the baseline) — verify: all recorded exit codes are 0 (shellcheck 127 permitted per baseline), compared against plan.md `## Research`
 - [ ] 4.4 Write plan.md `## Resolution` (root cause, what changed, proof the #82 regression test passes), merge `origin/main` into the product branch and the companion's `origin/main` into the companion branch, push both, and set `status: in-review` — verify: `node scripts/agento.mjs session --pr` reports both PRs, `companion.dirty: false`, `companion.ahead: 0`
