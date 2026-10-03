@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/autopilot-subagent-model-pins
 last-updated: 2026-10-02
-next-step: "5.3 add the CHANGELOG Unreleased entry"
+next-step: "5.4 end-to-end check on a temporary clone"
 github-issue: "#79"
 artifact-pr: "#22"
 ```
@@ -181,8 +181,10 @@ artifact-pr: "#22"
   Verify: `grep -n "Subagents and handoffs\|1.136\|Agent Host" docs/model-profiles.md`
   matches, and `grep -n "handoffs\[\].model. is not written" docs/model-profiles.md`
   matches nothing.
-- [ ] 5.3 Add a **Fixed.** entry citing #79 to CHANGELOG `## Unreleased` — verify:
+- [x] 5.3 Add a **Fixed.** entry citing #79 to CHANGELOG `## Unreleased` — verify:
   `grep -n "#79" CHANGELOG.md` matches under `## Unreleased`.
+  **Result (2026-10-02):** matches — `CHANGELOG.md:12`, under `## Unreleased`
+  (line 3).
 - [ ] 5.4 Run an end-to-end check on a temporary clone of this branch, with
   `AGENTO_CONFIG_HOME` set to a temporary copy of `~/.config/agento/model-profiles.json`:
   - `models apply mixed`: three handoff `model:` lines carrying the target pins,
