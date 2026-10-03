@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: issue/initiative-member-play-button
 last-updated: 2026-10-03
-next-step: "Approved (review round 2) — run /agento ship initiative-member-play-button from the primary window."
+next-step: ""
 github-issue: "#82"
 artifact-pr: "#24"
 ```
@@ -36,3 +36,7 @@ artifact-pr: "#24"
 - [x] 5.2 (added 2026-10-03) Reflow the `extension/README.md` Commands paragraph left with a short line by step 4.1 (review.md Finding 2) — verify: `git diff` on `extension/README.md` is whitespace/line-break only (`git diff --word-diff=porcelain` shows no word changes) and no line in the paragraph is short mid-paragraph — 2026-10-03: word-diff shows no word changes; paragraph lines 83–85 chars, last line `dispatch.`
 - [x] 5.3 (added 2026-10-03) Add one line to plan.md `## Resolution` noting the slug-named empty-actions message also applies to Deliveries rows (review.md Plan vs implementation deviation) — verify: `grep -n "Deliveries rows" plan.md` shows the line under `## Resolution`
 - [x] 5.4 (added 2026-10-03) Re-run the full gate, integrate `origin/main` into both halves, push both, and set `status: in-review` — verify: typecheck, test:unit, test:electron, root `node --test` exit 0 (shellcheck 127 per baseline); `agento.mjs session` shows `companion.dirty: false`, `companion.ahead: 0` — 2026-10-03: typecheck 0; test:unit 0 (110/110); test:electron 0 (in-repo, companion, workspace passed); node --test 0 (274/274); shellcheck 127 (not installed); `origin/main` an ancestor of both HEADs
+
+## Follow-ups (accepted at ship)
+
+- #82 changelog entry left under `## Unreleased` unstamped: the plugin version is unchanged at ship (neither `.claude-plugin/plugin.json` nor `package.json` changed), so step 3 does not date-stamp it. The repo accumulates fixes under `## Unreleased` until a version bump.
