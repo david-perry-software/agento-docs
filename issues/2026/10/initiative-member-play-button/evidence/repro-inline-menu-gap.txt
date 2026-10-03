@@ -1,0 +1,8 @@
+Initiatives inline menu contributions:
+  agento.planInitiativeMember  when: view == agento.initiatives && viewItem == agento.initiativeMember.ready
+
+Member rows and whether any inline button matches their viewItem:
+  ready-delivery     state=unplanned    contextValue=agento.initiativeMember.ready          inline=agento.planInitiativeMember
+  planned-delivery   state=planned      contextValue=agento.initiativeMember.in-flight      inline=NONE
+  building-delivery  state=in-progress  contextValue=agento.initiativeMember.in-flight      inline=NONE
+  review-delivery    state=in-review    contextValue=agento.initiativeMember.in-flight      inline=NONE
