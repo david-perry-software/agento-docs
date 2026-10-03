@@ -52,13 +52,21 @@ artifact-pr: "#22"
   `chatSessions/a31ca086-6903-4021-93a7-546b80031c2b.jsonl` in workspace
   `d8f8087a25de51c2b43f460bb22c5af2`. Screenshot:
   [evidence/step-1-3-run-c-byok-caller.png](evidence/step-1-3-run-c-byok-caller.png).
-- [ ] 1.4 Classify the result for each run: pin honored, fallback to the caller's
+- [x] 1.4 Classify the result for each run: pin honored, fallback to the caller's
   model, or tier refusal. Write the reproduction steps, the observed vs expected
   behavior, and links to the three screenshots into plan.md `## Evidence`, and
   replace "Status: unreproduced". If Run A and Run C show Claude Fable 5.1 (no
   defect), stop and ask the user to re-run with a screenshot, per Decision 1 —
   verify: `grep -n "Run A\|Run B\|Run C" plan.md` shows each run's model in
   `## Evidence`.
+  **Result (2026-10-03):** Classification — **no defect reproduced**. Run A
+  (Autopilot on DeepSeek, BYOK): pin honored. Run B (built-in Agent on Claude Opus
+  5.5): pin honored. Run C (built-in Agent on DeepSeek, BYOK): pin honored. All
+  three runs show the Reviewer on `Claude Fable 5.1`; the reported fallback did not
+  reproduce with any caller, including both BYOK callers. `## Evidence` updated
+  (reproduction steps, observed vs expected, three screenshots; "Status:
+  unreproduced" → "Status: no defect reproduced"). `grep -n "Run A\|Run B\|Run C"
+  plan.md` shows each run's model.
 - [ ] 1.5 Post the classified result on the issue with links to the evidence on the
   companion branch: `gh issue comment 79 --body-file <tmp>` — verify:
   `gh issue view 79 --comments` shows the comment with all three runs.

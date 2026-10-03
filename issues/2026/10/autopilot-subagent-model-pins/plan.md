@@ -32,12 +32,31 @@ GitHub issue: #79
   - The run had not reached review, so there is no Reviewer subagent call in it.
   - No other local transcript contains a Reviewer subagent run since the profile
     was applied.
-- **Status: unreproduced at planning time.** As decided (Decisions 1), roadmap
-  phase 1 runs a live test that tells the two pins apart. Its outcome is recorded
-  here and on #79. If the defect does not reproduce, the user re-runs and attaches a
-  screenshot of the Reviewer subagent pill, which shows the model it ran on.
+- **Reproduction (builder, 2026-10-03, live).** Three Reviewer subagent runs in
+  the soshiki window (`plan-20261002-213543`, workspace
+  `d8f8087a25de51c2b43f460bb22c5af2`, VS Code 1.136.0, Copilot Chat 0.64.0, Local
+  harness), profile `mixed` applied throughout. Each run's Reviewer `modelName`
+  was read from that window's chat transcript (`toolSpecificData.kind ==
+  "subagent"`, `agentName` "🔍 Agento Reviewer").
+  - **Run A** — caller 🔨 Agento Autopilot on `DeepSeek V4 Pro (deepseek)`
+    (`/agento ap api-shared-kernel`): Reviewer `modelName: "Claude Fable 5.1"` —
+    pin honored, no fallback, no tier refusal.
+    [evidence/step-1-1-run-a-reviewer.png](evidence/step-1-1-run-a-reviewer.png)
+  - **Run B** — caller built-in Agent on `Claude Opus 5.5 (copilot)`: Reviewer
+    `modelName: "Claude Fable 5.1"` — pin honored.
+    [evidence/step-1-2-run-b-copilot-caller.png](evidence/step-1-2-run-b-copilot-caller.png)
+  - **Run C** — caller built-in Agent on `DeepSeek V4 Pro (deepseek)` (BYOK):
+    Reviewer `modelName: "Claude Fable 5.1"` — pin honored.
+    [evidence/step-1-3-run-c-byok-caller.png](evidence/step-1-3-run-c-byok-caller.png)
+- **Status: no defect reproduced.** In all three runs the 🔍 Agento Reviewer
+  subagent ran on its own pin, `Claude Fable 5.1`, with every caller — including
+  both BYOK callers (the Autopilot on DeepSeek in Run A and the built-in Agent on
+  DeepSeek in Run C). The reported fallback (Reviewer on the caller's DeepSeek
+  model) did not reproduce on this harness.
 - **Observed vs expected.**
   - Observed (reported): the Reviewer subagent runs on the caller's model.
+  - Observed (live, 2026-10-03): the Reviewer subagent runs on its own pin,
+    `Claude Fable 5.1`, in all three runs.
   - Expected: it runs on its own pin. If VS Code refuses that model, the run stops
     and says how to fix the profile.
 - **Root-cause hypothesis.** The VS Code subagent docs (quoted in the evidence file)
