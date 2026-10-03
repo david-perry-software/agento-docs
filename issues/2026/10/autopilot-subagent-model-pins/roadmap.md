@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: issue/autopilot-subagent-model-pins
 last-updated: 2026-10-03
-next-step: "1.4 Classify the result for each run and record it in plan.md ## Evidence"
+next-step: "1.5 blocked: no defect reproduced — user decision needed (keep fix as hardening / abandon issue / other)"
 github-issue: "#79"
 artifact-pr: "#22"
 ```
