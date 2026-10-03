@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/initiative-member-play-button
 last-updated: 2026-10-03
-next-step: "5.1 electron assertion on the no-matching-delivery message path"
+next-step: "5.2 reflow the extension/README.md Commands paragraph"
 github-issue: "#82"
 artifact-pr: "#24"
 ```
@@ -32,7 +32,7 @@ artifact-pr: "#24"
 
 ## Phase 5: Address review findings
 
-- [ ] 5.1 (added 2026-10-03) In `extension/test/electron/suite.ts`, execute `agento.showActions` with an in-flight member element whose slug has no Deliveries row while `vscode.window.showInformationMessage` is temporarily replaced by a recorder; assert exactly one message `No Agento actions are available for <slug> in this window.` and that no picker or dispatch occurred (acceptance item 4's message-path assertion, review.md Finding 1) — verify: `cd extension && npm run test:electron` exit 0 with all three scenarios passed; `npm run typecheck` and `npm run test:unit` exit 0
+- [x] 5.1 (added 2026-10-03) In `extension/test/electron/suite.ts`, execute `agento.showActions` with an in-flight member element whose slug has no Deliveries row while `vscode.window.showInformationMessage` is temporarily replaced by a recorder; assert exactly one message `No Agento actions are available for <slug> in this window.` and that no picker or dispatch occurred (acceptance item 4's message-path assertion, review.md Finding 1) — verify: `cd extension && npm run test:electron` exit 0 with all three scenarios passed; `npm run typecheck` and `npm run test:unit` exit 0 — 2026-10-03: `assertOrphanMemberShowsMessage` in `suite.ts` stubs `showInformationMessage`/`showQuickPick`; typecheck 0, test:unit 0 (110/110), test:electron 0 (in-repo, companion, workspace passed)
 - [ ] 5.2 (added 2026-10-03) Reflow the `extension/README.md` Commands paragraph left with a short line by step 4.1 (review.md Finding 2) — verify: `git diff` on `extension/README.md` is whitespace/line-break only (`git diff --word-diff=porcelain` shows no word changes) and no line in the paragraph is short mid-paragraph
 - [ ] 5.3 (added 2026-10-03) Add one line to plan.md `## Resolution` noting the slug-named empty-actions message also applies to Deliveries rows (review.md Plan vs implementation deviation) — verify: `grep -n "Deliveries rows" plan.md` shows the line under `## Resolution`
 - [ ] 5.4 (added 2026-10-03) Re-run the full gate, integrate `origin/main` into both halves, push both, and set `status: in-review` — verify: typecheck, test:unit, test:electron, root `node --test` exit 0 (shellcheck 127 per baseline); `agento.mjs session` shows `companion.dirty: false`, `companion.ahead: 0`
