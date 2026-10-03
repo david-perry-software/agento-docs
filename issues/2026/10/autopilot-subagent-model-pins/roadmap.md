@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: issue/autopilot-subagent-model-pins
 last-updated: 2026-10-03
-next-step: "5.6 Write plan.md Resolution, integrate origin/main, set in-review, push"
+next-step: ""
 github-issue: "#79"
 artifact-pr: "#22"
 ```
@@ -256,10 +256,16 @@ artifact-pr: "#22"
   green — the full gate, no scoped gate). Shellcheck: exit 0, no findings (baseline
   0). Extension: `npm run typecheck` exit 0; `npm run test:unit` exit 0 (106 unit
   tests).
-- [ ] 5.6 Write plan.md `## Resolution` (root cause per phase 1, what changed, the
+- [x] 5.6 Write plan.md `## Resolution` (root cause per phase 1, what changed, the
   exposing test passing). Integrate `origin/main` in both halves, set
   `status: in-review`, and push product and companion — verify:
   `node scripts/agento.mjs session --pr` reports `delivery.status: in-review`.
+  **Result (2026-10-03):** plan.md `## Resolution` written — root cause: no defect
+  reproduced on VS Code 1.136 / Local harness (Reviewer ran on its own pin for every
+  caller, including both BYOK callers); ships as defensive hardening (`handoffs[].model`
+  pins, `models pins` + Autopilot `runSubagent` model, BYOK tier warning). Exposing
+  test passes: `node --test --test-name-pattern "issue #79" scripts/agento.test.mjs`
+  exit 0. `origin/main` already integrated in both halves. `status: in-review`.
 
 ## Phase 6: Post-ship live check
 

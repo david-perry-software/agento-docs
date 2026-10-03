@@ -454,4 +454,29 @@ handoff must also switch the picker to the Reviewer's pin.
 
 ## Resolution
 
-_Written by the Builder at completion._
+- **Root cause.** No defect reproduced on the tested harness (VS Code 1.136,
+  Copilot Chat 0.64.0, Local harness). In three live runs — the Autopilot on a
+  bring-your-own-key `DeepSeek V4 Pro (deepseek)` model, a built-in Agent on
+  `Claude Opus 5.5 (copilot)`, and a built-in Agent on the same
+  bring-your-own-key `DeepSeek V4 Pro (deepseek)` model — the 🔍 Agento Reviewer
+  subagent ran on its own pin, `Claude Fable 5.1`, with no fallback and no tier
+  refusal. The reported behavior (Reviewer on the caller's DeepSeek model) did
+  not reproduce with any caller, including both bring-your-own-key callers.
+- **What changed and why.** The change ships as defensive hardening, because the
+  reported path depends on VS Code's subagent model-resolution order, which the
+  live runs did not exercise against us. Agento now passes explicit models:
+  `models apply` writes a nested `model:` line into every `handoffs:` item (the
+  target's resolved pin, first entry of a list) and `models clear` removes it;
+  the read-only `models pins` verb reports each agent's `subagentModel`, which the
+  Autopilot passes as the `runSubagent` `model` for every Builder and Reviewer
+  invocation (omitting it when null, and stopping with the fix named on a tier
+  refusal). A BYOK tier warning in `models show`/`apply`/`pins` and the
+  `model-profile` doctor check surfaces the risk when `autopilot` pins a
+  non-`copilot` model while a delegated agent pins a `copilot` model. The
+  committed-file test now also rejects a nested handoff `model:` line.
+- **Proof the exposing test now passes.** The exposing regression test `issue #79
+  autopilot-subagent-model-pins: models apply pins handoffs[].model to the target
+  agent's model; clear removes it` in `scripts/agento.test.mjs` failed before the
+  fix (missing handoff `model:` assertion, recorded in roadmap 2.1) and now
+  passes — `node --test --test-name-pattern "issue #79" scripts/agento.test.mjs`
+  exit 0.
