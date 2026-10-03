@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/autopilot-subagent-model-pins
 last-updated: 2026-10-02
-next-step: "4.1 pass runSubagent model pins in the Autopilot body"
+next-step: "5.1 document handoff pins, models pins, and the tier warning"
 github-issue: "#79"
 artifact-pr: "#22"
 ```
@@ -117,7 +117,7 @@ artifact-pr: "#22"
 
 ## Phase 4: Autopilot and committed-file guard
 
-- [ ] 4.1 Update `.github/agents/delivery-autopilot.agent.md`:
+- [x] 4.1 Update `.github/agents/delivery-autopilot.agent.md`:
   - Add a Preflight step: run `node <agento-root>/scripts/agento.mjs models pins`
     and keep `pins.builder.subagentModel` and `pins.reviewer.subagentModel`. If the
     call fails, proceed unpinned and say so in a progress note. Relay each
@@ -133,7 +133,11 @@ artifact-pr: "#22"
   Keep the §9/§11/§12 lines intact — verify:
   `grep -n "models pins" .github/agents/delivery-autopilot.agent.md` matches, and
   `node --test tests/customizations.test.mjs` exit 0.
-- [ ] 4.2 Extend `tests/customizations.test.mjs`:
+  **Result (2026-10-02):** `grep -n "models pins"` matches (line 64);
+  `tests/customizations.test.mjs` 28 tests, 28 pass. The new models-pins step became
+  Preflight 2, renumbering the roadmap read to Preflight 3 — so the Reviewer direct
+  invocation this step calls "Preflight 2" is now Preflight 3 (same behavior).
+- [x] 4.2 Extend `tests/customizations.test.mjs`:
   - The committed-file test also rejects an indented `model:` line inside a
     `handoffs:` item.
   - A new test asserts that the Autopilot body cites `models pins`, the
@@ -143,6 +147,11 @@ artifact-pr: "#22"
   `node --test tests/customizations.test.mjs` exit 0. A temporary local commit
   adding `    model: "X"` to the Builder's handoff makes the committed-file test
   fail. Then reset that unpushed probe commit.
+  **Result (2026-10-02):** exit 0 — 29 tests, 29 pass. Probe: a local commit adding
+  `    model: "X"` to the Builder's handoff failed the committed-file test
+  (`delivery-builder.agent.md is committed with a model: line (top-level or inside a
+  handoffs: item)`), then the unpushed probe commit was reset (`git reset --hard
+  HEAD~1`).
 
 ## Phase 5: Docs, end-to-end, and gate
 
