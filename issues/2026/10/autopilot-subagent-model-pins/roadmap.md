@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: complete
 branch: issue/autopilot-subagent-model-pins
 last-updated: 2026-10-03
 next-step: ""
