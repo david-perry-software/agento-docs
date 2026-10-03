@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/initiative-member-play-button
 last-updated: 2026-10-03
-next-step: "3.2 record electron companion scenario coverage"
+next-step: "4.1 document the in-flight member play action"
 github-issue: "#82"
 artifact-pr: "#24"
 ```
@@ -21,7 +21,7 @@ artifact-pr: "#24"
 ## Phase 3: Verify in the extension host
 
 - [x] 3.1 Extend `extension/test/electron/suite.ts`: assert the In-flight member `building-delivery` has `contextValue` `agento.initiativeMember.in-flight`, and that `initiativeMemberActionSource(member, api.deliveries.current.model).actions` deep-equals the `actions` of the Deliveries row `building-delivery` (export the resolver through the test API if required) — verify: `cd extension && npm run test:electron` exit 0
-- [ ] 3.2 Run the electron suite in the companion scenario too if the runner supports `AGENTO_ELECTRON_SCENARIO=companion` (check `extension/test/electron/runTest.ts`) — verify: exit 0 recorded, or a note that the runner covers both scenarios in one invocation
+- [x] 3.2 Run the electron suite in the companion scenario too if the runner supports `AGENTO_ELECTRON_SCENARIO=companion` (check `extension/test/electron/runTest.ts`) — verify: exit 0 recorded, or a note that the runner covers both scenarios in one invocation — 2026-10-03: `runTest.ts` iterates `in-repo`, `companion`, and `workspace` (setting `AGENTO_ELECTRON_SCENARIO`) in one `npm run test:electron`; exit 0, all three "scenario passed" lines printed
 
 ## Phase 4: Docs and gate
 
