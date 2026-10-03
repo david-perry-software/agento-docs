@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: issue/initiative-member-play-button
 last-updated: 2026-10-03
-next-step: "4.4 write Resolution, integrate defaults, set in-review"
+next-step: "review: /agento review-issue initiative-member-play-button"
 github-issue: "#82"
 artifact-pr: "#24"
 ```
@@ -28,4 +28,4 @@ artifact-pr: "#24"
 - [x] 4.1 Update `docs/extension.md` (Initiatives section) and `extension/README.md` to describe the play action on in-flight members (opens the delivery's actions picker; informational message when no delivery matches) — verify: `grep -n "in flight\|In flight\|in-flight" docs/extension.md extension/README.md` shows the new wording
 - [x] 4.2 Add a **Fixed** entry to `CHANGELOG.md` under the unreleased/current section referencing #82 — verify: `grep -n "#82" CHANGELOG.md`
 - [x] 4.3 Full gate: `cd extension && npm run typecheck`, `npm run test:unit`, `npm run test:electron`; repo root `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`; `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` if available (record 127 otherwise, matching the baseline) — verify: all recorded exit codes are 0 (shellcheck 127 permitted per baseline), compared against plan.md `## Research` — 2026-10-03: typecheck 0; test:unit 0 (110/110); test:electron 0 (in-repo, companion, workspace passed); node --test 0 (274/274); shellcheck 127 (not installed, matches baseline)
-- [ ] 4.4 Write plan.md `## Resolution` (root cause, what changed, proof the #82 regression test passes), merge `origin/main` into the product branch and the companion's `origin/main` into the companion branch, push both, and set `status: in-review` — verify: `node scripts/agento.mjs session --pr` reports both PRs, `companion.dirty: false`, `companion.ahead: 0`
+- [x] 4.4 Write plan.md `## Resolution` (root cause, what changed, proof the #82 regression test passes), merge `origin/main` into the product branch and the companion's `origin/main` into the companion branch, push both, and set `status: in-review` — verify: `node scripts/agento.mjs session --pr` reports both PRs, `companion.dirty: false`, `companion.ahead: 0`

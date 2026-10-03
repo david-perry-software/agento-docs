@@ -206,3 +206,42 @@ Affected package: `extension/` only (plus docs/changelog).
 - [ ] Full gate: `cd extension && npm run typecheck` exit 0, `npm run test:unit`
   exit 0, `npm run test:electron` exit 0, and `node --test 'scripts/**/*.test.mjs'
   'tests/**/*.test.mjs'` exit 0 — verify: recorded exit codes in the roadmap.
+
+## Resolution
+
+**Root cause.** `extension/package.json` contributed inline `view/item/context`
+actions only for `viewItem == agento.delivery` (Deliveries) and
+`viewItem == agento.initiativeMember.ready` (Initiatives). Member rows in the
+In flight group carry `contextValue` `agento.initiativeMember.in-flight`, which no
+`when` clause matched, so VS Code rendered no button; and `agento.showActions`
+only understood Deliveries elements, so even a matching menu entry would have
+fallen back to the session's actions.
+
+**What changed** (product commits `9809449`..`5de7202`):
+
+- `extension/src/initiativeMemberActions.ts` (new, vscode-free):
+  `initiativeMemberActionSource(element, model)` returns the matching Deliveries
+  item's `actions` for an in-flight member by slug, `{ slug, actions: [] }` when no
+  delivery matches (or the Deliveries model is not ready), and `null` otherwise.
+- `extension/src/extension.ts`: `agento.showActions` accepts Deliveries or
+  Initiatives elements; a member element resolves through the new resolver and
+  never falls back to session actions; the empty-actions message names the slug
+  (`No Agento actions are available for <slug> in this window.`).
+  `extension/src/actionPicker.ts` `deliveryActionSource` accepts either element
+  type (still matching only `kind: "delivery"`).
+- `extension/package.json`: inline `agento.showActions` (`$(play)`) for
+  `view == agento.initiatives && viewItem == agento.initiativeMember.in-flight`;
+  `extensionIntegration.test.ts` updated to the three-entry array.
+- Electron suite asserts the In flight member `building-delivery` has
+  `contextValue` `agento.initiativeMember.in-flight` and resolves to the same
+  `actions` as the Deliveries row `building-delivery`.
+- `docs/extension.md`, `extension/README.md`, `CHANGELOG.md` (**Fixed**, #82).
+
+**Proof.** `extension/test/unit/initiativeMemberActions.test.ts` (`// Regression
+test for #82 initiative-member-play-button`) failed at `9809449` — `npm run
+test:unit` exit 2, `error TS2307: Cannot find module
+'../../src/initiativeMemberActions.js'` — and passes after the fix: `npm run
+test:unit` exit 0 (110/110). `npm run typecheck` 0, `npm run test:electron` 0
+(in-repo, companion, workspace scenarios passed), `node --test
+'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` 0 (274/274), `shellcheck` 127
+(not installed; matches the baseline).
