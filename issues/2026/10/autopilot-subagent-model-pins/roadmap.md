@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/autopilot-subagent-model-pins
 last-updated: 2026-10-02
-next-step: "3.3 add the read-only models pins verb"
+next-step: "3.4 add the BYOK tier warning"
 github-issue: "#79"
 artifact-pr: "#22"
 ```
@@ -88,7 +88,7 @@ artifact-pr: "#22"
   `scripts/agento.test.mjs` 81 tests, 81 pass. Added
   `models apply ignores handoff model: lines in dirty detection and still refuses
   other edits`.
-- [ ] 3.3 Add the read-only verb `models pins` (no argument; honors
+- [x] 3.3 Add the read-only verb `models pins` (no argument; honors
   `--plugin-root`). It emits `pins: { <alias>: { name, file, model, subagentModel } }`
   read from the plugin root's current files, plus `warnings` and the usual
   `modelsReport` fields. Change the usage header line to
@@ -97,6 +97,7 @@ artifact-pr: "#22"
   `model`/`subagentModel` is `null`; after apply → values match, list →
   `subagentModel` is the first entry; `pins extra` → exit 1 — verify:
   `node --test scripts/agento.test.mjs` exit 0.
+  **Result (2026-10-02):** exit 0 — 82 tests, 82 pass.
 - [ ] 3.4 Add the BYOK tier warning. A pure helper reads the vendor from a
   `<name> (<vendor>)` value and warns when `autopilot`'s pin is a non-`copilot`
   vendor while `builder` or `reviewer` pins a `copilot` vendor. The message names
