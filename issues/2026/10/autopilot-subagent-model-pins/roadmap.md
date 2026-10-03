@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: issue/autopilot-subagent-model-pins
 last-updated: 2026-10-03
-next-step: "1.3 (manual) Run C — built-in Agent caller on DeepSeek V4 Pro; screenshot the Reviewer subagent pill"
+next-step: "1.4 Classify the result for each run and record it in plan.md ## Evidence"
 github-issue: "#79"
 artifact-pr: "#22"
 ```
@@ -42,10 +42,16 @@ artifact-pr: "#22"
   `chatSessions/c639341d-308c-4c73-8a67-810ec0a58f66.jsonl` in workspace
   `d8f8087a25de51c2b43f460bb22c5af2`. Screenshot:
   [evidence/step-1-2-run-b-copilot-caller.png](evidence/step-1-2-run-b-copilot-caller.png).
-- [ ] 1.3 (manual) Run C (control) — repeat 1.2 in a new chat with the picker on
+- [x] 1.3 (manual) Run C (control) — repeat 1.2 in a new chat with the picker on
   DeepSeek V4 Pro and take a screenshot of the subagent pill — verify: the
   screenshot is saved as `evidence/step-1-3-run-c-byok-caller.png` and linked here.
   The Reviewer subagent's `modelName` (or refusal text) is recorded on this line.
+  **Result (2026-10-03):** Caller: built-in Agent on `DeepSeek V4 Pro (deepseek)`
+  (BYOK). Reviewer subagent ran on its own pin — `modelName: "Claude Fable 5.1"`
+  (pin honored; no fallback, no tier refusal), read from
+  `chatSessions/a31ca086-6903-4021-93a7-546b80031c2b.jsonl` in workspace
+  `d8f8087a25de51c2b43f460bb22c5af2`. Screenshot:
+  [evidence/step-1-3-run-c-byok-caller.png](evidence/step-1-3-run-c-byok-caller.png).
 - [ ] 1.4 Classify the result for each run: pin honored, fallback to the caller's
   model, or tier refusal. Write the reproduction steps, the observed vs expected
   behavior, and links to the three screenshots into plan.md `## Evidence`, and
