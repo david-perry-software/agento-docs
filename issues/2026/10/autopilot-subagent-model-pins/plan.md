@@ -14,6 +14,12 @@ either path. The Autopilot's `runSubagent` calls pass no `model`, and `models ap
 never writes `handoffs[].model`. `docs/model-profiles.md`
 lists the latter under Limits.
 
+**Outcome (2026-10-03):** no defect reproduced — in three live runs the 🔍 Agento
+Reviewer subagent ran on its own pin for every caller (see `## Evidence`, "Status:
+no defect reproduced"). The change ships as defensive hardening: `models apply` now
+writes `handoffs[].model`, the Autopilot passes the target model to `runSubagent`,
+and a BYOK tier warning is emitted at apply time.
+
 ## Evidence
 
 GitHub issue: #79

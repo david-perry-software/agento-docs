@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/autopilot-subagent-model-pins
 last-updated: 2026-10-03
-next-step: "5.2 Update docs/model-profiles.md per Decision 5 (no defect reproduced)"
+next-step: "5.6 Write plan.md Resolution, integrate origin/main, set in-review, push"
 github-issue: "#79"
 artifact-pr: "#22"
 ```
@@ -197,7 +197,7 @@ artifact-pr: "#22"
   `grep -n "models pins" docs/model-profiles.md docs/commands.md` matches both.
   **Result (2026-10-02):** matches both (model-profiles.md line 99, commands.md line
   147).
-- [ ] 5.2 (requires 1.4) Replace the `## Limits` bullet ``handoffs[].model` is not
+- [x] 5.2 (requires 1.4) Replace the `## Limits` bullet ``handoffs[].model` is not
   written…`` with a `## Subagents and handoffs` section per Decision 5, worded to
   phase 1's classified results. It covers:
   - the observed setup: VS Code 1.136, Local harness, a bring-your-own-key calling
@@ -212,6 +212,13 @@ artifact-pr: "#22"
   Verify: `grep -n "Subagents and handoffs\|1.136\|Agent Host" docs/model-profiles.md`
   matches, and `grep -n "handoffs\[\].model. is not written" docs/model-profiles.md`
   matches nothing.
+  **Result (2026-10-03):** `## Subagents and handoffs` added (VS Code 1.136, Local
+  harness, Reviewer pin honored by every caller including both BYOK callers — no
+  defect reproduced; pins apply on direct selection and were observed to apply to
+  Local subagents regardless of caller; Copilot-harness (Agent Host) unverified;
+  explicit `runSubagent`/handoff models as hardening). The `handoffs[].model`
+  Limits bullet removed; plan.md `## Problem` records the no-reproduce outcome.
+  Verify greps: matches at lines 144/148/155; the old bullet greps nothing.
 - [x] 5.3 Add a **Fixed.** entry citing #79 to CHANGELOG `## Unreleased` — verify:
   `grep -n "#79" CHANGELOG.md` matches under `## Unreleased`.
   **Result (2026-10-02):** matches — `CHANGELOG.md:12`, under `## Unreleased`
