@@ -4,6 +4,7 @@ branch: issue/companion-half-registration
 last-updated: 2026-10-04
 next-step: "1.1 Add the #86 exposing regression test and verify it fails"
 github-issue: "#86"
+artifact-pr: "#26"
 ```
 
 ## Phase 1: Expose the defect
