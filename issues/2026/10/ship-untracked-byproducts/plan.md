@@ -336,8 +336,9 @@ hand off a clean tree, so the byproducts were never cleared before ship.
 
 - `scripts/session-state.mjs` exports `splitPorcelain()`, which parses
   `git status --porcelain=v1 -z --untracked-files=all` into sorted `tracked` and
-  `untracked` lists. It skips the origin token of rename/copy entries and never sees
-  ignored files.
+  `untracked` lists. It skips the origin token of rename/copy entries — when
+  either status column is `R`/`C`, so a worktree-side rename (` R`, from
+  `git add -N`) parses too — and never sees ignored files.
 - `scripts/agento.mjs` `ship-preflight` adds two sibling fields:
   `ownerTree: { tracked, untracked, ahead } | null` (`null` without an owner or
   for the primary) and `companionTree: { tracked, untracked } | null` (`null` in the
@@ -348,8 +349,12 @@ hand off a clean tree, so the byproducts were never cleared before ship.
   checks from `ownerTree`. Tracked changes or `ahead > 0` stay a hard reject with
   the Builder handoff. Untracked-only dirt is a confirmation-path item that lists
   every path; on an explicit yes, step 3's first write is
-  `git -C <owner.path> clean -f -- <each listed path>` followed by a
-  `ship-preflight` re-run that must show `ownerTree` empty. A companion `dirty` gap
+  `git -C <owner.path> --literal-pathspecs clean -f -- <each listed path, single-quoted>`
+  (without `--literal-pathspecs`, `shot[1].png` would also delete an unlisted
+  `shot1.png`) followed by a `ship-preflight` re-run that must show `ownerTree`
+  empty. `ownerTree === null` with a non-primary owner is a hard reject. A
+  `tests/customizations.test.mjs` guard keeps every `git clean` in prompts,
+  agents, and command mirrors on `--literal-pathspecs`. A companion `dirty` gap
   quotes `companionTree` and names commit-in-the-half or discard; ship never
   deletes anything there.
 - Policy §7 gains the clean-handoff rule. The Builder (Pause protocol and
@@ -367,3 +372,14 @@ same run exit 0, 87/87, `ok 20` the #88 test. Step 2.3:
 reported layout. Scoped gate (step 6.1): node suite 283/283 (baseline 277), both
 guard replays exit 0, `test:unit` 114/114, `lint:hooks` exit 127 (shellcheck
 absent) with no shell file in the diff.
+
+**Review fixes (request-changes, 2026-10-04).** Step 2.4: `splitPorcelain` now
+skips the origin token when either column is `R`/`C`; new unit cases cover
+` R new.js\0old.js\0?? x.png\0` and origin paths starting with `R`/`C`
+(`README.md`, `CONTRIBUTING.md`) followed by a `??` entry, and a real
+`git add -N` rename probe parses to `{"tracked":["docs/new.md"],"untracked":["stray.png"]}`.
+Step 3.2: the literal-pathspec cleanup, the `ownerTree === null` hard reject, the
+CHANGELOG wording, and the guard, whose exposing run failed with the flag stripped.
+Step 4.2: the Builder Pause-protocol sentence. Re-gate (step 6.3): node suite
+286/286, both replays exit 0, `test:unit` 114/114, `lint:hooks` exit 127 with no
+shell file among the 14 changed paths, repro output unchanged.
