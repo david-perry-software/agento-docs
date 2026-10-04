@@ -2,14 +2,14 @@
 status: in-progress
 branch: issue/ship-untracked-byproducts
 last-updated: 2026-10-04
-next-step: "1.1 Add the exposing #88 ship-preflight test and verify it fails"
+next-step: "2.1 Export splitPorcelain() from scripts/session-state.mjs with unit tests"
 github-issue: "#88"
 artifact-pr: "#27"
 ```
 
 ## Phase 1: Expose the defect
 
-- [ ] 1.1 Add a `test(...)` to `scripts/agento.test.mjs` named `ship-preflight reports the owner tree split into tracked and untracked files (#88 ship-untracked-byproducts)`. In-repo part: `makeRepo` with a `worktrees.dir`, add `feature/widget` as a worktree, write the roadmap, push the branch with an upstream, then create `features/2026/09/other/evidence/x.png` (inside an untracked directory) and a top-level `evidence` file in the owner. Assert from `run(repo, "ship-preflight", "feature", "widget").json` that `ownerTree` deep-equals `{ tracked: [], untracked: ["evidence", "features/2026/09/other/evidence/x.png"], ahead: 0 }`, that `Object.keys(owner)` is exactly `path, role, dirPrefix, id`, and that `companionTree === null`. Then modify a tracked file (`tracked` lists it) and commit without pushing (`ahead: 1`). Companion part: `makePairRepo()` with both halves, an untracked `notes.md` in the companion half; assert `companionTree.untracked` deep-equals `["notes.md"]` and `companionGaps` deep-equals `["dirty"]`. With no owner worktree, `ownerTree === null`. — verify: `node --test scripts/agento.test.mjs > /tmp/sub-1-1.txt 2>&1; echo "exit=$?"` prints `exit=1`; `grep -c '^not ok' /tmp/sub-1-1.txt` is 1 and that line names the #88 test (failing because `ownerTree` is `undefined`); every other test in the file is `ok`; record the counts on this line
+- [x] 1.1 Add a `test(...)` to `scripts/agento.test.mjs` named `ship-preflight reports the owner tree split into tracked and untracked files (#88 ship-untracked-byproducts)`. In-repo part: `makeRepo` with a `worktrees.dir`, add `feature/widget` as a worktree, write the roadmap, push the branch with an upstream, then create `features/2026/09/other/evidence/x.png` (inside an untracked directory) and a top-level `evidence` file in the owner. Assert from `run(repo, "ship-preflight", "feature", "widget").json` that `ownerTree` deep-equals `{ tracked: [], untracked: ["evidence", "features/2026/09/other/evidence/x.png"], ahead: 0 }`, that `Object.keys(owner)` is exactly `path, role, dirPrefix, id`, and that `companionTree === null`. Then modify a tracked file (`tracked` lists it) and commit without pushing (`ahead: 1`). Companion part: `makePairRepo()` with both halves, an untracked `notes.md` in the companion half; assert `companionTree.untracked` deep-equals `["notes.md"]` and `companionGaps` deep-equals `["dirty"]`. With no owner worktree, `ownerTree === null`. — verify: `node --test scripts/agento.test.mjs > /tmp/sub-1-1.txt 2>&1; echo "exit=$?"` prints `exit=1`; `grep -c '^not ok' /tmp/sub-1-1.txt` is 1 and that line names the #88 test (failing because `ownerTree` is `undefined`); every other test in the file is `ok`; record the counts on this line — done 2026-10-04: `exit=1`, `# tests 87`, `# pass 86`, `# fail 1`; the only `not ok` is `not ok 20 - ship-preflight reports the owner tree split into tracked and untracked files (#88 ship-untracked-byproducts)`, actual `undefined` vs the expected `ownerTree`
 
 ## Phase 2: Fix the CLI
 
