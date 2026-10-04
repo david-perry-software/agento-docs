@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/gate-dashboard-plan-actions
 last-updated: 2026-10-03
-next-step: "3.1 Package the fixed extension"
+next-step: "4.2 Run the full gate"
 github-issue: "#84"
 artifact-pr: "#25"
 ```
@@ -74,7 +74,7 @@ artifact-pr: "#25"
 
 ## Phase 3: Verify packaging
 
-- [ ] 3.1 Package the fixed extension:
+- [x] 3.1 Package the fixed extension:
   `cd extension && npm run package`, which includes `scripts/assert-vsix.mjs`.
   Verify:
   - exit 0;
@@ -85,7 +85,7 @@ artifact-pr: "#25"
 
 ## Phase 4: Docs, changelog, gate
 
-- [ ] 4.1 Update `docs/extension.md`:
+- [x] 4.1 Update `docs/extension.md`:
   - The Deliveries, Initiatives, Session & Doctor, and "Command routing" sections say
     where each action appears and that a hidden action invoked anyway is rejected
     with a message naming the primary window: New Plan and Plan in the primary or an
