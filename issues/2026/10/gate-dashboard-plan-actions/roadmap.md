@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/gate-dashboard-plan-actions
 last-updated: 2026-10-03
-next-step: "2.4 Electron assertions for the window gate"
+next-step: "3.1 Package the fixed extension"
 github-issue: "#84"
 artifact-pr: "#25"
 ```
@@ -57,7 +57,7 @@ artifact-pr: "#25"
 
   Verify: `cd extension && npm run typecheck` exit 0, and `npm run test:unit` exit 0
   with all four tests in `gateDashboardPlanActions.test.ts` passing.
-- [ ] 2.4 Electron assertions in `extension/test/electron/suite.ts`:
+- [x] 2.4 Electron assertions in `extension/test/electron/suite.ts`:
   - In the primary fixture, `api.windowGate()` is `{ primary: true, canPlan: true }`.
     The existing New Plan, Plan, and New Initiative cases wait for it first.
   - In the stubbed-`client.run` block:
