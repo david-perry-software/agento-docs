@@ -1,0 +1,32 @@
+MANIFEST — menu entries for the gated commands:
+  view/title: agento.newPlan when="view == agento.deliveries"
+  view/title: agento.newInitiative when="view == agento.initiatives"
+  view/title: agento.newPlan when="view == agento.sessionDoctor"
+  view/item/context: agento.planInitiativeMember when="view == agento.initiatives && viewItem == agento.initiativeMember.ready"
+  menus.commandPalette: null
+  setContext calls in extension/src/extension.ts: 0
+  openTarget uses forceNewWindow: true: true
+NEW PLAN from role=build window (attached delivery worktree):
+  submitted: [{"command":"/agento start-session","target":"/repo"}]
+  opened windows: ["/repo","/repo-worktrees/plan-new"]
+  pending dispatch keys: [["/repo","/agento start-session"],["/repo-worktrees/plan-new","/agento new-feature Probe plan"]]
+  in-window chat.open calls: []
+  result: complete
+NEW PLAN from role=unmanaged window:
+  submitted: [{"command":"/agento start-session","target":"/repo"}]
+  opened windows: ["/repo","/repo-worktrees/plan-new"]
+  pending dispatch keys: [["/repo","/agento start-session"],["/repo-worktrees/plan-new","/agento new-feature Probe plan"]]
+  in-window chat.open calls: []
+  result: complete
+NEW PLAN from role=plan, detached window (control: #77 in-window path, stays allowed):
+  submitted: [{"command":"/agento new-feature Probe plan","target":"/repo-worktrees/plan-new"}]
+  opened windows: []
+  pending dispatch keys: []
+  in-window chat.open calls: ["/agento new-feature Probe plan"]
+  result: complete
+STRAY PENDING — primary window /repo activates/focuses later (within the 5 min TTL):
+  chat.open: ["/agento start-session"]
+NEW INITIATIVE from role=build window:
+  result: complete "/agento new-initiative Probe brief"
+  opened windows: ["/repo"]
+  pending dispatch keys: [["/repo","/agento new-initiative Probe brief"]]
