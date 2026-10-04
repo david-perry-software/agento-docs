@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/ship-untracked-byproducts
 last-updated: 2026-10-04
-next-step: "3.1 Ship prompt reads ownerTree/companionTree and offers untracked-only cleanup"
+next-step: "4.1 Add the §7 clean-handoff rule and cite it from the Builder and Reviewer"
 github-issue: "#88"
 artifact-pr: "#27"
 ```
@@ -19,7 +19,7 @@ artifact-pr: "#27"
 
 ## Phase 3: Ship prompt
 
-- [ ] 3.1 Edit `.github/prompts/ship.prompt.md` per plan.md `## Approach` item 3. In the Ownership bullet and step 1, the clean and zero-ahead checks read `ownerTree` from `ship-preflight`. In step 2 hard-reject, `ownerTree.tracked` non-empty or `ownerTree.ahead > 0` keeps the Builder handoff, and the companion `dirty` gap quotes `companionTree.tracked`/`companionTree.untracked` and names commit-in-the-half or discard, with ship deleting nothing there. Step 2 confirmation path gains the untracked-byproducts item: list every `ownerTree.untracked` path verbatim; on an explicit yes, step 3's first write is `git -C <owner.path> clean -f -- <each listed path>` followed by a `ship-preflight` re-run that must show `ownerTree` all empty before any other write. Document `ownerTree`/`companionTree` in the Ownership paragraph. Copy to `commands/ship.md`. — verify: `grep -c 'ownerTree' .github/prompts/ship.prompt.md` ≥ 4; `grep -c 'companionTree' .github/prompts/ship.prompt.md` ≥ 2; `grep -c 'clean -f --' .github/prompts/ship.prompt.md` ≥ 1; `grep -c 'porcelain. to print nothing' .github/prompts/ship.prompt.md` = 0; `cmp .github/prompts/ship.prompt.md commands/ship.md` silent; `node --test tests/customizations.test.mjs` exit 0; `node --test scripts/agento.test.mjs` exit 0 (prompt/command mirror test)
+- [x] 3.1 Edit `.github/prompts/ship.prompt.md` per plan.md `## Approach` item 3. In the Ownership bullet and step 1, the clean and zero-ahead checks read `ownerTree` from `ship-preflight`. In step 2 hard-reject, `ownerTree.tracked` non-empty or `ownerTree.ahead > 0` keeps the Builder handoff, and the companion `dirty` gap quotes `companionTree.tracked`/`companionTree.untracked` and names commit-in-the-half or discard, with ship deleting nothing there. Step 2 confirmation path gains the untracked-byproducts item: list every `ownerTree.untracked` path verbatim; on an explicit yes, step 3's first write is `git -C <owner.path> clean -f -- <each listed path>` followed by a `ship-preflight` re-run that must show `ownerTree` all empty before any other write. Document `ownerTree`/`companionTree` in the Ownership paragraph. Copy to `commands/ship.md`. — verify: `grep -c 'ownerTree' .github/prompts/ship.prompt.md` ≥ 4; `grep -c 'companionTree' .github/prompts/ship.prompt.md` ≥ 2; `grep -c 'clean -f --' .github/prompts/ship.prompt.md` ≥ 1; `grep -c 'porcelain. to print nothing' .github/prompts/ship.prompt.md` = 0; `cmp .github/prompts/ship.prompt.md commands/ship.md` silent; `node --test tests/customizations.test.mjs` exit 0; `node --test scripts/agento.test.mjs` exit 0 (prompt/command mirror test) — done 2026-10-04: `ownerTree` 10, `companionTree` 3, `clean -f --` 1, `porcelain. to print nothing` 0; `cmp` silent (exit 0); customizations `exit=0` 29/29; agento.test.mjs `exit=0` 87/87
 
 ## Phase 4: Clean-handoff rule
 
