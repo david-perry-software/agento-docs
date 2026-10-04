@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/gate-dashboard-plan-actions
 last-updated: 2026-10-03
-next-step: "2.3 Wire the gate into extension.ts"
+next-step: "2.4 Electron assertions for the window gate"
 github-issue: "#84"
 artifact-pr: "#25"
 ```
@@ -44,7 +44,7 @@ artifact-pr: "#25"
 
   Verify: `cd extension && npm run test:unit`. (a) and `extensionIntegration.test.ts`
   pass, and only (d) still fails.
-- [ ] 2.3 Wire the gate into `extension/src/extension.ts`:
+- [x] 2.3 Wire the gate into `extension/src/extension.ts`:
   - Add `applyGate` (stores the gate and calls `setContext` for `agento.primary` and
     `agento.canPlan`), and call `applyGate(CLOSED_GATE)` before the first refresh.
   - Add `gate: windowGate(sessionResult.json)` to the refresh snapshot. Apply it in
