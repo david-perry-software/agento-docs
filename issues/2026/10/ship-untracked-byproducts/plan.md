@@ -325,4 +325,45 @@ Affected files: `scripts/session-state.mjs`, `scripts/session-state.test.mjs`,
 
 ## Resolution
 
-_Written by the Builder at completion._
+**Root cause.** `ship-preflight` described the companion half but not the owner's
+own tree, so `/agento ship` fell back to a single boolean
+(`git -C <owner.path> status --porcelain` must print nothing). That boolean cannot
+tell untracked byproducts from tracked work, so an owner dirty only with stray
+screenshots was hard-rejected to the Builder. And no delivery role was required to
+hand off a clean tree, so the byproducts were never cleared before ship.
+
+**What changed.**
+
+- `scripts/session-state.mjs` exports `splitPorcelain()`, which parses
+  `git status --porcelain=v1 -z --untracked-files=all` into sorted `tracked` and
+  `untracked` lists. It skips the origin token of rename/copy entries and never sees
+  ignored files.
+- `scripts/agento.mjs` `ship-preflight` adds two sibling fields:
+  `ownerTree: { tracked, untracked, ahead } | null` (`null` without an owner or
+  for the primary) and `companionTree: { tracked, untracked } | null` (`null` in the
+  in-repo layout), on both the plain and the `--pr` result. `owner`, `companion`,
+  and `companionGaps` are unchanged; the regression test asserts `owner` keeps
+  exactly `path, role, dirPrefix, id`. `extension/cli/` re-copied.
+- `.github/prompts/ship.prompt.md` (byte copy `commands/ship.md`) reads the owner
+  checks from `ownerTree`. Tracked changes or `ahead > 0` stay a hard reject with
+  the Builder handoff. Untracked-only dirt is a confirmation-path item that lists
+  every path; on an explicit yes, step 3's first write is
+  `git -C <owner.path> clean -f -- <each listed path>` followed by a
+  `ship-preflight` re-run that must show `ownerTree` empty. A companion `dirty` gap
+  quotes `companionTree` and names commit-in-the-half or discard; ship never
+  deletes anything there.
+- Policy §7 gains the clean-handoff rule. The Builder (Pause protocol and
+  Completion) and the Reviewer (step 8) cite it as "policy §7 clean handoff", and
+  a `tests/customizations.test.mjs` canary keeps the wording policy-only.
+- `docs/commands.md` documents both fields; `CHANGELOG.md` `## Unreleased` has the
+  **Fixed.** bullet `(#88)`.
+
+**Proof.** Step 1.1: `node --test scripts/agento.test.mjs` exit 1, 87 tests, 86
+pass, the only `not ok` the #88 test (`ownerTree` was `undefined`). Step 2.2: the
+same run exit 0, 87/87, `ok 20` the #88 test. Step 2.3:
+[evidence/repro-output-fixed.txt](evidence/repro-output-fixed.txt) shows
+`ownerTree: { tracked: [], untracked: ["evidence",
+"features/2026/09/other-slug/evidence/step-1-1-x.png"], ahead: 0 }` for the
+reported layout. Scoped gate (step 6.1): node suite 283/283 (baseline 277), both
+guard replays exit 0, `test:unit` 114/114, `lint:hooks` exit 127 (shellcheck
+absent) with no shell file in the diff.
