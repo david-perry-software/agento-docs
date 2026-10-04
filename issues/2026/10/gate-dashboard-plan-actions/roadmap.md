@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/gate-dashboard-plan-actions
 last-updated: 2026-10-03
-next-step: "2.2 Gate the manifest menus and add menus.commandPalette"
+next-step: "2.3 Wire the gate into extension.ts"
 github-issue: "#84"
 artifact-pr: "#25"
 ```
@@ -33,7 +33,7 @@ artifact-pr: "#25"
   malformed record → `CLOSED_GATE`; the three exact rejection messages) — verify:
   `cd extension && npm run test:unit` — (b) and (c) pass, (a) and (d) still fail,
   everything else passes.
-- [ ] 2.2 Update the manifest in `extension/package.json`:
+- [x] 2.2 Update the manifest in `extension/package.json`:
   - Append `&& agento.canPlan` to both `agento.newPlan` `view/title` entries and to
     the `agento.planInitiativeMember` `view/item/context` entry.
   - Append `&& agento.primary` to the `agento.newInitiative` `view/title` entry.
