@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/companion-half-registration
 last-updated: 2026-10-04
-next-step: "4.1 Document paths state fields and the companion-unregistered warning; CHANGELOG Fixed bullet"
+next-step: "5.1 Gate against the plan.md Research baseline"
 github-issue: "#86"
 artifact-pr: "#26"
 ```
@@ -24,7 +24,7 @@ artifact-pr: "#26"
 
 ## Phase 4: Docs and changelog
 
-- [ ] 4.1 `docs/commands.md`: `paths` lists `worktreeState` and `companion.state` (`{ onDisk, registeredIn, origin, expectedOrigin, ok }`); `session` names the `companion-unregistered` warning; `docs/concurrency.md` `## Worktrees` gains one sentence that both halves are verified after creation; `CHANGELOG.md` `## Unreleased` gains a **Fixed.** bullet ending `(#86)` — verify: `grep -c 'companion-unregistered' docs/commands.md` ≥ 1; `grep -c 'worktreeState' docs/commands.md` ≥ 1; `grep -c 'registeredIn' docs/commands.md` ≥ 1; `git diff origin/main -- docs/concurrency.md` adds one sentence under `## Worktrees`; `grep -c '(#86)' CHANGELOG.md` = 1; `node --test tests/customizations.test.mjs` exit 0
+- [x] 4.1 `docs/commands.md`: `paths` lists `worktreeState` and `companion.state` (`{ onDisk, registeredIn, origin, expectedOrigin, ok }`); `session` names the `companion-unregistered` warning; `docs/concurrency.md` `## Worktrees` gains one sentence that both halves are verified after creation; `CHANGELOG.md` `## Unreleased` gains a **Fixed.** bullet ending `(#86)` — verify: `grep -c 'companion-unregistered' docs/commands.md` ≥ 1; `grep -c 'worktreeState' docs/commands.md` ≥ 1; `grep -c 'registeredIn' docs/commands.md` ≥ 1; `git diff origin/main -- docs/concurrency.md` adds one sentence under `## Worktrees`; `grep -c '(#86)' CHANGELOG.md` = 1; `node --test tests/customizations.test.mjs` exit 0 — run 2026-10-04: `companion-unregistered` 1, `worktreeState` 1, `registeredIn` 2, `(#86)` 1; concurrency.md diff adds one sentence (two lines) under `## Worktrees`; customizations `exit=0` 29/29
 
 ## Phase 5: Gate and publish
 
