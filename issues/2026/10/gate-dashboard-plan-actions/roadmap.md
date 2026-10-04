@@ -2,14 +2,14 @@
 status: in-progress
 branch: issue/gate-dashboard-plan-actions
 last-updated: 2026-10-03
-next-step: "1.1 Add the windowGate stub and the exposing test gateDashboardPlanActions.test.ts"
+next-step: "2.1 Implement windowGate and gateRejection"
 github-issue: "#84"
 artifact-pr: "#25"
 ```
 
 ## Phase 1: Expose the defect
 
-- [ ] 1.1 Add the stub `extension/src/windowGate.ts`. It exports `WindowGate`,
+- [x] 1.1 Add the stub `extension/src/windowGate.ts`. It exports `WindowGate`,
   `CLOSED_GATE`, `GatedCommand`, `windowGate`, and `gateRejection`, and keeps today's
   behaviour: `windowGate` always returns `{ primary: true, canPlan: true }`,
   `gateRejection` always returns `undefined`, and nothing imports it yet. Then add
