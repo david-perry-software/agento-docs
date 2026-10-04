@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/ship-untracked-byproducts
 last-updated: 2026-10-04
-next-step: "6.1 Run the scoped gate against the baseline"
+next-step: "6.2 Integrate, write Resolution, set in-review"
 github-issue: "#88"
 artifact-pr: "#27"
 ```
@@ -31,7 +31,7 @@ artifact-pr: "#27"
 
 ## Phase 6: Gate and publish
 
-- [ ] 6.1 Run the scoped gate against the plan.md `## Research` baseline (277/277/0; both replays 0; shellcheck absent, exit 127): `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`; `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`; `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`; `npm run lint:hooks; echo "exit=$?"`; `cd extension && npm ci && npm run test:unit`; `git diff --name-only origin/main...HEAD`. — verify: node suite exit 0, `# fail 0`, `# tests` > 277; both replays exit 0; `lint:hooks` exit 0 with no findings, or exit 127 with the diff naming no `scripts/hooks/` or `scripts/wait-for-checks.sh` path; `test:unit` exit 0; record the counts on this line
+- [x] 6.1 Run the scoped gate against the plan.md `## Research` baseline (277/277/0; both replays 0; shellcheck absent, exit 127): `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`; `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`; `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`; `npm run lint:hooks; echo "exit=$?"`; `cd extension && npm ci && npm run test:unit`; `git diff --name-only origin/main...HEAD`. — verify: node suite exit 0, `# fail 0`, `# tests` > 277; both replays exit 0; `lint:hooks` exit 0 with no findings, or exit 127 with the diff naming no `scripts/hooks/` or `scripts/wait-for-checks.sh` path; `test:unit` exit 0; record the counts on this line — done 2026-10-04: node suite `exit=0`, `# tests 283`, `# pass 283`, `# fail 0` (baseline 277); `replay-guard` exit 0; companion replay exit 0; `lint:hooks` exit 127 (`sh: 1: shellcheck: not found`) and `git diff --name-only origin/main...HEAD` names no `scripts/hooks/` or `scripts/wait-for-checks.sh` path (14 files: agents, policy, ship prompt + mirror, CHANGELOG, docs/commands.md, extension/cli/{agento,session-state}.mjs, scripts/{agento,session-state}{,.test}.mjs, tests/customizations.test.mjs); `npm ci` exit 0; `test:unit` exit 0, 114/114
 - [ ] 6.2 Integrate and publish. Merge `origin/main` into the product half and the companion's `origin/main` into the companion half (never rebase); push both. Write plan.md `## Resolution` (root cause, the CLI and prompt and policy changes, the step 1.1 failing and step 2.2 passing runs, the fixed repro output). Set `status: in-review` and `next-step: ""`. — verify: `git status --porcelain --untracked-files=all` empty in both halves (the new §7 rule); `node scripts/agento.mjs session --pr` reports `pr` and `companionPr` with the companion half `dirty: false`, `ahead: 0`; the code PR body starts with `Fixes #88`
 
 ## Follow-ups
