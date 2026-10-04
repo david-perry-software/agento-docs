@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: issue/ship-untracked-byproducts
 last-updated: 2026-10-04
 next-step: "1.1 Add the exposing #88 ship-preflight test and verify it fails"
