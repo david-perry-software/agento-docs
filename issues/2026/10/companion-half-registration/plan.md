@@ -256,4 +256,42 @@ no open PRs on 2026-10-04 — no overlap.
 
 ## Resolution
 
-_(written by the Builder at completion)_
+**Root cause.** Nothing verified a session half after `git worktree add`: the
+companion add is cwd-sensitive in practice (a dropped `cd` runs it in the product
+clone), `agento.mjs paths` only derived paths, and `agento.mjs session` turned an
+unregistered companion half into `registered: false` without a warning
+(`describeCompanion()` and the `session` warnings assembly never consulted it).
+
+**What changed.**
+
+- `scripts/session-state.mjs`: pure `halfState()` (on disk, `registeredIn`
+  product/companion/null with the half's own clone checked first, `origin` vs
+  `expectedOrigin`, `ok`) and `companionWarning()` (on disk + not registered in the
+  companion clone → `companion-unregistered: …`, with `; it is registered in
+  <product> instead — git -C <product> worktree remove <path>` when the product clone
+  lists it). Unit tests for both.
+- `scripts/agento.mjs`: `paths` emits `worktreeState` and, in companion mode,
+  `companion.state` (origins from `git -C <half> remote get-url origin`, expected
+  from the product root and the companion clone); `session` appends the
+  `companion-unregistered` warning; `session.companion` keeps its shape. The `paths`
+  usage line names the new fields; `extension/cli/` resynced.
+- `.github/prompts/start-session.prompt.md` (shared precondition 3, plan and build
+  mode step 3) and `.github/prompts/start-freehand.prompt.md` (step 3), mirrored in
+  `commands/`: the product half is added with `git -C <primary>`, and after the add(s)
+  — or for a reused half — `paths` must report `worktreeState.ok` and
+  `companion.state.ok`; a failing half stops the command before the workspace file or
+  window, naming `registeredIn`, `origin` vs `expectedOrigin`, and the exact
+  `git -C <clone> worktree remove <path>` fix, never removing anything.
+- `docs/commands.md`, `docs/concurrency.md`, `CHANGELOG.md` (**Fixed.** `(#86)`).
+
+**Proof.**
+
+- Step 1.1 (before the fix): `node --test scripts/agento.test.mjs` → `exit=1`,
+  86 tests, 85 pass, 1 fail — only the #86 test, on the missing
+  `companion-unregistered` warning.
+- Step 2.2 (after the fix): the same file → `exit=0`, 86/86, the #86 test `ok`.
+- [evidence/repro-output-fixed.txt](evidence/repro-output-fixed.txt): the original
+  reproduction against this branch shows `companion.state.ok: false` with
+  `registeredIn: "product"` and the `companion-unregistered` warning with the
+  `git -C …/proj worktree remove …` fix.
+- Step 5.1 gate results are recorded on that roadmap line.

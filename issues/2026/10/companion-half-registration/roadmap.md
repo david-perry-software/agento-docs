@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: issue/companion-half-registration
 last-updated: 2026-10-04
-next-step: "5.2 Integrate origin/main in both halves, publish, set in-review"
+next-step: ""
 github-issue: "#86"
 artifact-pr: "#26"
 ```
@@ -29,7 +29,7 @@ artifact-pr: "#26"
 ## Phase 5: Gate and publish
 
 - [x] 5.1 Gate against the plan.md `## Research` baseline (274/274/0; replays 0/0; shellcheck absent, exit 127): `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`; `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`; `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`; `npm run lint:hooks; echo "exit=$?"`; `cd extension && npm ci && npm run test:unit`; `git diff --name-only origin/main...HEAD` — verify: node suite exit 0, `# fail 0`, `# tests` > 274; both replays exit 0; `lint:hooks` exit 0 with no findings or exit 127 with the diff naming no `scripts/hooks/` or `scripts/wait-for-checks.sh` path; `test:unit` exit 0; record the counts on this line — run 2026-10-04: node suite `exit=0`, `# tests 277`, `# pass 277`, `# fail 0` (baseline 274 + the #86 test + 2 `session-state` unit tests); `replay-guard.sh` exit 0; companion replay exit 0; `npm run lint:hooks` exit 127 (`shellcheck: not found`) with `git diff --name-only origin/main...HEAD` naming 13 files, none under `scripts/hooks/` or `scripts/wait-for-checks.sh`; `npm ci` exit 0; `test:unit` exit 0, 114/114
-- [ ] 5.2 Integrate and publish: `git merge origin/main` in the product half and `git -C <companion.path> merge origin/main` in the companion half (never rebase); push both; write plan.md `## Resolution` (root cause, the CLI + prompt changes, the step 1.1 failing and step 2.2 passing runs, the fixed repro output); set `status: in-review`, `next-step: ""` — verify: `git status --porcelain` empty in both halves; `node scripts/agento.mjs session --pr` reports `pr` and `companionPr` with the companion half `dirty: false`, `ahead: 0`; the code PR body starts with `Fixes #86`
+- [x] 5.2 Integrate and publish: `git merge origin/main` in the product half and `git -C <companion.path> merge origin/main` in the companion half (never rebase); push both; write plan.md `## Resolution` (root cause, the CLI + prompt changes, the step 1.1 failing and step 2.2 passing runs, the fixed repro output); set `status: in-review`, `next-step: ""` — verify: `git status --porcelain` empty in both halves; `node scripts/agento.mjs session --pr` reports `pr` and `companionPr` with the companion half `dirty: false`, `ahead: 0`; the code PR body starts with `Fixes #86` — run 2026-10-04: `origin/main` already an ancestor of both halves (0 commits behind; no merge needed); PR #87 body starts with `Fixes #86`; `## Resolution` written
 
 ## Follow-ups
 
