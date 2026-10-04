@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/ship-untracked-byproducts
 last-updated: 2026-10-04
-next-step: "4.1 Add the §7 clean-handoff rule and cite it from the Builder and Reviewer"
+next-step: "5.1 Document ownerTree/companionTree and add the (#88) changelog bullet"
 github-issue: "#88"
 artifact-pr: "#27"
 ```
@@ -23,7 +23,7 @@ artifact-pr: "#27"
 
 ## Phase 4: Clean-handoff rule
 
-- [ ] 4.1 Add one bullet to `.github/instructions/delivery-policy.instructions.md` §7 (Git rules), the clean-handoff rule from plan.md `## Approach` item 4: empty `git status --porcelain --untracked-files=all` in the product worktree and, in companion mode, the companion half at every handoff (Builder completion, Builder pause or session break, Reviewer verdict). Delete byproducts, never commit them. Evidence belongs under the slug's `evidence/`. A recurring byproduct means fixing its producer and recording a Follow-up, with `.gitignore` reserved for genuinely generated artifacts. Cite it ("policy §7 clean handoff") in one clause each in `.github/agents/delivery-builder.agent.md` (Pause protocol and Completion) and `.github/agents/delivery-reviewer.agent.md` (step 8). Add the rule's distinctive phrase as a canary in `tests/customizations.test.mjs` "the policy file is the only place the shared rules are spelled out". — verify: `grep -c 'untracked-files=all' .github/instructions/delivery-policy.instructions.md` ≥ 1; `grep -c '§7' .github/agents/delivery-builder.agent.md` ≥ 2; `grep -c '§7' .github/agents/delivery-reviewer.agent.md` ≥ 1; `node --test tests/customizations.test.mjs` exit 0
+- [x] 4.1 Add one bullet to `.github/instructions/delivery-policy.instructions.md` §7 (Git rules), the clean-handoff rule from plan.md `## Approach` item 4: empty `git status --porcelain --untracked-files=all` in the product worktree and, in companion mode, the companion half at every handoff (Builder completion, Builder pause or session break, Reviewer verdict). Delete byproducts, never commit them. Evidence belongs under the slug's `evidence/`. A recurring byproduct means fixing its producer and recording a Follow-up, with `.gitignore` reserved for genuinely generated artifacts. Cite it ("policy §7 clean handoff") in one clause each in `.github/agents/delivery-builder.agent.md` (Pause protocol and Completion) and `.github/agents/delivery-reviewer.agent.md` (step 8). Add the rule's distinctive phrase as a canary in `tests/customizations.test.mjs` "the policy file is the only place the shared rules are spelled out". — verify: `grep -c 'untracked-files=all' .github/instructions/delivery-policy.instructions.md` ≥ 1; `grep -c '§7' .github/agents/delivery-builder.agent.md` ≥ 2; `grep -c '§7' .github/agents/delivery-reviewer.agent.md` ≥ 1; `node --test tests/customizations.test.mjs` exit 0 — done 2026-10-04: policy `untracked-files=all` 1, builder `§7` 4, reviewer `§7` 2; customizations `exit=0` 29/29 with canary `/delete\s+them, never commit them/` (absent outside the policy, asserted present in it)
 
 ## Phase 5: Docs and changelog
 
