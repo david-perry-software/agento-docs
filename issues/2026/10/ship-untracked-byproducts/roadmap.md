@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: in-progress
 branch: issue/ship-untracked-byproducts
 last-updated: 2026-10-04
-next-step: "2.4 (added at review) splitPorcelain worktree-side rename"
+next-step: "2.4 splitPorcelain worktree-side rename"
 github-issue: "#88"
 artifact-pr: "#27"
 ```
@@ -26,6 +26,7 @@ artifact-pr: "#27"
 ## Phase 4: Clean-handoff rule
 
 - [x] 4.1 Add one bullet to `.github/instructions/delivery-policy.instructions.md` §7 (Git rules), the clean-handoff rule from plan.md `## Approach` item 4: empty `git status --porcelain --untracked-files=all` in the product worktree and, in companion mode, the companion half at every handoff (Builder completion, Builder pause or session break, Reviewer verdict). Delete byproducts, never commit them. Evidence belongs under the slug's `evidence/`. A recurring byproduct means fixing its producer and recording a Follow-up, with `.gitignore` reserved for genuinely generated artifacts. Cite it ("policy §7 clean handoff") in one clause each in `.github/agents/delivery-builder.agent.md` (Pause protocol and Completion) and `.github/agents/delivery-reviewer.agent.md` (step 8). Add the rule's distinctive phrase as a canary in `tests/customizations.test.mjs` "the policy file is the only place the shared rules are spelled out". — verify: `grep -c 'untracked-files=all' .github/instructions/delivery-policy.instructions.md` ≥ 1; `grep -c '§7' .github/agents/delivery-builder.agent.md` ≥ 2; `grep -c '§7' .github/agents/delivery-reviewer.agent.md` ≥ 1; `node --test tests/customizations.test.mjs` exit 0 — done 2026-10-04: policy `untracked-files=all` 1, builder `§7` 4, reviewer `§7` 2; customizations `exit=0` 29/29 with canary `/delete\s+them, never commit them/` (absent outside the policy, asserted present in it)
+- [ ] 4.2 (added 2026-10-04) Review finding 4 (nit): in `.github/agents/delivery-builder.agent.md` Pause protocol, merge the back-to-back "Either stop leaves both trees clean … Either stop is a `completed` §9 result" into one sentence that names the worktree and, in companion mode, the companion half (no "both trees" in the in-repo layout), still citing "policy §7 clean handoff". — verify: `grep -c 'Either stop' .github/agents/delivery-builder.agent.md` = 1; `grep -c 'Either stop leaves both trees' .github/agents/delivery-builder.agent.md` = 0; `grep -c '§7' .github/agents/delivery-builder.agent.md` ≥ 2; `node --test tests/customizations.test.mjs` exit 0
 
 ## Phase 5: Docs and changelog
 
