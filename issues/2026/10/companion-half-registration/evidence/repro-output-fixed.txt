@@ -1,0 +1,97 @@
+base: /tmp/agento-chr-ywTM
+--- companion half origin (expected /tmp/agento-chr-ywTM/proj-docs.git)
+/tmp/agento-chr-ywTM/proj.git
+--- companion clone worktree list
+worktree /tmp/agento-chr-ywTM/proj-docs
+HEAD c95cee9b3e7712641d434619e3fb43446e862f1f
+branch refs/heads/main
+
+--- product clone worktree list
+worktree /tmp/agento-chr-ywTM/proj
+HEAD b57470336d43f938c4d13351e68a1cef7760b5c5
+branch refs/heads/main
+
+worktree /tmp/agento-chr-ywTM/proj-docs-worktrees/plan-20261004-1
+HEAD b57470336d43f938c4d13351e68a1cef7760b5c5
+detached
+
+worktree /tmp/agento-chr-ywTM/wt/plan-20261004-1
+HEAD b57470336d43f938c4d13351e68a1cef7760b5c5
+detached
+
+--- paths plan 20261004-1 (from the primary): companion block
+{
+  "companion": {
+    "worktreesDir": "/tmp/agento-chr-ywTM/proj-docs-worktrees",
+    "worktree": "/tmp/agento-chr-ywTM/proj-docs-worktrees/plan-20261004-1",
+    "branch": null,
+    "state": {
+      "onDisk": true,
+      "registeredIn": "product",
+      "origin": "/tmp/agento-chr-ywTM/proj.git",
+      "expectedOrigin": "/tmp/agento-chr-ywTM/proj-docs.git",
+      "ok": false
+    }
+  }
+}
+--- session (from the product half): companion, worktrees, warnings
+{
+  "companion": {
+    "path": "/tmp/agento-chr-ywTM/proj-docs-worktrees/plan-20261004-1",
+    "branch": null,
+    "detached": false,
+    "registered": false,
+    "dirty": false,
+    "ahead": 0,
+    "behind": 0
+  },
+  "worktrees": [
+    {
+      "path": "/tmp/agento-chr-ywTM/proj",
+      "branch": "main",
+      "detached": false,
+      "role": "primary",
+      "dirPrefix": null,
+      "id": null,
+      "isPrimary": true,
+      "isManaged": false,
+      "repo": "product"
+    },
+    {
+      "path": "/tmp/agento-chr-ywTM/proj-docs-worktrees/plan-20261004-1",
+      "branch": null,
+      "detached": true,
+      "role": "unmanaged",
+      "dirPrefix": null,
+      "id": null,
+      "isPrimary": false,
+      "isManaged": false,
+      "repo": "product"
+    },
+    {
+      "path": "/tmp/agento-chr-ywTM/wt/plan-20261004-1",
+      "branch": null,
+      "detached": true,
+      "role": "plan",
+      "dirPrefix": "plan",
+      "id": "20261004-1",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "product"
+    },
+    {
+      "path": "/tmp/agento-chr-ywTM/proj-docs",
+      "branch": "main",
+      "detached": false,
+      "role": "unmanaged",
+      "dirPrefix": null,
+      "id": null,
+      "isPrimary": false,
+      "isManaged": false,
+      "repo": "companion"
+    }
+  ],
+  "warnings": [
+    "companion-unregistered: /tmp/agento-chr-ywTM/proj-docs-worktrees/plan-20261004-1 exists but is not a registered worktree of /tmp/agento-chr-ywTM/proj-docs; it is registered in /tmp/agento-chr-ywTM/proj instead — git -C /tmp/agento-chr-ywTM/proj worktree remove /tmp/agento-chr-ywTM/proj-docs-worktrees/plan-20261004-1"
+  ]
+}
