@@ -1,0 +1,31 @@
+$ git -C <owner> status --porcelain --untracked-files=all
+?? evidence
+?? features/2026/09/other-slug/evidence/step-1-1-x.png
+$ git -C <owner> status --porcelain --untracked-files=no
+$ git -C <owner> rev-list --count @{upstream}..HEAD
+0
+$ git -C <owner> clean -n            # no -d: misses files inside untracked directories
+Would remove evidence
+$ git -C <owner> clean -n -d
+Would remove evidence
+Would remove features/2026/09/
+$ agento.mjs ship-preflight feature widget
+{
+  "status": "ok",
+  "resolutionSource": "local",
+  "branch": "feature/widget",
+  "owner": {
+    "path": "<tmp>/product-worktrees/feature-widget",
+    "role": "build",
+    "dirPrefix": "feature",
+    "id": "widget"
+  },
+  "message": "Ship preflight can proceed: roadmap resolved via local fallback for feature/widget.",
+  "companion": null,
+  "companionGaps": [],
+  "layout": "checkout",
+  "artifactsRoot": "<tmp>/product",
+  "root": "<tmp>/product",
+  "configSource": "<tmp>/product/.github/agento.json"
+}
+exit=0
