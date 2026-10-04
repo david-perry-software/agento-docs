@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/companion-half-registration
 last-updated: 2026-10-04
-next-step: "3.1 start-session prompt: git -C <primary> product add and the post-add paths check"
+next-step: "3.2 start-freehand prompt: git -C <primary> product add and the post-add paths check"
 github-issue: "#86"
 artifact-pr: "#26"
 ```
@@ -19,7 +19,7 @@ artifact-pr: "#26"
 
 ## Phase 3: Prompts
 
-- [ ] 3.1 `.github/prompts/start-session.prompt.md`: plan mode step 3 and build mode step 3 add the product half with `git -C <primary> worktree add …` (the primary is `worktrees[0].path` of the record); after the add(s) — and for a reused registered half — run `node <agento-root>/scripts/agento.mjs paths <kind> <id>` and require `worktreeState.ok` and, with a pair, `companion.state.ok`; on failure stop with the §9 failed result naming the half, `registeredIn`, `origin` vs `expectedOrigin`, and the exact `git -C <clone named by registeredIn> worktree remove <path>` fix, without removing anything, writing the workspace file, or opening a window; copy to `commands/start-session.md` — verify: `grep -c 'worktreeState.ok' .github/prompts/start-session.prompt.md` ≥ 2; `grep -c 'companion.state.ok' .github/prompts/start-session.prompt.md` ≥ 2; `cmp .github/prompts/start-session.prompt.md commands/start-session.md` silent; `node --test tests/customizations.test.mjs` exit 0
+- [x] 3.1 `.github/prompts/start-session.prompt.md`: plan mode step 3 and build mode step 3 add the product half with `git -C <primary> worktree add …` (the primary is `worktrees[0].path` of the record); after the add(s) — and for a reused registered half — run `node <agento-root>/scripts/agento.mjs paths <kind> <id>` and require `worktreeState.ok` and, with a pair, `companion.state.ok`; on failure stop with the §9 failed result naming the half, `registeredIn`, `origin` vs `expectedOrigin`, and the exact `git -C <clone named by registeredIn> worktree remove <path>` fix, without removing anything, writing the workspace file, or opening a window; copy to `commands/start-session.md` — verify: `grep -c 'worktreeState.ok' .github/prompts/start-session.prompt.md` ≥ 2; `grep -c 'companion.state.ok' .github/prompts/start-session.prompt.md` ≥ 2; `cmp .github/prompts/start-session.prompt.md commands/start-session.md` silent; `node --test tests/customizations.test.mjs` exit 0 — run 2026-10-04: `worktreeState.ok` 3, `companion.state.ok` 3, `cmp` silent, customizations `exit=0` 29/29 (the post-add check lives in shared precondition 3 and both modes cite it; the §9 failed result is named, not spelled, per the policy-restatement test)
 - [ ] 3.2 `.github/prompts/start-freehand.prompt.md` step 3: the same `git -C <primary>` product add and post-add `paths freehand <slug>` check with the same failure handling; copy to `commands/start-freehand.md` — verify: `grep -c 'worktreeState.ok' .github/prompts/start-freehand.prompt.md` ≥ 1; `grep -c 'companion.state.ok' .github/prompts/start-freehand.prompt.md` ≥ 1; `cmp .github/prompts/start-freehand.prompt.md commands/start-freehand.md` silent; `node --test tests/customizations.test.mjs` exit 0
 
 ## Phase 4: Docs and changelog
