@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/gate-dashboard-plan-actions
 last-updated: 2026-10-03
-next-step: "4.2 Run the full gate"
+next-step: "4.3 Write Resolution, integrate main, set in-review"
 github-issue: "#84"
 artifact-pr: "#25"
 ```
@@ -99,7 +99,7 @@ artifact-pr: "#25"
   - `grep -n 'agento.canPlan\|unpromoted plan window' docs/extension.md`;
   - `grep -n '#84' CHANGELOG.md`;
   - `node --test 'tests/**/*.test.mjs'` exit 0.
-- [ ] 4.2 Run the full gate (policy §5):
+- [x] 4.2 Run the full gate (policy §5):
   - `git ls-files '*.sh' | xargs pnpm dlx shellcheck` exit 0;
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0;
   - `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` exit 0;
@@ -112,6 +112,10 @@ artifact-pr: "#25"
 
   Verify: every recorded status is 0, and there are no findings beyond the plan.md
   baseline (which has none).
+
+  Result (2026-10-03): shellcheck exit 0, 0 findings; node tests exit 0, 274/274;
+  both guard smokes exit 0; extension typecheck + unit (114/114) + electron
+  (in-repo, companion, workspace passed) exit 0; #77 diff --stat empty.
 - [ ] 4.3 Finish the delivery:
   - Write plan.md `## Resolution`: the root cause, what changed, and proof that the
     1.1 tests now pass.
