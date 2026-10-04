@@ -1,0 +1,88 @@
+base: /tmp/agento-chr-2rXA
+--- companion half origin (expected /tmp/agento-chr-2rXA/proj-docs.git)
+/tmp/agento-chr-2rXA/proj.git
+--- companion clone worktree list
+worktree /tmp/agento-chr-2rXA/proj-docs
+HEAD 1eb4d48b01f563a7cded15ea5a787c6db4e63fd6
+branch refs/heads/main
+
+--- product clone worktree list
+worktree /tmp/agento-chr-2rXA/proj
+HEAD 7ddb8b786f160b43eeec6d78f7c884c89123dac1
+branch refs/heads/main
+
+worktree /tmp/agento-chr-2rXA/proj-docs-worktrees/plan-20261004-1
+HEAD 7ddb8b786f160b43eeec6d78f7c884c89123dac1
+detached
+
+worktree /tmp/agento-chr-2rXA/wt/plan-20261004-1
+HEAD 7ddb8b786f160b43eeec6d78f7c884c89123dac1
+detached
+
+--- paths plan 20261004-1 (from the primary): companion block
+{
+  "companion": {
+    "worktreesDir": "/tmp/agento-chr-2rXA/proj-docs-worktrees",
+    "worktree": "/tmp/agento-chr-2rXA/proj-docs-worktrees/plan-20261004-1",
+    "branch": null
+  }
+}
+--- session (from the product half): companion, worktrees, warnings
+{
+  "companion": {
+    "path": "/tmp/agento-chr-2rXA/proj-docs-worktrees/plan-20261004-1",
+    "branch": null,
+    "detached": false,
+    "registered": false,
+    "dirty": false,
+    "ahead": 0,
+    "behind": 0
+  },
+  "worktrees": [
+    {
+      "path": "/tmp/agento-chr-2rXA/proj",
+      "branch": "main",
+      "detached": false,
+      "role": "primary",
+      "dirPrefix": null,
+      "id": null,
+      "isPrimary": true,
+      "isManaged": false,
+      "repo": "product"
+    },
+    {
+      "path": "/tmp/agento-chr-2rXA/proj-docs-worktrees/plan-20261004-1",
+      "branch": null,
+      "detached": true,
+      "role": "unmanaged",
+      "dirPrefix": null,
+      "id": null,
+      "isPrimary": false,
+      "isManaged": false,
+      "repo": "product"
+    },
+    {
+      "path": "/tmp/agento-chr-2rXA/wt/plan-20261004-1",
+      "branch": null,
+      "detached": true,
+      "role": "plan",
+      "dirPrefix": "plan",
+      "id": "20261004-1",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "product"
+    },
+    {
+      "path": "/tmp/agento-chr-2rXA/proj-docs",
+      "branch": "main",
+      "detached": false,
+      "role": "unmanaged",
+      "dirPrefix": null,
+      "id": null,
+      "isPrimary": false,
+      "isManaged": false,
+      "repo": "companion"
+    }
+  ],
+  "warnings": []
+}
