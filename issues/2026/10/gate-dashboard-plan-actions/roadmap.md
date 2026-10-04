@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: issue/gate-dashboard-plan-actions
 last-updated: 2026-10-03
-next-step: "4.3 Write Resolution, integrate main, set in-review"
+next-step: ""
 github-issue: "#84"
 artifact-pr: "#25"
 ```
@@ -116,7 +116,7 @@ artifact-pr: "#25"
   Result (2026-10-03): shellcheck exit 0, 0 findings; node tests exit 0, 274/274;
   both guard smokes exit 0; extension typecheck + unit (114/114) + electron
   (in-repo, companion, workspace passed) exit 0; #77 diff --stat empty.
-- [ ] 4.3 Finish the delivery:
+- [x] 4.3 Finish the delivery:
   - Write plan.md `## Resolution`: the root cause, what changed, and proof that the
     1.1 tests now pass.
   - Merge `origin/main` into the product branch and the companion's `origin/main`

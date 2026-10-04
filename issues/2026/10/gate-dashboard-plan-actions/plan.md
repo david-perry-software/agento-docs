@@ -426,4 +426,45 @@ behaviour (always `{ primary: true, canPlan: true }`, `gateRejection` always
 
 ## Resolution
 
-(written by the Builder at completion)
+**Root cause.** The three planning entry points (`agento.newPlan`,
+`agento.newInitiative`, `agento.planInitiativeMember`) had no role term in their
+menu `when` clauses, no `menus.commandPalette` entry, and no role check in their
+handlers; the extension set no context keys. Every window therefore offered them,
+and from any window other than the primary (or an unpromoted plan window for New
+Plan) the flows routed `/agento start-session` / `/agento new-initiative` to the
+primary through a pending dispatch and `openTarget(…, { forceNewWindow: true })`.
+
+**What changed.**
+
+- `extension/src/windowGate.ts` (new): `windowGate(session)` derives
+  `{ primary, canPlan }` from the raw `agento.mjs session` record —
+  `primary` for `role: primary`, `canPlan` for primary or `role: plan` with
+  `worktree.detached === true` — and returns `CLOSED_GATE` for every other role
+  and every malformed or failed record. `gateRejection(command, gate)` returns the
+  primary-window message when the command's key is closed.
+- `extension/package.json`: `&& agento.canPlan` on both New Plan title entries and
+  the ready-member Plan entry, `&& agento.primary` on New Initiative, and a
+  `menus.commandPalette` section (`agento.canPlan`, `agento.primary`, `false`).
+- `extension/src/extension.ts`: `applyGate` stores the gate and sets both context
+  keys; it runs with `CLOSED_GATE` at activation, with `windowGate(sessionResult.json)`
+  in the deliveries/session refresh snapshot (so `LatestDeliveryRefresh` discards
+  stale gates), and with `CLOSED_GATE` on refresh error or no folder. Each of the
+  three handlers rejects first — output line, `showErrorMessage`, return — before
+  any prompt, editor, or dispatch. `ExtensionApi.windowGate()` exposes the gate.
+- Tests: the exposing `extension/test/unit/gateDashboardPlanActions.test.ts`
+  (a)–(d); updated manifest expectations in `extensionIntegration.test.ts`;
+  Electron assertions for primary (open), stubbed `build` and invalid sessions
+  (closed, all three commands rejected with prompts and runners set to
+  `assert.fail`), a stale primary refresh (stays closed), stubbed `plan` + detached
+  (`canPlan` only, New Initiative rejected), and the `workspace` scenario's live
+  detached plan worktree (`{ primary: false, canPlan: true }`, equal to
+  `windowGate` of the live session).
+- `docs/extension.md` and `CHANGELOG.md` `## Unreleased` (**Fixed**, #84).
+- Unchanged, as planned: `newPlanFlow.ts`, `newInitiativeFlow.ts`, the #77
+  in-window path, the pending-dispatch TTL, and `openTarget`.
+
+**Proof.** Step 1.1 recorded the four exposing tests failing on their assertions
+(114 tests, 110 pass, 4 fail). After step 2.3, `npm run test:unit` passes 114/114,
+including (a)–(d); `npm run test:electron` passes the in-repo, companion, and
+workspace scenarios; the packaged VSIX carries the gated `when` clauses (6
+matches) and `out/src/windowGate.js`.
