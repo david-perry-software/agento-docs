@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/ship-untracked-byproducts
 last-updated: 2026-10-04
-next-step: "5.1 Document ownerTree/companionTree and add the (#88) changelog bullet"
+next-step: "6.1 Run the scoped gate against the baseline"
 github-issue: "#88"
 artifact-pr: "#27"
 ```
@@ -27,7 +27,7 @@ artifact-pr: "#27"
 
 ## Phase 5: Docs and changelog
 
-- [ ] 5.1 `docs/commands.md`: the `ship-preflight` paragraph lists `ownerTree` (`{ tracked, untracked, ahead } | null`) and `companionTree` (`{ tracked, untracked } | null`). `CHANGELOG.md` `## Unreleased` gains one **Fixed.** bullet ending `(#88)` covering the untracked-only ship cleanup, the companion gap file lists, and the clean-handoff rule. — verify: `grep -c 'ownerTree' docs/commands.md` ≥ 1; `grep -c 'companionTree' docs/commands.md` ≥ 1; `grep -c '(#88)' CHANGELOG.md` = 1; `node --test tests/customizations.test.mjs` exit 0
+- [x] 5.1 `docs/commands.md`: the `ship-preflight` paragraph lists `ownerTree` (`{ tracked, untracked, ahead } | null`) and `companionTree` (`{ tracked, untracked } | null`). `CHANGELOG.md` `## Unreleased` gains one **Fixed.** bullet ending `(#88)` covering the untracked-only ship cleanup, the companion gap file lists, and the clean-handoff rule. — verify: `grep -c 'ownerTree' docs/commands.md` ≥ 1; `grep -c 'companionTree' docs/commands.md` ≥ 1; `grep -c '(#88)' CHANGELOG.md` = 1; `node --test tests/customizations.test.mjs` exit 0 — done 2026-10-04: `ownerTree` 1, `companionTree` 1, `(#88)` 1; customizations `exit=0` 29/29
 
 ## Phase 6: Gate and publish
 
