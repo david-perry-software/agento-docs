@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/ship-untracked-byproducts
 last-updated: 2026-10-04
-next-step: "2.1 Export splitPorcelain() from scripts/session-state.mjs with unit tests"
+next-step: "2.2 Emit ownerTree and companionTree from ship-preflight"
 github-issue: "#88"
 artifact-pr: "#27"
 ```
@@ -13,7 +13,7 @@ artifact-pr: "#27"
 
 ## Phase 2: Fix the CLI
 
-- [ ] 2.1 In `scripts/session-state.mjs` export `splitPorcelain(zOutput)` per plan.md `## Approach` item 1. Add `scripts/session-state.test.mjs` cases: empty input → `{ tracked: [], untracked: [] }`; untracked-only; tracked-only (` M`, `A `, `D `); mixed (sorted output); a rename entry `R  new\0old\0` contributes `new` only and the following entry still parses. — verify: `node --test scripts/session-state.test.mjs` exit 0 with the new tests `ok`
+- [x] 2.1 In `scripts/session-state.mjs` export `splitPorcelain(zOutput)` per plan.md `## Approach` item 1. Add `scripts/session-state.test.mjs` cases: empty input → `{ tracked: [], untracked: [] }`; untracked-only; tracked-only (` M`, `A `, `D `); mixed (sorted output); a rename entry `R  new\0old\0` contributes `new` only and the following entry still parses. — verify: `node --test scripts/session-state.test.mjs` exit 0 with the new tests `ok` — done 2026-10-04: `exit=0`, `# tests 52`, `# pass 52`, `# fail 0`, five `splitPorcelain` tests `ok`; `extension/cli/session-state.mjs` re-copied
 - [ ] 2.2 In `scripts/agento.mjs` add `treeState(dir)` (`git status --porcelain=v1 -z --untracked-files=all` → `splitPorcelain` plus `ahead` counted like `describeCompanion`; `null` when the directory is missing). `ship-preflight` emits `ownerTree` (`null` when `owner` is `null` or `owner.role === "primary"`) and `companionTree` (`{ tracked, untracked }` when `companion?.registered`, else `null`), on both the plain and the `--pr` result, leaving `owner`, `companion`, and `companionGaps` untouched. Extend the usage text, then `cd extension && npm run copy-cli`. — verify: `node --test scripts/agento.test.mjs` exit 0 with the #88 test `ok` and the existing ship-preflight / close-decision tests passing unchanged; `node --test tests/extension-bundle.test.mjs` exit 0
 - [ ] 2.3 Re-run the reproduction against this branch. — verify: `CLI=<product half>/scripts/agento.mjs bash <companion.path>/issues/2026/10/ship-untracked-byproducts/evidence/repro.sh > <companion.path>/issues/2026/10/ship-untracked-byproducts/evidence/repro-output-fixed.txt 2>&1; echo "exit=$?"` prints `exit=0`; the file shows `"ownerTree"` with `tracked: []`, both untracked paths, and `ahead: 0`; commit it with this step (companion commit)
 
