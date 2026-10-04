@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: complete
 branch: issue/ship-untracked-byproducts
 last-updated: 2026-10-04
 next-step: ""
