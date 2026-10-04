@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/gate-dashboard-plan-actions
 last-updated: 2026-10-03
-next-step: "2.1 Implement windowGate and gateRejection"
+next-step: "2.2 Gate the manifest menus and add menus.commandPalette"
 github-issue: "#84"
 artifact-pr: "#25"
 ```
@@ -28,7 +28,7 @@ artifact-pr: "#25"
 
 ## Phase 2: Fix
 
-- [ ] 2.1 Implement `windowGate` and `gateRejection` in `extension/src/windowGate.ts`
+- [x] 2.1 Implement `windowGate` and `gateRejection` in `extension/src/windowGate.ts`
   as designed (`primary`, `plan` + detached → `canPlan`, everything else and every
   malformed record → `CLOSED_GATE`; the three exact rejection messages) — verify:
   `cd extension && npm run test:unit` — (b) and (c) pass, (a) and (d) still fail,
