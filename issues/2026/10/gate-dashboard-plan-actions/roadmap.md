@@ -4,6 +4,7 @@ branch: issue/gate-dashboard-plan-actions
 last-updated: 2026-10-03
 next-step: "1.1 Add the windowGate stub and the exposing test gateDashboardPlanActions.test.ts"
 github-issue: "#84"
+artifact-pr: "#25"
 ```
 
 ## Phase 1: Expose the defect
