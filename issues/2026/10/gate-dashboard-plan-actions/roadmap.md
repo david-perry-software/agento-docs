@@ -1,7 +1,7 @@
 ```yaml
-status: in-review
+status: complete
 branch: issue/gate-dashboard-plan-actions
-last-updated: 2026-10-03
+last-updated: 2026-10-04
 next-step: ""
 github-issue: "#84"
 artifact-pr: "#25"
@@ -126,6 +126,6 @@ artifact-pr: "#25"
   Verify: `node <agento-root>/scripts/agento.mjs session --pr` shows the companion
   half `dirty: false`, `ahead: 0`, and both PRs open.
 
-## Follow-ups
+## Follow-ups (accepted at ship)
 
-(none yet)
+- #84 changelog entry left under `## Unreleased` unstamped: the plugin version is unchanged at ship (neither `.claude-plugin/plugin.json` nor `package.json` changed), so step 3 does not date-stamp it. The repo accumulates fixes under `## Unreleased` until a version bump.
