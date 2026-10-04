@@ -2,14 +2,14 @@
 status: in-progress
 branch: issue/companion-half-registration
 last-updated: 2026-10-04
-next-step: "1.1 Add the #86 exposing regression test and verify it fails"
+next-step: "2.1 Add halfState() and companionWarning() to scripts/session-state.mjs with unit tests"
 github-issue: "#86"
 artifact-pr: "#26"
 ```
 
 ## Phase 1: Expose the defect
 
-- [ ] 1.1 Add a `test(...)` to `scripts/agento.test.mjs` named `session warns and paths reports ok: false when the companion half is registered in the product clone (#86 companion-half-registration)`: build `makePairRepo()`, add the product half with `git(repo, "worktree", "add", "-q", "--detach", <wt>/plan-20261004-1, "origin/main")`, then add the companion half from the **product** clone (`git(repo, "worktree", "add", "-q", "--detach", <docsWt>/plan-20261004-1, "origin/main")`); assert from `run(<product half>, "session")` that `warnings` contains exactly one entry matching `/^companion-unregistered: .*plan-20261004-1 exists but is not a registered worktree of .*project-docs/` that also names `repo` and `git -C ${repo} worktree remove`, and from `run(repo, "paths", "plan", "20261004-1")` that `companion.state` deep-equals `{ onDisk: true, registeredIn: "product", origin: <product origin>, expectedOrigin: <companion origin>, ok: false }` and `worktreeState.ok === true` — verify: `node --test scripts/agento.test.mjs > /tmp/chr-1-1.txt 2>&1; echo "exit=$?"` prints `exit=1`; `grep -c '^not ok' /tmp/chr-1-1.txt` is 1 and that line names the #86 test; every other test in the file is `ok`
+- [x] 1.1 Add a `test(...)` to `scripts/agento.test.mjs` named `session warns and paths reports ok: false when the companion half is registered in the product clone (#86 companion-half-registration)`: build `makePairRepo()`, add the product half with `git(repo, "worktree", "add", "-q", "--detach", <wt>/plan-20261004-1, "origin/main")`, then add the companion half from the **product** clone (`git(repo, "worktree", "add", "-q", "--detach", <docsWt>/plan-20261004-1, "origin/main")`); assert from `run(<product half>, "session")` that `warnings` contains exactly one entry matching `/^companion-unregistered: .*plan-20261004-1 exists but is not a registered worktree of .*project-docs/` that also names `repo` and `git -C ${repo} worktree remove`, and from `run(repo, "paths", "plan", "20261004-1")` that `companion.state` deep-equals `{ onDisk: true, registeredIn: "product", origin: <product origin>, expectedOrigin: <companion origin>, ok: false }` and `worktreeState.ok === true` — verify: `node --test scripts/agento.test.mjs > /tmp/chr-1-1.txt 2>&1; echo "exit=$?"` prints `exit=1`; `grep -c '^not ok' /tmp/chr-1-1.txt` is 1 and that line names the #86 test; every other test in the file is `ok` — run 2026-10-04: `exit=1`, `# tests 86`, `# pass 85`, `# fail 1`; the only `not ok` is test 9 (the #86 test), failing on the `companion-unregistered` warning count (0 ≠ 1)
 
 ## Phase 2: Fix the CLI
 
