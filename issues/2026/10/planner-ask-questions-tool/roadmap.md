@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/planner-ask-questions-tool
 last-updated: 2026-10-07
-next-step: "2.4 Add the CHANGELOG Fixed entry (#90)"
+next-step: "3.1 Run the full suite and record the counts"
 github-issue: "#90"
 artifact-pr: "#28"
 ```
@@ -73,7 +73,7 @@ artifact-pr: "#28"
   byte-for-byte to `commands/agento-init.md` and `commands/install-skills.md` —
   verify: `node --test tests/customizations.test.mjs` passes, including the 1.2 test
   and the "plugin commands must mirror workspace prompts" assertion.
-- [ ] 2.4 Add a `**Fixed.**` entry under `CHANGELOG.md` `## Unreleased` describing the
+- [x] 2.4 Add a `**Fixed.**` entry under `CHANGELOG.md` `## Unreleased` describing the
   tool-list fix and the recommended-choice rule, ending `(#90)` — verify:
   `grep -n "#90" CHANGELOG.md` shows the entry under `## Unreleased`.
 
