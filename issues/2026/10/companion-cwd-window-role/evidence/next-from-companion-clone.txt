@@ -1,0 +1,22 @@
+$ cd /home/david/DP/agento-docs && node scripts/agento.mjs next
+{
+  "status": "unsupported",
+  "role": "unmanaged",
+  "lifecycle": "no-delivery",
+  "slug": null,
+  "type": null,
+  "artifactPr": null,
+  "layout": null,
+  "artifactsRoot": null,
+  "next": null,
+  "candidates": [],
+  "reviewFresh": null,
+  "dispatch": null,
+  "warnings": [
+    "anchored-from-companion: /home/david/DP/agento-docs is a companion checkout of /home/david/DP/agento; the record describes /home/david/DP/agento"
+  ],
+  "reason": "role unmanaged has no delivery lifecycle to continue; use the session record's allowed commands",
+  "root": "/home/david/DP/agento",
+  "configSource": "/home/david/DP/agento/.github/agento.json"
+}
+exit=3

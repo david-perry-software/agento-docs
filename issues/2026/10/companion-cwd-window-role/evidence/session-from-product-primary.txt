@@ -1,0 +1,80 @@
+$ cd /home/david/DP/agento && node scripts/agento.mjs session
+{
+  "status": "ok",
+  "role": "primary",
+  "hosted": false,
+  "worktree": {
+    "path": "/home/david/DP/agento",
+    "branch": "main",
+    "detached": false,
+    "isPrimary": true,
+    "isManaged": false,
+    "dirPrefix": null,
+    "id": null
+  },
+  "worktrees": [
+    {
+      "path": "/home/david/DP/agento",
+      "branch": "main",
+      "detached": false,
+      "role": "primary",
+      "dirPrefix": null,
+      "id": null,
+      "isPrimary": true,
+      "isManaged": false,
+      "repo": "product"
+    },
+    {
+      "path": "/home/david/DP/agento-worktrees/plan-20261007-045607",
+      "branch": "issue/companion-cwd-window-role",
+      "detached": false,
+      "role": "build",
+      "dirPrefix": "plan",
+      "id": "20261007-045607",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "product"
+    },
+    {
+      "path": "/home/david/DP/agento-docs",
+      "branch": "main",
+      "detached": false,
+      "role": "unmanaged",
+      "dirPrefix": null,
+      "id": null,
+      "isPrimary": false,
+      "isManaged": false,
+      "repo": "companion"
+    },
+    {
+      "path": "/home/david/DP/agento-docs-worktrees/plan-20261007-045607",
+      "branch": "issue/companion-cwd-window-role",
+      "detached": false,
+      "role": "build",
+      "dirPrefix": "plan",
+      "id": "20261007-045607",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "companion"
+    }
+  ],
+  "companion": null,
+  "workspace": null,
+  "delivery": null,
+  "pr": null,
+  "companionPr": null,
+  "lifecycle": "no-delivery",
+  "allowed": [
+    "/agento continue",
+    "/agento start-session",
+    "/agento new-feature",
+    "/agento new-issue",
+    "/agento new-initiative",
+    "/agento delivery-status"
+  ],
+  "elsewhere": [],
+  "warnings": [],
+  "root": "/home/david/DP/agento",
+  "configSource": "/home/david/DP/agento/.github/agento.json"
+}
+exit=0

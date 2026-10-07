@@ -1,0 +1,81 @@
+$ cd /home/david/DP/agento-docs && node scripts/agento.mjs session   # CLI from /home/david/DP/agento-worktrees/plan-20261007-045607 at 7b4a3c6
+{
+  "status": "ok",
+  "role": "unmanaged",
+  "hosted": false,
+  "worktree": {
+    "path": "/home/david/DP/agento-docs",
+    "branch": null,
+    "detached": false,
+    "isPrimary": false,
+    "isManaged": false,
+    "dirPrefix": null,
+    "id": null
+  },
+  "worktrees": [
+    {
+      "path": "/home/david/DP/agento",
+      "branch": "main",
+      "detached": false,
+      "role": "primary",
+      "dirPrefix": null,
+      "id": null,
+      "isPrimary": true,
+      "isManaged": false,
+      "repo": "product"
+    },
+    {
+      "path": "/home/david/DP/agento-worktrees/plan-20261007-045607",
+      "branch": "issue/companion-cwd-window-role",
+      "detached": false,
+      "role": "build",
+      "dirPrefix": "plan",
+      "id": "20261007-045607",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "product"
+    },
+    {
+      "path": "/home/david/DP/agento-docs",
+      "branch": "main",
+      "detached": false,
+      "role": "unmanaged",
+      "dirPrefix": null,
+      "id": null,
+      "isPrimary": false,
+      "isManaged": false,
+      "repo": "companion"
+    },
+    {
+      "path": "/home/david/DP/agento-docs-worktrees/plan-20261007-045607",
+      "branch": "issue/companion-cwd-window-role",
+      "detached": false,
+      "role": "build",
+      "dirPrefix": "plan",
+      "id": "20261007-045607",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "companion"
+    }
+  ],
+  "companion": null,
+  "workspace": null,
+  "delivery": null,
+  "pr": null,
+  "companionPr": null,
+  "lifecycle": "no-delivery",
+  "allowed": [],
+  "elsewhere": [
+    {
+      "command": "/agento start-session",
+      "window": "primary",
+      "reason": "this directory is neither the primary worktree nor a managed Agento worktree"
+    }
+  ],
+  "warnings": [
+    "anchored-from-companion: /home/david/DP/agento-docs is a companion checkout of /home/david/DP/agento; the record describes /home/david/DP/agento"
+  ],
+  "root": "/home/david/DP/agento",
+  "configSource": "/home/david/DP/agento/.github/agento.json"
+}
+exit=0
