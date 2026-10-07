@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/planner-ask-questions-tool
 last-updated: 2026-10-07
-next-step: "2.1 Add vscode/askQuestions to the Planner and Architect tools: lines"
+next-step: "2.2 Add the §10 recommended-choice rule to delivery-policy"
 github-issue: "#90"
 artifact-pr: "#28"
 ```
@@ -48,7 +48,7 @@ artifact-pr: "#28"
 
 ## Phase 2: Fix
 
-- [ ] 2.1 Add `vscode/askQuestions` to the `tools:` line of
+- [x] 2.1 Add `vscode/askQuestions` to the `tools:` line of
   `.github/agents/delivery-planner.agent.md` and
   `.github/agents/initiative-architect.agent.md`. Nothing else in the frontmatter
   changes — verify: the 1.1 test passes, and VS Code diagnostics (`get_errors`) for
