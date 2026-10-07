@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/planner-ask-questions-tool
 last-updated: 2026-10-07
-next-step: "3.2 Run both guard smokes"
+next-step: "3.3 Complete the scoped lint gate"
 github-issue: "#90"
 artifact-pr: "#28"
 ```
@@ -85,10 +85,12 @@ artifact-pr: "#28"
   Recorded 2026-10-07 at product `e8d5c14`: exit **0**, `# tests 288 / # pass 288 /
   # fail 0` (286 baseline + the 2 #90 tests); focused
   `node --test tests/customizations.test.mjs` exit 0, 32/32.
-- [ ] 3.2 Run both guard smokes,
+- [x] 3.2 Run both guard smokes,
   `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` and
   `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`
   — verify: both exit 0.
+  Recorded 2026-10-07 at product `e8d5c14`: guard smoke exit **0**, companion guard
+  smoke exit **0**.
 - [ ] 3.3 Complete the scoped lint gate (plan `## Research`). Run
   `git diff --name-only origin/main...HEAD` and record that no `*.sh` file changed.
   If `command -v shellcheck` succeeds, run
