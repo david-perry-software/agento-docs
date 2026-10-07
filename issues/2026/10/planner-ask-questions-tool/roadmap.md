@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: issue/planner-ask-questions-tool
 last-updated: 2026-10-07
-next-step: "3.3 Complete the scoped lint gate"
+next-step: "3.4 (manual) Screenshot the question carousel from a new 📋 Agento Planner chat"
 github-issue: "#90"
 artifact-pr: "#28"
 ```
@@ -91,13 +91,20 @@ artifact-pr: "#28"
   — verify: both exit 0.
   Recorded 2026-10-07 at product `e8d5c14`: guard smoke exit **0**, companion guard
   smoke exit **0**.
-- [ ] 3.3 Complete the scoped lint gate (plan `## Research`). Run
+- [x] 3.3 Complete the scoped lint gate (plan `## Research`). Run
   `git diff --name-only origin/main...HEAD` and record that no `*.sh` file changed.
   If `command -v shellcheck` succeeds, run
   `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` and compare it with the
   baseline (exit 127, not installed). Otherwise record it as still unavailable — the
   scoped gate's diff check, focused tests, and full suite stand in, and the result
   is recorded on this line — verify: no `*.sh` in the diff.
+  Recorded 2026-10-07 at product `e8d5c14`: the diff lists 9 files — the two agent
+  files, `delivery-policy.instructions.md`, `agento-init.prompt.md`,
+  `install-skills.prompt.md`, `CHANGELOG.md`, `commands/agento-init.md`,
+  `commands/install-skills.md`, `tests/customizations.test.mjs` — and **0** `*.sh`.
+  `command -v shellcheck` fails: still unavailable, same as the baseline. Focused
+  tests (32/32), the full suite (288/288, step 3.1), and `get_errors` on both agent
+  files (no diagnostics, step 2.1) stand in.
 - [ ] 3.4 (manual) In the VS Code window open on this branch's worktree, start a
   **new** chat and pick the 📋 Agento Planner from the agent picker. Send: "Ask me one
   clarifying question about adding a README badge using your ask-questions tool,
