@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-review
 branch: issue/planner-ask-questions-tool
 last-updated: 2026-10-07
-next-step: "3.4 (manual) Screenshot the question carousel from a new 📋 Agento Planner chat"
+next-step: ""
 github-issue: "#90"
 artifact-pr: "#28"
 ```
@@ -105,10 +105,19 @@ artifact-pr: "#28"
   `command -v shellcheck` fails: still unavailable, same as the baseline. Focused
   tests (32/32), the full suite (288/288, step 3.1), and `get_errors` on both agent
   files (no diagnostics, step 2.1) stand in.
-- [ ] 3.4 (manual) In the VS Code window open on this branch's worktree, start a
+- [x] 3.4 (manual) In the VS Code window open on this branch's worktree, start a
   **new** chat and pick the 📋 Agento Planner from the agent picker. Send: "Ask me one
   clarifying question about adding a README badge using your ask-questions tool,
   then stop without writing anything." Screenshot the question carousel, showing
   the option marked recommended, and attach it — verify: the screenshot is saved as
   `evidence/step-3-4-planner-carousel.png`, linked here, and dated. It shows the
   carousel, not a numbered list, with one option marked recommended.
+  Completed 2026-10-07 00:36 by the user:
+  [evidence/step-3-4-planner-carousel.png](evidence/step-3-4-planner-carousel.png).
+  A fresh chat with 📋 Agento Planner selected (Claude Opus 5.5). The message sent
+  was "Ask me one clarifying question about adding a README badge using your
+  ask-questions tool". The chat shows "Asking a question (README badge type)" and the
+  VS Code question carousel "Which badge should be added to the README?" with
+  options 1 CI build status (pre-selected, the recommended default), 2 License,
+  3 Latest release, 4 custom answer, and Submit. It is the carousel, not a numbered
+  list, and no secrets are visible.

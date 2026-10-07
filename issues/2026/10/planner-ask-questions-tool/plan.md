@@ -283,3 +283,52 @@ Files touched (product): `.github/agents/delivery-planner.agent.md`,
   the question carousel with one option marked recommended. Screenshot at
   `evidence/step-3-4-planner-carousel.png`.
 - [ ] `CHANGELOG.md` `## Unreleased` has a `**Fixed.**` entry referencing #90.
+
+## Resolution
+
+Root cause:
+
+- VS Code gives a custom agent only the tools in its `tools:` list. The 📋 Agento
+  Planner and 🏛️ Agento Architect declared `Needs: … ask-questions …`, but neither
+  `tools:` list held `vscode/askQuestions`, and no alias covers it. Both agents
+  always took the §10 numbered-list fallback.
+- No test checked that a declared `ask-questions` need is backed by the tool. No
+  policy rule asked for a recommended choice.
+
+What changed and why (product commits on `issue/planner-ask-questions-tool`):
+
+- `.github/agents/delivery-planner.agent.md` and
+  `.github/agents/initiative-architect.agent.md` list `vscode/askQuestions` in
+  `tools:`. This brings back the question carousel.
+- `delivery-policy.instructions.md` §10 names `vscode/askQuestions` in the
+  `ask-questions` vocabulary bullet. It adds the `**Recommended choice.**` paragraph:
+  - every question offers 2–4 options, exactly one recommended
+  - with the tool, that option is listed first with `recommended: true`
+  - in the fallback, options are lettered and the recommended one is bold and
+    suffixed `(recommended)` with a one-line reason
+  - answers are retained verbatim
+  - the `ask-questions` fallback bullet points to the paragraph
+- Planner step 2, Architect step 3, and every "ask-questions tool" sentence in
+  `agento-init` and `install-skills` cite `§10 recommended choice`. The
+  `commands/` mirrors are byte-identical copies.
+- `tests/customizations.test.mjs` adds two regression tests named
+  `(#90 planner-ask-questions-tool)`: tool backing for every `ask-questions` need,
+  and the §10 rule with its citations.
+- `CHANGELOG.md` `## Unreleased` has a `**Fixed.** … (#90)` entry.
+
+Proof the exposing tests now pass:
+
+- Before the fix (product `6df9e2c`, roadmap 1.3):
+  `node --test tests/customizations.test.mjs` exit 1, 30/32. Only the two #90 tests
+  failed.
+- After the fix (product `e8d5c14`):
+  - focused run exit 0, 32/32
+  - full suite `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0,
+    288/288 (286 baseline + 2)
+  - both guard smokes exit 0
+  - no `*.sh` in the diff (roadmap 3.1–3.3, re-run on 2026-10-07 during the
+    Builder audit with the same results)
+- Live: a fresh 📋 Agento Planner chat showed the VS Code question carousel with the
+  recommended option pre-selected:
+  [evidence/step-3-4-planner-carousel.png](evidence/step-3-4-planner-carousel.png).
+  See roadmap 3.4.
