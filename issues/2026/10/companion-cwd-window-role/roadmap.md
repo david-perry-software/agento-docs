@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: issue/companion-cwd-window-role
 last-updated: 2026-10-07
-next-step: "review"
+next-step: ""
 github-issue: "#92"
 artifact-pr: "#29"
 ```
