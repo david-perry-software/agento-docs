@@ -2,14 +2,14 @@
 status: in-progress
 branch: issue/planner-ask-questions-tool
 last-updated: 2026-10-07
-next-step: "1.1 Add the tool-backing regression test (#90 planner-ask-questions-tool)"
+next-step: "1.2 Add the recommended-choice regression test (#90 planner-ask-questions-tool)"
 github-issue: "#90"
 artifact-pr: "#28"
 ```
 
 ## Phase 1: Exposing regression tests
 
-- [ ] 1.1 Add to `tests/customizations.test.mjs` the test `every agent or tool-restricted
+- [x] 1.1 Add to `tests/customizations.test.mjs` the test `every agent or tool-restricted
   prompt that needs ask-questions lists vscode/askQuestions (#90
   planner-ask-questions-tool)`:
   - Define a constant `ASK_QUESTIONS_TOOL = "vscode/askQuestions"`.
