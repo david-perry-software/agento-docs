@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/planner-ask-questions-tool
 last-updated: 2026-10-07
-next-step: "3.1 Run the full suite and record the counts"
+next-step: "3.2 Run both guard smokes"
 github-issue: "#90"
 artifact-pr: "#28"
 ```
@@ -79,9 +79,12 @@ artifact-pr: "#28"
 
 ## Phase 3: Verification
 
-- [ ] 3.1 Run the full suite, `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`,
+- [x] 3.1 Run the full suite, `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`,
   and record the counts — verify: exit 0, and `# pass` equals 286 plus the new
   tests, with `# fail 0`.
+  Recorded 2026-10-07 at product `e8d5c14`: exit **0**, `# tests 288 / # pass 288 /
+  # fail 0` (286 baseline + the 2 #90 tests); focused
+  `node --test tests/customizations.test.mjs` exit 0, 32/32.
 - [ ] 3.2 Run both guard smokes,
   `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` and
   `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`
