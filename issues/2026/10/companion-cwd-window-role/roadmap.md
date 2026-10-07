@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/companion-cwd-window-role
 last-updated: 2026-10-07
-next-step: "2.2 Correct the codified clone.role assertion and recopy the CLI bundle"
+next-step: "2.3 Rerun the reproduction with this branch's CLI and capture after-logs"
 github-issue: "#92"
 artifact-pr: "#29"
 ```
@@ -34,7 +34,7 @@ artifact-pr: "#29"
   - `grep -n 'deriveRole({ cwd: startDir' scripts/agento.mjs` prints nothing;
   - `grep -c 'cwd: roleCwd' scripts/agento.mjs` prints `3`;
   - `git diff --stat -- scripts/session-state.mjs` is empty.
-- [ ] 2.2 In the existing test "session from a companion half anchors on the product primary and matches the product half", change `assert.equal(clone.role, "unmanaged")` to `"primary"` and update the comment above it ("clone → primary, anchored on the product primary"). Leave `list[2].role` as `"unmanaged"`. Then run `cd extension && npm run copy-cli`. — verify:
+- [x] 2.2 In the existing test "session from a companion half anchors on the product primary and matches the product half", change `assert.equal(clone.role, "unmanaged")` to `"primary"` and update the comment above it ("clone → primary, anchored on the product primary"). Leave `list[2].role` as `"unmanaged"`. Then run `cd extension && npm run copy-cli`. — verify:
   - `node --test scripts/agento.test.mjs tests/extension-bundle.test.mjs` exits 0 with `# fail 0`, and the step 1.1 #92 test is `ok`;
   - `cmp scripts/agento.mjs extension/cli/agento.mjs` exits 0;
   - `git diff -U0 -- scripts/agento.test.mjs` shows, outside the new test, only the `clone.role` line and its comment.
