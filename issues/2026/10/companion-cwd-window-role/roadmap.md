@@ -2,14 +2,14 @@
 status: in-progress
 branch: issue/companion-cwd-window-role
 last-updated: 2026-10-07
-next-step: "1.1 Add the exposing #92 regression test and verify it fails"
+next-step: "2.1 Fix the role anchor in scripts/agento.mjs (roleCwd)"
 github-issue: "#92"
 artifact-pr: "#29"
 ```
 
 ## Phase 1: Expose the defect
 
-- [ ] 1.1 Add a new `test(...)` to `scripts/agento.test.mjs`. Put it directly after the test "session from a companion half anchors on the product primary and matches the product half", and name it `session, next, and doctor from the companion clone describe the product primary (#92 companion-cwd-window-role)`. The test does the following:
+- [x] 1.1 Add a new `test(...)` to `scripts/agento.test.mjs`. Put it directly after the test "session from a companion half anchors on the product primary and matches the product half", and name it `session, next, and doctor from the companion clone describe the product primary (#92 companion-cwd-window-role)`. The test does the following:
   - Calls `makePairRepo()`, then `fs.mkdirSync(path.join(docs, "features"), { recursive: true })`.
   - Sets `primary = run(repo, "session").json`. Asserts that `run(docs, "session")` and `run(path.join(docs, "features"), "session")` each give `role === "primary"`, `worktree.path === repo`, `strip(record)` deep-equal to `strip(primary)`, and `warnings[0]` matching `/^anchored-from-companion: /`.
   - Asserts that `run(docs, "next")` has `code === 0`, `json.role === "primary"`, and `json.status` and `json.next` deep-equal to those of `run(repo, "next")`.
