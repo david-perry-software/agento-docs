@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: issue/companion-cwd-window-role
 last-updated: 2026-10-07
 next-step: "1.1 Add the exposing #92 regression test and verify it fails"
