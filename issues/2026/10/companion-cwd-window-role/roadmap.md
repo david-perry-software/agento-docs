@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/companion-cwd-window-role
 last-updated: 2026-10-07
-next-step: "2.1 Fix the role anchor in scripts/agento.mjs (roleCwd)"
+next-step: "2.2 Correct the codified clone.role assertion and recopy the CLI bundle"
 github-issue: "#92"
 artifact-pr: "#29"
 ```
@@ -23,7 +23,7 @@ artifact-pr: "#29"
 
 ## Phase 2: Fix the role anchor
 
-- [ ] 2.1 Change only `scripts/agento.mjs`:
+- [x] 2.1 Change only `scripts/agento.mjs`:
   - `anchorRoot()` returns `fromClone: true` only on the single-match branch when the cwd is the clone itself (`samePath(clone, dir)`, not `looksLikeHalf`). Every other return gets `fromClone: false`.
   - Add `const roleCwd = anchor.fromClone ? root : startDir;` beside `const root = anchor.root;`.
   - Switch the three `deriveRole({ cwd: startDir, … })` calls (doctor `session-workspace`, `session`, `next`) to `cwd: roleCwd`.
