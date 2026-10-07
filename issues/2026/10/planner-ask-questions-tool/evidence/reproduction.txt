@@ -1,0 +1,17 @@
+# Reproduction 2026-10-07, product HEAD 42c420e, VS Code 1.136.0
+$ grep -n "^tools:" .github/agents/*.agent.md
+.github/agents/copilot-mechanic.agent.md:5:tools: [execute, read, agent, edit, search, web]
+.github/agents/delivery-autopilot.agent.md:5:tools: [execute, read, agent, search, browser]
+.github/agents/delivery-builder.agent.md:5:tools: [execute, read, agent, edit, search, browser]
+.github/agents/delivery-planner.agent.md:5:tools: [read, search, edit, execute, web, agent, browser]
+.github/agents/delivery-reviewer.agent.md:5:tools: [read, search, execute, edit, agent, browser]
+.github/agents/initiative-architect.agent.md:5:tools: [read, search, edit, execute, agent]
+
+$ grep -n "^Needs:.*ask-questions" .github/agents/*.agent.md
+.github/agents/delivery-planner.agent.md:16:Needs: terminal, ask-questions, gh, network
+.github/agents/initiative-architect.agent.md:11:Needs: terminal, ask-questions, gh, network
+
+$ check: every agent whose Needs: lists ask-questions has vscode/askQuestions in tools:
+FAIL delivery-planner.agent.md tools=[read, search, edit, execute, web, agent, browser]
+FAIL initiative-architect.agent.md tools=[read, search, edit, execute, agent]
+check exit=1
