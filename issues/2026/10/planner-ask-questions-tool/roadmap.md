@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: complete
 branch: issue/planner-ask-questions-tool
 last-updated: 2026-10-07
 next-step: ""
