@@ -1,0 +1,14 @@
+# VS Code 1.136.0 workbench.desktop.main.js excerpts (askQuestions tool), captured 2026-10-07
+
+## Loi="vscode_askQuestions"
+urn o!==void 0&&o.kind!=="transient"}var Doi="The user is not available to respond and will review your work later. Work autonomously and make good decisions.",Loi="vscode_askQuestions",Roi={header:50,question:200},Ttr={header:75};function Dtr(s,o){if(s!==void 0)return s.length>o?s.slice(0,o-3)+"...":s}function Rtr(){let o={type:"object",properties:{questions:{type:"array",description:"List of questions to ask the us
+
+## recommended:{type:"boolean"
+:{type:"string",description:"Display label and value for the option."},description:{type:"string",description:"Optional secondary text shown with the option."},recommended:{type:"boolean",description:"Mark this option as the recommended default."}},required:["label"]}}},required:["header","question"]},minItems:1}},required:["questions"]};return{id:Loi,toolReferenceName:"askQuestions",legacyToolReferenceFullNames:[Loi
+
+## toolReferenceName:"askQuestions"
+ption:"Mark this option as the recommended default."}},required:["label"]}}},required:["header","question"]},minItems:1}},required:["questions"]};return{id:Loi,toolReferenceName:"askQuestions",legacyToolReferenceFullNames:[Loi,"vscode/askQuestions"],canBeReferencedInPrompt:!1,icon:j.fromId(M.question.id),displayName:d(13513,null),userDescription:d(13514,null),modelDescription:"Use this tool to ask the user a small nu
+
+## toolEquivalent:["vscode/askQuestions"]
+null),toolEquivalent:[]},{name:"NotebookEdit",description:d(13236,null),toolEquivalent:["edit/editNotebook"]},{name:"AskUserQuestion",description:d(13224,null),toolEquivalent:["vscode/askQuestions"]},{name:"MCPSearch",description:d(13232,null),toolEquivalent:[]}],G$t=[{name:"sonnet",description:d(13246,null),modelEquivalent:"Claude Sonnet 4.5 (copilot)"},{name:"opus",description:d(13237,null),modelEquivalent:"Claude 
+
