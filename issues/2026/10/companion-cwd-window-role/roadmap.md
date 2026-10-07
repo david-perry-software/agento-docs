@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/companion-cwd-window-role
 last-updated: 2026-10-07
-next-step: "3.1 Update docs/architecture.md and CHANGELOG.md"
+next-step: "3.2 Scoped gate against the plan.md baseline"
 github-issue: "#92"
 artifact-pr: "#29"
 ```
@@ -45,7 +45,7 @@ artifact-pr: "#29"
 
 ## Phase 3: Docs, gate, and publish
 
-- [ ] 3.1 Update the docs and changelog:
+- [x] 3.1 Update the docs and changelog:
   - In `docs/architecture.md` "Companion-cwd anchoring", add one sentence: from the companion clone itself (its root or any subdirectory, on any branch), `role` and `worktree` are the product primary's; from a half, they are the product half's; the clone's own `worktrees[]` entry stays `unmanaged`.
   - Add a **Fixed** bullet under `CHANGELOG.md` `## Unreleased` stating that `agento.mjs session`/`next` (the §11 window check) reported `role: unmanaged` and rejected every command when the terminal sat in the companion clone of a primary window, and now return the product primary's record with the `anchored-from-companion` warning (`#92`).
 
