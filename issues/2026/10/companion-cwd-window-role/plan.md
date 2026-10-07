@@ -267,4 +267,34 @@ Affected files: `scripts/agento.mjs`, `scripts/agento.test.mjs`,
 
 ## Resolution
 
-(written by the Builder at completion)
+Root cause: `anchorRoot()` already re-anchored `root` on the product primary when the
+cwd sat in the companion clone, but `session`, `next`, and the doctor
+`session-workspace` check passed the raw `startDir` to `deriveRole`. The companion
+clone has no case in `classifyByPath`, so the role fell through to `unmanaged`, with
+`allowed: []`.
+
+What changed (`scripts/agento.mjs` only, recopied to `extension/cli/agento.mjs`):
+
+- `anchorRoot()` returns `fromClone: true` only on the single-match branch when the
+  toplevel is the companion clone itself (not a half); every other return is
+  `fromClone: false`.
+- `const roleCwd = anchor.fromClone ? root : startDir;` sits beside `root`, and the
+  three `deriveRole` callers use `cwd: roleCwd`. Halves, product worktrees, and
+  subdirectories keep using `startDir`. `session-state.mjs`, `classifyWorktrees`, and
+  the `anchored-from-companion` warning text are unchanged; the clone's own
+  `worktrees[]` entry stays `unmanaged`.
+- The existing pair test's `clone.role` assertion moved from `"unmanaged"` to
+  `"primary"`; `docs/architecture.md` and `CHANGELOG.md` record the rule.
+
+Proof:
+
+- The step 1.1 test `session, next, and doctor from the companion clone describe the
+  product primary (#92 companion-cwd-window-role)` failed before the fix (exit 1, the
+  only `not ok`, `'unmanaged'` vs `'primary'`) and passes after it (step 2.2: 92
+  tests, `# fail 0`; step 3.2: the full suite).
+- The step 2.3 logs, run from this repository's real pair:
+  [after-session-from-companion-clone.txt](evidence/after-session-from-companion-clone.txt),
+  [after-session-from-companion-subdir.txt](evidence/after-session-from-companion-subdir.txt),
+  and [after-next-from-companion-clone.txt](evidence/after-next-from-companion-clone.txt)
+  show `role: "primary"`, `worktree.path: /home/david/DP/agento`, the primary's six
+  `allowed[]` commands, the kept `anchored-from-companion` warning, and `exit=0`.

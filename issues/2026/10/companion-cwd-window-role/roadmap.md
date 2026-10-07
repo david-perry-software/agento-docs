@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: issue/companion-cwd-window-role
 last-updated: 2026-10-07
-next-step: "3.3 Integrate, publish, write Resolution, set in-review"
+next-step: "review"
 github-issue: "#92"
 artifact-pr: "#29"
 ```
@@ -66,7 +66,7 @@ artifact-pr: "#29"
   - the diff lists exactly `CHANGELOG.md`, `docs/architecture.md`, `extension/cli/agento.mjs`, `scripts/agento.mjs`, and `scripts/agento.test.mjs`, with no shell file.
 
   Result (2026-10-07, product HEAD after 3.1): `node --check` exit 0; suite exit 0, `# tests 289`, `# pass 289`, `# fail 0`; guard smoke exit 0; companion guard smoke exit 0; shellcheck exit 127 (`command not found`, same as baseline); diff = exactly the five planned files, no shell file.
-- [ ] 3.3 Integrate and publish:
+- [x] 3.3 Integrate and publish:
   - Run `git merge origin/main` in the product half and `git -C <companion.path> merge origin/main` in the companion half. Never rebase.
   - Push both.
   - Write plan.md `## Resolution`: the root cause, the `roleCwd` change, and the step 1.1 test and step 2.3 logs proving the fix.
