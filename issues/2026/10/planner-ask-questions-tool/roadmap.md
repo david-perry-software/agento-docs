@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/planner-ask-questions-tool
 last-updated: 2026-10-07
-next-step: "1.3 Record the exposing run"
+next-step: "2.1 Add vscode/askQuestions to the Planner and Architect tools: lines"
 github-issue: "#90"
 artifact-pr: "#28"
 ```
@@ -30,9 +30,21 @@ artifact-pr: "#28"
 
   — verify: `node --test tests/customizations.test.mjs` exits nonzero, and the new
   test fails on the missing §10 paragraph.
-- [ ] 1.3 Record the exposing run on this line: failing test names, assertion
+- [x] 1.3 Record the exposing run on this line: failing test names, assertion
   messages, and the pass/fail counts — verify: the run's captured status is nonzero,
   only the two #90 tests fail, and every pre-existing test still passes.
+  Recorded 2026-10-07 at product `6df9e2c` (fix not yet applied):
+  `node --test tests/customizations.test.mjs` exit **1**, `# tests 32 / # pass 30 /
+  # fail 2`; all 30 pre-existing tests pass.
+  - `not ok 16 - every agent or tool-restricted prompt that needs ask-questions lists
+    vscode/askQuestions (#90 planner-ask-questions-tool)`: "files that need
+    ask-questions but do not list vscode/askQuestions in tools:" →
+    `delivery-planner.agent.md tools=[read, search, edit, execute, web, agent,
+    browser]`, `initiative-architect.agent.md tools=[read, search, edit, execute,
+    agent]`.
+  - `not ok 17 - ask-questions clarification always offers a §10 recommended choice
+    (#90 planner-ask-questions-tool)`: "delivery-policy §10 must define a
+    **Recommended choice.** paragraph".
 
 ## Phase 2: Fix
 
