@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/planner-ask-questions-tool
 last-updated: 2026-10-07
-next-step: "1.2 Add the recommended-choice regression test (#90 planner-ask-questions-tool)"
+next-step: "1.3 Record the exposing run"
 github-issue: "#90"
 artifact-pr: "#28"
 ```
@@ -20,7 +20,7 @@ artifact-pr: "#28"
 
   — verify: `node --test tests/customizations.test.mjs` exits nonzero, and the
   failure names `delivery-planner.agent.md` and `initiative-architect.agent.md`.
-- [ ] 1.2 Add the test `ask-questions clarification always offers a §10 recommended
+- [x] 1.2 Add the test `ask-questions clarification always offers a §10 recommended
   choice (#90 planner-ask-questions-tool)`:
   - §10 of `delivery-policy.instructions.md` contains a `**Recommended choice.**`
     paragraph that mentions `recommended: true` and `(recommended)`.
