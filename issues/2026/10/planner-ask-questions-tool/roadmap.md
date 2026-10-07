@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/planner-ask-questions-tool
 last-updated: 2026-10-07
-next-step: "2.3 Cite the §10 recommended choice in the Planner, Architect, agento-init, and install-skills"
+next-step: "2.4 Add the CHANGELOG Fixed entry (#90)"
 github-issue: "#90"
 artifact-pr: "#28"
 ```
@@ -67,7 +67,7 @@ artifact-pr: "#28"
 
   — verify: the §10 part of the 1.2 test passes, and the existing "Needs: and
   Fallback: from the §10 vocabulary" test still passes.
-- [ ] 2.3 Cite `§10 recommended choice` in Planner step 2 and Architect step 3, and
+- [x] 2.3 Cite `§10 recommended choice` in Planner step 2 and Architect step 3, and
   in every "ask-questions tool" sentence of `.github/prompts/agento-init.prompt.md`
   and `.github/prompts/install-skills.prompt.md`. Then copy those two prompts
   byte-for-byte to `commands/agento-init.md` and `commands/install-skills.md` —
