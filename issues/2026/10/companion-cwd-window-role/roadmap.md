@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/companion-cwd-window-role
 last-updated: 2026-10-07
-next-step: "3.2 Scoped gate against the plan.md baseline"
+next-step: "3.3 Integrate, publish, write Resolution, set in-review"
 github-issue: "#92"
 artifact-pr: "#29"
 ```
@@ -50,7 +50,7 @@ artifact-pr: "#29"
   - Add a **Fixed** bullet under `CHANGELOG.md` `## Unreleased` stating that `agento.mjs session`/`next` (the §11 window check) reported `role: unmanaged` and rejected every command when the terminal sat in the companion clone of a primary window, and now return the product primary's record with the `anchored-from-companion` warning (`#92`).
 
   — verify: `grep -n '#92' CHANGELOG.md` hits one line under `## Unreleased`, and `grep -n 'companion clone itself' docs/architecture.md` hits one line.
-- [ ] 3.2 Scoped gate against the plan.md `## Research` baseline (288 tests, guard 0, shellcheck exit 127 absent). Run:
+- [x] 3.2 Scoped gate against the plan.md `## Research` baseline (288 tests, guard 0, shellcheck exit 127 absent). Run:
   - `node --check scripts/agento.mjs scripts/agento.test.mjs extension/cli/agento.mjs`;
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`;
   - `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`;
@@ -64,6 +64,8 @@ artifact-pr: "#29"
   - both guard smokes exit 0;
   - shellcheck exits 0 with no findings, or exits 127 as in the baseline;
   - the diff lists exactly `CHANGELOG.md`, `docs/architecture.md`, `extension/cli/agento.mjs`, `scripts/agento.mjs`, and `scripts/agento.test.mjs`, with no shell file.
+
+  Result (2026-10-07, product HEAD after 3.1): `node --check` exit 0; suite exit 0, `# tests 289`, `# pass 289`, `# fail 0`; guard smoke exit 0; companion guard smoke exit 0; shellcheck exit 127 (`command not found`, same as baseline); diff = exactly the five planned files, no shell file.
 - [ ] 3.3 Integrate and publish:
   - Run `git merge origin/main` in the product half and `git -C <companion.path> merge origin/main` in the companion half. Never rebase.
   - Push both.
