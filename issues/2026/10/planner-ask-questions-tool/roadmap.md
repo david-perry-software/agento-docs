@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: issue/planner-ask-questions-tool
 last-updated: 2026-10-07
 next-step: "1.1 Add the tool-backing regression test (#90 planner-ask-questions-tool)"
