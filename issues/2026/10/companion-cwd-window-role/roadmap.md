@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/companion-cwd-window-role
 last-updated: 2026-10-07
-next-step: "2.3 Rerun the reproduction with this branch's CLI and capture after-logs"
+next-step: "3.1 Update docs/architecture.md and CHANGELOG.md"
 github-issue: "#92"
 artifact-pr: "#29"
 ```
@@ -38,7 +38,7 @@ artifact-pr: "#29"
   - `node --test scripts/agento.test.mjs tests/extension-bundle.test.mjs` exits 0 with `# fail 0`, and the step 1.1 #92 test is `ok`;
   - `cmp scripts/agento.mjs extension/cli/agento.mjs` exits 0;
   - `git diff -U0 -- scripts/agento.test.mjs` shows, outside the new test, only the `clone.role` line and its comment.
-- [ ] 2.3 Rerun the reproduction with this branch's CLI. Write the outputs as `evidence/after-session-from-companion-clone.txt`, `evidence/after-session-from-companion-subdir.txt`, and `evidence/after-next-from-companion-clone.txt` in the companion half's issue directory, using the same command header format as the "before" logs. — verify (from `/home/david/DP/agento-docs`, `/home/david/DP/agento-docs/features`, and `/home/david/DP/agento-docs` for `next`):
+- [x] 2.3 Rerun the reproduction with this branch's CLI. Write the outputs as [`evidence/after-session-from-companion-clone.txt`](evidence/after-session-from-companion-clone.txt), [`evidence/after-session-from-companion-subdir.txt`](evidence/after-session-from-companion-subdir.txt), and [`evidence/after-next-from-companion-clone.txt`](evidence/after-next-from-companion-clone.txt) in the companion half's issue directory, using the same command header format as the "before" logs. — verify (from `/home/david/DP/agento-docs`, `/home/david/DP/agento-docs/features`, and `/home/david/DP/agento-docs` for `next`):
   - each log shows `"role": "primary"` at the top level, `worktree.path` `/home/david/DP/agento`, and the `allowed[]` of `evidence/session-from-product-primary.txt`;
   - the `next` log ends `exit=0`;
   - the `anchored-from-companion` warning is still present.

@@ -1,0 +1,36 @@
+$ cd /home/david/DP/agento-docs && node scripts/agento.mjs next   # CLI from /home/david/DP/agento-worktrees/plan-20261007-045607 at fe24168
+{
+  "status": "ok",
+  "role": "primary",
+  "lifecycle": "no-delivery",
+  "slug": "companion-cwd-window-role",
+  "type": "issue",
+  "artifactPr": "#29",
+  "layout": "checkout",
+  "artifactsRoot": "/home/david/DP/agento-docs",
+  "next": {
+    "command": "start-session",
+    "args": [
+      "issue/companion-cwd-window-role",
+      "--resume"
+    ],
+    "invocation": "/agento start-session issue/companion-cwd-window-role --resume",
+    "window": "here",
+    "then": "/agento continue companion-cwd-window-role",
+    "reason": "issue/companion-cwd-window-role is in-progress: reopen its worktree window, then continue there",
+    "target": null
+  },
+  "candidates": [],
+  "reviewFresh": null,
+  "dispatch": {
+    "prompt": "/home/david/DP/agento-worktrees/plan-20261007-045607/commands/start-session.md",
+    "agent": null
+  },
+  "warnings": [
+    "anchored-from-companion: /home/david/DP/agento-docs is a companion checkout of /home/david/DP/agento; the record describes /home/david/DP/agento"
+  ],
+  "reason": "issue/companion-cwd-window-role is in-progress: reopen its worktree window, then continue there",
+  "root": "/home/david/DP/agento",
+  "configSource": "/home/david/DP/agento/.github/agento.json"
+}
+exit=0
