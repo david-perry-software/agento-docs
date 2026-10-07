@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/planner-ask-questions-tool
 last-updated: 2026-10-07
-next-step: "2.2 Add the §10 recommended-choice rule to delivery-policy"
+next-step: "2.3 Cite the §10 recommended choice in the Planner, Architect, agento-init, and install-skills"
 github-issue: "#90"
 artifact-pr: "#28"
 ```
@@ -53,7 +53,7 @@ artifact-pr: "#28"
   `.github/agents/initiative-architect.agent.md`. Nothing else in the frontmatter
   changes — verify: the 1.1 test passes, and VS Code diagnostics (`get_errors`) for
   both files report no unknown-tool warning.
-- [ ] 2.2 In `.github/instructions/delivery-policy.instructions.md` §10:
+- [x] 2.2 In `.github/instructions/delivery-policy.instructions.md` §10:
   - Reword the `ask-questions` vocabulary bullet to name `vscode/askQuestions`, in
     the same ``- `ask-questions` — `` shape.
   - Add the `**Recommended choice.**` paragraph after the standard fallbacks. Every
