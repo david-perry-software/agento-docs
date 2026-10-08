@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: feature/status-colors
 last-updated: 2026-10-08
-next-step: "4.4 (manual) Install the packaged VSIX in your own VS Code and screenshot the tinted icons in all three views and the status bar"
+next-step: "Every step ticked; set status: in-review and hand off to /agento review-feature status-colors"
 artifact-pr: "#34"
 ```
 
@@ -51,12 +51,12 @@ artifact-pr: "#34"
   Target: local electron test host, no ports — verify: `cd extension && npm run build && npm run test:electron` exit 0 in all scenarios — done 2026-10-08: build 0, test:electron exit 0, 3/3 scenarios (in-repo, companion, workspace); also asserts the empty/error rows, invalid initiative and its diagnostic, Session `Lifecycle`/Warning rows, the Doctor `pulse` group, and the error-model status bar (`statusBarItem.errorBackground`)
 - [x] 4.2 In `docs/extension.md`, add a "Status colors" section with the mapping table, the `workbench.colorCustomizations` override example, and the note that the status bar background (doctor warn/fail) overrides the lifecycle color. Add a `CHANGELOG.md` `## Unreleased` entry — verify: `grep -n "agento.status.paused" docs/extension.md` and `grep -n -i "status colors" CHANGELOG.md` both match — done 2026-10-08: both greps exit 0 (`docs/extension.md` lines 83 and 109; `CHANGELOG.md` line 5)
 - [x] 4.3 Package the extension for the manual check with `cd extension && npm run package`, and name the produced `.vsix` absolute path on this line. The `.vsix` is a gitignored byproduct: delete it after 4.4 and never commit it — verify: `npm run package` exit 0 and the named file exists — done 2026-10-08 at product `bacc2a1`: `npm run package` exit 0 (40 files, 94.49 KB; VSIX archive assertion passed), file exists at `/home/david/DP/agento-worktrees/plan-20261008-202650/extension/agento-dashboard-0.7.0.vsix` (gitignored; delete after 4.4)
-- [ ] 4.4 (manual) In your own VS Code:
+- [x] 4.4 (manual) In your own VS Code:
   1. Extensions view → `…` → *Install from VSIX…*, select the `.vsix` named in 4.3, and reload the window.
   2. Open the Agento activity-bar container and expand groups in Deliveries, Initiatives, and Session & Doctor.
   3. Take a screenshot showing colored status icons in all three views and the colored status bar item, with no secrets visible.
 
-  — verify: the screenshot is saved as `evidence/step-4-4-status-colors.png`, linked on this line, and shows tinted icons in all three views
+  — verify: the screenshot is saved as `evidence/step-4-4-status-colors.png`, linked on this line, and shows tinted icons in all three views — done 2026-10-08: the agent installed the VSIX with `code --install-extension extension/agento-dashboard-0.7.0.vsix --force` (listed as `david-perry-software.agento-dashboard@0.7.0`); the user reloaded the window, expanded the views, and took the screenshot. Evidence: [evidence/step-4-4-status-colors.png](evidence/step-4-4-status-colors.png). It shows Deliveries with the Paused group (orange `debug-pause`) and its orange leaf, and the Shipped group (green `pass-filled`) with green `git-pull-request` leaves; Initiatives with the Completed (3) `archive` folder, done initiatives with tinted `type-hierarchy`, and green Complete groups; Session & Doctor with the `Lifecycle` row's orange pause glyph; and the orange status bar item `Agento: build · 1 active`. No secrets visible. The gitignored `.vsix` byproduct was deleted afterwards, never committed
 
 ## Phase 5: Verification
 
@@ -68,4 +68,4 @@ artifact-pr: "#34"
   - `cd extension && npm run typecheck && npm run build && npm run test:unit && npm run test:electron`
   - `node --test tests/extension-bundle.test.mjs`
 
-  — verify: all commands exit 0; shellcheck has no findings; node ≥ 340; unit ≥ 128 with every new case attributed to this delivery; `git status --porcelain --untracked-files=all` is empty in both halves — done 2026-10-08 at product `bacc2a1`, run before 4.3/4.4 so automated work finishes ahead of the manual step (`origin/main` `f3944be` already an ancestor of both halves; nothing to merge): shellcheck exit 0, no findings (baseline: same); node 340/340 exit 0 (baseline 340); guard smoke exit 0; companion guard smoke exit 0; extension typecheck 0, build 0, unit 139/139 exit 0 (baseline 128; +11 from this delivery: 8 in `statusStyle.test.ts`, 2 in `initiativeTreeProvider.test.ts`, 1 in `sessionDoctorModel.test.ts`), test:electron exit 0, 3/3 scenarios (baseline 3/3); `tests/extension-bundle.test.mjs` 4/4 exit 0; both halves clean. Re-run before `status: in-review` if `origin/main` advances or 4.4 changes code
+  — verify: all commands exit 0; shellcheck has no findings; node ≥ 340; unit ≥ 128 with every new case attributed to this delivery; `git status --porcelain --untracked-files=all` is empty in both halves — done 2026-10-08 at product `bacc2a1`, run before 4.3/4.4 so automated work finishes ahead of the manual step (`origin/main` `f3944be` already an ancestor of both halves; nothing to merge): shellcheck exit 0, no findings (baseline: same); node 340/340 exit 0 (baseline 340); guard smoke exit 0; companion guard smoke exit 0; extension typecheck 0, build 0, unit 139/139 exit 0 (baseline 128; +11 from this delivery: 8 in `statusStyle.test.ts`, 2 in `initiativeTreeProvider.test.ts`, 1 in `sessionDoctorModel.test.ts`), test:electron exit 0, 3/3 scenarios (baseline 3/3); `tests/extension-bundle.test.mjs` 4/4 exit 0; both halves clean. Re-run before `status: in-review` if `origin/main` advances or 4.4 changes code. Rechecked 2026-10-08 after 4.4: the result still stands. Product HEAD is still `bacc2a1`, 4.4 changed no code, and `origin/main` is still `f3944be` (product) and `be8997e` (companion), both ancestors of their halves. A spot-check `npm run test:unit` gave 139/139, exit 0
