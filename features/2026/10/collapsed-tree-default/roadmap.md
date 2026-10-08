@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/collapsed-tree-default
 last-updated: 2026-10-08
-next-step: "Review: /agento review-feature collapsed-tree-default"
+next-step: ""
 artifact-pr: "#32"
 ```
 
