@@ -1,0 +1,29 @@
+```yaml
+status: planned
+branch: feature/collapsed-tree-default
+last-updated: 2026-10-08
+next-step: "1.1 Install extension dependencies and record the extension baseline"
+```
+
+## Phase 1: Baseline
+
+- [ ] 1.1 Install extension dependencies and record the extension baseline: `cd extension && npm ci`, then `npm run build`, `npm run test:unit` (pass count), `npm run test:electron`; record exit codes and counts on this line next to the planning baseline (shellcheck via `git ls-files '*.sh' | xargs pnpm dlx shellcheck` exit 0 no findings; node tests 340/340; build exit 0; unit 119/119); a red extension baseline triggers the §5 overlap reassessment before continuing — verify: the results are recorded here and `git status --porcelain --untracked-files=all` is empty
+
+## Phase 2: Collapsed groups with per-window stable ids
+
+- [ ] 2.1 Add `extension/src/treeItemIds.ts` exporting `createTreeIdScope(nonce = randomUUID())` returning `(...parts) => "agento:<nonce>:<parts joined by '/'>"`, with `extension/test/unit/treeItemIds.test.ts` (same scope → identical ids; two scopes → different ids; format) — verify: `cd extension && npm run build && npm run test:unit` exit 0
+- [ ] 2.2 Deliveries: `DeliveryTreeProvider(roadmapRoot, treeId)`; lifecycle groups use `TreeItemCollapsibleState.Collapsed` and `id = treeId("deliveries", "group", lifecycle)`; leaves and messages unchanged — verify: `cd extension && npm run build && npm run test:unit` exit 0
+- [ ] 2.3 Initiatives: `InitiativeTreeItemSpec.collapsible` → `"none" | "collapsed"`, initiative and group specs return `"collapsed"` with `idParts` `["initiative", slug]` / `["group", initiativeSlug, kind]`; `InitiativeTreeProvider(artifactRoot, treeId)` maps `"collapsed"` → `Collapsed` and sets `id = treeId("initiatives", ...idParts)`; extend `initiativeTreeProvider.test.ts` for the collapsed/idParts specs and `"none"` without `idParts` for members, diagnostics, and messages — verify: `cd extension && npm run build && npm run test:unit` exit 0
+- [ ] 2.4 Session & Doctor: `SessionDoctorProvider(treeId)`; groups use `Collapsed` and `id = treeId("sessionDoctor", "group", element.id)` — verify: `cd extension && npm run build && npm run test:unit` exit 0
+- [ ] 2.5 `extension/src/extension.ts`: create one `createTreeIdScope()` in `activate()` and pass it to all three providers; add an `extensionIntegration.test.ts` source-shape assertion that the scope is created once and handed to each constructor — verify: `cd extension && npm run build && npm run test:unit` exit 0 and `grep -rn "Expanded\|\"expanded\"" extension/src` prints nothing
+
+## Phase 3: Integration evidence and docs
+
+- [ ] 3.1 `extension/test/electron/suite.ts`: assert every Deliveries group, initiative, initiative group, and Session & Doctor group reports `collapsibleState === vscode.TreeItemCollapsibleState.Collapsed` and an `id` starting with `agento:`; assert delivery and member leaves stay `None`; capture the initiative `ready` group id before the existing completed-member refresh and assert the same id afterwards (label `Ready (1)` → `Ready (2)`) — verify: `cd extension && npm run build && npm run test:electron` exit 0 in all scenarios
+- [ ] 3.2 `docs/extension.md`: state that Agento groups start collapsed in every new or reloaded window and keep the user's expansion while the window stays open; add a `CHANGELOG.md` `## Unreleased` entry — verify: `grep -n -i "collapsed" docs/extension.md CHANGELOG.md` matches both files
+- [ ] 3.3 Package the extension for the manual check: `cd extension && npm run package`, and name the produced `.vsix` absolute path on this line (the `.vsix` is a byproduct: delete it after 3.4, never commit it) — verify: `npm run package` exit 0 and the named file exists
+- [ ] 3.4 (manual) In your own VS Code: Extensions view → `…` → *Install from VSIX…* → select the `.vsix` named in 3.3; reload the window; open the Agento activity-bar container and expand at least one group in each of Deliveries, Initiatives, and Session & Doctor; run *Developer: Reload Window*; reopen the Agento container and take a screenshot showing every group collapsed (no secrets visible) — verify: screenshot saved as `evidence/step-3-4-collapsed-after-reload.png` and linked on this line, showing all three views with collapsed groups
+
+## Phase 4: Verification
+
+- [ ] 4.1 Full gate after merging `origin/main`: `git ls-files '*.sh' | xargs pnpm dlx shellcheck`, `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`, `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`, `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`, `cd extension && npm run build && npm run test:unit && npm run test:electron`, `node --test tests/extension-bundle.test.mjs`; record each result against the step 1.1 baseline on this line — verify: all exit 0, shellcheck no findings, node ≥ 340, unit ≥ 119 with every new case attributed to this delivery, and `git status --porcelain --untracked-files=all` empty in both halves
