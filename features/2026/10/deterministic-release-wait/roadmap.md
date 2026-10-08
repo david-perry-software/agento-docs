@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/deterministic-release-wait
 last-updated: 2026-10-07
-next-step: "4.3"
+next-step: "5.1"
 artifact-pr: "#31"
 ```
 
@@ -26,7 +26,7 @@ artifact-pr: "#31"
 
 - [x] 4.1 Rewrite the release-workflow bullet and step 4 (Report) of `.github/prompts/ship.prompt.md`, and copy the same bytes to `commands/ship.md`. Run `node <agento-root>/scripts/agento.mjs release <merge-sha> --wait 50` and rerun while it exits 2 with `verdict: pending`. On `dispatch-required`, first check for a `workflow_dispatch` run created after the merge date, then run `gh workflow run <workflow> --ref <default>` at most once and resolve again. Report `superseded-success` with both run URLs, and `not-triggered`/`not-configured` with their reason. Exit 4 is a resumable hard stop; exit 3 follows policy §1 — verify: `cmp .github/prompts/ship.prompt.md commands/ship.md` exit 0 and `node --test tests/customizations.test.mjs` exit 0
 - [x] 4.2 In `delivery-policy.instructions.md` §6, change the third bullet so CI waits use `wait-for-checks.sh` and deploy waits use `agento.mjs release <merge-sha> --wait N`, with every wait call at most 60 s and exit 2 meaning rerun. In `AGENTS.md`, list `release-state.mjs` on line 22 and name both bounded waits on line 66. Add an allow fixture to `tests/guard-fixtures.txt` for `node scripts/agento.mjs release abc1234 --wait 50` — verify: `node --test tests/customizations.test.mjs` exit 0, `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` exit 0, and `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt` exit 0
-- [ ] 4.3 Update the docs: the `checks.releaseWorkflow` row in `docs/project-profile.md` (verdicts, push and `paths-ignore` handling, superseded runs, dispatch for dispatch-only workflows); the CLI subcommand paragraph in `docs/commands.md` (`release` and its exit codes, also in the trailing exit-code sentence); `README.md` line 514; and one `CHANGELOG.md` `## Unreleased` entry covering `agento.mjs release` and the `wait-for-checks.sh` 60 s default and change-only poll lines — verify: `grep -n "agento.mjs release\|release <merge-sha>" docs/project-profile.md docs/commands.md README.md CHANGELOG.md` matches each file, and `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0
+- [x] 4.3 Update the docs: the `checks.releaseWorkflow` row in `docs/project-profile.md` (verdicts, push and `paths-ignore` handling, superseded runs, dispatch for dispatch-only workflows); the CLI subcommand paragraph in `docs/commands.md` (`release` and its exit codes, also in the trailing exit-code sentence); `README.md` line 514; and one `CHANGELOG.md` `## Unreleased` entry covering `agento.mjs release` and the `wait-for-checks.sh` 60 s default and change-only poll lines — verify: `grep -n "agento.mjs release\|release <merge-sha>" docs/project-profile.md docs/commands.md README.md CHANGELOG.md` matches each file, and `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0
 
 ## Phase 5: Verification
 
