@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/start-session-cli
 last-updated: 2026-10-07
-next-step: "3.1 Rewrite the start-session prompt as a thin CLI formatter"
+next-step: "3.2 customizations.test.mjs: start-session calls agento.mjs start-session"
 artifact-pr: "#30"
 ```
 
@@ -24,7 +24,7 @@ artifact-pr: "#30"
 
 ## Phase 3: Thin prompt
 
-- [ ] 3.1 Rewrite `.github/prompts/start-session.prompt.md` and copy it byte-for-byte to `commands/start-session.md`: keep frontmatter, `Needs: terminal, code`, `Fallback:`, the §10 pointer, and the window-check line; one call to `node <agento-root>/scripts/agento.mjs start-session <args>` (stating that it runs the window check and the `doctor --for start-session` checks itself); map `status`/`reason`/`allowed`/`elsewhere` to the §9 receipt, `preflight[]` to `Preflight:` lines, the report (paths, outcome, branch, workspace, `opened` or the `openCommand` code fallback, the dependency-install note, the reused-window note), `next` to §12 blocks, and the §9 result line; no step-by-step fallback (an unexpected CLI failure is `Result: failed` with the CLI reason, re-send resumes) — verify: `cmp commands/start-session.md .github/prompts/start-session.prompt.md` exit 0 and `wc -l < .github/prompts/start-session.prompt.md` well under the old 160
+- [x] 3.1 Rewrite `.github/prompts/start-session.prompt.md` and copy it byte-for-byte to `commands/start-session.md`: keep frontmatter, `Needs: terminal, code`, `Fallback:`, the §10 pointer, and the window-check line; one call to `node <agento-root>/scripts/agento.mjs start-session <args>` (stating that it runs the window check and the `doctor --for start-session` checks itself); map `status`/`reason`/`allowed`/`elsewhere` to the §9 receipt, `preflight[]` to `Preflight:` lines, the report (paths, outcome, branch, workspace, `opened` or the `openCommand` code fallback, the dependency-install note, the reused-window note), `next` to §12 blocks, and the §9 result line; no step-by-step fallback (an unexpected CLI failure is `Result: failed` with the CLI reason, re-send resumes) — verify: `cmp commands/start-session.md .github/prompts/start-session.prompt.md` exit 0 and `wc -l < .github/prompts/start-session.prompt.md` well under the old 160 — 2026-10-07: `cmp` exit 0; 93 lines; `node --test tests/customizations.test.mjs` 32/32
 - [ ] 3.2 Update `tests/customizations.test.mjs`: the #58 test accepts `agento.mjs start-session` for start-session's prompt and mirror (start-freehand still requires `agento.mjs workspace`) and asserts the start-session prompt calls `agento.mjs start-session` — verify: `node --test tests/customizations.test.mjs` exit 0
 
 ## Phase 4: Extension calls the CLI
