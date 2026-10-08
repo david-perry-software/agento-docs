@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/status-colors
 last-updated: 2026-10-08
-next-step: "4.3 Package the extension VSIX for the manual check"
+next-step: "4.4 (manual) Install the packaged VSIX in your own VS Code and screenshot the tinted icons in all three views and the status bar"
 artifact-pr: "#34"
 ```
 
@@ -50,7 +50,7 @@ artifact-pr: "#34"
 
   Target: local electron test host, no ports — verify: `cd extension && npm run build && npm run test:electron` exit 0 in all scenarios — done 2026-10-08: build 0, test:electron exit 0, 3/3 scenarios (in-repo, companion, workspace); also asserts the empty/error rows, invalid initiative and its diagnostic, Session `Lifecycle`/Warning rows, the Doctor `pulse` group, and the error-model status bar (`statusBarItem.errorBackground`)
 - [x] 4.2 In `docs/extension.md`, add a "Status colors" section with the mapping table, the `workbench.colorCustomizations` override example, and the note that the status bar background (doctor warn/fail) overrides the lifecycle color. Add a `CHANGELOG.md` `## Unreleased` entry — verify: `grep -n "agento.status.paused" docs/extension.md` and `grep -n -i "status colors" CHANGELOG.md` both match — done 2026-10-08: both greps exit 0 (`docs/extension.md` lines 83 and 109; `CHANGELOG.md` line 5)
-- [ ] 4.3 Package the extension for the manual check with `cd extension && npm run package`, and name the produced `.vsix` absolute path on this line. The `.vsix` is a gitignored byproduct: delete it after 4.4 and never commit it — verify: `npm run package` exit 0 and the named file exists
+- [x] 4.3 Package the extension for the manual check with `cd extension && npm run package`, and name the produced `.vsix` absolute path on this line. The `.vsix` is a gitignored byproduct: delete it after 4.4 and never commit it — verify: `npm run package` exit 0 and the named file exists — done 2026-10-08 at product `bacc2a1`: `npm run package` exit 0 (40 files, 94.49 KB; VSIX archive assertion passed), file exists at `/home/david/DP/agento-worktrees/plan-20261008-202650/extension/agento-dashboard-0.7.0.vsix` (gitignored; delete after 4.4)
 - [ ] 4.4 (manual) In your own VS Code:
   1. Extensions view → `…` → *Install from VSIX…*, select the `.vsix` named in 4.3, and reload the window.
   2. Open the Agento activity-bar container and expand groups in Deliveries, Initiatives, and Session & Doctor.
