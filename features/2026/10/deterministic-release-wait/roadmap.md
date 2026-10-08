@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/deterministic-release-wait
 last-updated: 2026-10-07
 next-step: "1.1"
