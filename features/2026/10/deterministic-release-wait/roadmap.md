@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/deterministic-release-wait
 last-updated: 2026-10-07
-next-step: "2.3"
+next-step: "3.1"
 artifact-pr: "#31"
 ```
 
@@ -16,7 +16,7 @@ artifact-pr: "#31"
 
 - [x] 2.1 Wire `case "release"` into `scripts/agento.mjs`. `parseArgs` gains `--wait` (integer 0–60; more than 60 is a usage error, exit 1) and `--interval` (integer 1–60, default 10); add the `release <merge-sha> [--wait N] [--interval N]` header line and widen the `usage()` slice to `(1, 25)`. `<merge-sha>` must match `^[0-9a-f]{7,40}$`; unset `checks.releaseWorkflow` returns `not-configured`, exit 0, with no `gh` call. A `ghApi()` helper follows the `lookupPullRequest()` pattern (`cwd: root`, `timeout: 15000`); a missing `gh`, auth failure, unknown SHA, or other `gh` error exits 3, and the auth case names `gh auth login`. Facts are gathered lazily, so a `success` costs two API calls. `emit()` reports `status`, `verdict`, `sha`, `workflow`, `run`, `supersededBy`, `reason`, `mergeDate`, `graceSeconds`, `polls`, and `waitedSeconds`, with exit 0/2/3/4 per plan.md. Add `agento.test.mjs` cases using a `gh` stub on the restricted `PATH` that answers `api <path>` from fixtures: one per exit code (`not-configured` with no `gh` call, `success`, `pending`, `dispatch-required`, `failed`, `no-run`, `superseded-success`, `gh` missing, HTTP 401, `--wait 61`), and `usage` lists `release <merge-sha>` — verify: `node --test scripts/agento.test.mjs` exit 0
 - [x] 2.2 Add the synchronous `--wait` loop: sleep with `Atomics.wait` and keep polling while the verdict is `pending` and `waitedSeconds + interval ≤ wait`; never loop on `dispatch-required`. Add `agento.test.mjs` cases: a stub sequence going from pending to success under `--wait 3 --interval 1` exits 0 with `polls ≥ 2`; an always-pending stub under `--wait 2 --interval 1` exits 2 within 5 s — verify: `node --test scripts/agento.test.mjs` exit 0
-- [ ] 2.3 Add `release-state.mjs` to `extension/scripts/copy-cli.mjs` `cliFiles` and `tests/extension-bundle.test.mjs`, then run `cd extension && npm run copy-cli` — verify: `node --test tests/extension-bundle.test.mjs` exit 0 and `cd extension && npm ci && npm run build && npm run test:unit` exit 0
+- [x] 2.3 Add `release-state.mjs` to `extension/scripts/copy-cli.mjs` `cliFiles` and `tests/extension-bundle.test.mjs`, then run `cd extension && npm run copy-cli` — verify: `node --test tests/extension-bundle.test.mjs` exit 0 and `cd extension && npm ci && npm run build && npm run test:unit` exit 0
 
 ## Phase 3: Shorter PR-check waits
 
