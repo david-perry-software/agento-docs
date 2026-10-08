@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/status-colors
 last-updated: 2026-10-08
-next-step: "3.1 Color Deliveries lifecycle groups and leaves"
+next-step: "3.2 Color Initiatives groups, members, rows, and diagnostics"
 artifact-pr: "#34"
 ```
 
@@ -17,7 +17,7 @@ artifact-pr: "#34"
 
 ## Phase 3: Apply colors to every surface
 
-- [ ] 3.1 Deliveries: in `extension/src/deliveryTreeProvider.ts`, lifecycle groups use `lifecycleStyle(group.lifecycle)` for glyph and color. Leaves keep the `git-pull-request` glyph, tinted by their lifecycle color. The error message row becomes `error` tinted `agento.health.fail`; the empty row stays uncolored `info` — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0
+- [x] 3.1 Deliveries: in `extension/src/deliveryTreeProvider.ts`, lifecycle groups use `lifecycleStyle(group.lifecycle)` for glyph and color. Leaves keep the `git-pull-request` glyph, tinted by their lifecycle color. The error message row becomes `error` tinted `agento.health.fail`; the empty row stays uncolored `info` — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0 — done 2026-10-08: build 0, typecheck 0, unit 0 (136/136)
 - [ ] 3.2 Initiatives:
   - Add `color?: string` to `InitiativeTreeItemSpec` and replace `GROUP_ICONS` with `initiativeGroupStyle` for groups and members.
   - Initiative rows: done and valid → `type-hierarchy` tinted `agento.status.complete`; invalid → `warning` tinted `agento.health.fail`; otherwise uncolored `type-hierarchy`.
