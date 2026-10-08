@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/collapsed-tree-default
 last-updated: 2026-10-08
-next-step: "4.1 re-verify the full gate still stands at product b3eac7b with origin/main an ancestor of both halves, then hand off to review"
+next-step: "Review: /agento review-feature collapsed-tree-default"
 artifact-pr: "#32"
 ```
 
@@ -27,4 +27,4 @@ artifact-pr: "#32"
 
 ## Phase 4: Verification
 
-- [x] 4.1 Full gate after merging `origin/main`: `git ls-files '*.sh' | xargs pnpm dlx shellcheck`, `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`, `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`, `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`, `cd extension && npm run build && npm run test:unit && npm run test:electron`, `node --test tests/extension-bundle.test.mjs`; record each result against the step 1.1 baseline on this line — verify: all exit 0, shellcheck no findings, node ≥ 340, unit ≥ 119 with every new case attributed to this delivery, and `git status --porcelain --untracked-files=all` empty in both halves — done 2026-10-08 at product `b3eac7b` (run ahead of manual 3.4, which changes no product code): `origin/main` an ancestor of both halves (no merge needed); shellcheck exit 0, no findings (baseline: exit 0, none); node tests exit 0, 340/340 (baseline 340); guard smoke exit 0; companion guard smoke exit 0; extension `npm run build` exit 0; `test:unit` exit 0, 124/124 (baseline 119; +5 from this delivery: 3 `treeItemIds.test.ts`, 1 `initiativeTreeProvider.test.ts` collapsed/idParts, 1 `extensionIntegration.test.ts` single scope); `test:electron` exit 0, 3/3 scenarios (baseline 3/3); `node --test tests/extension-bundle.test.mjs` exit 0, 4/4; both halves clean
+- [x] 4.1 Full gate after merging `origin/main`: `git ls-files '*.sh' | xargs pnpm dlx shellcheck`, `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`, `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`, `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`, `cd extension && npm run build && npm run test:unit && npm run test:electron`, `node --test tests/extension-bundle.test.mjs`; record each result against the step 1.1 baseline on this line — verify: all exit 0, shellcheck no findings, node ≥ 340, unit ≥ 119 with every new case attributed to this delivery, and `git status --porcelain --untracked-files=all` empty in both halves — done 2026-10-08 at product `b3eac7b` (run ahead of manual 3.4, which changes no product code): `origin/main` an ancestor of both halves (no merge needed); shellcheck exit 0, no findings (baseline: exit 0, none); node tests exit 0, 340/340 (baseline 340); guard smoke exit 0; companion guard smoke exit 0; extension `npm run build` exit 0; `test:unit` exit 0, 124/124 (baseline 119; +5 from this delivery: 3 `treeItemIds.test.ts`, 1 `initiativeTreeProvider.test.ts` collapsed/idParts, 1 `extensionIntegration.test.ts` single scope); `test:electron` exit 0, 3/3 scenarios (baseline 3/3); `node --test tests/extension-bundle.test.mjs` exit 0, 4/4; both halves clean; re-verified 2026-10-08 after 3.4: product HEAD still `b3eac7b` (no diff), `origin/main` still an ancestor of both halves (no merge, gate not rerun), both halves clean
