@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/start-session-cli
 last-updated: 2026-10-07
-next-step: "5.1 Docs and CHANGELOG"
+next-step: "6.1 Full gate against the baseline"
 artifact-pr: "#30"
 ```
 
@@ -36,7 +36,7 @@ artifact-pr: "#30"
 
 ## Phase 5: Docs
 
-- [ ] 5.1 Update `docs/commands.md` (start-session row and CLI paragraph: subcommand, flags, output fields, exit codes), `docs/extension.md` (New Plan and play buttons call the CLI; Open in chat fallback; no poll), `docs/model-profiles.md` (start-session is a thin formatter: pin it to a fast model, e.g. `prompts.start-session`), and add a `CHANGELOG.md` `## Unreleased` entry — verify: `grep -n "agento.mjs start-session" docs/commands.md docs/extension.md CHANGELOG.md` matches each file, `grep -n "start-session" docs/model-profiles.md` shows the recommendation, and `node --test tests/customizations.test.mjs` exit 0
+- [x] 5.1 Update `docs/commands.md` (start-session row and CLI paragraph: subcommand, flags, output fields, exit codes), `docs/extension.md` (New Plan and play buttons call the CLI; Open in chat fallback; no poll), `docs/model-profiles.md` (start-session is a thin formatter: pin it to a fast model, e.g. `prompts.start-session`), and add a `CHANGELOG.md` `## Unreleased` entry — verify: `grep -n "agento.mjs start-session" docs/commands.md docs/extension.md CHANGELOG.md` matches each file, `grep -n "start-session" docs/model-profiles.md` shows the recommendation, and `node --test tests/customizations.test.mjs` exit 0 — 2026-10-07: grep matches commands.md (1), extension.md (2), CHANGELOG.md (2); model-profiles.md lines 66–70; customizations 33/33
 
 ## Phase 6: Verification
 
