@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/collapsed-tree-default
 last-updated: 2026-10-08
-next-step: "3.3 Package the extension VSIX for the manual check"
+next-step: "4.1 Full gate after merging origin/main (run ahead of manual 3.4)"
 artifact-pr: "#32"
 ```
 
@@ -22,7 +22,7 @@ artifact-pr: "#32"
 
 - [x] 3.1 `extension/test/electron/suite.ts`: assert every Deliveries group, initiative, initiative group, and Session & Doctor group reports `collapsibleState === vscode.TreeItemCollapsibleState.Collapsed` and an `id` starting with `agento:`; assert delivery and member leaves stay `None`; capture the initiative `ready` group id before the existing completed-member refresh and assert the same id afterwards (label `Ready (1)` → `Ready (2)`) — verify: `cd extension && npm run build && npm run test:electron` exit 0 in all scenarios — done 2026-10-08: build exit 0; `test:electron` exit 0, 3/3 scenarios (in-repo, companion, workspace); Session & Doctor groups asserted as Session, Companion, Warnings, Doctor
 - [x] 3.2 `docs/extension.md`: state that Agento groups start collapsed in every new or reloaded window and keep the user's expansion while the window stays open; add a `CHANGELOG.md` `## Unreleased` entry — verify: `grep -n -i "collapsed" docs/extension.md CHANGELOG.md` matches both files — done 2026-10-08: grep exit 0, `docs/extension.md:21` and `CHANGELOG.md:7`
-- [ ] 3.3 Package the extension for the manual check: `cd extension && npm run package`, and name the produced `.vsix` absolute path on this line (the `.vsix` is a byproduct: delete it after 3.4, never commit it) — verify: `npm run package` exit 0 and the named file exists
+- [x] 3.3 Package the extension for the manual check: `cd extension && npm run package`, and name the produced `.vsix` absolute path on this line (the `.vsix` is a byproduct: delete it after 3.4, never commit it) — verify: `npm run package` exit 0 and the named file exists — done 2026-10-08 at `b3eac7b`: `npm run package` exit 0 (VSIX archive assertion passed); file exists: `/home/david/DP/agento-worktrees/plan-20261008-182150/extension/agento-dashboard-0.7.0.vsix` (94685 bytes, gitignored by `*.vsix`; its `out/deliveryTreeProvider.js` contains `Collapsed`)
 - [ ] 3.4 (manual) In your own VS Code: Extensions view → `…` → *Install from VSIX…* → select the `.vsix` named in 3.3; reload the window; open the Agento activity-bar container and expand at least one group in each of Deliveries, Initiatives, and Session & Doctor; run *Developer: Reload Window*; reopen the Agento container and take a screenshot showing every group collapsed (no secrets visible) — verify: screenshot saved as `evidence/step-3-4-collapsed-after-reload.png` and linked on this line, showing all three views with collapsed groups
 
 ## Phase 4: Verification
