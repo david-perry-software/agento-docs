@@ -2,13 +2,13 @@
 status: in-progress
 branch: feature/status-colors
 last-updated: 2026-10-08
-next-step: "1.1 Install extension dependencies and record the extension baseline"
+next-step: "2.1 Add extension/src/statusStyle.ts and its unit test"
 artifact-pr: "#34"
 ```
 
 ## Phase 1: Baseline
 
-- [ ] 1.1 Install extension dependencies and record the extension baseline next to the planning baseline. Run `cd extension && npm ci`, then `npm run build`, `npm run typecheck`, `npm run test:unit` (pass count), and `npm run test:electron` (scenario count), and record exit codes and counts on this line. Planning baseline: shellcheck via `git ls-files '*.sh' | xargs pnpm dlx shellcheck` exit 0, no findings; typecheck exit 0; node tests 340/340; unit 128/128. A red extension baseline triggers the §5 overlap reassessment before continuing — verify: results are recorded on this line and `git status --porcelain --untracked-files=all` is empty
+- [x] 1.1 Install extension dependencies and record the extension baseline next to the planning baseline. Run `cd extension && npm ci`, then `npm run build`, `npm run typecheck`, `npm run test:unit` (pass count), and `npm run test:electron` (scenario count), and record exit codes and counts on this line. Planning baseline: shellcheck via `git ls-files '*.sh' | xargs pnpm dlx shellcheck` exit 0, no findings; typecheck exit 0; node tests 340/340; unit 128/128. A red extension baseline triggers the §5 overlap reassessment before continuing — verify: results are recorded on this line and `git status --porcelain --untracked-files=all` is empty — done 2026-10-08 at product `f2f50ce`: `npm ci` exit 0, `npm run build` exit 0, `npm run typecheck` exit 0, `npm run test:unit` exit 0 (128/128), `npm run test:electron` exit 0 (3/3 scenarios: in-repo, companion, workspace); baseline green, no overlap reassessment needed; working tree clean
 
 ## Phase 2: Style mapping and contributed colors
 
