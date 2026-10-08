@@ -3,6 +3,7 @@ status: planned
 branch: feature/collapsed-tree-default
 last-updated: 2026-10-08
 next-step: "1.1 Install extension dependencies and record the extension baseline"
+artifact-pr: "#32"
 ```
 
 ## Phase 1: Baseline
