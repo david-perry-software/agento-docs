@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/status-colors
 last-updated: 2026-10-08
-next-step: "Review: /agento review-feature status-colors"
+next-step: "complete"
 artifact-pr: "#34"
 ```
 
