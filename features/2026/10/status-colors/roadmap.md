@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/status-colors
 last-updated: 2026-10-08
-next-step: "3.3 Color Session & Doctor rows"
+next-step: "3.4 Color the status bar item"
 artifact-pr: "#34"
 ```
 
@@ -26,13 +26,13 @@ artifact-pr: "#34"
   - Update `extension/test/unit/initiativeTreeProvider.test.ts` expectations to include colors.
 
   — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0 — done 2026-10-08: build 0, typecheck 0, unit 0 (138/138, +2 color cases in `initiativeTreeProvider.test.ts`)
-- [ ] 3.3 Session & Doctor: in `extension/src/sessionDoctorProvider.ts`, add `color?` to `RowElement`.
+- [x] 3.3 Session & Doctor: in `extension/src/sessionDoctorProvider.ts`, add `color?` to `RowElement`.
   - Check rows and Warning rows use `healthStyle`.
   - The Session `Lifecycle` row uses `lifecycleStyle`, uncolored for `no-delivery`.
   - The Doctor group's `pulse` glyph is tinted by the worst check status (fail > warn > ok).
   - The load-error row is tinted `agento.health.fail`.
 
-  — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0
+  — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0 — done 2026-10-08: build 0, typecheck 0, unit 0 (138/138); `no-delivery` leaves the Lifecycle row without an icon, like the other Session rows
 - [ ] 3.4 Status bar:
   - Add `statusBarStyle: { color?: string; background?: "warning" | "error" }` to both `SessionDoctorModel` kinds in `extension/src/sessionDoctorModel.ts`. `color` comes from `lifecycleStyle(lifecycle)`; `background` is `"warning"` when doctor `status` is `warn` and `"error"` when it is `fail`; the error model uses `background: "error"`.
   - In `extension/src/extension.ts`, add one `applyStatusBar(statusBar, model)` helper that sets `text`, `color`, and `backgroundColor` (`statusBarItem.warningBackground` / `statusBarItem.errorBackground`), and use it at all three sites that set `statusBar.text` today. The text stays unchanged.
