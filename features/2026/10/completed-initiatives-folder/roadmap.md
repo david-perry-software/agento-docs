@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/completed-initiatives-folder
 last-updated: 2026-10-08
-next-step: "3.1 Electron fixture and suite for the Completed folder"
+next-step: "3.2 Document the Completed folder"
 artifact-pr: "#33"
 ```
 
@@ -18,7 +18,7 @@ artifact-pr: "#33"
 
 ## Phase 3: Integration evidence and docs
 
-- [ ] 3.1 Electron fixture and suite: in `extension/test/electron/runTest.ts` add initiative `finished-initiative` (breakdown with one member `finished-delivery`) and a `status: complete` roadmap for `finished-delivery` with `initiative: "finished-initiative"` (parameterize the `roadmap()` helper's initiative); in `extension/test/electron/suite.ts` assert the root is `agento-extension` then a folder labelled `Completed (1)` with `collapsibleState === Collapsed`, an `id` starting with `agento:`, `contextValue === "agento.initiativesCompleted"`, whose only child is `finished-initiative`; update the Deliveries label assertions for the new shipped delivery — verify: `cd extension && npm run build && npm run test:electron` exit 0 in all scenarios
+- [x] 3.1 Electron fixture and suite: in `extension/test/electron/runTest.ts` add initiative `finished-initiative` (breakdown with one member `finished-delivery`) and a `status: complete` roadmap for `finished-delivery` with `initiative: "finished-initiative"` (parameterize the `roadmap()` helper's initiative); in `extension/test/electron/suite.ts` assert the root is `agento-extension` then a folder labelled `Completed (1)` with `collapsibleState === Collapsed`, an `id` starting with `agento:`, `contextValue === "agento.initiativesCompleted"`, whose only child is `finished-initiative`; update the Deliveries label assertions for the new shipped delivery — verify: `cd extension && npm run build && npm run test:electron` exit 0 in all scenarios
 - [ ] 3.2 `docs/extension.md` `## Initiatives`: state that initiatives whose members are all complete (and whose breakdown is valid) are grouped under a collapsed **Completed (N)** folder after the active ones, hidden when none are complete; add a `CHANGELOG.md` `## Unreleased` entry — verify: `grep -n "Completed (N)" docs/extension.md CHANGELOG.md` matches both files
 - [ ] 3.3 Package the extension for the manual check: `cd extension && npm run package`, and name the produced `.vsix` absolute path on this line (the `.vsix` is a byproduct: delete it after 3.4, never commit it) — verify: `npm run package` exit 0 and the named file exists
 - [ ] 3.4 (manual) In your own VS Code: Extensions view → `…` → *Install from VSIX…* → select the `.vsix` named in 3.3; run *Developer: Reload Window*; open the Agento activity-bar container and take a screenshot of the Initiatives view showing the collapsed `Completed (N)` folder (on this repository all three initiatives are complete, so it shows `Completed (3)` and no other initiative rows; no secrets visible) — verify: screenshot saved as `evidence/step-3-4-completed-folder.png` and linked on this line, showing the collapsed `Completed (N)` folder as the last root row of Initiatives
