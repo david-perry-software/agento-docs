@@ -1,0 +1,71 @@
+```yaml
+status: complete
+branch: feature/status-colors
+last-updated: 2026-10-08
+next-step: "complete"
+artifact-pr: "#34"
+```
+
+## Phase 1: Baseline
+
+- [x] 1.1 Install extension dependencies and record the extension baseline next to the planning baseline. Run `cd extension && npm ci`, then `npm run build`, `npm run typecheck`, `npm run test:unit` (pass count), and `npm run test:electron` (scenario count), and record exit codes and counts on this line. Planning baseline: shellcheck via `git ls-files '*.sh' | xargs pnpm dlx shellcheck` exit 0, no findings; typecheck exit 0; node tests 340/340; unit 128/128. A red extension baseline triggers the §5 overlap reassessment before continuing — verify: results are recorded on this line and `git status --porcelain --untracked-files=all` is empty — done 2026-10-08 at product `f2f50ce`: `npm ci` exit 0, `npm run build` exit 0, `npm run typecheck` exit 0, `npm run test:unit` exit 0 (128/128), `npm run test:electron` exit 0 (3/3 scenarios: in-repo, companion, workspace); baseline green, no overlap reassessment needed; working tree clean
+
+## Phase 2: Style mapping and contributed colors
+
+- [x] 2.1 Add `extension/src/statusStyle.ts` (no `vscode` import). It exports `StatusStyle`, `lifecycleStyle`, `initiativeGroupStyle`, `healthStyle`, and `STATUS_COLOR_IDS` exactly per plan.md `## Approach` item 1. Add `extension/test/unit/statusStyle.test.ts` covering the table, the unknown-value fallbacks, and coverage of every bundled `extension/cli/session-state.mjs` `LIFECYCLES` value except `no-delivery` — verify: `cd extension && npm run build && npm run test:unit` exit 0 — done 2026-10-08: build exit 0, unit exit 0 (135/135, +7 in `statusStyle.test.ts`)
+- [x] 2.2 Add `contributes.colors` to `extension/package.json`, one entry per `STATUS_COLOR_IDS` id with a description and `dark`/`light`/`highContrast`/`highContrastLight` defaults referencing the `charts.*` ids in plan.md `## Approach` item 2. Extend `statusStyle.test.ts` to assert the two-way match (every emitted id is declared with all four defaults; every declared `agento.*` color is emitted) — verify: `cd extension && npm run build && npm run test:unit` exit 0 — done 2026-10-08: build exit 0, unit exit 0 (136/136; the manifest test also pins each id's `charts.*` default to the plan table)
+
+## Phase 3: Apply colors to every surface
+
+- [x] 3.1 Deliveries: in `extension/src/deliveryTreeProvider.ts`, lifecycle groups use `lifecycleStyle(group.lifecycle)` for glyph and color. Leaves keep the `git-pull-request` glyph, tinted by their lifecycle color. The error message row becomes `error` tinted `agento.health.fail`; the empty row stays uncolored `info` — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0 — done 2026-10-08: build 0, typecheck 0, unit 0 (136/136)
+- [x] 3.2 Initiatives:
+  - Add `color?: string` to `InitiativeTreeItemSpec` and replace `GROUP_ICONS` with `initiativeGroupStyle` for groups and members.
+  - Initiative rows: done and valid → `type-hierarchy` tinted `agento.status.complete`; invalid → `warning` tinted `agento.health.fail`; otherwise uncolored `type-hierarchy`.
+  - The Completed folder is `archive` tinted `agento.status.complete`. Diagnostics are tinted `agento.health.fail` (error) or `agento.health.warn` (anomaly). The error message row is tinted `agento.health.fail`.
+  - `InitiativeTreeProvider` passes `new ThemeColor(spec.color)` into the `ThemeIcon`.
+  - Update `extension/test/unit/initiativeTreeProvider.test.ts` expectations to include colors.
+
+  — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0 — done 2026-10-08: build 0, typecheck 0, unit 0 (138/138, +2 color cases in `initiativeTreeProvider.test.ts`)
+- [x] 3.3 Session & Doctor: in `extension/src/sessionDoctorProvider.ts`, add `color?` to `RowElement`.
+  - Check rows and Warning rows use `healthStyle`.
+  - The Session `Lifecycle` row uses `lifecycleStyle`, uncolored for `no-delivery`.
+  - The Doctor group's `pulse` glyph is tinted by the worst check status (fail > warn > ok).
+  - The load-error row is tinted `agento.health.fail`.
+
+  — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0 — done 2026-10-08: build 0, typecheck 0, unit 0 (138/138); `no-delivery` leaves the Lifecycle row without an icon, like the other Session rows
+- [x] 3.4 Status bar:
+  - Add `statusBarStyle: { color?: string; background?: "warning" | "error" }` to both `SessionDoctorModel` kinds in `extension/src/sessionDoctorModel.ts`. `color` comes from `lifecycleStyle(lifecycle)`; `background` is `"warning"` when doctor `status` is `warn` and `"error"` when it is `fail`; the error model uses `background: "error"`.
+  - In `extension/src/extension.ts`, add one `applyStatusBar(statusBar, model)` helper that sets `text`, `color`, and `backgroundColor` (`statusBarItem.warningBackground` / `statusBarItem.errorBackground`), and use it at all three sites that set `statusBar.text` today. The text stays unchanged.
+  - Extend `extension/test/unit/sessionDoctorModel.test.ts` for ok/warn/fail and the error model.
+
+  — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0 and `grep -n "statusBar.text =" extension/src/extension.ts` matches only inside `applyStatusBar` and the initial creation — done 2026-10-08: build 0, typecheck 0, unit 0 (139/139, +1 status-bar style case and style assertions on the existing model/error cases); grep matches only line 83 (`applyStatusBar`) and line 104 (initial creation)
+
+## Phase 4: Integration evidence and docs
+
+- [x] 4.1 In `extension/test/electron/suite.ts`, assert `(iconPath as ThemeIcon).id` and `.color?.id` for:
+  - every Deliveries group and leaf in the fixture (Planned, Building, In Review, Shipped);
+  - initiative groups and members;
+  - the Doctor check rows;
+  - `api.statusBar.color` / `backgroundColor`, matching the fixture's lifecycle and doctor status.
+
+  Target: local electron test host, no ports — verify: `cd extension && npm run build && npm run test:electron` exit 0 in all scenarios — done 2026-10-08: build 0, test:electron exit 0, 3/3 scenarios (in-repo, companion, workspace); also asserts the empty/error rows, invalid initiative and its diagnostic, Session `Lifecycle`/Warning rows, the Doctor `pulse` group, and the error-model status bar (`statusBarItem.errorBackground`)
+- [x] 4.2 In `docs/extension.md`, add a "Status colors" section with the mapping table, the `workbench.colorCustomizations` override example, and the note that the status bar background (doctor warn/fail) overrides the lifecycle color. Add a `CHANGELOG.md` `## Unreleased` entry — verify: `grep -n "agento.status.paused" docs/extension.md` and `grep -n -i "status colors" CHANGELOG.md` both match — done 2026-10-08: both greps exit 0 (`docs/extension.md` lines 83 and 109; `CHANGELOG.md` line 5)
+- [x] 4.3 Package the extension for the manual check with `cd extension && npm run package`, and name the produced `.vsix` absolute path on this line. The `.vsix` is a gitignored byproduct: delete it after 4.4 and never commit it — verify: `npm run package` exit 0 and the named file exists — done 2026-10-08 at product `bacc2a1`: `npm run package` exit 0 (40 files, 94.49 KB; VSIX archive assertion passed), file exists at `/home/david/DP/agento-worktrees/plan-20261008-202650/extension/agento-dashboard-0.7.0.vsix` (gitignored; delete after 4.4)
+- [x] 4.4 (manual) In your own VS Code:
+  1. Extensions view → `…` → *Install from VSIX…*, select the `.vsix` named in 4.3, and reload the window.
+  2. Open the Agento activity-bar container and expand groups in Deliveries, Initiatives, and Session & Doctor.
+  3. Take a screenshot showing colored status icons in all three views and the colored status bar item, with no secrets visible.
+
+  — verify: the screenshot is saved as `evidence/step-4-4-status-colors.png`, linked on this line, and shows tinted icons in all three views — done 2026-10-08: the agent installed the VSIX with `code --install-extension extension/agento-dashboard-0.7.0.vsix --force` (listed as `david-perry-software.agento-dashboard@0.7.0`); the user reloaded the window, expanded the views, and took the screenshot. Evidence: [evidence/step-4-4-status-colors.png](evidence/step-4-4-status-colors.png). It shows Deliveries with the Paused group (orange `debug-pause`) and its orange leaf, and the Shipped group (green `pass-filled`) with green `git-pull-request` leaves; Initiatives with the Completed (3) `archive` folder, done initiatives with tinted `type-hierarchy`, and green Complete groups; Session & Doctor with the `Lifecycle` row's orange pause glyph; and the orange status bar item `Agento: build · 1 active`. No secrets visible. The gitignored `.vsix` byproduct was deleted afterwards, never committed
+
+## Phase 5: Verification
+
+- [x] 5.1 Run the full gate after merging `origin/main` into both halves and record each result against the step 1.1 baseline on this line:
+  - `git ls-files '*.sh' | xargs pnpm dlx shellcheck`
+  - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`
+  - `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`
+  - `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`
+  - `cd extension && npm run typecheck && npm run build && npm run test:unit && npm run test:electron`
+  - `node --test tests/extension-bundle.test.mjs`
+
+  — verify: all commands exit 0; shellcheck has no findings; node ≥ 340; unit ≥ 128 with every new case attributed to this delivery; `git status --porcelain --untracked-files=all` is empty in both halves — done 2026-10-08 at product `bacc2a1`, run before 4.3/4.4 so automated work finishes ahead of the manual step (`origin/main` `f3944be` already an ancestor of both halves; nothing to merge): shellcheck exit 0, no findings (baseline: same); node 340/340 exit 0 (baseline 340); guard smoke exit 0; companion guard smoke exit 0; extension typecheck 0, build 0, unit 139/139 exit 0 (baseline 128; +11 from this delivery: 8 in `statusStyle.test.ts`, 2 in `initiativeTreeProvider.test.ts`, 1 in `sessionDoctorModel.test.ts`), test:electron exit 0, 3/3 scenarios (baseline 3/3); `tests/extension-bundle.test.mjs` 4/4 exit 0; both halves clean. Re-run before `status: in-review` if `origin/main` advances or 4.4 changes code. Rechecked 2026-10-08 after 4.4: the result still stands. Product HEAD is still `bacc2a1`, 4.4 changed no code, and `origin/main` is still `f3944be` (product) and `be8997e` (companion), both ancestors of their halves. A spot-check `npm run test:unit` gave 139/139, exit 0
