@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/collapsed-tree-default
 last-updated: 2026-10-08
-next-step: "2.5 Pin the single per-activation tree id scope in extensionIntegration.test.ts"
+next-step: "3.1 Electron suite: collapsed state, agento: ids, and stable ready-group id across refresh"
 artifact-pr: "#32"
 ```
 
@@ -16,7 +16,7 @@ artifact-pr: "#32"
 - [x] 2.2 Deliveries: `DeliveryTreeProvider(roadmapRoot, treeId)`; lifecycle groups use `TreeItemCollapsibleState.Collapsed` and `id = treeId("deliveries", "group", lifecycle)`; leaves and messages unchanged — verify: `cd extension && npm run build && npm run test:unit` exit 0 — done 2026-10-08: build exit 0; unit exit 0, 122/122; the single `createTreeIdScope()` in `activate()` landed here (the new constructor argument needs it to compile), 2.3/2.4 reuse it and 2.5 adds the source-shape assertion
 - [x] 2.3 Initiatives: `InitiativeTreeItemSpec.collapsible` → `"none" | "collapsed"`, initiative and group specs return `"collapsed"` with `idParts` `["initiative", slug]` / `["group", initiativeSlug, kind]`; `InitiativeTreeProvider(artifactRoot, treeId)` maps `"collapsed"` → `Collapsed` and sets `id = treeId("initiatives", ...idParts)`; extend `initiativeTreeProvider.test.ts` for the collapsed/idParts specs and `"none"` without `idParts` for members, diagnostics, and messages — verify: `cd extension && npm run build && npm run test:unit` exit 0 — done 2026-10-08: build exit 0; unit exit 0, 123/123 (+1 collapsed/idParts case; the empty/error case now also asserts `"none"` and no `idParts`)
 - [x] 2.4 Session & Doctor: `SessionDoctorProvider(treeId)`; groups use `Collapsed` and `id = treeId("sessionDoctor", "group", element.id)` — verify: `cd extension && npm run build && npm run test:unit` exit 0 — done 2026-10-08: build exit 0; unit exit 0, 123/123
-- [ ] 2.5 `extension/src/extension.ts`: create one `createTreeIdScope()` in `activate()` and pass it to all three providers; add an `extensionIntegration.test.ts` source-shape assertion that the scope is created once and handed to each constructor — verify: `cd extension && npm run build && npm run test:unit` exit 0 and `grep -rn "Expanded\|\"expanded\"" extension/src` prints nothing
+- [x] 2.5 `extension/src/extension.ts`: create one `createTreeIdScope()` in `activate()` and pass it to all three providers; add an `extensionIntegration.test.ts` source-shape assertion that the scope is created once and handed to each constructor — verify: `cd extension && npm run build && npm run test:unit` exit 0 and `grep -rn "Expanded\|\"expanded\"" extension/src` prints nothing — done 2026-10-08: build exit 0; unit exit 0, 124/124 (+1 `extensionIntegration.test.ts` single-scope case); grep printed nothing (exit 1)
 
 ## Phase 3: Integration evidence and docs
 
