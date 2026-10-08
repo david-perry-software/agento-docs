@@ -1,0 +1,15 @@
+{
+  "status": "ok",
+  "verdict": "not-triggered",
+  "sha": "38d5f713fb20183e6496eccebab8ef008013abf7",
+  "workflow": "staging-release.yml",
+  "run": null,
+  "supersededBy": null,
+  "reason": "the merge changed only files the workflow's path filters exclude",
+  "mergeDate": "2026-08-12T07:58:26Z",
+  "graceSeconds": 180,
+  "polls": 1,
+  "waitedSeconds": 0,
+  "root": "/home/david/DP/soshiki",
+  "configSource": "/home/david/DP/soshiki/.github/agento.json"
+}
