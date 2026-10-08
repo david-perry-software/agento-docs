@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/completed-initiatives-folder
 last-updated: 2026-10-08
-next-step: "2.1 Completed folder element and root partition"
+next-step: "2.3 Unit tests for the completed folder"
 artifact-pr: "#33"
 ```
 
@@ -12,8 +12,8 @@ artifact-pr: "#33"
 
 ## Phase 2: Completed folder in the Initiatives tree
 
-- [ ] 2.1 `extension/src/initiativeTreePresentation.ts`: add `CompletedFolderElement` (`{ kind: "completed"; items: InitiativeTreeItem[] }`) to `InitiativeTreeElement`; at the root of a `ready` model return non-completed initiatives (not `done && valid`) in CLI order, then one completed folder only when at least one initiative is `done && valid`; folder children are those initiatives as `initiative` elements in CLI order — verify: `cd extension && npm run build` exit 0
-- [ ] 2.2 `initiativeTreeItemSpec` for the folder: label `Completed (<n>)`, `collapsible: "collapsed"`, `idParts: ["completed"]`, `contextValue: "agento.initiativesCompleted"`, icon `archive`, tooltip with the count, no command; confirm `extension/src/initiativeTreeProvider.ts` needs no change (or make the minimal mapping change) — verify: `cd extension && npm run build` exit 0
+- [x] 2.1 `extension/src/initiativeTreePresentation.ts`: add `CompletedFolderElement` (`{ kind: "completed"; items: InitiativeTreeItem[] }`) to `InitiativeTreeElement`; at the root of a `ready` model return non-completed initiatives (not `done && valid`) in CLI order, then one completed folder only when at least one initiative is `done && valid`; folder children are those initiatives as `initiative` elements in CLI order — verify: `cd extension && npm run build` exit 0 — done 2026-10-08: build exit 0; landed in one commit with 2.2 because the new element kind does not type-check until `initiativeTreeItemSpec` handles it
+- [x] 2.2 `initiativeTreeItemSpec` for the folder: label `Completed (<n>)`, `collapsible: "collapsed"`, `idParts: ["completed"]`, `contextValue: "agento.initiativesCompleted"`, icon `archive`, tooltip with the count, no command; confirm `extension/src/initiativeTreeProvider.ts` needs no change (or make the minimal mapping change) — verify: `cd extension && npm run build` exit 0 — done 2026-10-08: build exit 0; the provider maps the spec generically and needed no change
 - [ ] 2.3 `extension/test/unit/initiativeTreeProvider.test.ts`: mixed model (active, done+valid, done+invalid) → root `[active, done+invalid, folder]` with the folder holding only done+valid; all-done → only the folder; none done → no folder; folder spec (label, collapsed, idParts, context value, icon, no command); a nested initiative's spec and children equal the root form — verify: `cd extension && npm run build && npm run test:unit` exit 0 with the new cases counted
 
 ## Phase 3: Integration evidence and docs
