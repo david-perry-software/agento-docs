@@ -2,13 +2,13 @@
 status: in-progress
 branch: feature/collapsed-tree-default
 last-updated: 2026-10-08
-next-step: "1.1 Install extension dependencies and record the extension baseline"
+next-step: "2.1 Add extension/src/treeItemIds.ts with createTreeIdScope and unit tests"
 artifact-pr: "#32"
 ```
 
 ## Phase 1: Baseline
 
-- [ ] 1.1 Install extension dependencies and record the extension baseline: `cd extension && npm ci`, then `npm run build`, `npm run test:unit` (pass count), `npm run test:electron`; record exit codes and counts on this line next to the planning baseline (shellcheck via `git ls-files '*.sh' | xargs pnpm dlx shellcheck` exit 0 no findings; node tests 340/340; build exit 0; unit 119/119); a red extension baseline triggers the §5 overlap reassessment before continuing — verify: the results are recorded here and `git status --porcelain --untracked-files=all` is empty
+- [x] 1.1 Install extension dependencies and record the extension baseline: `cd extension && npm ci`, then `npm run build`, `npm run test:unit` (pass count), `npm run test:electron`; record exit codes and counts on this line next to the planning baseline (shellcheck via `git ls-files '*.sh' | xargs pnpm dlx shellcheck` exit 0 no findings; node tests 340/340; build exit 0; unit 119/119); a red extension baseline triggers the §5 overlap reassessment before continuing — verify: the results are recorded here and `git status --porcelain --untracked-files=all` is empty — done 2026-10-08 at `c90cdb1`: `npm ci` exit 0; `npm run build` exit 0; `npm run test:unit` exit 0, 119/119; `npm run test:electron` exit 0, 3/3 scenarios (in-repo, companion, workspace) — matches the planning baseline, green, full gate stands; product tree clean
 
 ## Phase 2: Collapsed groups with per-window stable ids
 
