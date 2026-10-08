@@ -3,6 +3,7 @@ status: planned
 branch: feature/completed-initiatives-folder
 last-updated: 2026-10-08
 next-step: "1.1 Record the extension baseline"
+artifact-pr: "#33"
 ```
 
 ## Phase 1: Baseline
