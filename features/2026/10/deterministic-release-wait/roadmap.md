@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/deterministic-release-wait
 last-updated: 2026-10-07
-next-step: "3.1"
+next-step: "4.1"
 artifact-pr: "#31"
 ```
 
@@ -20,7 +20,7 @@ artifact-pr: "#31"
 
 ## Phase 3: Shorter PR-check waits
 
-- [ ] 3.1 In `scripts/wait-for-checks.sh`, set the default `max_seconds` to 60 for both `pr` and `run` and update the header comment. Print a poll line only when the snapshot differs from the previous poll (the first poll always prints), plus the `RESULT:` line; arguments and exit codes stay the same. In `tests/wait-for-checks.test.mjs`, drop the grace test's `poll 2` assertion and add a test that an unchanged pending snapshot under `--max-seconds 3 --interval 1` prints exactly one `poll` line plus `RESULT: still pending` — verify: `node --test tests/wait-for-checks.test.mjs` exit 0, and `shellcheck scripts/wait-for-checks.sh` reports zero findings when `command -v shellcheck` succeeds (otherwise step 5.2 covers it with the CI evidence)
+- [x] 3.1 In `scripts/wait-for-checks.sh`, set the default `max_seconds` to 60 for both `pr` and `run` and update the header comment. Print a poll line only when the snapshot differs from the previous poll (the first poll always prints), plus the `RESULT:` line; arguments and exit codes stay the same. In `tests/wait-for-checks.test.mjs`, drop the grace test's `poll 2` assertion and add a test that an unchanged pending snapshot under `--max-seconds 3 --interval 1` prints exactly one `poll` line plus `RESULT: still pending` — verify: `node --test tests/wait-for-checks.test.mjs` exit 0, and `shellcheck scripts/wait-for-checks.sh` reports zero findings when `command -v shellcheck` succeeds (otherwise step 5.2 covers it with the CI evidence)
 
 ## Phase 4: Prompts, policy, docs
 
