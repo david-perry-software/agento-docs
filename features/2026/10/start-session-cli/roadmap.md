@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/start-session-cli
 last-updated: 2026-10-07
-next-step: "6.2 Fixture timing"
+next-step: "6.3 Real run against the agento primary"
 artifact-pr: "#30"
 ```
 
@@ -41,5 +41,5 @@ artifact-pr: "#30"
 ## Phase 6: Verification
 
 - [x] 6.1 Full gate after merging `origin/main`: `git ls-files '*.sh' | xargs pnpm dlx shellcheck`, `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`, `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`, `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`, `cd extension && npm run build && npm run test:unit && npm run test:electron`, `node --test tests/extension-bundle.test.mjs`; record each result against the step 1.1 baseline on this line — verify: all exit 0, shellcheck no findings, node test count ≥ 289 with every new case attributed to this delivery — 2026-10-07: `origin/main` is an ancestor of HEAD; shellcheck exit 0, no findings (baseline: exit 0, none); node exit 0, 301/301 (baseline 289: +2 session-state helpers [1.2], +9 start-session CLI cases [2.1–2.6], +1 customizations case [3.2]); replay-guard exit 0; companion replay-guard exit 0; extension build exit 0; unit exit 0, 119/119 (baseline 114: newPlanFlow poll cases replaced, +cliClient timeout, +4 dispatcher, +1 routing, +1 integration); electron exit 0, all three scenarios (baseline: exit 0); extension-bundle exit 0; both trees clean
-- [ ] 6.2 Fixture timing: run `node --test --test-name-pattern "start-session" scripts/agento.test.mjs` and record the `duration_ms` of the companion plan-mode and build-mode cases on this line — verify: each companion start-session case completes in seconds (< 10 000 ms)
+- [x] 6.2 Fixture timing: run `node --test --test-name-pattern "start-session" scripts/agento.test.mjs` and record the `duration_ms` of the companion plan-mode and build-mode cases on this line — verify: each companion start-session case completes in seconds (< 10 000 ms) — 2026-10-07: exit 0, 11/11; companion plan mode (create + 3 resumes, workspace write/refresh) 696 ms; companion build mode (mirrored, legacy, promoted pair: 3 starts) 1 032 ms; slowest case (in-repo build mode, 8 CLI runs) 1 269 ms; whole pattern 7 066 ms
 - [ ] 6.3 Real run against the agento primary (only when `/home/david/DP/agento` is on a clean `main`; otherwise pause with `6.3 blocked: primary not on a clean main`): `time node <this worktree>/scripts/agento.mjs start-session --no-open --root /home/david/DP/agento`; record `real` time and the JSON `status`/`subject`/`target`; then remove that clean, detached, unpublished session exactly as `/agento close-session <session-id>` does for a plan session (`git -C /home/david/DP/agento worktree remove <product half>`, `git -C /home/david/DP/agento-docs worktree remove <companion half>`, delete its `.code-workspace`) — verify: `status: "ok"`, `real` in seconds (< 30 s), and `node scripts/agento.mjs session --root /home/david/DP/agento` lists no `plan-<id>` entry for that id in `worktrees[]`
