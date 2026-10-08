@@ -2,13 +2,13 @@
 status: in-progress
 branch: feature/completed-initiatives-folder
 last-updated: 2026-10-08
-next-step: "1.1 Record the extension baseline"
+next-step: "2.1 Completed folder element and root partition"
 artifact-pr: "#33"
 ```
 
 ## Phase 1: Baseline
 
-- [ ] 1.1 Install extension dependencies and record the extension baseline: `cd extension && npm ci`, then `npm run build`, `npm run test:unit` (pass count), `npm run test:electron`; record exit codes and counts on this line next to the planning baseline (shellcheck via `git ls-files '*.sh' | xargs pnpm dlx shellcheck` exit 0 no findings; node tests 340/340; build clean; unit 124/124); a red extension baseline triggers the §5 overlap reassessment before continuing — verify: the results are recorded here and `git status --porcelain --untracked-files=all` is empty
+- [x] 1.1 Install extension dependencies and record the extension baseline: `cd extension && npm ci`, then `npm run build`, `npm run test:unit` (pass count), `npm run test:electron`; record exit codes and counts on this line next to the planning baseline (shellcheck via `git ls-files '*.sh' | xargs pnpm dlx shellcheck` exit 0 no findings; node tests 340/340; build clean; unit 124/124); a red extension baseline triggers the §5 overlap reassessment before continuing — verify: the results are recorded here and `git status --porcelain --untracked-files=all` is empty — done 2026-10-08 at `f29a6c8`: `npm ci` exit 0; `npm run build` exit 0; `npm run test:unit` exit 0, 124/124; `npm run test:electron` exit 0, in-repo, companion, and workspace scenarios passed (VS Code 1.125.0); product tree clean. Baseline green, no overlap reassessment needed.
 
 ## Phase 2: Completed folder in the Initiatives tree
 
