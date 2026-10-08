@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/start-session-cli
 last-updated: 2026-10-07
-next-step: "Review: /agento review-feature start-session-cli"
+next-step: ""
 artifact-pr: "#30"
 ```
 
