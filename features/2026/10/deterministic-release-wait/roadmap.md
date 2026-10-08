@@ -2,13 +2,13 @@
 status: in-progress
 branch: feature/deterministic-release-wait
 last-updated: 2026-10-07
-next-step: "1.1"
+next-step: "1.2"
 artifact-pr: "#31"
 ```
 
 ## Phase 1: Release-state core (`scripts/release-state.mjs`)
 
-- [ ] 1.1 Add `scripts/release-state.mjs` and `scripts/release-state.test.mjs` with `globToRegExp` (GitHub rules: `*` stops at `/`, `**` crosses it, `**/` matches zero directories, `?`, `!` negation), `parseWorkflowTriggers` (line-based reader for `on:` in the `push`, `[push, …]`, and block-map forms; reads `branches`, `branches-ignore`, `paths`, and `paths-ignore` as block or flow lists, plus `workflow_dispatch`; sets `unparsed: true` on anything else) and `pushTriggered` (branch and path filters, last-match-wins negation, `true` when `filesTruncated` or `unparsed`), tested against a fixture copy of Soshiki's `on:` block — verify: `node --test scripts/release-state.test.mjs` exit 0
+- [x] 1.1 Add `scripts/release-state.mjs` and `scripts/release-state.test.mjs` with `globToRegExp` (GitHub rules: `*` stops at `/`, `**` crosses it, `**/` matches zero directories, `?`, `!` negation), `parseWorkflowTriggers` (line-based reader for `on:` in the `push`, `[push, …]`, and block-map forms; reads `branches`, `branches-ignore`, `paths`, and `paths-ignore` as block or flow lists, plus `workflow_dispatch`; sets `unparsed: true` on anything else) and `pushTriggered` (branch and path filters, last-match-wins negation, `true` when `filesTruncated` or `unparsed`), tested against a fixture copy of Soshiki's `on:` block — verify: `node --test scripts/release-state.test.mjs` exit 0
 - [ ] 1.2 Add `pickExactRun` (prefers `push` runs over `workflow_dispatch`), `classifyRun`, `withinGrace` (180 s from the merge commit's committer date), and the non-superseded branches of `releaseVerdict` (exact `success`, `pending`, or `failed`; `dispatch-required`; `not-triggered`; no run within grace → `pending`; no run after grace → `no-run`), with one test per verdict and one where a newer same-SHA dispatch run must not shadow the push run — verify: `node --test scripts/release-state.test.mjs` exit 0
 - [ ] 1.3 Add the superseded branch of `releaseVerdict`: for a cancelled exact run, check later default-branch `push` runs, oldest first, that are descendants (compare `ahead` or `identical`); the first `success` gives `superseded-success` with `supersededBy`, any pending descendant gives `pending`, otherwise `failed`, and `workflow_dispatch` runs are ignored; test a passing descendant, a non-descendant, a pending descendant, and a later dispatch-only run — verify: `node --test scripts/release-state.test.mjs` exit 0
 
