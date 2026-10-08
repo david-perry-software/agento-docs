@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/start-session-cli
 last-updated: 2026-10-07
-next-step: "2.7 Refresh the bundled CLI"
+next-step: "3.1 Rewrite the start-session prompt as a thin CLI formatter"
 artifact-pr: "#30"
 ```
 
@@ -20,7 +20,7 @@ artifact-pr: "#30"
 - [x] 2.4 Implement build mode (`resolveWithLayout`; `conflict`/`branch-mismatch`/`missing` → rejected with the resolver `message`; `complete` → rejected; `findOwner` primary → rejected; managed → resumed untouched; local branch → add on it; origin-only → `--track -b`; nowhere → rejected; companion: registered → reused, `origin/<branch>` → tracking add, else `--no-track -b <branch> … origin/<default>` + push warning); agento.test.mjs cases for every branch listed, in both layouts where the layout matters — verify: `node --test scripts/agento.test.mjs` exit 0
 - [x] 2.5 Post-add failure path: a half with `ok: false` → `status: "failed"`, `reason: "post-add-check"`, `half`, `registeredIn`, `origin`, `expectedOrigin`, `fix: "git -C <clone> worktree remove <path>"`; no workspace write, no open, nothing removed; a failing `git worktree add` → `failed` with its stderr; agento.test.mjs case reusing the #86 wrong-clone setup (companion half pre-registered in the product clone) asserts the fix string and that both halves and their registrations are untouched — verify: `node --test scripts/agento.test.mjs` exit 0
 - [x] 2.6 Open step: without `--no-open` run `code --new-window <target.path>` (15 s bound) → `opened: true`; missing/failing `code` → `opened: false` + `openCommand`; `--no-open` never runs `code`; agento.test.mjs cases with a `restrictedPath` `code` stub that records its argv (pair → workspace path, in-repo → folder path, resume → still opened) and with `code` absent — verify: `node --test scripts/agento.test.mjs` exit 0 — 2026-10-07: 2.1–2.6 landed as one commit (one subcommand, one test section); `node --test scripts/agento.test.mjs scripts/session-state.test.mjs` exit 0, 153/153 (9 new start-session cases); `node scripts/agento.mjs | grep -c start-session` → 1. The 2.4 primary-owner rejection is reached through the window check (a primary on the delivery branch is off `main`), covered by the window-check case
-- [ ] 2.7 Refresh the bundled CLI: `cd extension && npm run copy-cli` — verify: `node --test tests/extension-bundle.test.mjs` exit 0 and `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0
+- [x] 2.7 Refresh the bundled CLI: `cd extension && npm run copy-cli` — verify: `node --test tests/extension-bundle.test.mjs` exit 0 and `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0 — 2026-10-07: bundle 4/4, full node suite exit 0, 300/300
 
 ## Phase 3: Thin prompt
 
