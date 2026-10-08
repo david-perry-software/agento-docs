@@ -60,7 +60,7 @@ artifact-pr: "#34"
 
 ## Phase 5: Verification
 
-- [ ] 5.1 Run the full gate after merging `origin/main` into both halves and record each result against the step 1.1 baseline on this line:
+- [x] 5.1 Run the full gate after merging `origin/main` into both halves and record each result against the step 1.1 baseline on this line:
   - `git ls-files '*.sh' | xargs pnpm dlx shellcheck`
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`
   - `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`
@@ -68,4 +68,4 @@ artifact-pr: "#34"
   - `cd extension && npm run typecheck && npm run build && npm run test:unit && npm run test:electron`
   - `node --test tests/extension-bundle.test.mjs`
 
-  — verify: all commands exit 0; shellcheck has no findings; node ≥ 340; unit ≥ 128 with every new case attributed to this delivery; `git status --porcelain --untracked-files=all` is empty in both halves
+  — verify: all commands exit 0; shellcheck has no findings; node ≥ 340; unit ≥ 128 with every new case attributed to this delivery; `git status --porcelain --untracked-files=all` is empty in both halves — done 2026-10-08 at product `bacc2a1`, run before 4.3/4.4 so automated work finishes ahead of the manual step (`origin/main` `f3944be` already an ancestor of both halves; nothing to merge): shellcheck exit 0, no findings (baseline: same); node 340/340 exit 0 (baseline 340); guard smoke exit 0; companion guard smoke exit 0; extension typecheck 0, build 0, unit 139/139 exit 0 (baseline 128; +11 from this delivery: 8 in `statusStyle.test.ts`, 2 in `initiativeTreeProvider.test.ts`, 1 in `sessionDoctorModel.test.ts`), test:electron exit 0, 3/3 scenarios (baseline 3/3); `tests/extension-bundle.test.mjs` 4/4 exit 0; both halves clean. Re-run before `status: in-review` if `origin/main` advances or 4.4 changes code
