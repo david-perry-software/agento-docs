@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/status-colors
 last-updated: 2026-10-08
-next-step: "3.4 Color the status bar item"
+next-step: "4.1 Assert icon colors and status bar style in the electron suite"
 artifact-pr: "#34"
 ```
 
@@ -33,12 +33,12 @@ artifact-pr: "#34"
   - The load-error row is tinted `agento.health.fail`.
 
   — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0 — done 2026-10-08: build 0, typecheck 0, unit 0 (138/138); `no-delivery` leaves the Lifecycle row without an icon, like the other Session rows
-- [ ] 3.4 Status bar:
+- [x] 3.4 Status bar:
   - Add `statusBarStyle: { color?: string; background?: "warning" | "error" }` to both `SessionDoctorModel` kinds in `extension/src/sessionDoctorModel.ts`. `color` comes from `lifecycleStyle(lifecycle)`; `background` is `"warning"` when doctor `status` is `warn` and `"error"` when it is `fail`; the error model uses `background: "error"`.
   - In `extension/src/extension.ts`, add one `applyStatusBar(statusBar, model)` helper that sets `text`, `color`, and `backgroundColor` (`statusBarItem.warningBackground` / `statusBarItem.errorBackground`), and use it at all three sites that set `statusBar.text` today. The text stays unchanged.
   - Extend `extension/test/unit/sessionDoctorModel.test.ts` for ok/warn/fail and the error model.
 
-  — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0 and `grep -n "statusBar.text =" extension/src/extension.ts` matches only inside `applyStatusBar` and the initial creation
+  — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0 and `grep -n "statusBar.text =" extension/src/extension.ts` matches only inside `applyStatusBar` and the initial creation — done 2026-10-08: build 0, typecheck 0, unit 0 (139/139, +1 status-bar style case and style assertions on the existing model/error cases); grep matches only line 83 (`applyStatusBar`) and line 104 (initial creation)
 
 ## Phase 4: Integration evidence and docs
 
