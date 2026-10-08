@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/status-colors
 last-updated: 2026-10-08
-next-step: "4.2 Document status colors and add the CHANGELOG entry"
+next-step: "4.3 Package the extension VSIX for the manual check"
 artifact-pr: "#34"
 ```
 
@@ -49,7 +49,7 @@ artifact-pr: "#34"
   - `api.statusBar.color` / `backgroundColor`, matching the fixture's lifecycle and doctor status.
 
   Target: local electron test host, no ports — verify: `cd extension && npm run build && npm run test:electron` exit 0 in all scenarios — done 2026-10-08: build 0, test:electron exit 0, 3/3 scenarios (in-repo, companion, workspace); also asserts the empty/error rows, invalid initiative and its diagnostic, Session `Lifecycle`/Warning rows, the Doctor `pulse` group, and the error-model status bar (`statusBarItem.errorBackground`)
-- [ ] 4.2 In `docs/extension.md`, add a "Status colors" section with the mapping table, the `workbench.colorCustomizations` override example, and the note that the status bar background (doctor warn/fail) overrides the lifecycle color. Add a `CHANGELOG.md` `## Unreleased` entry — verify: `grep -n "agento.status.paused" docs/extension.md` and `grep -n -i "status colors" CHANGELOG.md` both match
+- [x] 4.2 In `docs/extension.md`, add a "Status colors" section with the mapping table, the `workbench.colorCustomizations` override example, and the note that the status bar background (doctor warn/fail) overrides the lifecycle color. Add a `CHANGELOG.md` `## Unreleased` entry — verify: `grep -n "agento.status.paused" docs/extension.md` and `grep -n -i "status colors" CHANGELOG.md` both match — done 2026-10-08: both greps exit 0 (`docs/extension.md` lines 83 and 109; `CHANGELOG.md` line 5)
 - [ ] 4.3 Package the extension for the manual check with `cd extension && npm run package`, and name the produced `.vsix` absolute path on this line. The `.vsix` is a gitignored byproduct: delete it after 4.4 and never commit it — verify: `npm run package` exit 0 and the named file exists
 - [ ] 4.4 (manual) In your own VS Code:
   1. Extensions view → `…` → *Install from VSIX…*, select the `.vsix` named in 4.3, and reload the window.
