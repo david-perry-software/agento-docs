@@ -3,6 +3,7 @@ status: planned
 branch: feature/deterministic-release-wait
 last-updated: 2026-10-07
 next-step: "1.1"
+artifact-pr: "#31"
 ```
 
 ## Phase 1: Release-state core (`scripts/release-state.mjs`)
