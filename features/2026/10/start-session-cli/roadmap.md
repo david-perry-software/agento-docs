@@ -2,13 +2,13 @@
 status: in-progress
 branch: feature/start-session-cli
 last-updated: 2026-10-07
-next-step: "1.1 Install extension dependencies and record the extension baseline"
+next-step: "1.2 Add nextSessionId and classifyFetchFailure to session-state.mjs"
 artifact-pr: "#30"
 ```
 
 ## Phase 1: Baseline and shared helpers
 
-- [ ] 1.1 Install extension dependencies and record the extension baseline: `cd extension && npm ci`, then `npm run typecheck`, `npm run test:unit` (pass count), `npm run test:electron`; record exit codes and counts on this line next to the planning baseline (shellcheck via `git ls-files '*.sh' | xargs pnpm dlx shellcheck` exit 0 no findings; node tests 289/289); a red extension baseline triggers the §5 overlap reassessment before continuing — verify: the four results are recorded here and `git status --porcelain --untracked-files=all` is empty
+- [x] 1.1 Install extension dependencies and record the extension baseline: `cd extension && npm ci`, then `npm run typecheck`, `npm run test:unit` (pass count), `npm run test:electron`; record exit codes and counts on this line next to the planning baseline (shellcheck via `git ls-files '*.sh' | xargs pnpm dlx shellcheck` exit 0 no findings; node tests 289/289); a red extension baseline triggers the §5 overlap reassessment before continuing — verify: the four results are recorded here and `git status --porcelain --untracked-files=all` is empty — baseline 2026-10-07: `npm ci` exit 0, `typecheck` exit 0, `test:unit` exit 0 114/114, `test:electron` exit 0 (in-repo, companion, workspace scenarios passed); rerun shellcheck exit 0 no findings, node tests exit 0 289/289; tree clean — green, full gate stands
 - [ ] 1.2 Add pure `nextSessionId({ now, taken })` (UTC `YYYYMMDD-HHMMSS`, then `-2`, `-3`, … until not in `taken`) and `classifyFetchFailure(stderr)` (`"auth"` for Authentication failed / could not read Username / Permission denied (publickey) / 401 / 403 / terminal prompts disabled, else `"other"`) to `scripts/session-state.mjs`, with cases in `scripts/session-state.test.mjs` — verify: `node --test scripts/session-state.test.mjs` exit 0
 - [ ] 1.3 Refactor `scripts/agento.mjs` without behavior change: extract `writeSessionWorkspace(resolved)` from the `workspace` case and `sessionRecord()` from the `session` case; both cases call the extracted functions — verify: `node --test scripts/agento.test.mjs` exit 0 with the same pass count as before the step (the #58 workspace test included)
 
