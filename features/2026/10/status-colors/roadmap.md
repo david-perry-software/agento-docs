@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/status-colors
 last-updated: 2026-10-08
-next-step: "2.1 Add extension/src/statusStyle.ts and its unit test"
+next-step: "2.2 Add contributes.colors to extension/package.json with the two-way test"
 artifact-pr: "#34"
 ```
 
@@ -12,7 +12,7 @@ artifact-pr: "#34"
 
 ## Phase 2: Style mapping and contributed colors
 
-- [ ] 2.1 Add `extension/src/statusStyle.ts` (no `vscode` import). It exports `StatusStyle`, `lifecycleStyle`, `initiativeGroupStyle`, `healthStyle`, and `STATUS_COLOR_IDS` exactly per plan.md `## Approach` item 1. Add `extension/test/unit/statusStyle.test.ts` covering the table, the unknown-value fallbacks, and coverage of every bundled `extension/cli/session-state.mjs` `LIFECYCLES` value except `no-delivery` — verify: `cd extension && npm run build && npm run test:unit` exit 0
+- [x] 2.1 Add `extension/src/statusStyle.ts` (no `vscode` import). It exports `StatusStyle`, `lifecycleStyle`, `initiativeGroupStyle`, `healthStyle`, and `STATUS_COLOR_IDS` exactly per plan.md `## Approach` item 1. Add `extension/test/unit/statusStyle.test.ts` covering the table, the unknown-value fallbacks, and coverage of every bundled `extension/cli/session-state.mjs` `LIFECYCLES` value except `no-delivery` — verify: `cd extension && npm run build && npm run test:unit` exit 0 — done 2026-10-08: build exit 0, unit exit 0 (135/135, +7 in `statusStyle.test.ts`)
 - [ ] 2.2 Add `contributes.colors` to `extension/package.json`, one entry per `STATUS_COLOR_IDS` id with a description and `dark`/`light`/`highContrast`/`highContrastLight` defaults referencing the `charts.*` ids in plan.md `## Approach` item 2. Extend `statusStyle.test.ts` to assert the two-way match (every emitted id is declared with all four defaults; every declared `agento.*` color is emitted) — verify: `cd extension && npm run build && npm run test:unit` exit 0
 
 ## Phase 3: Apply colors to every surface
