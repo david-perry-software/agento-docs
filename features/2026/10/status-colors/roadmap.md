@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/status-colors
 last-updated: 2026-10-08
-next-step: "3.2 Color Initiatives groups, members, rows, and diagnostics"
+next-step: "3.3 Color Session & Doctor rows"
 artifact-pr: "#34"
 ```
 
@@ -18,14 +18,14 @@ artifact-pr: "#34"
 ## Phase 3: Apply colors to every surface
 
 - [x] 3.1 Deliveries: in `extension/src/deliveryTreeProvider.ts`, lifecycle groups use `lifecycleStyle(group.lifecycle)` for glyph and color. Leaves keep the `git-pull-request` glyph, tinted by their lifecycle color. The error message row becomes `error` tinted `agento.health.fail`; the empty row stays uncolored `info` — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0 — done 2026-10-08: build 0, typecheck 0, unit 0 (136/136)
-- [ ] 3.2 Initiatives:
+- [x] 3.2 Initiatives:
   - Add `color?: string` to `InitiativeTreeItemSpec` and replace `GROUP_ICONS` with `initiativeGroupStyle` for groups and members.
   - Initiative rows: done and valid → `type-hierarchy` tinted `agento.status.complete`; invalid → `warning` tinted `agento.health.fail`; otherwise uncolored `type-hierarchy`.
   - The Completed folder is `archive` tinted `agento.status.complete`. Diagnostics are tinted `agento.health.fail` (error) or `agento.health.warn` (anomaly). The error message row is tinted `agento.health.fail`.
   - `InitiativeTreeProvider` passes `new ThemeColor(spec.color)` into the `ThemeIcon`.
   - Update `extension/test/unit/initiativeTreeProvider.test.ts` expectations to include colors.
 
-  — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0
+  — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0 — done 2026-10-08: build 0, typecheck 0, unit 0 (138/138, +2 color cases in `initiativeTreeProvider.test.ts`)
 - [ ] 3.3 Session & Doctor: in `extension/src/sessionDoctorProvider.ts`, add `color?` to `RowElement`.
   - Check rows and Warning rows use `healthStyle`.
   - The Session `Lifecycle` row uses `lifecycleStyle`, uncolored for `no-delivery`.
