@@ -1,0 +1,6 @@
+$ cd /home/david/DP/soshiki && time node <worktree>/scripts/agento.mjs release dfdacce8ed0e37f8de1b2d8144c7653159a7655b
+exit=0
+
+real    0m1.050s
+user    0m0.143s
+sys     0m0.071s

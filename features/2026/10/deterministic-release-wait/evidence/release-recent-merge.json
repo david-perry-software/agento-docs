@@ -1,0 +1,22 @@
+{
+  "status": "ok",
+  "verdict": "success",
+  "sha": "dfdacce8ed0e37f8de1b2d8144c7653159a7655b",
+  "workflow": "staging-release.yml",
+  "run": {
+    "id": 37705117632,
+    "event": "push",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/david-perry-software/soshiki/actions/runs/37705117632",
+    "headSha": "dfdacce8ed0e37f8de1b2d8144c7653159a7655b"
+  },
+  "supersededBy": null,
+  "reason": "push run 37705117632 succeeded",
+  "mergeDate": "2026-10-07T23:57:05Z",
+  "graceSeconds": 180,
+  "polls": 1,
+  "waitedSeconds": 0,
+  "root": "/home/david/DP/soshiki",
+  "configSource": "/home/david/DP/soshiki/.github/agento.json"
+}
