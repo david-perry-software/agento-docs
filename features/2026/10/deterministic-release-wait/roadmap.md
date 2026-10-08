@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/deterministic-release-wait
 last-updated: 2026-10-07
-next-step: "5.2"
+next-step: ""
 artifact-pr: "#31"
 ```
 
@@ -31,7 +31,7 @@ artifact-pr: "#31"
 ## Phase 5: Verification
 
 - [x] 5.1 Run three live, read-only checks from `/home/david/DP/soshiki` with `node <worktree>/scripts/agento.mjs release <sha>`, saving each JSON output to the companion slug directory as `evidence/release-<case>.json`: (a) the newest first-parent merge on `origin/main` that changed non-docs files, under `time`; (b) a merge whose `<sha>^1..<sha>` diff touches only `docs/**` or `ROADMAP.md`; (c) the `headSha` of run 37025633788 (`gh run view 37025633788 --json headSha`) — verify: (a) `verdict: success` in under 5 s real time, (b) `verdict: not-triggered`, (c) `run.id == 37025633788` (or `supersededBy` set if that run was cancelled), all exit 0 — done 2026-10-07: (a) `dfdacce` → `success`, run 37705117632, 1.05 s real ([json](evidence/release-recent-merge.json), [time](evidence/release-recent-merge.time.txt)); (b) `38d5f71` (Soshiki #23: `ROADMAP.md` + `docs/**` only; no newer docs-only merge exists in the 427 first-parent commits) → `not-triggered` ([json](evidence/release-docs-only.json)); (c) `1634ff4` → `success`, `run.id` 37025633788 ([json](evidence/release-run-37025633788.json))
-- [ ] 5.2 Run the full gate against the baseline: merge `origin/main` (and rerun `npm run copy-cli` if `scripts/agento.mjs` changed); `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0 with 0 failures (baseline 289/289); both guard replays exit 0; `cd extension && npm run build && npm run test:unit` exit 0; shellcheck over `scripts/hooks/*.sh scripts/wait-for-checks.sh` locally if installed, otherwise `scripts/wait-for-checks.sh pr <n>` until the PR's CI `Shellcheck` step reports `success`; record the comparison in plan.md `## Research` — verify: every listed command exits 0, and `git status --porcelain --untracked-files=all` is empty in both halves
+- [x] 5.2 Run the full gate against the baseline: merge `origin/main` (and rerun `npm run copy-cli` if `scripts/agento.mjs` changed); `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0 with 0 failures (baseline 289/289); both guard replays exit 0; `cd extension && npm run build && npm run test:unit` exit 0; shellcheck over `scripts/hooks/*.sh scripts/wait-for-checks.sh` locally if installed, otherwise `scripts/wait-for-checks.sh pr <n>` until the PR's CI `Shellcheck` step reports `success`; record the comparison in plan.md `## Research` — verify: every listed command exits 0, and `git status --porcelain --untracked-files=all` is empty in both halves — done 2026-10-07: `origin/main` already an ancestor (no merge, no `copy-cli` rerun); 328/328 tests; both guard replays exit 0; extension build 0, unit 114/114; shellcheck via PR #95 CI run 37709879200 `Shellcheck` → `success`; comparison recorded in plan.md `## Research`
 
 ## Follow-ups
 

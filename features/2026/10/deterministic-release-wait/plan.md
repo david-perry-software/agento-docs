@@ -149,6 +149,23 @@ Lint baseline (policy §5), recorded on detached `origin/main` at `993d919`:
   `Shellcheck` step is the shellcheck evidence, awaited with
   `scripts/wait-for-checks.sh pr <n>`.
 
+Final gate (Builder, step 5.2, 2026-10-07, on `f17fce4` with `origin/main`
+`993d919` an ancestor, so no merge or `copy-cli` rerun was needed):
+
+- `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` → exit 0, 328 tests,
+  328 pass, 0 fail (baseline 289/289; +39 new: 24 in `release-state.test.mjs`, 13
+  `release` cases in `agento.test.mjs`, 2 in `wait-for-checks.test.mjs`).
+- shellcheck → still not installed locally (`command -v shellcheck` empty); PR #95
+  CI run 37709879200 on `f17fce4`, job `test`, step `Shellcheck` → `success`, zero
+  findings, matching the clean baseline.
+- `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` → exit 0 (the new
+  `release abc1234 --wait 50` fixture evaluates `allow`);
+  `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`
+  → exit 0.
+- `cd extension && npm run build` → exit 0; `npm run test:unit` → exit 0, 114 pass,
+  0 fail.
+- Comparison: no new findings and no failures against the baseline.
+
 Concurrent deliveries: `gh pr list --state open` → #94 `feature/start-session-cli`,
 which changes `scripts/agento.mjs`, `scripts/session-state.mjs`, and
 `scripts/session-state.test.mjs`. It overlaps this plan on `scripts/agento.mjs`, and
