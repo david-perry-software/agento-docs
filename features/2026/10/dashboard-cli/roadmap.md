@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/dashboard-cli
 last-updated: 2026-10-09
-next-step: "3.1 add extension/src/dashboardDocument.ts and its unit tests"
+next-step: "3.2 one dashboard spawn per extension refresh"
 artifact-pr: "#38"
 initiative: "agento-hardening"
 ```
@@ -26,7 +26,7 @@ initiative: "agento-hardening"
 
 ## Phase 3: Extension cutover
 
-- [ ] 3.1 Add `extension/src/dashboardDocument.ts` exporting `splitDashboardDocument(json)` → `{ session, doctor, deliveries, initiatives: { list, details: ReadonlyMap<string, unknown> } }`, where the envelope is validated (`status: "ok"`, each section present) and a section with `status: "error"` is returned as `Error(message)`; add `extension/test/unit/dashboardDocument.test.ts` covering a valid document, a per-section error, a malformed envelope, and `details` keyed by `initiativeSlugs(list)` — verify: `cd extension && npm run test:unit` exit 0 with the new tests listed
+- [x] 3.1 Add `extension/src/dashboardDocument.ts` exporting `splitDashboardDocument(json)` → `{ session, doctor, deliveries, initiatives: { list, details: ReadonlyMap<string, unknown> } }`, where the envelope is validated (`status: "ok"`, each section present) and a section with `status: "error"` is returned as `Error(message)`; add `extension/test/unit/dashboardDocument.test.ts` covering a valid document, a per-section error, a malformed envelope, and `details` keyed by `initiativeSlugs(list)` — verify: `cd extension && npm run test:unit` exit 0 with the new tests listed
 - [ ] 3.2 Rewrite the refresh in `extension/src/extension.ts`: one `client.run(["dashboard", "--pr", ...(root ? ["--plugin-root", root] : [])])` under a single `LatestDeliveryRefresh`; apply the Deliveries, Session & Doctor (status bar + window banner via `applySessionIndicators`), window gate, and Initiatives snapshots together; route `Error` sections to `createDeliveryTreeError` / `createSessionDoctorError` / `createInitiativeTreeError`; log the `timings` line to the output channel; remove `latestInitiativeRefresh` — verify: `cd extension && npm run build` exit 0; `extensionIntegration.test.ts` updated to assert `client.run(["dashboard", "--pr"`, the absence of `client.run(["session"`, `["doctor"`, `["status"`, `["initiative"` on refresh, one `new LatestDeliveryRefresh()`, and still no `setInterval`; `npm run test:unit` exit 0
 - [ ] 3.3 Update `extension/test/electron/suite.ts`: a `dashboardResponse(session, doctor, status, initiatives)` fixture composed from the existing `sessionResponse`/`doctorResponse`/`statusResponse`; assert `pending.length === 2` after two refreshes, resolve each request with one dashboard document, `refreshWithSession` asserts `start + 1`; add a per-section error case rendering only that view's error row — verify: `local:3165/4165 — cd extension && npm run test:electron` exit 0 across in-repo, companion, workspace, and no-markdown scenarios
 - [ ] 3.4 Update `extension/README.md` (Deliveries, Initiatives, Session & Doctor sections and the `cli/` paragraph name `agento.mjs dashboard --pr` as the one refresh call), `docs/extension.md` "Refresh and recovery", and the `CHANGELOG.md` **Changed** entry for the single-spawn refresh — verify: `grep -n "dashboard" extension/README.md docs/extension.md CHANGELOG.md` shows each; `node --test tests/customizations.test.mjs` exit 0
