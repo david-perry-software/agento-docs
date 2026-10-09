@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/window-type-banner
 last-updated: 2026-10-09
-next-step: "3.1 Create the WindowBannerProvider webview view provider"
+next-step: "3.2 Wire the window banner view into the manifest and extension.ts"
 artifact-pr: "#35"
 ```
 
@@ -36,13 +36,13 @@ artifact-pr: "#35"
 
 ## Phase 3: Webview view and wiring
 
-- [ ] 3.1 Create `extension/src/windowBannerProvider.ts`: `WindowBannerProvider implements vscode.WebviewViewProvider`.
+- [x] 3.1 Create `extension/src/windowBannerProvider.ts`: `WindowBannerProvider implements vscode.WebviewViewProvider`.
   - It keeps the latest banner model. `resolveWebviewView` sets `webview.options = { enableScripts: false, enableCommandUris: ["agento.sessionDoctor.focus"], localResourceRoots: [] }` and renders the latest model immediately.
   - `update(banner)` re-renders when a view is attached. The view reference is dropped `onDidDispose`.
   - Each render uses a fresh nonce from `crypto.randomBytes`.
   - Exposes `current` and `html` getters.
 
-  — verify: `cd extension && npm run build && npm run typecheck` exit 0
+  — verify: `cd extension && npm run build && npm run typecheck` exit 0 — done 2026-10-09: build 0, typecheck 0
 - [ ] 3.2 Wire the view.
   - `extension/package.json`: prepend `{ "id": "agento.windowBanner", "name": "Window", "type": "webview" }` to `contributes.views.agento`.
   - `extension/src/extension.ts`: construct `WindowBannerProvider` and register it with `vscode.window.registerWebviewViewProvider("agento.windowBanner", windowBanner)`, pushing the registration into `context.subscriptions`.
