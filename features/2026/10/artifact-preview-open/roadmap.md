@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/artifact-preview-open
 last-updated: 2026-10-09
-next-step: "3.3 Package the extension and install the VSIX into the user's VS Code"
+next-step: "3.4 (manual) Reload VS Code, click a delivery and an initiative member, and attach a screenshot of the rendered preview tabs in one editor group"
 artifact-pr: "#36"
 ```
 
@@ -31,7 +31,7 @@ artifact-pr: "#36"
   - add one sentence on **Reopen Editor With… → Text Editor** for editing the source.
 
   Add a `CHANGELOG.md` `## Unreleased` **Changed.** entry — verify: `grep -n "Markdown preview" docs/extension.md` and `grep -n -i "markdown preview" CHANGELOG.md` both match, and `grep -n "beside the active editor" docs/extension.md` prints nothing — 2026-10-09: docs grep matches lines 36 and 48, CHANGELOG grep matches lines 7 and 10, "beside the active editor" grep exit 1 (no match); `tests/customizations.test.mjs` 33/33
-- [ ] 3.3 Package the extension for the manual check with `cd extension && npm run package`, and name the produced `.vsix` absolute path on this line. The agent installs it into the user's VS Code with `code --install-extension <vsix> --force`. The `.vsix` is a gitignored byproduct: delete it after 3.4 and never commit it — verify: `npm run package` exit 0, the named file exists, and `code --list-extensions --show-versions` lists `david-perry-software.agento-dashboard` at the packaged version
+- [x] 3.3 Package the extension for the manual check with `cd extension && npm run package`, and name the produced `.vsix` absolute path on this line. The agent installs it into the user's VS Code with `code --install-extension <vsix> --force`. The `.vsix` is a gitignored byproduct: delete it after 3.4 and never commit it — verify: `npm run package` exit 0, the named file exists, and `code --list-extensions --show-versions` lists `david-perry-software.agento-dashboard` at the packaged version — 2026-10-09 at product `293d57e`: `npm run package` exit 0 (VSIX archive assertion passed), produced `/home/david/DP/agento-worktrees/plan-20261009-051931/extension/agento-dashboard-0.7.0.vsix` (100047 bytes); `code --install-extension … --force` exit 0; `code --list-extensions --show-versions` lists `david-perry-software.agento-dashboard@0.7.0`
 - [ ] 3.4 (manual) In your own VS Code:
   1. Reload the window (Developer: Reload Window) so the VSIX installed in 3.3 is active.
   2. With any file open in the editor, click a delivery in the Agento **Deliveries** view, then an initiative member in **Initiatives**.
