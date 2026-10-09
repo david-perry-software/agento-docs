@@ -36,3 +36,4 @@ initiative: "agento-hardening"
 ## Follow-ups
 
 - Walk feature and issue roadmaps separately in `dashboardDocument`, so an unreadable issue roadmap cannot fail the initiatives section (review 2026-10-09, Finding 2, non-blocking).
+- Reword `docs/commands.md` L160 "byte-for-byte what that subcommand prints" to "the same JSON document that subcommand prints"; the sections are re-indented inside the envelope and tests check deep equality (review 2026-10-09 round 2, Finding 2, non-blocking).
