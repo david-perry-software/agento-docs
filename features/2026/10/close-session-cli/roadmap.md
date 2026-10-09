@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/close-session-cli
 last-updated: 2026-10-09
-next-step: "review"
+next-step: ""
 artifact-pr: "#40"
 initiative: "agento-hardening"
 ```
