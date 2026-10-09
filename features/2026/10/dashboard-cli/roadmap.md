@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/dashboard-cli
 last-updated: 2026-10-09
-next-step: "review"
+next-step: ""
 artifact-pr: "#38"
 initiative: "agento-hardening"
 ```
