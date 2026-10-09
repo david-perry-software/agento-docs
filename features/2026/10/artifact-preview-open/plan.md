@@ -247,6 +247,8 @@ All code changes are in `extension/`; `scripts/` and the CLI are unchanged.
   Verify: roadmap step 4.1's recorded results.
 - [ ] In the user's VS Code with the packaged VSIX, a delivery click and a member
   click each show a rendered preview tab in the main editor group, with no split.
-  Verify: `evidence/step-3-4-preview-open.png` linked from roadmap step 3.4.
+  Verify: `evidence/step-3-4-preview-open.png` linked from roadmap step 3.4 (delivery
+  click) and `evidence/step-3-5-breakdown-preview.png` linked from roadmap step 3.5
+  (member click; added 2026-10-09, review round 1).
 - [ ] Both halves are clean at handoff. Verify: `git status --porcelain
   --untracked-files=all` is empty in the product worktree and the companion half.
