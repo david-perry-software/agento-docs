@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/artifact-preview-open
 last-updated: 2026-10-09
-next-step: "2.2 Wire agento.openRoadmap and agento.openBreakdown to openArtifactPreview"
+next-step: "3.1 Replace the ViewColumn.Two electron assertions with preview-tab assertions"
 artifact-pr: "#36"
 ```
 
@@ -13,7 +13,7 @@ artifact-pr: "#36"
 ## Phase 2: Open as preview in the active group
 
 - [x] 2.1 Add `extension/src/openArtifact.ts` (no `vscode` import) exporting `MARKDOWN_PREVIEW_VIEW_TYPE = "vscode.markdown.preview.editor"` and `openArtifactPreview(uri, { openWith, openSource, log })` exactly per plan.md `## Approach` item 1. Add `extension/test/unit/openArtifact.test.ts` with the success case (`openWith` gets the URI and view type, `openSource` not called, returns `"preview"`) and the rejection case (one `log` line, `openSource` called once with the same URI, returns `"source"`) — verify: `cd extension && npm run build && npm run test:unit` exit 0 with the two new cases passing — 2026-10-09: exit 0, unit 154/154 (152 baseline + 2 new `openArtifactPreview` cases)
-- [ ] 2.2 In `extension/src/extension.ts`, register `agento.openRoadmap` and `agento.openBreakdown` with one shared handler that calls `openArtifactPreview`. `openWith` runs `vscode.commands.executeCommand("vscode.openWith", uri, viewType, { viewColumn: vscode.ViewColumn.Active, preview: false })`; `openSource` runs `vscode.window.showTextDocument(uri, { viewColumn: vscode.ViewColumn.Active, preview: false })`; `log` appends to `output`. Delete `openRoadmap` from `extension/src/deliveryTreeProvider.ts` and `openBreakdown` from `extension/src/initiativeTreeProvider.ts`, and drop their imports. Command ids and `package.json` stay unchanged — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0, and `grep -rn "ViewColumn.Beside\|export async function openRoadmap\|export async function openBreakdown" extension/src` prints nothing
+- [x] 2.2 In `extension/src/extension.ts`, register `agento.openRoadmap` and `agento.openBreakdown` with one shared handler that calls `openArtifactPreview`. `openWith` runs `vscode.commands.executeCommand("vscode.openWith", uri, viewType, { viewColumn: vscode.ViewColumn.Active, preview: false })`; `openSource` runs `vscode.window.showTextDocument(uri, { viewColumn: vscode.ViewColumn.Active, preview: false })`; `log` appends to `output`. Delete `openRoadmap` from `extension/src/deliveryTreeProvider.ts` and `openBreakdown` from `extension/src/initiativeTreeProvider.ts`, and drop their imports. Command ids and `package.json` stay unchanged — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0, and `grep -rn "ViewColumn.Beside\|export async function openRoadmap\|export async function openBreakdown" extension/src` prints nothing — 2026-10-09: build/typecheck/unit exit 0, unit 154/154; grep exit 1, no matches
 
 ## Phase 3: Integration evidence and docs
 
