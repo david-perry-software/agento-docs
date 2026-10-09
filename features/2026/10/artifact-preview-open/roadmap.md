@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/artifact-preview-open
 last-updated: 2026-10-09
-next-step: "4.1 Run the full gate (ordered before the 3.3 package/install and 3.4 manual check)"
+next-step: "3.3 Package the extension and install the VSIX into the user's VS Code"
 artifact-pr: "#36"
 ```
 
@@ -41,7 +41,7 @@ artifact-pr: "#36"
 
 ## Phase 4: Verification
 
-- [ ] 4.1 Run the full gate after merging `origin/main` into both halves and record each result against the step 1.1 baseline on this line:
+- [x] 4.1 Run the full gate after merging `origin/main` into both halves and record each result against the step 1.1 baseline on this line:
   - `git ls-files '*.sh' | xargs pnpm dlx shellcheck`
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`
   - `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`
@@ -49,4 +49,4 @@ artifact-pr: "#36"
   - `cd extension && npm run typecheck && npm run build && npm run test:unit && npm run test:electron`
   - `node --test tests/extension-bundle.test.mjs`
 
-  — verify: all commands exit 0; shellcheck has no findings; node ≥ 340; unit ≥ 152 with every new case attributed to this delivery; electron 3/3 scenarios; `git status --porcelain --untracked-files=all` is empty in both halves
+  — verify: all commands exit 0; shellcheck has no findings; node ≥ 340; unit ≥ 152 with every new case attributed to this delivery; electron 3/3 scenarios; `git status --porcelain --untracked-files=all` is empty in both halves — **2026-10-09 at product `293d57e`** (run ahead of 3.3/3.4 so automated work completes before the manual check; `origin/main` is an ancestor of HEAD in both halves): shellcheck exit 0, no findings (baseline: exit 0, none); node 340/340 exit 0 (baseline 340); guard smoke exit 0; companion guard smoke exit 0; extension typecheck exit 0, build exit 0, unit 154/154 exit 0 (baseline 152; +2 are the `openArtifactPreview` cases from step 2.1); `npm run test:electron` exit 0, 3/3 scenarios (baseline 3/3); `node --test tests/extension-bundle.test.mjs` exit 0, 4/4; both halves clean
