@@ -212,11 +212,12 @@ All code changes are in `extension/`; `scripts/` and the CLI are unchanged.
   second editor group is created and no source text editor is shown. Verify: the
   electron suite's delivery block assertions (`tabGroups.all.length === 1`,
   `TabInputCustom.viewType`, `isPreview === false`, no visible text editor for the
-  URI) pass in all scenarios.
+  URI) pass in all scenarios. Scope (added 2026-10-09, review round 1): "all
+  scenarios" means the in-repo and companion scenarios; the workspace scenario returns before the tree blocks, unchanged from `main`.
 - [ ] Clicking an initiative member (same `agento.openBreakdown` command as the
   initiative row) opens its `breakdown.md` the same way, from the companion artifact
   root in the companion scenario. Verify: the electron suite's member block
-  assertions pass in all scenarios.
+  assertions pass in all scenarios (the in-repo and companion scenarios, as above).
 - [ ] Clicking the same item twice focuses the existing preview tab instead of
   opening a duplicate. Verify: the electron repeat-click assertion (exactly one
   matching tab).
