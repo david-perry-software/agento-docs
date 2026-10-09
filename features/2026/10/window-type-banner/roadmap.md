@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/window-type-banner
 last-updated: 2026-10-09
-next-step: "4.1 Document the window banner in docs/extension.md, README, and CHANGELOG"
+next-step: "5.1 Run the full gate after integrating origin/main into both halves"
 artifact-pr: "#35"
 ```
 
@@ -62,7 +62,7 @@ artifact-pr: "#35"
 
 ## Phase 4: Docs
 
-- [ ] 4.1 In `docs/extension.md`, add a `## Window banner` section before `## Session & Doctor`. Cover: what each role shows, the unmanaged and unavailable banners, the click → Session & Doctor behavior, the `agento.role.*` color table, a `workbench.colorCustomizations` override example, and the pane-height note. Add one sentence about the banner to `extension/README.md`. Add a `CHANGELOG.md` `## Unreleased` **Added** entry — verify: `grep -n "agento.role.build" docs/extension.md` and `grep -n -i "window banner" CHANGELOG.md extension/README.md` all match
+- [x] 4.1 In `docs/extension.md`, add a `## Window banner` section before `## Session & Doctor`. Cover: what each role shows, the unmanaged and unavailable banners, the click → Session & Doctor behavior, the `agento.role.*` color table, a `workbench.colorCustomizations` override example, and the pane-height note. Add one sentence about the banner to `extension/README.md`. Add a `CHANGELOG.md` `## Unreleased` **Added** entry — verify: `grep -n "agento.role.build" docs/extension.md` and `grep -n -i "window banner" CHANGELOG.md extension/README.md` all match — done 2026-10-09: `docs/extension.md` lines 92 and 102 match; CHANGELOG.md line 5 and extension/README.md line 6 match. The Install paragraph in `docs/extension.md` also names the banner
 
 ## Phase 5: Verification
 
