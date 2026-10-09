@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: in-progress
 branch: feature/artifact-preview-open
 last-updated: 2026-10-09
-next-step: ""
+next-step: "3.5"
 artifact-pr: "#36"
 ```
 
@@ -37,7 +37,12 @@ artifact-pr: "#36"
   2. With any file open in the editor, click a delivery in the Agento **Deliveries** view, then an initiative member in **Initiatives**.
   3. Take a screenshot showing the rendered roadmap/breakdown preview tabs in the main editor group with no split, and no secrets visible.
 
-  — verify: the screenshot is saved as `evidence/step-3-4-preview-open.png`, linked on this line, and shows rendered preview tabs in a single editor group — **completed 2026-10-09** (user screenshot taken 01:48): [evidence/step-3-4-preview-open.png](evidence/step-3-4-preview-open.png) shows one editor group with two tabs, `roadmap.md .../artifact-preview-open` and `roadmap.md ~/.../artifact-repo-hooks`; the active tab is the rendered artifact-repo-hooks roadmap (editor title "Markdown Preview") opened by clicking that delivery, which is highlighted in **Deliveries**; the status bar shows `Agento: build · 1 active` and the window banner shows BUILD WINDOW. The **Initiatives** view shows only a collapsed `Completed (3)` folder, so the initiative-member (breakdown) click is not visible in this screenshot; the breakdown path is covered by the step 3.1 electron assertions (`assertOpensMarkdownPreview`, 3/3 scenarios). The verify is met for the delivery click. No secrets visible (the top bar shows a private LAN IP only). The 3.3 `.vsix` byproduct was deleted after this check.
+  — verify: the screenshot is saved as `evidence/step-3-4-preview-open.png`, linked on this line, and shows rendered preview tabs in a single editor group — **completed 2026-10-09** (user screenshot taken 01:48): [evidence/step-3-4-preview-open.png](evidence/step-3-4-preview-open.png) shows one editor group with two tabs, `roadmap.md .../artifact-preview-open` and `roadmap.md ~/.../artifact-repo-hooks`; the active tab is the rendered artifact-repo-hooks roadmap (editor title "Markdown Preview") opened by clicking that delivery, which is highlighted in **Deliveries**; the status bar shows `Agento: build · 1 active` and the window banner shows BUILD WINDOW. The **Initiatives** view shows only a collapsed `Completed (3)` folder, so the initiative-member (breakdown) click is not visible in this screenshot; the breakdown path is covered by the step 3.1 electron assertions (`assertOpensMarkdownPreview`, 3/3 scenarios). The verify is met for the delivery click. No secrets visible (the top bar shows a private LAN IP only). The 3.3 `.vsix` byproduct was deleted after this check. **Review 2026-10-09:** this evidence covers the delivery click only; plan.md acceptance item 8 also requires the member click in the packaged VSIX, so that half moved to step 3.5.
+- [ ] 3.5 (manual) (added 2026-10-09, review round 1, Finding 1) In your own VS Code, with `david-perry-software.agento-dashboard@0.7.0` from step 3.3 still installed (`code --list-extensions --show-versions`; repackage per 3.3 if it was replaced):
+  1. With any file open in the editor, expand **Initiatives → Completed (3)**, expand an initiative, and click one of its members.
+  2. Take a screenshot showing that member's `breakdown.md` as a rendered Markdown preview tab (editor title "Markdown Preview") in the main editor group, with no split and no secrets visible.
+
+  — verify: the screenshot is saved as `evidence/step-3-5-breakdown-preview.png`, linked on this line, and shows a rendered `breakdown.md` preview tab in a single editor group
 
 ## Phase 4: Verification
 
