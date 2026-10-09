@@ -3,6 +3,7 @@ status: planned
 branch: feature/close-session-cli
 last-updated: 2026-10-09
 next-step: "1.1"
+artifact-pr: "#40"
 initiative: "agento-hardening"
 ```
 
