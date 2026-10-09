@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/window-type-banner
 last-updated: 2026-10-09
-next-step: "2.1 Add role colors to statusStyle, the manifest, and statusStyle tests"
+next-step: "2.2 Parse hosted into the session doctor model"
 artifact-pr: "#35"
 ```
 
@@ -12,12 +12,12 @@ artifact-pr: "#35"
 
 ## Phase 2: Colors and banner model
 
-- [ ] 2.1 Add role colors in one step so the manifest-equality test never goes red.
+- [x] 2.1 Add role colors in one step so the manifest-equality test never goes red.
   - In `extension/src/statusStyle.ts`, add `ROLE_BANNER_COLORS` and `roleBannerColor(role)`. Map `primary`/`plan`/`build`/`freehand`/`unmanaged` to `agento.role.<role>` and anything else to `agento.role.unavailable`. Export `ROLE_FOREGROUND_COLOR = "agento.role.foreground"`. Include all seven ids in `STATUS_COLOR_IDS`.
   - In `extension/package.json` `contributes.colors`, declare the seven ids with descriptions and the defaults from plan.md `## Approach` item 2 for all four theme kinds.
   - In `extension/test/unit/statusStyle.test.ts`, cover `roleBannerColor` for every role and an unknown role. Update the expected `STATUS_COLOR_IDS` list. Add a WCAG contrast-ratio test: each `agento.role.*` background default against the `agento.role.foreground` default is ≥ 4.5.
 
-  — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0, with the manifest-equality and contrast tests passing
+  — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0, with the manifest-equality and contrast tests passing — done 2026-10-09: build 0, typecheck 0, unit 0 (141/141; +2: roleBannerColor mapping, WCAG contrast)
 - [ ] 2.2 In `extension/src/sessionDoctorModel.ts`, add `hosted: boolean` to `SessionSummary`, read as `sessionValue.hosted === true`. Extend `extension/test/unit/sessionDoctorModel.test.ts` with a hosted and a non-hosted case, and update existing `deepEqual` expectations — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0
 - [ ] 2.3 Create the pure module `extension/src/windowBanner.ts` (no `vscode` import) with `createWindowBannerModel(model: SessionDoctorModel)` and `renderWindowBannerHtml(banner, nonce)` per plan.md `## Approach` items 3–4.
   - Titles per role; the detail line; ` · hosted`; the unmanaged and `AGENTO UNAVAILABLE` banners.
