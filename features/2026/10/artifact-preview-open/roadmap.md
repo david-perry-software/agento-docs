@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/artifact-preview-open
 last-updated: 2026-10-09
 next-step: ""
