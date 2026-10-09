@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/close-session-cli
 last-updated: 2026-10-09
-next-step: "3.1"
+next-step: "3.2"
 artifact-pr: "#40"
 initiative: "agento-hardening"
 ```
@@ -23,7 +23,7 @@ initiative: "agento-hardening"
 
 ## Phase 3: Prompt becomes a formatter
 
-- [ ] 3.1 Rewrite `.github/prompts/close-session.prompt.md` on the `start-session.prompt.md` model: `Needs: terminal`, §9/§11/§12 citations, "One call" (`node <agento-root>/scripts/agento.mjs close-session <arg> [--dry-run] [--ignore-occupants]`, flags only when the user gave them), "Map the JSON to the response" for `usage-error`, `rejected`, `blocked` (occupant list, close-the-window instruction, re-send command and the `--ignore-occupants` override each in its own §12 block), `failed`, and `ok` (halves, workspace file, branch outcomes, warnings, each `next[]` entry in a §12 block); remove every `git`, `paths`, and `close-decision` instruction; copy byte-for-byte to `commands/close-session.md` — verify: `diff .github/prompts/close-session.prompt.md commands/close-session.md` is empty and `node --test tests/customizations.test.mjs` passes
+- [x] 3.1 Rewrite `.github/prompts/close-session.prompt.md` on the `start-session.prompt.md` model: `Needs: terminal`, §9/§11/§12 citations, "One call" (`node <agento-root>/scripts/agento.mjs close-session <arg> [--dry-run] [--ignore-occupants]`, flags only when the user gave them), "Map the JSON to the response" for `usage-error`, `rejected`, `blocked` (occupant list, close-the-window instruction, re-send command and the `--ignore-occupants` override each in its own §12 block), `failed`, and `ok` (halves, workspace file, branch outcomes, warnings, each `next[]` entry in a §12 block); remove every `git`, `paths`, and `close-decision` instruction; copy byte-for-byte to `commands/close-session.md` — verify: `diff .github/prompts/close-session.prompt.md commands/close-session.md` is empty and `node --test tests/customizations.test.mjs` passes — done 2026-10-09: diff of prompt and commands mirror empty; node --test tests/customizations.test.mjs 36 pass / 0 fail (§9/§11/§12 citations, Needs: terminal, close-before-ship ordering check, new formatter test); no git worktree removal, branch -d, paths, or close-decision steps remain in the prose
 - [ ] 3.2 Add a `tests/customizations.test.mjs` test "close-session is one agento.mjs close-session call with no hand-run fallback procedure" asserting the byte mirror, the CLI call, and the absence of `git worktree remove`, `git branch -d`, `agento.mjs paths`, and `agento.mjs close-decision` in the prompt body; keep `close-session` in the worktree-list allowlist comment accurate — verify: `node --test tests/customizations.test.mjs` passes
 
 ## Phase 4: Docs, bundle copy, gate, evidence
