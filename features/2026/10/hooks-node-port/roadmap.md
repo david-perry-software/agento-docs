@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/hooks-node-port
 last-updated: 2026-10-09
-next-step: "2.1 parity test python vs node"
+next-step: "3.1 delete the Python heredocs and the switch"
 artifact-pr: "#41"
 initiative: "agento-hardening"
 ```
@@ -15,7 +15,7 @@ initiative: "agento-hardening"
 
 ## Phase 2: Parity proof
 
-- [ ] 2.1 Add a temporary `tests/hook-parity.test.mjs` that, for each implementation (`AGENTO_HOOK_IMPL=python` and `node`), runs the guard wrapper on every command in `tests/guard-fixtures.txt` (throwaway repo on `feature/replay`), every `{companion}`-substituted command in `tests/guard-fixtures-companion.txt` (the `REPLAY_COMPANION` layout), and a corpus of ≥ 40 guard-test commands (hook-path writes and reads, watchers behind prefixes, `gh pr merge` flags, commits with redirections and pathspecs, chained `switch`/`checkout`, `-a` commits, companion `-C`/`cd` forms, an edit-tool `filePath` payload, a malformed payload), plus the SessionStart wrapper against the plain, custom-roots, companion, missing-companion, managed, pair, and worktree-config repos from `tests/session-context.test.mjs`, and asserts stdout is byte-identical between the two implementations for every case; record the counts and "0 differences" in `evidence/step-2-1-parity.md` and link it here — verify: `node --test tests/hook-parity.test.mjs` passes; the evidence file exists and names the per-corpus counts
+- [x] 2.1 Add a temporary `tests/hook-parity.test.mjs` that, for each implementation (`AGENTO_HOOK_IMPL=python` and `node`), runs the guard wrapper on every command in `tests/guard-fixtures.txt` (throwaway repo on `feature/replay`), every `{companion}`-substituted command in `tests/guard-fixtures-companion.txt` (the `REPLAY_COMPANION` layout), and a corpus of ≥ 40 guard-test commands (hook-path writes and reads, watchers behind prefixes, `gh pr merge` flags, commits with redirections and pathspecs, chained `switch`/`checkout`, `-a` commits, companion `-C`/`cd` forms, an edit-tool `filePath` payload, a malformed payload), plus the SessionStart wrapper against the plain, custom-roots, companion, missing-companion, managed, pair, and worktree-config repos from `tests/session-context.test.mjs`, and asserts stdout is byte-identical between the two implementations for every case; record the counts and "0 differences" in `evidence/step-2-1-parity.md` and link it here — verify: `node --test tests/hook-parity.test.mjs` passes; the evidence file exists and names the per-corpus counts — done 2026-10-09: 4/4 pass, 0 differences (101 fixture commands, 30 companion fixture commands, 60 guard-test payloads, 15 SessionStart payloads) — evidence: [evidence/step-2-1-parity.md](evidence/step-2-1-parity.md)
 
 ## Phase 3: Cut over and remove python3
 
