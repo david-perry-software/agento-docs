@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/window-type-banner
 last-updated: 2026-10-09
-next-step: "3.3 Electron assertions for the window banner"
+next-step: "4.1 Document the window banner in docs/extension.md, README, and CHANGELOG"
 artifact-pr: "#35"
 ```
 
@@ -51,14 +51,14 @@ artifact-pr: "#35"
   - Update `extension/test/unit/extensionIntegration.test.ts`: the expected `views.agento` list, plus a `registerWebviewViewProvider\("agento\.windowBanner"` source assertion.
 
   — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0, and `grep -c "windowBanner.update(" extension/src/extension.ts` prints 1 (inside the helper) — done 2026-10-09: build 0, typecheck 0, unit 0 (152/152, view-list and `registerWebviewViewProvider` assertions updated in place); grep prints 1 (`applySessionIndicators`). Also updated `extension/test/vsix/suite.ts`'s expected view ids (discovered: the packaged-VSIX check asserts the view list and would fail at 5.2)
-- [ ] 3.3 In `extension/test/electron/suite.ts`:
+- [x] 3.3 In `extension/test/electron/suite.ts`:
   - After the existing `build` refresh, assert `api.windowBanner.current` (title `BUILD WINDOW`, detail containing the fixture slug, branch, and `building`, tone `build`).
   - After the detached-plan refresh, assert `PLAN WINDOW` with `detached`.
   - After the invalid-session refresh, assert `AGENTO UNAVAILABLE` with tone `unavailable`.
   - Assert the primary-window case where the suite already drives one.
   - Run `vscode.commands.executeCommand("agento.windowBanner.focus")`, wait until `api.windowBanner.html` is defined, and assert it contains the current title, `--vscode-agento-role-<tone>`, and `command:agento.sessionDoctor.focus`.
 
-  Target: local electron test host, no ports — verify: `cd extension && npm run build && npm run test:electron` exit 0 in all scenarios
+  Target: local electron test host, no ports — verify: `cd extension && npm run build && npm run test:electron` exit 0 in all scenarios — done 2026-10-09: build 0; test:electron in-repo, companion, and workspace scenarios all `Exit code: 0` (in-repo/companion now report "window banner"). The detached-plan fixture now also sets `branch: null`, as the CLI does for a detached HEAD, so the banner shows `detached`
 
 ## Phase 4: Docs
 
