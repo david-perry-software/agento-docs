@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/window-type-banner
 last-updated: 2026-10-09
-next-step: "Review: /agento review-feature window-type-banner"
+next-step: ""
 artifact-pr: "#35"
 ```
 
