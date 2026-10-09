@@ -86,6 +86,10 @@ Skills consulted: none — no matching domain (this repository has no
   breaks). Contributed colors are exposed inside webviews as CSS variables
   `--vscode-<id with dots replaced by dashes>`, e.g. `--vscode-agento-role-build`, so
   theme and `workbench.colorCustomizations` overrides reach the banner.
+  *Corrected 2026-10-09 (roadmap step 3.4):* the installed VS Code replaces only the
+  first dot (`id.replace(".", "-")`), so the variable is actually
+  `--vscode-agento-role.build`. The banner references both spellings with a
+  fallback, `var(--vscode-agento-role-build, var(--vscode-agento-role\.build))`.
 - **Manifest test.** `extension/test/unit/extensionIntegration.test.ts` deep-equals
   the `views.agento` list, and checks `extension.ts` source for `createTreeView`
   calls. Both need updating for the new view.
@@ -224,6 +228,9 @@ new `extension/test/unit/windowBanner.test.ts`, `extension/test/electron/suite.t
   Mitigation: compact HTML whose background fills the whole pane (`html, body`
   height 100%, banner background on `body`), so any extra height stays colored
   instead of showing a blank gap. Documented in `docs/extension.md`.
+  *Updated 2026-10-09 (roadmap steps 3.5–3.6):* VS Code enforces a 120 px minimum
+  webview pane body height that extensions cannot change, so the banner centers its
+  content vertically in that height, and the view declares `"initialSize": 1`.
 - **Pane header duplication.** The view's own header (`WINDOW`) sits above the
   banner. Mitigation: short name `Window`; accepted as native VS Code chrome.
 - **XSS through branch names or CLI messages.** Mitigation: strict CSP with no
