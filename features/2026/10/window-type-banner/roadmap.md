@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/window-type-banner
 last-updated: 2026-10-09
-next-step: "3.2 Wire the window banner view into the manifest and extension.ts"
+next-step: "3.3 Electron assertions for the window banner"
 artifact-pr: "#35"
 ```
 
@@ -43,14 +43,14 @@ artifact-pr: "#35"
   - Exposes `current` and `html` getters.
 
   — verify: `cd extension && npm run build && npm run typecheck` exit 0 — done 2026-10-09: build 0, typecheck 0
-- [ ] 3.2 Wire the view.
+- [x] 3.2 Wire the view.
   - `extension/package.json`: prepend `{ "id": "agento.windowBanner", "name": "Window", "type": "webview" }` to `contributes.views.agento`.
   - `extension/src/extension.ts`: construct `WindowBannerProvider` and register it with `vscode.window.registerWebviewViewProvider("agento.windowBanner", windowBanner)`, pushing the registration into `context.subscriptions`.
   - Replace the three `applyStatusBar(statusBar, model)` call sites with one helper that updates the status bar and calls `windowBanner.update(createWindowBannerModel(model))`.
   - Add `windowBanner` to `ExtensionApi` and the returned API object.
   - Update `extension/test/unit/extensionIntegration.test.ts`: the expected `views.agento` list, plus a `registerWebviewViewProvider\("agento\.windowBanner"` source assertion.
 
-  — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0, and `grep -c "windowBanner.update(" extension/src/extension.ts` prints 1 (inside the helper)
+  — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0, and `grep -c "windowBanner.update(" extension/src/extension.ts` prints 1 (inside the helper) — done 2026-10-09: build 0, typecheck 0, unit 0 (152/152, view-list and `registerWebviewViewProvider` assertions updated in place); grep prints 1 (`applySessionIndicators`). Also updated `extension/test/vsix/suite.ts`'s expected view ids (discovered: the packaged-VSIX check asserts the view list and would fail at 5.2)
 - [ ] 3.3 In `extension/test/electron/suite.ts`:
   - After the existing `build` refresh, assert `api.windowBanner.current` (title `BUILD WINDOW`, detail containing the fixture slug, branch, and `building`, tone `build`).
   - After the detached-plan refresh, assert `PLAN WINDOW` with `detached`.
