@@ -1,0 +1,32 @@
+# product clone (/home/david/DP/agento) before
+worktree /home/david/DP/agento
+HEAD 5d992cb05f0cf7826c7a0bf5c66de9cad77771b7
+branch refs/heads/main
+
+worktree /home/david/DP/agento-worktrees/plan-20261009-182342
+HEAD 5b51fdc3b518229a4033dbb3d385cc1690d7fb2a
+branch refs/heads/feature/close-session-cli
+# product clone after
+worktree /home/david/DP/agento
+HEAD 5d992cb05f0cf7826c7a0bf5c66de9cad77771b7
+branch refs/heads/main
+
+worktree /home/david/DP/agento-worktrees/plan-20261009-182342
+HEAD 5b51fdc3b518229a4033dbb3d385cc1690d7fb2a
+branch refs/heads/feature/close-session-cli
+# companion clone (/home/david/DP/agento-docs) before
+worktree /home/david/DP/agento-docs
+HEAD 16981d6e69e000af90e6f1f1cffc12a1a38dc4c1
+branch refs/heads/main
+
+worktree /home/david/DP/agento-docs-worktrees/plan-20261009-182342
+HEAD a2de7a30fb4c9230e5a2544d94c6d3672fc1e79e
+branch refs/heads/feature/close-session-cli
+# companion clone after
+worktree /home/david/DP/agento-docs
+HEAD 16981d6e69e000af90e6f1f1cffc12a1a38dc4c1
+branch refs/heads/main
+
+worktree /home/david/DP/agento-docs-worktrees/plan-20261009-182342
+HEAD a2de7a30fb4c9230e5a2544d94c6d3672fc1e79e
+branch refs/heads/feature/close-session-cli
