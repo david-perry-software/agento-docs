@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/artifact-preview-open
 last-updated: 2026-10-09
-next-step: "3.8"
+next-step: "4.2"
 artifact-pr: "#36"
 ```
 
@@ -51,7 +51,7 @@ artifact-pr: "#36"
 
   Target: local electron test host, no ports — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0 with the new unit case passing, and `npm run test:electron` exit 0 with 4/4 scenarios (in-repo, companion, workspace, no-markdown) — 2026-10-09: build exit 0, typecheck exit 0, unit 155/155 exit 0 (152 baseline + 3 `openArtifactPreview` cases; `ok 114` is the new unavailable-path case); `npm run test:electron` exit 0, 4/4 scenarios ("Electron no-markdown scenario passed: source fallback in the active group")
 - [x] 3.7 (added 2026-10-09, review round 1, Finding 3) Record the electron scenario coverage precisely: the delivery and member preview assertions run in the in-repo and companion scenarios; the workspace scenario returns before the tree blocks, unchanged from `main`. Annotate plan.md acceptance items 1-2 and this roadmap's step 3.1 line with that scope — verify: `git show origin/main:extension/test/electron/suite.ts | grep -n "Electron workspace scenario passed"` matches (the early return predates this delivery), and `grep -n "workspace scenario returns before the tree blocks" plan.md roadmap.md` matches in both files — 2026-10-09: the `origin/main` grep matches `suite.ts` line 534 (exit 0); the annotation grep matches plan.md line 216 and roadmap.md lines 27 (step 3.1) and 53 (this step), exit 0. The step 3.6 `no-markdown` scenario is a fourth scenario and also skips the tree blocks by design
-- [ ] 3.8 (added 2026-10-09, review round 1) Repackage and reinstall the VSIX so step 3.5 exercises the step 3.6 code: `cd extension && npm run package`, `code --install-extension <vsix> --force`, then delete the `.vsix` byproduct — verify: `npm run package` exit 0, install exit 0, `code --list-extensions --show-versions` lists `david-perry-software.agento-dashboard@0.7.0`, and the `.vsix` no longer exists
+- [x] 3.8 (added 2026-10-09, review round 1) Repackage and reinstall the VSIX so step 3.5 exercises the step 3.6 code: `cd extension && npm run package`, `code --install-extension <vsix> --force`, then delete the `.vsix` byproduct — verify: `npm run package` exit 0, install exit 0, `code --list-extensions --show-versions` lists `david-perry-software.agento-dashboard@0.7.0`, and the `.vsix` no longer exists — 2026-10-09 at product `8a70b19`: `npm run package` exit 0 (VSIX archive assertion passed), produced `/home/david/DP/agento-worktrees/plan-20261009-051931/extension/agento-dashboard-0.7.0.vsix` (100147 bytes); `code --install-extension … --force` exit 0; `code --list-extensions --show-versions` lists `david-perry-software.agento-dashboard@0.7.0`; the installed `out/openArtifact.js` and `out/extension.js` contain `previewAvailable`; the `.vsix` was deleted (`ls` exit 2)
 
 ## Phase 4: Verification
 
