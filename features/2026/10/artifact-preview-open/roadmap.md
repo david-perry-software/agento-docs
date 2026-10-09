@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/artifact-preview-open
 last-updated: 2026-10-09
-next-step: "3.1 Replace the ViewColumn.Two electron assertions with preview-tab assertions"
+next-step: "3.2 Update docs/extension.md and CHANGELOG.md"
 artifact-pr: "#36"
 ```
 
@@ -17,14 +17,14 @@ artifact-pr: "#36"
 
 ## Phase 3: Integration evidence and docs
 
-- [ ] 3.1 In `extension/test/electron/suite.ts`, replace the `ViewColumn.Two` text-editor assertions in the delivery block (around lines 651-661) and the initiative-member block (around lines 763-775) with the assertions in plan.md `## Approach` item 4:
+- [x] 3.1 In `extension/test/electron/suite.ts`, replace the `ViewColumn.Two` text-editor assertions in the delivery block (around lines 651-661) and the initiative-member block (around lines 763-775) with the assertions in plan.md `## Approach` item 4:
   - `vscode.markdown-language-features` is active;
   - `tabGroups.all.length === 1`;
   - the active tab is a `TabInputCustom` with view type `vscode.markdown.preview.editor` for the command's URI, with `isPreview === false`, in `ViewColumn.One`;
   - no visible text editor shows the URI;
   - a repeat run of the command leaves exactly one matching tab.
 
-  Keep the existing URI and companion artifact-root assertions. If the markdown extension is inactive in the test host, add the minimal `runTest.ts` launch-arg fix as an `(added <date>)` step instead of weakening the assertion. Target: local electron test host, no ports — verify: `cd extension && npm run build && npm run test:electron` exit 0 in all scenarios (in-repo, companion, workspace)
+  Keep the existing URI and companion artifact-root assertions. If the markdown extension is inactive in the test host, add the minimal `runTest.ts` launch-arg fix as an `(added <date>)` step instead of weakening the assertion. Target: local electron test host, no ports — verify: `cd extension && npm run build && npm run test:electron` exit 0 in all scenarios (in-repo, companion, workspace) — 2026-10-09: exit 0, 3/3 scenarios; the assertions live in a shared `assertOpensMarkdownPreview` helper used by both blocks; `vscode.markdown-language-features` is active under `--disable-extensions`, so no `runTest.ts` change was needed
 - [ ] 3.2 Update `docs/extension.md`:
   - line 36: a delivery opens its `roadmap.md` as a rendered Markdown preview in the active editor group;
   - lines 44-45: the same for `breakdown.md`;
