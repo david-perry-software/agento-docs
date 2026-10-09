@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-review
 branch: feature/artifact-preview-open
 last-updated: 2026-10-09
-next-step: "3.4 (manual) Reload VS Code, click a delivery and an initiative member, and attach a screenshot of the rendered preview tabs in one editor group"
+next-step: ""
 artifact-pr: "#36"
 ```
 
@@ -32,12 +32,12 @@ artifact-pr: "#36"
 
   Add a `CHANGELOG.md` `## Unreleased` **Changed.** entry — verify: `grep -n "Markdown preview" docs/extension.md` and `grep -n -i "markdown preview" CHANGELOG.md` both match, and `grep -n "beside the active editor" docs/extension.md` prints nothing — 2026-10-09: docs grep matches lines 36 and 48, CHANGELOG grep matches lines 7 and 10, "beside the active editor" grep exit 1 (no match); `tests/customizations.test.mjs` 33/33
 - [x] 3.3 Package the extension for the manual check with `cd extension && npm run package`, and name the produced `.vsix` absolute path on this line. The agent installs it into the user's VS Code with `code --install-extension <vsix> --force`. The `.vsix` is a gitignored byproduct: delete it after 3.4 and never commit it — verify: `npm run package` exit 0, the named file exists, and `code --list-extensions --show-versions` lists `david-perry-software.agento-dashboard` at the packaged version — 2026-10-09 at product `293d57e`: `npm run package` exit 0 (VSIX archive assertion passed), produced `/home/david/DP/agento-worktrees/plan-20261009-051931/extension/agento-dashboard-0.7.0.vsix` (100047 bytes); `code --install-extension … --force` exit 0; `code --list-extensions --show-versions` lists `david-perry-software.agento-dashboard@0.7.0`
-- [ ] 3.4 (manual) In your own VS Code:
+- [x] 3.4 (manual) In your own VS Code:
   1. Reload the window (Developer: Reload Window) so the VSIX installed in 3.3 is active.
   2. With any file open in the editor, click a delivery in the Agento **Deliveries** view, then an initiative member in **Initiatives**.
   3. Take a screenshot showing the rendered roadmap/breakdown preview tabs in the main editor group with no split, and no secrets visible.
 
-  — verify: the screenshot is saved as `evidence/step-3-4-preview-open.png`, linked on this line, and shows rendered preview tabs in a single editor group
+  — verify: the screenshot is saved as `evidence/step-3-4-preview-open.png`, linked on this line, and shows rendered preview tabs in a single editor group — **completed 2026-10-09** (user screenshot taken 01:48): [evidence/step-3-4-preview-open.png](evidence/step-3-4-preview-open.png) shows one editor group with two tabs, `roadmap.md .../artifact-preview-open` and `roadmap.md ~/.../artifact-repo-hooks`; the active tab is the rendered artifact-repo-hooks roadmap (editor title "Markdown Preview") opened by clicking that delivery, which is highlighted in **Deliveries**; the status bar shows `Agento: build · 1 active` and the window banner shows BUILD WINDOW. The **Initiatives** view shows only a collapsed `Completed (3)` folder, so the initiative-member (breakdown) click is not visible in this screenshot; the breakdown path is covered by the step 3.1 electron assertions (`assertOpensMarkdownPreview`, 3/3 scenarios). The verify is met for the delivery click. No secrets visible (the top bar shows a private LAN IP only). The 3.3 `.vsix` byproduct was deleted after this check.
 
 ## Phase 4: Verification
 
@@ -49,4 +49,4 @@ artifact-pr: "#36"
   - `cd extension && npm run typecheck && npm run build && npm run test:unit && npm run test:electron`
   - `node --test tests/extension-bundle.test.mjs`
 
-  — verify: all commands exit 0; shellcheck has no findings; node ≥ 340; unit ≥ 152 with every new case attributed to this delivery; electron 3/3 scenarios; `git status --porcelain --untracked-files=all` is empty in both halves — **2026-10-09 at product `293d57e`** (run ahead of 3.3/3.4 so automated work completes before the manual check; `origin/main` is an ancestor of HEAD in both halves): shellcheck exit 0, no findings (baseline: exit 0, none); node 340/340 exit 0 (baseline 340); guard smoke exit 0; companion guard smoke exit 0; extension typecheck exit 0, build exit 0, unit 154/154 exit 0 (baseline 152; +2 are the `openArtifactPreview` cases from step 2.1); `npm run test:electron` exit 0, 3/3 scenarios (baseline 3/3); `node --test tests/extension-bundle.test.mjs` exit 0, 4/4; both halves clean
+  — verify: all commands exit 0; shellcheck has no findings; node ≥ 340; unit ≥ 152 with every new case attributed to this delivery; electron 3/3 scenarios; `git status --porcelain --untracked-files=all` is empty in both halves — **2026-10-09 at product `293d57e`** (run ahead of 3.3/3.4 so automated work completes before the manual check; `origin/main` is an ancestor of HEAD in both halves): shellcheck exit 0, no findings (baseline: exit 0, none); node 340/340 exit 0 (baseline 340); guard smoke exit 0; companion guard smoke exit 0; extension typecheck exit 0, build exit 0, unit 154/154 exit 0 (baseline 152; +2 are the `openArtifactPreview` cases from step 2.1); `npm run test:electron` exit 0, 3/3 scenarios (baseline 3/3); `node --test tests/extension-bundle.test.mjs` exit 0, 4/4; both halves clean. **Re-confirmed 2026-10-09 before in-review:** product HEAD still `293d57e` with no code change since this run, and product `origin/main` (`4b38ce5`) unchanged and an ancestor; companion `origin/main` advanced to `b407b68` (PR #37, `initiatives/2026/10/agento-hardening/` brief + breakdown only, no product code and no overlap with this delivery) and was merged into the companion branch, so the gate result stands
