@@ -1,0 +1,87 @@
+{
+  "status": "blocked",
+  "mode": "build",
+  "subject": "feature/close-session-cli",
+  "outcome": "closed",
+  "applied": false,
+  "product": {
+    "path": "/home/david/DP/agento-worktrees/plan-20261009-182342",
+    "branch": "feature/close-session-cli",
+    "detached": false,
+    "registered": true,
+    "onDisk": true,
+    "removed": false
+  },
+  "companion": {
+    "path": "/home/david/DP/agento-docs-worktrees/plan-20261009-182342",
+    "branch": "feature/close-session-cli",
+    "detached": false,
+    "registered": true,
+    "onDisk": true,
+    "removed": false
+  },
+  "workspace": {
+    "path": "/home/david/DP/agento-worktrees/plan-20261009-182342.code-workspace",
+    "existed": true,
+    "removed": false
+  },
+  "branches": {
+    "product": {
+      "name": "feature/close-session-cli",
+      "upstream": "origin/feature/close-session-cli",
+      "remoteExists": true,
+      "mergedIntoDefault": false,
+      "action": "retained",
+      "reason": "origin/feature/close-session-cli still exists"
+    },
+    "companion": {
+      "name": "feature/close-session-cli",
+      "upstream": "origin/feature/close-session-cli",
+      "remoteExists": true,
+      "mergedIntoDefault": false,
+      "action": "retained",
+      "reason": "origin/feature/close-session-cli still exists"
+    }
+  },
+  "occupants": {
+    "product": [
+      "PID 2257014 (code)",
+      "PID 2257537 (code)",
+      "PID 2258976 (code)",
+      "and 20 more processes",
+      "a matching VS Code folder",
+      "a matching VS Code workspace window"
+    ],
+    "companion": [
+      "PID 2351422 (bash)",
+      "PID 2361411 (bash)",
+      "PID 2368818 (bash)",
+      "and 40 more processes",
+      "a matching VS Code folder",
+      "a matching VS Code workspace window"
+    ]
+  },
+  "dirty": {
+    "product": [],
+    "companion": []
+  },
+  "next": [
+    "/agento ship close-session-cli"
+  ],
+  "reason": "occupied",
+  "message": "Active worktree occupants detected - product half /home/david/DP/agento-worktrees/plan-20261009-182342: PID 2257014 (code), PID 2257537 (code), PID 2258976 (code), and 20 more processes, a matching VS Code folder, a matching VS Code workspace window; companion half /home/david/DP/agento-docs-worktrees/plan-20261009-182342: PID 2351422 (bash), PID 2361411 (bash), PID 2368818 (bash), and 40 more processes, a matching VS Code folder, a matching VS Code workspace window. Close their terminals or VS Code window before removal, or re-send with --ignore-occupants.",
+  "fix": null,
+  "reauth": null,
+  "allowed": [
+    "/agento continue",
+    "/agento start-session",
+    "/agento new-feature",
+    "/agento new-issue",
+    "/agento new-initiative",
+    "/agento delivery-status"
+  ],
+  "elsewhere": [],
+  "warnings": [],
+  "root": "/home/david/DP/agento",
+  "configSource": "/home/david/DP/agento/.github/agento.json"
+}
