@@ -2,14 +2,14 @@
 status: in-progress
 branch: feature/close-session-cli
 last-updated: 2026-10-09
-next-step: "1.1"
+next-step: "1.2"
 artifact-pr: "#40"
 initiative: "agento-hardening"
 ```
 
 ## Phase 1: Occupant check module
 
-- [ ] 1.1 Add `scripts/worktree-occupants.mjs` exporting `findOccupants(target, { procDir, platform, codeStatus })` as a faithful port of the guard's check (`scripts/hooks/delivery-guard.sh` L55–118: `/proc/<pid>/cwd` scan on Linux with the same name sanitising, `code --status` with a 5 s timeout and the three `Folder` / `Workspace` / `Window (… (Workspace))` regexes, `details[]` in the guard's exact wording, ≤3 PIDs then "and N more processes") with unit tests in `scripts/worktree-occupants.test.mjs` using a fake `procDir` and canned status text, including `code` missing and a non-Linux platform — verify: `node --test scripts/worktree-occupants.test.mjs` passes and covers every `details` phrase
+- [x] 1.1 Add `scripts/worktree-occupants.mjs` exporting `findOccupants(target, { procDir, platform, codeStatus })` as a faithful port of the guard's check (`scripts/hooks/delivery-guard.sh` L55–118: `/proc/<pid>/cwd` scan on Linux with the same name sanitising, `code --status` with a 5 s timeout and the three `Folder` / `Workspace` / `Window (… (Workspace))` regexes, `details[]` in the guard's exact wording, ≤3 PIDs then "and N more processes") with unit tests in `scripts/worktree-occupants.test.mjs` using a fake `procDir` and canned status text, including `code` missing and a non-Linux platform — verify: `node --test scripts/worktree-occupants.test.mjs` passes and covers every `details` phrase — done 2026-10-09: 8 pass / 0 fail (PID list, "and N more processes", folder, workspace phrases; `code` missing, non-Linux)
 - [ ] 1.2 Add an end-to-end occupant test that spawns a real child process with its cwd inside a temporary directory and asserts it appears as `PID <n> (<comm>)`, then disappears after the child exits — verify: `node --test scripts/worktree-occupants.test.mjs` passes on Linux and skips the live-process case elsewhere
 
 ## Phase 2: `agento.mjs close-session`
