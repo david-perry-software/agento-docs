@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/window-type-banner
 last-updated: 2026-10-09
-next-step: "2.3 Create the pure windowBanner model and HTML module with unit tests"
+next-step: "3.1 Create the WindowBannerProvider webview view provider"
 artifact-pr: "#35"
 ```
 
@@ -19,7 +19,7 @@ artifact-pr: "#35"
 
   — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0, with the manifest-equality and contrast tests passing — done 2026-10-09: build 0, typecheck 0, unit 0 (141/141; +2: roleBannerColor mapping, WCAG contrast)
 - [x] 2.2 In `extension/src/sessionDoctorModel.ts`, add `hosted: boolean` to `SessionSummary`, read as `sessionValue.hosted === true`. Extend `extension/test/unit/sessionDoctorModel.test.ts` with a hosted and a non-hosted case, and update existing `deepEqual` expectations — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0 — done 2026-10-09: build 0, typecheck 0, unit 0 (142/142; +1: hosted true/false/absent/non-boolean)
-- [ ] 2.3 Create the pure module `extension/src/windowBanner.ts` (no `vscode` import) with `createWindowBannerModel(model: SessionDoctorModel)` and `renderWindowBannerHtml(banner, nonce)` per plan.md `## Approach` items 3–4.
+- [x] 2.3 Create the pure module `extension/src/windowBanner.ts` (no `vscode` import) with `createWindowBannerModel(model: SessionDoctorModel)` and `renderWindowBannerHtml(banner, nonce)` per plan.md `## Approach` items 3–4.
   - Titles per role; the detail line; ` · hosted`; the unmanaged and `AGENTO UNAVAILABLE` banners.
   - CSP `default-src 'none'; style-src 'nonce-<nonce>'`.
   - A single `command:agento.sessionDoctor.focus` link with the tooltip in `title`.
@@ -32,7 +32,7 @@ artifact-pr: "#35"
   - CSP, nonce, no `<script`, the command link, and the role CSS variable;
   - a branch and an error message containing `<script>"'&` rendered escaped.
 
-  — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0, and `grep -c "from \"vscode\"" extension/src/windowBanner.ts` prints 0
+  — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0, and `grep -c "from \"vscode\"" extension/src/windowBanner.ts` prints 0 — done 2026-10-09: build 0, typecheck 0, unit 0 (152/152; +10 in `windowBanner.test.ts`: roles, delivery detail, no-delivery, detached plan, hosted, unmanaged, unknown role, error, CSP/link/colors HTML, hostile escaping); grep prints 0
 
 ## Phase 3: Webview view and wiring
 
