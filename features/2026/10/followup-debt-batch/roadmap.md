@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/followup-debt-batch
 last-updated: 2026-10-09
-next-step: "Review: /agento review-feature followup-debt-batch"
+next-step: ""
 artifact-pr: "#39"
 initiative: "agento-hardening"
 ```
