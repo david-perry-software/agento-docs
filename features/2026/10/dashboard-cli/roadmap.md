@@ -2,14 +2,14 @@
 status: in-progress
 branch: feature/dashboard-cli
 last-updated: 2026-10-09
-next-step: "1.1 memoise the product worktree list and primary root"
+next-step: "1.2 share the gh --version probe"
 artifact-pr: "#38"
 initiative: "agento-hardening"
 ```
 
 ## Phase 1: CLI foundations (memoisation, shared probe, document builders)
 
-- [ ] 1.1 Add `productWorktrees({ fresh })` and a memoised `primaryWorktreesDir()` in `scripts/agento.mjs`, seeded from `anchorRoot`'s read when its `dir` is `root`; switch every read-only `git worktree list --porcelain` call site (`layoutFor`, `resolveArtifacts`, `resolveSessionPaths`, `managedHalves`, `sessionRecord`, the `worktrees-dir`/`session-workspace`/`artifact-repo` doctor checks, `status`, `initiative`, `next`, `start-session` pre-mutation reads) to it; `start-session`'s post-`worktree add` reads use `{ fresh: true }` — verify: `node --test scripts/agento.test.mjs` passes unchanged; a new test with a logging `git` wrapper on a restricted PATH asserts `session`, `status --pr`, and `initiative` each run `worktree list --porcelain` once per clone (product; plus companion in companion mode) from a product cwd
+- [x] 1.1 Add `productWorktrees({ fresh })` and a memoised `primaryWorktreesDir()` in `scripts/agento.mjs`, seeded from `anchorRoot`'s read when its `dir` is `root`; switch every read-only `git worktree list --porcelain` call site (`layoutFor`, `resolveArtifacts`, `resolveSessionPaths`, `managedHalves`, `sessionRecord`, the `worktrees-dir`/`session-workspace`/`artifact-repo` doctor checks, `status`, `initiative`, `next`, `start-session` pre-mutation reads) to it; `start-session`'s post-`worktree add` reads use `{ fresh: true }` — verify: `node --test scripts/agento.test.mjs` passes unchanged; a new test with a logging `git` wrapper on a restricted PATH asserts `session`, `status --pr`, and `initiative` each run `worktree list --porcelain` once per clone (product; plus companion in companion mode) from a product cwd
 - [ ] 1.2 Share the `gh --version` probe: one memoised `ghVersion()` used by `lookupPullRequest`, the doctor `gh` check, and `release` — verify: a new test with a `gh` stub that logs `--version` asserts `status --pr` over three non-complete items runs `--version` exactly once while `pr view` runs once per item (twice per item in companion mode); existing `ship-preflight --pr`, `session --pr`, and `release` tests pass unchanged
 - [ ] 1.3 Extract `statusDocument({ typeFilter, slugFilter, pr, lookup })`, `initiativeListDocument(roadmaps)`, `initiativeDetailDocument(slug, roadmaps)`, and `doctorDocument(ids)` from their `switch` cases, and add the injectable `lookup` parameter (default `lookupPullRequest`) to `sessionRecord` and `statusDocument`; the cases become single emits — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0 with every pre-existing assertion untouched; `git diff --stat` shows no test assertion edits for this step
 - [ ] 1.4 Integrate `origin/main` into both halves by merge, run `cd extension && npm run copy-cli` and confirm `cmp` on all six `extension/cli/*.mjs`, commit (product code commit + companion roadmap commit), push both — verify: `git status --porcelain --untracked-files=all` empty in both halves; `node <agento-root>/scripts/agento.mjs session` reports `companion.dirty: false`, `companion.ahead: 0`
