@@ -3,6 +3,7 @@ status: planned
 branch: feature/followup-debt-batch
 last-updated: 2026-10-09
 next-step: "1.1 Add the failing managed-worktree tests for paths, workspace, and config"
+artifact-pr: "#39"
 initiative: "agento-hardening"
 ```
 
