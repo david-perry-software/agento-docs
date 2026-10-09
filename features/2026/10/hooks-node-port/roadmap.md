@@ -3,6 +3,7 @@ status: planned
 branch: feature/hooks-node-port
 last-updated: 2026-10-09
 next-step: "1.1 add scripts/hooks/hook-lib.mjs with unit tests"
+artifact-pr: "#41"
 initiative: "agento-hardening"
 ```
 
