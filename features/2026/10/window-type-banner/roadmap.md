@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: feature/window-type-banner
 last-updated: 2026-10-09
-next-step: "5.4 (manual) Reload the build window and screenshot the Window banner at the top of the Agento sidebar"
+next-step: "5.1 Re-run the full gate after steps 3.4–3.6"
 artifact-pr: "#35"
 ```
 
@@ -85,10 +85,10 @@ artifact-pr: "#35"
   — verify: all commands exit 0; shellcheck has no findings; node ≥ 340; unit ≥ 139 with every new case attributed to this delivery; electron all scenarios; `git status --porcelain --untracked-files=all` is empty in both halves — done 2026-10-09 at product `7e4b81e` (`origin/main` already an ancestor of both halves; nothing to merge): shellcheck exit 0, no findings (baseline: 0); node 340/340 exit 0 (baseline 340); guard smoke exit 0; companion guard smoke exit 0; typecheck 0 (no findings); build 0; unit 152/152 exit 0 (baseline 139; +13 from this delivery: 2 `statusStyle`, 1 `sessionDoctorModel`, 10 `windowBanner`); test:electron exit 0 (in-repo, companion, workspace); `extension-bundle.test.mjs` 4/4 exit 0; both halves clean
 - [x] 5.2 Package the extension with `cd extension && npm run package` and name the produced `.vsix` absolute path on this line. The `.vsix` is a gitignored byproduct: delete it after 5.4 and never commit it — verify: `npm run package` exit 0 (VSIX archive assertion passed) and the named file exists — done 2026-10-09: `npm run package` exit 0, "VSIX archive assertion passed: 14 required entries, license bytes preserved, exclusions clean"; produced `/home/david/DP/agento-worktrees/plan-20261009-041322/extension/agento-dashboard-0.7.0.vsix` (42 files, 97.19 KB; gitignored by `.gitignore:7`). Re-done 2026-10-09 after 3.4: `npm run package` exit 0, assertion passed, same path (42 files, 97.29 KB)
 - [x] 5.3 Install the packaged VSIX into the user's VS Code with `code --install-extension <path from 5.2> --force` — verify: `code --list-extensions --show-versions` lists `david-perry-software.agento-dashboard@<manifest version>` — done 2026-10-09: install exit 0 ("Extension 'agento-dashboard-0.7.0.vsix' was successfully installed."); the list shows `david-perry-software.agento-dashboard@0.7.0`, matching `extension/package.json` version 0.7.0. Re-done 2026-10-09 after 3.4 with `--force`; the list still shows `david-perry-software.agento-dashboard@0.7.0`, now with the fixed banner
-- [ ] 5.4 (manual) In your own VS Code, in this build window:
+- [x] 5.4 (manual) In your own VS Code, in this build window:
   1. Run *Developer: Reload Window*.
   2. Open the Agento activity-bar container. The `Window` view should sit at the top with a green `BUILD WINDOW` banner showing `window-type-banner · feature/window-type-banner · <lifecycle>`.
   3. Hover the banner to see the worktree-path tooltip, then click it and confirm Session & Doctor gets focus.
   4. Take a screenshot of the sidebar showing the banner, with no secrets visible.
 
-  — verify: the screenshot is saved as `evidence/step-5-4-window-banner.png`, linked on this line, and shows the colored banner above Deliveries
+  — verify: the screenshot is saved as `evidence/step-5-4-window-banner.png`, linked on this line, and shows the colored banner above Deliveries — done 2026-10-09 by the user: after reloading and reviewing the banner over several iterations (steps 3.4–3.6), the user accepted the final look ("i accept"). Evidence: [evidence/step-5-4-window-banner.png](evidence/step-5-4-window-banner.png) shows the green `BUILD WINDOW` banner at the top of the Agento sidebar above Deliveries, detail `window-type-banner · feature/window-type-banner · paused`, no secrets visible
