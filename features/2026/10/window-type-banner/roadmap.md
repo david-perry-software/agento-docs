@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/window-type-banner
 last-updated: 2026-10-09
-next-step: "5.2 Package the extension VSIX"
+next-step: "5.3 Install the packaged VSIX into VS Code"
 artifact-pr: "#35"
 ```
 
@@ -75,7 +75,7 @@ artifact-pr: "#35"
   - `node --test tests/extension-bundle.test.mjs`
 
   — verify: all commands exit 0; shellcheck has no findings; node ≥ 340; unit ≥ 139 with every new case attributed to this delivery; electron all scenarios; `git status --porcelain --untracked-files=all` is empty in both halves — done 2026-10-09 at product `7e4b81e` (`origin/main` already an ancestor of both halves; nothing to merge): shellcheck exit 0, no findings (baseline: 0); node 340/340 exit 0 (baseline 340); guard smoke exit 0; companion guard smoke exit 0; typecheck 0 (no findings); build 0; unit 152/152 exit 0 (baseline 139; +13 from this delivery: 2 `statusStyle`, 1 `sessionDoctorModel`, 10 `windowBanner`); test:electron exit 0 (in-repo, companion, workspace); `extension-bundle.test.mjs` 4/4 exit 0; both halves clean
-- [ ] 5.2 Package the extension with `cd extension && npm run package` and name the produced `.vsix` absolute path on this line. The `.vsix` is a gitignored byproduct: delete it after 5.4 and never commit it — verify: `npm run package` exit 0 (VSIX archive assertion passed) and the named file exists
+- [x] 5.2 Package the extension with `cd extension && npm run package` and name the produced `.vsix` absolute path on this line. The `.vsix` is a gitignored byproduct: delete it after 5.4 and never commit it — verify: `npm run package` exit 0 (VSIX archive assertion passed) and the named file exists — done 2026-10-09: `npm run package` exit 0, "VSIX archive assertion passed: 14 required entries, license bytes preserved, exclusions clean"; produced `/home/david/DP/agento-worktrees/plan-20261009-041322/extension/agento-dashboard-0.7.0.vsix` (42 files, 97.19 KB; gitignored by `.gitignore:7`)
 - [ ] 5.3 Install the packaged VSIX into the user's VS Code with `code --install-extension <path from 5.2> --force` — verify: `code --list-extensions --show-versions` lists `david-perry-software.agento-dashboard@<manifest version>`
 - [ ] 5.4 (manual) In your own VS Code, in this build window:
   1. Run *Developer: Reload Window*.
