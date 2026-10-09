@@ -2,13 +2,13 @@
 status: in-progress
 branch: feature/window-type-banner
 last-updated: 2026-10-09
-next-step: "1.1 Install extension dependencies and record the extension baseline"
+next-step: "2.1 Add role colors to statusStyle, the manifest, and statusStyle tests"
 artifact-pr: "#35"
 ```
 
 ## Phase 1: Baseline
 
-- [ ] 1.1 Install extension dependencies and record the extension baseline next to the planning baseline. Run `cd extension && npm ci`, then `npm run build`, `npm run typecheck`, `npm run test:unit` (pass count), and `npm run test:electron` (scenario count), and record each result on this line — verify: every command exits 0; unit 139/139 and electron scenario count match or are explained against plan.md `## Research`
+- [x] 1.1 Install extension dependencies and record the extension baseline next to the planning baseline. Run `cd extension && npm ci`, then `npm run build`, `npm run typecheck`, `npm run test:unit` (pass count), and `npm run test:electron` (scenario count), and record each result on this line — verify: every command exits 0; unit 139/139 and electron scenario count match or are explained against plan.md `## Research` — done 2026-10-09 at product `987618b`: `npm ci` 0, `build` 0, `typecheck` 0 (no findings), `test:unit` 0 (139/139), `test:electron` 0 (3 scenarios: in-repo, companion, workspace)
 
 ## Phase 2: Colors and banner model
 
