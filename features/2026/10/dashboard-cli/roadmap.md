@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/dashboard-cli
 last-updated: 2026-10-09
-next-step: "2.6 integrate origin/main, copy-cli, full node suite, push both halves"
+next-step: "3.1 add extension/src/dashboardDocument.ts and its unit tests"
 artifact-pr: "#38"
 initiative: "agento-hardening"
 ```
@@ -22,7 +22,7 @@ initiative: "agento-hardening"
 - [x] 2.4 Measure on this repository: three runs each of `session --pr`, `doctor`, `status --pr`, `initiative`, `initiative agento-hardening`, and `dashboard --pr`, from the product primary (`/home/david/DP/agento`, on `main`) and from this build worktree; write medians and the breakdown's table into `evidence/timings.md` in the slug directory; if `dashboard --pr`'s median exceeds the slowest standalone median, record it and add an `(added <date>)` step that moves the dominating probe into the pool — verify: `evidence/timings.md` exists with both tables and the comparison line `dashboard --pr median ≤ slowest standalone median: yes|no` — done 2026-10-09: [evidence/timings.md](evidence/timings.md) round 1 records `no` from the primary (1 400 ms vs 1 313 ms; `yes` from the build worktree, 1 146 vs 1 367), hence 2.7
 - [x] 2.7 (added 2026-10-09) In `dashboard`, queue the PR lookups right after `gh --version` and ahead of the doctor probes, and compute the local doctor checks (`node`, `worktrees-dir`, `session-workspace`, `artifact-repo`, `model-profile`; each check now runs at most once per process) and the initiatives section while the pool runs — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0 (dashboard deep-equality and pool tests unchanged); re-measure into [evidence/timings.md](evidence/timings.md) round 2 with `dashboard --pr median ≤ slowest standalone median: yes` from both the primary and the build worktree (1 069 vs 1 322 ms; 777 vs 1 337 ms)
 - [x] 2.5 Document the subcommand: `docs/commands.md` subcommand list (shape, sections, per-section error, `--pr` and `--plugin-root`, exit codes), `AGENTS.md` `scripts/` bullet, `CHANGELOG.md` `## Unreleased` **Added** entry — verify: `grep -n "dashboard" docs/commands.md AGENTS.md CHANGELOG.md` shows each; `node --test tests/customizations.test.mjs` exit 0
-- [ ] 2.6 Integrate `origin/main` into both halves, `npm run copy-cli`, `cmp` all six CLI copies, run `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`, commit and push both halves — verify: tests exit 0 with 0 failures; both halves clean; `companion.ahead: 0`
+- [x] 2.6 Integrate `origin/main` into both halves, `npm run copy-cli`, `cmp` all six CLI copies, run `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`, commit and push both halves — verify: tests exit 0 with 0 failures; both halves clean; `companion.ahead: 0`
 
 ## Phase 3: Extension cutover
 
