@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/artifact-preview-open
 last-updated: 2026-10-09
-next-step: "4.2"
+next-step: "3.5 (manual) screenshot of an initiative member's breakdown.md opened as a rendered Markdown preview tab in the main editor group"
 artifact-pr: "#36"
 ```
 
@@ -64,4 +64,4 @@ artifact-pr: "#36"
   - `node --test tests/extension-bundle.test.mjs`
 
   — verify: all commands exit 0; shellcheck has no findings; node ≥ 340; unit ≥ 152 with every new case attributed to this delivery; electron 3/3 scenarios; `git status --porcelain --untracked-files=all` is empty in both halves — **2026-10-09 at product `293d57e`** (run ahead of 3.3/3.4 so automated work completes before the manual check; `origin/main` is an ancestor of HEAD in both halves): shellcheck exit 0, no findings (baseline: exit 0, none); node 340/340 exit 0 (baseline 340); guard smoke exit 0; companion guard smoke exit 0; extension typecheck exit 0, build exit 0, unit 154/154 exit 0 (baseline 152; +2 are the `openArtifactPreview` cases from step 2.1); `npm run test:electron` exit 0, 3/3 scenarios (baseline 3/3); `node --test tests/extension-bundle.test.mjs` exit 0, 4/4; both halves clean. **Re-confirmed 2026-10-09 before in-review:** product HEAD still `293d57e` with no code change since this run, and product `origin/main` (`4b38ce5`) unchanged and an ancestor; companion `origin/main` advanced to `b407b68` (PR #37, `initiatives/2026/10/agento-hardening/` brief + breakdown only, no product code and no overlap with this delivery) and was merged into the companion branch, so the gate result stands
-- [ ] 4.2 (added 2026-10-09, review round 1) Rerun the full step 4.1 gate after the step 3.6 code change, with `origin/main` merged into both halves, and record each result against the step 1.1 baseline on this line — verify: all 4.1 commands exit 0; shellcheck has no findings; node ≥ 340; unit ≥ 155 with every new case attributed to this delivery; electron 4/4 scenarios; `git status --porcelain --untracked-files=all` is empty in both halves
+- [x] 4.2 (added 2026-10-09, review round 1) Rerun the full step 4.1 gate after the step 3.6 code change, with `origin/main` merged into both halves, and record each result against the step 1.1 baseline on this line — verify: all 4.1 commands exit 0; shellcheck has no findings; node ≥ 340; unit ≥ 155 with every new case attributed to this delivery; electron 4/4 scenarios; `git status --porcelain --untracked-files=all` is empty in both halves — **2026-10-09 at product `8a70b19`** (`origin/main` an ancestor of HEAD in both halves: product `4b38ce5`, companion `b407b68`): shellcheck exit 0, no findings (baseline: exit 0, none); node 340/340 exit 0 (baseline 340); guard smoke exit 0; companion guard smoke exit 0; extension typecheck exit 0, build exit 0, unit 155/155 exit 0 (baseline 152; +3 are this delivery's `openArtifactPreview` cases, steps 2.1 and 3.6); `npm run test:electron` exit 0, 4/4 scenarios (baseline 3/3; the fourth is step 3.6's `no-markdown`); `node --test tests/extension-bundle.test.mjs` exit 0, 4/4; both halves clean
