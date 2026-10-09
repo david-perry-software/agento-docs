@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/artifact-preview-open
 last-updated: 2026-10-09
-next-step: "3.6"
+next-step: "3.7"
 artifact-pr: "#36"
 ```
 
@@ -43,13 +43,13 @@ artifact-pr: "#36"
   2. Take a screenshot showing that member's `breakdown.md` as a rendered Markdown preview tab (editor title "Markdown Preview") in the main editor group, with no split and no secrets visible.
 
   — verify: the screenshot is saved as `evidence/step-3-5-breakdown-preview.png`, linked on this line, and shows a rendered `breakdown.md` preview tab in a single editor group
-- [ ] 3.6 (added 2026-10-09, review round 1, Finding 2) Make the source fallback observable when the Markdown preview is unavailable. Probe (throwaway host under `/tmp`, VS Code 1.125.0): with `--disable-extension vscode.markdown-language-features` (the flag is ignored when combined with `--disable-extensions`), `vscode.openWith(uri, "vscode.markdown.preview.editor", { viewColumn: Active, preview: false })` **resolves** and opens a pinned text tab in the active group; it does not reject, so today the logged fallback never fires and the handler returns `"preview"`. Fix:
+- [x] 3.6 (added 2026-10-09, review round 1, Finding 2) Make the source fallback observable when the Markdown preview is unavailable. Probe (throwaway host under `/tmp`, VS Code 1.125.0): with `--disable-extension vscode.markdown-language-features` (the flag is ignored when combined with `--disable-extensions`), `vscode.openWith(uri, "vscode.markdown.preview.editor", { viewColumn: Active, preview: false })` **resolves** and opens a pinned text tab in the active group; it does not reject, so today the logged fallback never fires and the handler returns `"preview"`. Fix:
   - `extension/src/openArtifact.ts`: add `previewAvailable(): boolean` to `OpenArtifactDeps`; when it returns false, log one line and call `openSource` without calling `openWith`, returning `"source"`; keep the rejection path.
   - `extension/src/extension.ts`: `previewAvailable` is `vscode.extensions.getExtension("vscode.markdown-language-features") !== undefined`.
   - `extension/test/unit/openArtifact.test.ts`: a case for the unavailable path (no `openWith` call, `openSource` once, one log line, `"source"`).
   - `extension/test/electron/runTest.ts` + `suite.ts`: a fourth scenario `no-markdown` launched with `--disable-extension vscode.markdown-language-features` (no `--disable-extensions`) in which a Deliveries click returns `"source"` and opens a pinned `TabInputText` for the roadmap in `ViewColumn.One` with one editor group and no preview tab.
 
-  Target: local electron test host, no ports — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0 with the new unit case passing, and `npm run test:electron` exit 0 with 4/4 scenarios (in-repo, companion, workspace, no-markdown)
+  Target: local electron test host, no ports — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exit 0 with the new unit case passing, and `npm run test:electron` exit 0 with 4/4 scenarios (in-repo, companion, workspace, no-markdown) — 2026-10-09: build exit 0, typecheck exit 0, unit 155/155 exit 0 (152 baseline + 3 `openArtifactPreview` cases; `ok 114` is the new unavailable-path case); `npm run test:electron` exit 0, 4/4 scenarios ("Electron no-markdown scenario passed: source fallback in the active group")
 - [ ] 3.7 (added 2026-10-09, review round 1, Finding 3) Record the electron scenario coverage precisely: the delivery and member preview assertions run in the in-repo and companion scenarios; the workspace scenario returns before the tree blocks, unchanged from `main`. Annotate plan.md acceptance items 1-2 and this roadmap's step 3.1 line with that scope — verify: `git show origin/main:extension/test/electron/suite.ts | grep -n "Electron workspace scenario passed"` matches (the early return predates this delivery), and `grep -n "workspace scenario returns before the tree blocks" plan.md roadmap.md` matches in both files
 - [ ] 3.8 (added 2026-10-09, review round 1) Repackage and reinstall the VSIX so step 3.5 exercises the step 3.6 code: `cd extension && npm run package`, `code --install-extension <vsix> --force`, then delete the `.vsix` byproduct — verify: `npm run package` exit 0, install exit 0, `code --list-extensions --show-versions` lists `david-perry-software.agento-dashboard@0.7.0`, and the `.vsix` no longer exists
 
