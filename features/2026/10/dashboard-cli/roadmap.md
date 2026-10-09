@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: in-progress
 branch: feature/dashboard-cli
 last-updated: 2026-10-09
-next-step: "review"
+next-step: "3.6"
 artifact-pr: "#38"
 initiative: "agento-hardening"
 ```
@@ -31,6 +31,7 @@ initiative: "agento-hardening"
 - [x] 3.3 Update `extension/test/electron/suite.ts`: a `dashboardResponse(session, doctor, status, initiatives)` fixture composed from the existing `sessionResponse`/`doctorResponse`/`statusResponse`; assert `pending.length === 2` after two refreshes, resolve each request with one dashboard document, `refreshWithSession` asserts `start + 1`; add a per-section error case rendering only that view's error row — verify: `local:3165/4165 — cd extension && npm run test:electron` exit 0 across in-repo, companion, workspace, and no-markdown scenarios
 - [x] 3.4 Update `extension/README.md` (Deliveries, Initiatives, Session & Doctor sections and the `cli/` paragraph name `agento.mjs dashboard --pr` as the one refresh call), `docs/extension.md` "Refresh and recovery", and the `CHANGELOG.md` **Changed** entry for the single-spawn refresh — verify: `grep -n "dashboard" extension/README.md docs/extension.md CHANGELOG.md` shows each; `node --test tests/customizations.test.mjs` exit 0
 - [x] 3.5 Integrate both defaults by merge, run the complete gate — `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`; `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`; `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`; `git ls-files '*.sh' | xargs pnpm dlx shellcheck` compared against the zero-finding baseline; `cd extension && npm run build && npm run test:unit && npm run test:electron && npm run package`; `cmp` on all six `extension/cli/*.mjs` — audit the diff against plan.md `## Approach`, push both halves, set `status: in-review` — verify: every command exits 0; both PRs mergeable; both halves clean with `companion.ahead: 0` — done 2026-10-09: node 347/347, both guard replays exit 0, shellcheck exit 0 with no findings (baseline: none), extension build 0, unit 160/160, Electron 4/4 scenarios, package 0, six `cmp` identical; diff audit matches `## Approach` plus `extension/test/unit/gateDashboardPlanActions.test.ts` (one refresh-gate source assertion, see 3.2); PR #101 CI `test` pass, mergeable; PR #38 mergeable
+- [ ] 3.6 (added 2026-10-09) Extend the logging-`git` test (`session, status --pr, and initiative read each clone's worktree list once from a product cwd`, `scripts/agento.test.mjs`) to `dashboard` and `dashboard --pr` in both the in-repo and companion loops, closing acceptance item 3 (review 2026-10-09, Finding 1); then `npm run copy-cli`, integrate both defaults, push both halves, set `status: in-review` — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0 with the extended test asserting one `worktree list --porcelain` per clone for `dashboard` and `dashboard --pr`; `cmp` on all six `extension/cli/*.mjs`; both halves clean with `companion.ahead: 0`
 
 ## Follow-ups
 
