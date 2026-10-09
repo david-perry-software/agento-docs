@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/close-session-cli
 last-updated: 2026-10-09
-next-step: "4.1"
+next-step: "4.2"
 artifact-pr: "#40"
 initiative: "agento-hardening"
 ```
@@ -28,7 +28,7 @@ initiative: "agento-hardening"
 
 ## Phase 4: Docs, bundle copy, gate, evidence
 
-- [ ] 4.1 Document the subcommand in `docs/commands.md` (grammar, statuses and exit codes, outcomes, the occupant gate and its Linux-only process scan, `--dry-run`, `--ignore-occupants`, branch-deletion rule) next to the `start-session` entry, update the `/agento close-session` table row, name the CLI close in `docs/architecture.md` (the `CLOSE` node and the Scripts bullet), and add a `CHANGELOG.md` entry — verify: `grep -n "close-session" docs/commands.md docs/architecture.md CHANGELOG.md` shows the new text and `node --test tests/**/*.test.mjs` passes
+- [x] 4.1 Document the subcommand in `docs/commands.md` (grammar, statuses and exit codes, outcomes, the occupant gate and its Linux-only process scan, `--dry-run`, `--ignore-occupants`, branch-deletion rule) next to the `start-session` entry, update the `/agento close-session` table row, name the CLI close in `docs/architecture.md` (the `CLOSE` node and the Scripts bullet), and add a `CHANGELOG.md` entry — verify: `grep -n "close-session" docs/commands.md docs/architecture.md CHANGELOG.md` shows the new text and `node --test tests/**/*.test.mjs` passes — done 2026-10-09: grep shows the subcommand in docs/commands.md (grammar, statuses and exit codes, outcomes, occupant gate with the Linux-only /proc scan, --dry-run, --ignore-occupants, branch-deletion rule) plus the updated /agento close-session table row, the CLOSE node and Scripts bullet in docs/architecture.md, and a CHANGELOG entry; node --test tests/*.test.mjs 100 pass / 0 fail (run after the 4.2 bundle refresh, which the bundle test needs)
 - [ ] 4.2 Refresh the extension's CLI bundle: `cd extension && npm ci && npm run build && npm run test:unit`; commit the regenerated `extension/cli/` files; no `extension/src` edits — verify: `git diff --stat origin/main -- extension/src .github/prompts/ship.prompt.md` is empty and `node --test tests/extension-bundle.test.mjs` passes
 - [ ] 4.3 Scoped lint gate (policy §5): run `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` and compare with the baseline (357 pass / 0 fail): no failures, count ≥ 357; run `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` if available (record its output) else record "exit 127 locally; no `.sh` changed"; after pushing, `scripts/wait-for-checks.sh pr <n>` must report the CI shellcheck step green; record all three results on this line — verify: the recorded counts and the green CI check
 - [ ] 4.4 Real-run evidence: from this worktree run `node scripts/agento.mjs --root /home/david/DP/agento close-session 20261009-182342 --dry-run` and save the JSON as `evidence/step-4-4-dry-run.json`; it must report `mode: "build"`, `subject: "feature/close-session-cli"`, `applied: false`, `status: "blocked"`, `reason: "occupied"` with this window in `occupants`; capture `git worktree list --porcelain` in both clones before and after and confirm they are identical — verify: the evidence file is committed in the companion half and linked here
