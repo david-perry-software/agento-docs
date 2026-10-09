@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/artifact-preview-open
 last-updated: 2026-10-09
-next-step: "3.2 Update docs/extension.md and CHANGELOG.md"
+next-step: "4.1 Run the full gate (ordered before the 3.3 package/install and 3.4 manual check)"
 artifact-pr: "#36"
 ```
 
@@ -25,12 +25,12 @@ artifact-pr: "#36"
   - a repeat run of the command leaves exactly one matching tab.
 
   Keep the existing URI and companion artifact-root assertions. If the markdown extension is inactive in the test host, add the minimal `runTest.ts` launch-arg fix as an `(added <date>)` step instead of weakening the assertion. Target: local electron test host, no ports — verify: `cd extension && npm run build && npm run test:electron` exit 0 in all scenarios (in-repo, companion, workspace) — 2026-10-09: exit 0, 3/3 scenarios; the assertions live in a shared `assertOpensMarkdownPreview` helper used by both blocks; `vscode.markdown-language-features` is active under `--disable-extensions`, so no `runTest.ts` change was needed
-- [ ] 3.2 Update `docs/extension.md`:
+- [x] 3.2 Update `docs/extension.md`:
   - line 36: a delivery opens its `roadmap.md` as a rendered Markdown preview in the active editor group;
   - lines 44-45: the same for `breakdown.md`;
   - add one sentence on **Reopen Editor With… → Text Editor** for editing the source.
 
-  Add a `CHANGELOG.md` `## Unreleased` **Changed.** entry — verify: `grep -n "Markdown preview" docs/extension.md` and `grep -n -i "markdown preview" CHANGELOG.md` both match, and `grep -n "beside the active editor" docs/extension.md` prints nothing
+  Add a `CHANGELOG.md` `## Unreleased` **Changed.** entry — verify: `grep -n "Markdown preview" docs/extension.md` and `grep -n -i "markdown preview" CHANGELOG.md` both match, and `grep -n "beside the active editor" docs/extension.md` prints nothing — 2026-10-09: docs grep matches lines 36 and 48, CHANGELOG grep matches lines 7 and 10, "beside the active editor" grep exit 1 (no match); `tests/customizations.test.mjs` 33/33
 - [ ] 3.3 Package the extension for the manual check with `cd extension && npm run package`, and name the produced `.vsix` absolute path on this line. The agent installs it into the user's VS Code with `code --install-extension <vsix> --force`. The `.vsix` is a gitignored byproduct: delete it after 3.4 and never commit it — verify: `npm run package` exit 0, the named file exists, and `code --list-extensions --show-versions` lists `david-perry-software.agento-dashboard` at the packaged version
 - [ ] 3.4 (manual) In your own VS Code:
   1. Reload the window (Developer: Reload Window) so the VSIX installed in 3.3 is active.
