@@ -1,18 +1,29 @@
 # Review: artifact-preview-open
 
-Verdict: request-changes
+Verdict: approve
 
-Reviewed 2026-10-09 at product `293d57e` (`feature/artifact-preview-open`, draft PR
-#100) and companion `d412d4f` (draft PR #36). `origin/main` is an ancestor of HEAD in
-both halves (`git merge-base --is-ancestor` exit 0). Both halves had 0 ahead / 0
-behind their remote branch and a clean `git status --porcelain --untracked-files=all`.
+Review round 2 (round 1: `request-changes`). Reviewed 2026-10-09 at product `8a70b19`
+(`feature/artifact-preview-open`, draft PR #100) and companion `58bbc0d` (draft PR
+#36). After `git fetch origin` in both halves, `origin/main` is an ancestor of HEAD in
+both (`git merge-base --is-ancestor` exit 0). Product HEAD equals
+`origin/feature/artifact-preview-open`. The session record shows the companion half
+on the roadmap branch with `dirty: false`, `ahead: 0`, `behind: 0`. `git status
+--porcelain --untracked-files=all` was empty in both halves before and after my gate
+run.
 
 Skills consulted: none — no matching domain. This repository has no `.agents/skills/`
 directory, and its AGENTS.md has no `## Agento` skills table.
 
-The code, tests, and docs are correct and the full gate is green. The one blocking
-gap is evidence: acceptance item 8 requires a member click in the user's VS Code with
-the packaged VSIX. Step 3.4's screenshot shows only a delivery click.
+All three round-1 findings are resolved:
+
+- Finding 1 (major, missing member-click evidence) is fixed by step 3.5's screenshot.
+- Finding 2 (fallback never observed) is fixed by step 3.6. A real host with the
+  Markdown extension disabled now falls back to source text, and an electron scenario
+  proves it.
+- Finding 3 (electron scope wording) is fixed by step 3.7.
+
+Every acceptance item passes, the full gate is green on my rerun, and no finding is
+above nit.
 
 ## Acceptance checklist results
 
@@ -24,23 +35,35 @@ the packaged VSIX. Step 3.4's screenshot shows only a delivery click.
    asserts every item the plan lists: the Markdown extension is active,
    `tabGroups.all.length === 1`, `TabInputCustom.viewType`, `isPreview === false`,
    `ViewColumn.One`, and no visible text editor for the URI. The delivery block calls
-   it. My run of `npm run test:electron` exited 0 with all 3 scenarios passing.
-   Note: the delivery and member blocks run in the in-repo and companion scenarios.
-   The workspace scenario returns at `suite.ts` line 583, before the tree blocks; that
-   was already true on `main`.
+   it. My run of `npm run test:electron` exited 0 with 4/4 scenarios. The in-repo and
+   companion scenarios, which hold the tree blocks, printed "scenario passed". This
+   matches the scope the plan now states (step 3.7). The workspace scenario returns at
+   `suite.ts` line 606, before the tree blocks, as it already did on `main`.
 2. **Member click opens `breakdown.md` the same way, from the companion artifact root
    in the companion scenario — pass.** The member block calls the same helper, and
-   the existing `expectedArtifactRoot` assertion is kept (`suite.ts` lines 809-813).
+   the existing `expectedArtifactRoot` assertion is kept (`suite.ts` lines 833-836).
    The companion scenario passed in my electron run.
 3. **A repeat click focuses the existing tab — pass.** The helper refocuses
    `activeDocument`, reruns the command, and asserts `previewTabsFor(uri).length ===
    1` and `tabGroups.all.length === 1`. This passed in my electron run.
 4. **Falls back to source text in the active group and logs one line — pass.**
-   `extension/test/unit/openArtifact.test.ts` has a rejection case that asserts
-   `result === "source"`, `openSource` called with `[URI]`, and exactly one log line.
-   `npm run test:unit` exited 0 with 154/154 passing (`ok 112`, `ok 113` are the two
-   new cases). `openSource` uses `showTextDocument(uri, { viewColumn: Active,
-   preview: false })`.
+   `extension/test/unit/openArtifact.test.ts` covers both fallback triggers:
+   - the rejection case (`ok 113`);
+   - the new unavailable case (`ok 114`): `previewAvailable()` is false, so there is no
+     `openWith` call, `openSource` is called once, one log line is written, and the
+     result is `"source"`.
+
+   `npm run test:unit` exited 0, 155/155. The fallback is now observed in a real host.
+   The `no-markdown` electron scenario launches with `--disable-extension
+   vscode.markdown-language-features`, and `suite.ts` lines 570-591 assert:
+   - the extension is `undefined`;
+   - a Deliveries click returns `"source"`;
+   - the active tab is a pinned `TabInputText` for the roadmap in `ViewColumn.One`;
+   - there is one tab group and no preview tab.
+
+   It printed "Electron no-markdown scenario passed" with exit code 0 in my run.
+   `extension.ts` line 295 wires `previewAvailable` to
+   `vscode.extensions.getExtension("vscode.markdown-language-features") !== undefined`.
 5. **Command IDs and manifest unchanged; old exports gone — pass.** `git diff
    origin/main...HEAD -- extension/package.json` is empty. Running `grep -rn
    "ViewColumn.Beside\|export async function openRoadmap\|export async function
@@ -50,32 +73,41 @@ the packaged VSIX. Step 3.4's screenshot shows only a delivery click.
    matches lines 36 and 48. `grep -n -i "markdown preview" CHANGELOG.md` matches
    lines 7 and 10. `docs/extension.md` line 38 names **Reopen Editor With… → Text
    Editor**. `grep -n "beside the active editor" docs/extension.md` exited 1.
-7. **Full gate green against the baseline — pass.** I re-ran every command on
-   2026-10-09:
+7. **Full gate green against the baseline — pass.** I re-ran every command at
+   `8a70b19` on 2026-10-09:
    - `git ls-files '*.sh' | xargs pnpm dlx shellcheck`: exit 0, no findings
      (baseline: exit 0, no findings).
    - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`: exit 0, 340/340.
    - Guard smoke: exit 0. Companion guard smoke: exit 0.
    - Extension `npm run typecheck`: exit 0. `npm run build`: exit 0.
-   - `npm run test:unit`: exit 0, 154/154 (baseline 152; the 2 new cases are this
-     delivery's `openArtifactPreview` tests).
-   - `npm run test:electron`: exit 0, 3/3 scenarios.
+   - `npm run test:unit`: exit 0, 155/155. The baseline was 152; `ok 112`-`ok 114`
+     are this delivery's three `openArtifactPreview` cases.
+   - `npm run test:electron`: exit 0, 4/4 scenarios (in-repo, companion, workspace,
+     no-markdown), each reporting `Exit code: 0`. The baseline was 3/3; the fourth
+     scenario is step 3.6's.
    - `node --test tests/extension-bundle.test.mjs`: exit 0, 4/4.
+
+   These match step 4.2's recorded results.
 8. **User's VS Code with the packaged VSIX: a delivery click and a member click each
-   show a rendered preview tab in the main group, with no split — fail.**
-   `evidence/step-3-4-preview-open.png` shows only the delivery half. It has one
-   editor group and the rendered `artifact-repo-hooks` roadmap ("Markdown Preview" in
-   the editor title) opened from the highlighted Deliveries row. The Initiatives view
-   shows a collapsed `Completed (3)` folder, and no `breakdown.md` tab is visible. The
-   Builder recorded this gap on the step line. It substituted the electron coverage
-   from item 2, but this item specifically requires the packaged VSIX in the user's
-   VS Code. A member was reachable (expand `Completed (3)`), so this is not a
-   §4-style impossibility. It is a missing manual check. `code --list-extensions
-   --show-versions` still lists `david-perry-software.agento-dashboard@0.7.0`, so the
-   check needs no repackaging.
+   show a rendered preview tab in the main group, with no split — pass.**
+   - Delivery click: `evidence/step-3-4-preview-open.png`, linked from step 3.4 and
+     accepted in round 1.
+   - Member click: `evidence/step-3-5-breakdown-preview.png`, linked from step 3.5. I
+     viewed it. **Initiatives → Completed (3) → agento-extension → Complete (8)** is
+     expanded with `cli-dashb…` selected. There is one editor group with two tabs
+     (`roadmap.md`, `breakdown.md`). The active tab is the rendered `breakdown.md` from
+     `agento-docs/initiatives/2026/09/agento-extension`, with a heading, a frontmatter
+     block, and "Markdown Preview" in the editor title. The right-hand pane is the
+     Chat panel, not an editor group. No secrets are visible; the top bar shows only a
+     private LAN IP.
+   - Which code the screenshot exercised: `code --list-extensions --show-versions`
+     lists `david-perry-software.agento-dashboard@0.7.0`. The installed
+     `out/openArtifact.js` and `out/extension.js` both contain `previewAvailable`, and
+     the screenshot clock (02:12:29) is after commit `8a70b19` (02:06:42). So the
+     member click ran the step 3.6 code.
 9. **Both halves clean at handoff — pass.** `git status --porcelain
-   --untracked-files=all` printed nothing in the product worktree or the companion
-   half before this review was written. The `.vsix` byproduct from step 3.3 is gone.
+   --untracked-files=all` printed nothing in either half after my gate run.
+   `extension/*.vsix` does not exist (`ls` failed), so the step 3.8 byproduct is gone.
 
 ## Plan vs implementation
 
@@ -93,41 +125,63 @@ the packaged VSIX. Step 3.4's screenshot shows only a delivery click.
   - The Markdown-extension activation assertion runs after the first open, not
     before it. The extension activates on demand, so the order in the plan would be
     racy.
-- No undocumented changes. The diff touches only the 8 files planned (`git diff
-  --stat origin/main...HEAD`). `scripts/` and the CLI are untouched.
+- Round-2 code (`git diff 293d57e..HEAD -- extension`, commit `8a70b19`) is exactly
+  step 3.6:
+  - the `previewAvailable()` dependency and early source fallback in
+    `openArtifact.ts`;
+  - its wiring in `extension.ts`;
+  - the third unit case;
+  - the `no-markdown` scenario in `runTest.ts` (it drops `--disable-extensions`,
+    which would make `--disable-extension` ignored) and `suite.ts`.
+
+  The probe that motivated it is recorded on the step line: `vscode.openWith`
+  resolves with a text editor instead of rejecting.
+- Plan edits since round 1 (`git diff a73f63b..HEAD -- plan.md`):
+  - acceptance items 1-2 gained the scenario-scope annotation (step 3.7);
+  - item 8's verify gained the step 3.5 evidence link.
+
+  Both are marked `(added 2026-10-09, review round 1)`. They clarify or strengthen the
+  criteria; nothing was weakened.
+- No undocumented changes. The diff touches 9 files (`git diff --stat
+  origin/main...HEAD`): the 8 planned files plus `extension/test/electron/runTest.ts`
+  for step 3.6's scenario. `scripts/` and the CLI are untouched, and
+  `extension/package.json` is unchanged (`git diff --quiet` exit 0).
 - Lint gate (§5): the plan chose the full gate on a green baseline. My fresh
   full-repository shellcheck and the extension typecheck are both exit 0 with no
   findings, matching the baseline.
 
 ## Roadmap audit
 
-- 1.1, 2.1, 2.2, 3.1, 3.2, 3.3, 4.1: I spot-checked each against the code and my own
-  command runs. The results above match what each step line records.
-- **3.4 (manual)** has a linked evidence file, as §3 requires, but the step's own
-  action 2 (click an initiative member) and its "roadmap/breakdown preview tabs"
-  screenshot cover only the delivery half. Repair: I annotated 3.4 as delivery-half
-  evidence only and added **3.5 (manual) (added 2026-10-09)** for the member click,
-  with its own evidence file. 3.4 stays ticked because its delivery-click evidence is
-  real.
-- I set the header to `status: in-progress` and `next-step: "3.5"` so the Builder
-  resumes at the new manual step. Its resume protocol then pauses there for the user.
-- No falsely ticked automated steps found.
+- 13/13 steps are ticked. I spot-checked each against the code, the evidence
+  directory, and my own command runs:
+  - 1.1-4.1: unchanged since round 1 and still accurate.
+  - **3.5 (manual)**: the linked evidence file exists and shows what the line
+    describes (§3 satisfied).
+  - **3.6**: the code, the unit case `ok 114`, and the `no-markdown` scenario are
+    present and pass.
+  - **3.7**: `grep -n "workspace scenario returns before the tree blocks"` matches
+    plan.md line 216 and roadmap.md lines 27 and 53.
+  - **3.8**: the installed VSIX carries `previewAvailable`, and no `.vsix` remains.
+  - **4.2**: my gate rerun reproduces its numbers.
+- Header: `status: in-review`, `next-step: ""`. That is consistent with every step
+  ticked and no `(manual, post-ship)` steps.
+- No falsely ticked boxes and no repairs needed.
 
 ## Findings
 
-1. **Major (blocks approval): missing packaged-VSIX evidence for the member
-   (breakdown) click.** This is acceptance item 8. The fix is the new manual step 3.5.
-   No code change is expected.
-2. **Nit: the fallback trigger is assumed, not observed.** `openArtifactPreview`
-   falls back when `vscode.openWith` rejects. The unit test proves the pure logic, but
-   no test observes how a real host behaves when the Markdown preview editor is
-   unavailable. Whether `vscode.openWith` rejects or silently opens the default
-   editor is not verified. Both outcomes leave the file readable, so this is
-   low-risk. Recorded as a follow-up, not a blocker.
-3. **Nit: the electron assertions run in 2 of 3 scenarios.** The workspace scenario
-   exits before the tree blocks (`suite.ts` line 583), so "all scenarios" in plan
-   items 1-2 means the two scenarios that have deliveries. This structure is
-   unchanged from `main`.
+Round-1 findings 1-3 are resolved (see the summary above). New this round, nits only:
+
+1. **Nit: plan.md still describes the round-0 thresholds and fallback trigger.**
+   - Acceptance item 7 still says unit ≥ 152 and electron 3/3, verified by step 4.1.
+   - `## Approach` item 1 and `## Risks` still describe falling back only when
+     `openWith` rejects.
+
+   Steps 3.6 and 4.2 record the current behavior and the stronger results (155,
+   4/4). This is documentation drift only.
+2. **Nit: the `no-markdown` scenario covers the Deliveries click only.** The
+   Initiatives click is registered to the same `openArtifact` closure
+   (`extension/src/extension.ts` lines 294 and 305-306), so the breakdown fallback
+   path is identical.
 
 No security findings. The one new log line writes the artifact's local file URI to
 the Agento output channel. It has no secrets and no user input beyond a path the
@@ -135,6 +189,7 @@ extension already resolved.
 
 ## Follow-ups
 
-- Check how `vscode.openWith(uri, "vscode.markdown.preview.editor", …)` behaves in a
-  host with `vscode.markdown-language-features` disabled. Either confirm it rejects,
-  which triggers the logged source fallback, or adapt the fallback detection.
+None new. The round-1 follow-up (how `vscode.openWith` behaves with the Markdown
+extension disabled) was resolved in-delivery by step 3.6. It resolves with a text
+editor rather than rejecting, so availability is now checked first, and the
+`no-markdown` scenario covers it.
