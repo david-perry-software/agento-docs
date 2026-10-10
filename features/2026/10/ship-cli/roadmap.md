@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/ship-cli
 last-updated: 2026-10-10
-next-step: "6.1 docs and changelog"
+next-step: "6.2 refresh the extension CLI bundle"
 artifact-pr: "#42"
 initiative: "agento-hardening"
 ```
@@ -40,7 +40,7 @@ initiative: "agento-hardening"
 
 ## Phase 6: Docs, bundle copy, gate, evidence
 
-- [ ] 6.1 Document the subcommand in `docs/commands.md` (grammar, statuses and exit codes 0/1/2/3, the phase table, `gaps.hard`/`gaps.confirm` codes, `confirmToken` and `--confirm`, `--wait`, the occupant pause, the epilogue contract) next to the `close-session` entry and update the `/agento ship` table row and the companion-ship paragraph; name the CLI ship in `docs/architecture.md` (the `SHIP` node and the Scripts bullet); add a `CHANGELOG.md` `## Unreleased` entry — verify: `grep -n "agento.mjs ship" docs/commands.md docs/architecture.md CHANGELOG.md` shows the new text and `node --test 'tests/**/*.test.mjs'` passes
+- [x] 6.1 Document the subcommand in `docs/commands.md` (grammar, statuses and exit codes 0/1/2/3, the phase table, `gaps.hard`/`gaps.confirm` codes, `confirmToken` and `--confirm`, `--wait`, the occupant pause, the epilogue contract) next to the `close-session` entry and update the `/agento ship` table row and the companion-ship paragraph; name the CLI ship in `docs/architecture.md` (the `SHIP` node and the Scripts bullet); add a `CHANGELOG.md` `## Unreleased` entry — verify: `grep -n "agento.mjs ship" docs/commands.md docs/architecture.md CHANGELOG.md` shows the new text and `node --test 'tests/**/*.test.mjs'` passes
 - [ ] 6.2 Refresh the extension's CLI bundle: `cd extension && npm ci && npm run build && npm run test:unit`; commit the regenerated `extension/cli/` files; no `extension/src` edits; record the build and unit-test exit codes and counts on this line — verify: `git diff --stat origin/main -- extension/src` is empty and `node --test tests/extension-bundle.test.mjs` passes
 - [ ] 6.3 Full lint gate (policy §5): `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0 with ≥ 393 pass and 0 fail; `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` and `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt` both exit 0; `shellcheck` recorded as "not installed locally; no `.sh` changed" unless available; after pushing, `scripts/wait-for-checks.sh pr <n>` reports the CI `Shellcheck`, `Unit tests`, and `Guard fixture replay` steps green; record every count and compare with the baseline on this line — verify: the recorded counts and the green CI checks
 - [ ] 6.4 Real-run evidence: from this worktree run `node scripts/agento.mjs --root /home/david/DP/agento ship feature ship-cli` (audit only, no `--confirm`) against this delivery's own open PRs; save the JSON as `evidence/step-6-4-audit.json`; it must exit 3 with `status: rejected`, `reason: audit-gaps`, `phase: audit`, `gaps.hard` naming `unticked-steps`, a non-null `confirmToken`, and `actions: []`; capture `git worktree list --porcelain` in both clones and `git for-each-ref` before and after and confirm they are identical — verify: the evidence files are committed in the companion half and linked here
