@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/ship-cli
 last-updated: 2026-10-10
 next-step: ""
