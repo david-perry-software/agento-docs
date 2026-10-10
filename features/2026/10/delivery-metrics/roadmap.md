@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/delivery-metrics
 last-updated: 2026-10-10
-next-step: "4.2 set status in-review and push both halves"
+next-step: ""
 artifact-pr: "#43"
 initiative: "agento-hardening"
 ```
