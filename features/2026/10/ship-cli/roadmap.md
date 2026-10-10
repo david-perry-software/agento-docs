@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/ship-cli
 last-updated: 2026-10-10
-next-step: "1.2 extract releaseVerdict and add ghRun"
+next-step: "2.1 ship scaffold: args, usage, window check, doctor, fetch"
 artifact-pr: "#42"
 initiative: "agento-hardening"
 ```
@@ -10,7 +10,7 @@ initiative: "agento-hardening"
 ## Phase 1: Extract reusable seams (behaviour unchanged)
 
 - [x] 1.1 Extract the occupant gate and apply block of `closeSession()` (`scripts/agento.mjs` L1789–1831 at `dd86680`) into `removeSessionPair({ halves, workspace, branches, ignoreOccupants, dryRun, codeStatus })` returning `{ status: "ok" | "blocked" | "failed", reason, message, half, occupants, product, companion, workspace, branches, warnings }` without emitting; `closeSession()` calls it and maps the result onto `out` — verify: `node --test scripts/agento.test.mjs` passes with every existing close-session case unchanged and `node scripts/agento.mjs close-session --help` output (usage header) is unchanged
-- [ ] 1.2 Extract the body of `case "release"` into `releaseVerdict(sha, { wait, interval })` returning `{ fields, code }`, the case emitting it, and add `ghRun(cwd, args, timeout)` (a `gitRun`-shaped bounded `gh` runner with stdin closed and stderr captured) beside `gitRun` — verify: `node --test scripts/agento.test.mjs scripts/release-state.test.mjs` passes with every release case unchanged
+- [x] 1.2 Extract the body of `case "release"` into `releaseVerdict(sha, { wait, interval })` returning `{ fields, code }`, the case emitting it, and add `ghRun(cwd, args, timeout)` (a `gitRun`-shaped bounded `gh` runner with stdin closed and stderr captured) beside `gitRun` — verify: `node --test scripts/agento.test.mjs scripts/release-state.test.mjs` passes with every release case unchanged
 
 ## Phase 2: `agento.mjs ship` — audit (read-only)
 
