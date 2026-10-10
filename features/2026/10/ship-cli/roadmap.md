@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/ship-cli
 last-updated: 2026-10-10
 next-step: "1.1 extract removeSessionPair from closeSession"
