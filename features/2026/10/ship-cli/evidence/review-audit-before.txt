@@ -1,0 +1,27 @@
+== /home/david/DP/agento
+worktree /home/david/DP/agento
+HEAD dd86680922a0d2a9d0784b86cdef66a933bb5803
+branch refs/heads/main
+
+worktree /home/david/DP/agento-worktrees/plan-20261010-141158
+HEAD 263694d8fa5579cedb19d24b29cd0e74292d5201
+branch refs/heads/feature/ship-cli
+
+263694d8fa5579cedb19d24b29cd0e74292d5201 commit	refs/heads/feature/ship-cli
+dd86680922a0d2a9d0784b86cdef66a933bb5803 commit	refs/heads/main
+263694d8fa5579cedb19d24b29cd0e74292d5201 commit	refs/remotes/origin/feature/ship-cli
+dd86680922a0d2a9d0784b86cdef66a933bb5803 commit	refs/remotes/origin/main
+dba66a38dbdefe69bed4ab9f56cd9da9d22c347f tag	refs/tags/v0.1.0
+== /home/david/DP/agento-docs
+worktree /home/david/DP/agento-docs
+HEAD 724f83f094feb54b4eb4b1889201f2fb9b4fa82a
+branch refs/heads/main
+
+worktree /home/david/DP/agento-docs-worktrees/plan-20261010-141158
+HEAD c6567d4e36c1039417675b90ac54acc1e2e4a762
+branch refs/heads/feature/ship-cli
+
+c6567d4e36c1039417675b90ac54acc1e2e4a762 commit	refs/heads/feature/ship-cli
+724f83f094feb54b4eb4b1889201f2fb9b4fa82a commit	refs/heads/main
+c6567d4e36c1039417675b90ac54acc1e2e4a762 commit	refs/remotes/origin/feature/ship-cli
+724f83f094feb54b4eb4b1889201f2fb9b4fa82a commit	refs/remotes/origin/main

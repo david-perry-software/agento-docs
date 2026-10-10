@@ -1,0 +1,152 @@
+{
+  "status": "rejected",
+  "type": "feature",
+  "slug": "ship-cli",
+  "branch": "feature/ship-cli",
+  "mode": "companion",
+  "phase": "audit",
+  "resumedAt": "audit",
+  "outcome": null,
+  "audit": {
+    "owner": {
+      "path": "/home/david/DP/agento-worktrees/plan-20261010-141158",
+      "role": "build",
+      "dirPrefix": "plan",
+      "id": "20261010-141158"
+    },
+    "ownerTree": {
+      "tracked": [],
+      "untracked": [],
+      "ahead": 0
+    },
+    "companion": {
+      "path": "/home/david/DP/agento-docs-worktrees/plan-20261010-141158",
+      "branch": "feature/ship-cli",
+      "detached": false,
+      "dirty": false,
+      "ahead": 0,
+      "behind": 0,
+      "registered": true
+    },
+    "companionGaps": [],
+    "companionTree": {
+      "tracked": [],
+      "untracked": []
+    },
+    "layout": "checkout",
+    "artifactsRoot": "/home/david/DP/agento-docs",
+    "artifactRef": "origin/feature/ship-cli",
+    "roadmapPath": "features/2026/10/ship-cli/roadmap.md",
+    "roadmap": {
+      "status": "in-review",
+      "unticked": [],
+      "postShip": []
+    },
+    "review": {
+      "present": false,
+      "verdict": null,
+      "stale": false,
+      "reviewedAt": null,
+      "lastCodeCommit": {
+        "sha": "263694d8fa5579cedb19d24b29cd0e74292d5201",
+        "at": "2026-10-10T16:20:51.000Z"
+      }
+    },
+    "issue": null,
+    "changelog": {
+      "versionChanged": false,
+      "from": null,
+      "to": null,
+      "unreleasedHeading": null,
+      "needsStamp": false,
+      "headingWithoutVersionChange": false
+    },
+    "pr": {
+      "number": 105,
+      "state": "OPEN",
+      "isDraft": true,
+      "mergeStateStatus": "CLEAN",
+      "url": "https://github.com/david-perry-software/agento/pull/105",
+      "mergeCommit": null,
+      "title": "feature/ship-cli",
+      "mergeable": "MERGEABLE"
+    },
+    "companionPr": {
+      "number": 42,
+      "state": "OPEN",
+      "isDraft": true,
+      "mergeStateStatus": "CLEAN",
+      "url": "https://github.com/david-perry-software/agento-docs/pull/42",
+      "mergeCommit": null,
+      "title": "docs(feature): ship-cli",
+      "mergeable": "MERGEABLE"
+    },
+    "diffFiles": [
+      ".github/instructions/delivery-policy.instructions.md",
+      ".github/prompts/ship.prompt.md",
+      "CHANGELOG.md",
+      "commands/ship.md",
+      "docs/architecture.md",
+      "docs/commands.md",
+      "extension/cli/agento.mjs",
+      "scripts/agento.mjs",
+      "scripts/agento.test.mjs",
+      "tests/customizations.test.mjs"
+    ]
+  },
+  "gaps": {
+    "hard": [
+      {
+        "code": "review-missing",
+        "detail": "features/2026/10/ship-cli/review.md is absent on origin/feature/ship-cli"
+      }
+    ],
+    "confirm": []
+  },
+  "confirmToken": "7aec0d37b84c",
+  "rejectTo": {
+    "command": "/agento review-feature ship-cli",
+    "window": "build"
+  },
+  "actions": [],
+  "pr": {
+    "number": 105,
+    "state": "OPEN",
+    "isDraft": true,
+    "mergeStateStatus": "CLEAN",
+    "url": "https://github.com/david-perry-software/agento/pull/105",
+    "mergeCommit": null
+  },
+  "companionPr": {
+    "number": 42,
+    "state": "OPEN",
+    "isDraft": true,
+    "mergeStateStatus": "CLEAN",
+    "url": "https://github.com/david-perry-software/agento-docs/pull/42",
+    "mergeCommit": null
+  },
+  "mergeSha": null,
+  "release": null,
+  "teardown": null,
+  "postShip": null,
+  "next": [
+    "/agento review-feature ship-cli"
+  ],
+  "preflight": [],
+  "reason": "audit-gaps",
+  "message": "1 hard gap(s): review-missing",
+  "fix": null,
+  "reauth": null,
+  "allowed": [
+    "/agento continue",
+    "/agento start-session",
+    "/agento new-feature",
+    "/agento new-issue",
+    "/agento new-initiative",
+    "/agento delivery-status"
+  ],
+  "elsewhere": [],
+  "warnings": [],
+  "root": "/home/david/DP/agento",
+  "configSource": "/home/david/DP/agento/.github/agento.json"
+}
