@@ -3,6 +3,7 @@ status: planned
 branch: feature/delivery-metrics
 last-updated: 2026-10-10
 next-step: "1.1 extension baseline"
+artifact-pr: "#43"
 initiative: "agento-hardening"
 ```
 
