@@ -2,14 +2,14 @@
 status: in-progress
 branch: feature/delivery-metrics
 last-updated: 2026-10-10
-next-step: "1.1 extension baseline"
+next-step: "2.1 delivery-metrics module"
 artifact-pr: "#43"
 initiative: "agento-hardening"
 ```
 
 ## Phase 1: Baseline
 
-- [ ] 1.1 Install extension dependencies and record the extension baseline next to the planning baseline in plan.md `## Research` (shellcheck exit 0 no findings; node tests 420/420): run `cd extension && npm ci`, then `npm run build`, `npm run typecheck`, `npm run test:unit` (pass count), and `npm run test:electron` (scenario count), and record each exit code and count on this line; a red extension baseline triggers the §5 overlap reassessment before continuing — verify: every command exits 0, the counts are recorded on this line, and `git status --porcelain --untracked-files=all` is empty in both halves
+- [x] 1.1 (2026-10-10: `npm ci` 0; `build` 0; `typecheck` 0; `test:unit` 0, 160/160 pass; `test:electron` 0, 4/4 scenarios — in-repo, companion, workspace, no-markdown; both halves clean) Install extension dependencies and record the extension baseline next to the planning baseline in plan.md `## Research` (shellcheck exit 0 no findings; node tests 420/420): run `cd extension && npm ci`, then `npm run build`, `npm run typecheck`, `npm run test:unit` (pass count), and `npm run test:electron` (scenario count), and record each exit code and count on this line; a red extension baseline triggers the §5 overlap reassessment before continuing — verify: every command exits 0, the counts are recorded on this line, and `git status --porcelain --untracked-files=all` is empty in both halves
 
 ## Phase 2: CLI — `agento.mjs metrics` and the dashboard section
 

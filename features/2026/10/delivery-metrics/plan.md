@@ -159,7 +159,10 @@ product `origin/main` `49e3617`).**
 - Extension: `extension/node_modules` is absent in this worktree; the Builder runs
   `npm ci`, `build`, `typecheck`, `test:unit`, `test:electron` in step 1.1 and
   records the counts next to this baseline (previous delivery recorded unit 160/160
-  and Electron 4/4 scenarios).
+  and Electron 4/4 scenarios). Recorded by the Builder at step 1.1 (2026-10-10):
+  `npm ci` exit 0; `build` exit 0; `typecheck` exit 0; `test:unit` exit 0,
+  160/160; `test:electron` exit 0, 4/4 scenarios (in-repo, companion, workspace,
+  no-markdown). The extension baseline is green, so the full gate stands.
 - Overlap decision: the baseline is green, so the **full gate** applies — no scoped
   gate, no cleanup prerequisite. This delivery touches no shell files.
 
