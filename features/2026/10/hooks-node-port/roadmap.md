@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/hooks-node-port
 last-updated: 2026-10-09
-next-step: "5.2 integrate both defaults, confirm CI, set in-review"
+next-step: ""
 artifact-pr: "#41"
 initiative: "agento-hardening"
 ```
@@ -32,6 +32,6 @@ initiative: "agento-hardening"
 ## Phase 5: Gate, integration, review handoff
 
 - [x] 5.1 Full-repository gate against the plan.md §5 baseline (382/382/0, both replays 0 MISMATCH, shellcheck silent), recording exit codes and counts on this line: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`; `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`; `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`; `npx --yes shellcheck scripts/hooks/delivery-guard.sh scripts/hooks/session-context.sh scripts/hooks/replay-guard.sh scripts/wait-for-checks.sh` (plain command, no redirection, no `{ }`); `cd extension && npm run build && npm run test:unit`; `git status --porcelain --untracked-files=all` empty in both halves — verify: all exit 0; `# tests` ≥ 382 and `# fail 0`; `grep -c MISMATCH` 0 for both replay logs; shellcheck prints nothing — done 2026-10-09 at product `HEAD` after 4.3: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0, `# tests 393`, `# pass 393`, `# fail 0` (baseline 382); replay exit 0 / 0 MISMATCH; companion replay exit 0 / 0 MISMATCH; shellcheck 0.11.0 (the npx-cached binary run by path, the four files, plain command) exit 0, silent; extension `npm ci` (first install in this worktree) exit 0, `npm run build` exit 0, `npm run test:unit` exit 0 with 160/160; `git status --porcelain --untracked-files=all` empty in both halves
-- [ ] 5.2 Integrate both defaults by merge (`git merge origin/main` in the product half; `git -C <companion half> merge origin/main`), push product then companion, confirm CI (`scripts/wait-for-checks.sh pr <code PR>` exit 0 — the CI shellcheck job is the authoritative shellcheck run), then set `status: in-review` and `next-step: ""` in this roadmap (companion half) and push — verify: `git status --porcelain` empty in both halves; `git rev-list --count @{upstream}..HEAD` = 0 in both; `git merge-base --is-ancestor origin/main HEAD` exit 0 in both; `scripts/wait-for-checks.sh pr <n>` exit 0; `node scripts/agento.mjs initiative agento-hardening` lists `hooks-node-port` as `in-review` with `errors: []`
+- [x] 5.2 Integrate both defaults by merge (`git merge origin/main` in the product half; `git -C <companion half> merge origin/main`), push product then companion, confirm CI (`scripts/wait-for-checks.sh pr <code PR>` exit 0 — the CI shellcheck job is the authoritative shellcheck run), then set `status: in-review` and `next-step: ""` in this roadmap (companion half) and push — verify: `git status --porcelain` empty in both halves; `git rev-list --count @{upstream}..HEAD` = 0 in both; `git merge-base --is-ancestor origin/main HEAD` exit 0 in both; `scripts/wait-for-checks.sh pr <n>` exit 0; `node scripts/agento.mjs initiative agento-hardening` lists `hooks-node-port` as `in-review` with `errors: []` — done 2026-10-09: `origin/main` was already an ancestor of both halves (no merge needed; `merge-base --is-ancestor` exit 0 in both); both halves pushed, `rev-list --count @{upstream}..HEAD` 0 and `git status --porcelain` empty in both; `scripts/wait-for-checks.sh pr 104` exit 0 (`test` SUCCESS on head `25f288e`, merge state CLEAN); `node scripts/agento.mjs initiative agento-hardening` exit 0 lists `hooks-node-port` as `in-review` with `errors: []`
 
 ## Follow-ups
