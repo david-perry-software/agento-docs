@@ -292,3 +292,59 @@ All code changes in the product half; `extension/cli/` refreshed by `copy-cli`.
 - [ ] `extension/cli/` matches `scripts/` — `node --test tests/extension-bundle.test.mjs` exit 0.
 - [ ] Scoped gate (policy §5) green against the baseline: full node suite exit 0 with `# tests` > 436 and `# fail 0`; both guard replays exit 0; `cd extension && npm run test:unit` exit 0; `npm run lint:hooks` exit 0, or 127 with no shell file in `git diff --name-only origin/main...HEAD`.
 - [ ] `evidence/repro.sh` against this branch's `HEAD` exits 0 (the hard-gap test passes with the real GitHub values) — output saved as `evidence/repro-output-fixed.txt`.
+
+## Resolution
+
+**Root cause.** The three conflict gates in `scripts/agento.mjs` — the audit's
+`pr-conflicting` and `companion-pr-conflicting` and `ship-preflight`'s
+`conflicting-pr` — compared `mergeStateStatus` with `"CONFLICTING"`, a value GitHub
+never emits (a conflicting PR is `mergeable: CONFLICTING` / `mergeStateStatus:
+DIRTY`), so the gates never fired; the tests fed the same impossible value and
+masked it. Separately, phase `checks` (roadmap `complete`, PR open) skipped the
+audit and never re-checked the PR, and a failed merge or failing check left the
+roadmap at `complete`, so every re-send landed on `checks` again.
+
+**What changed.**
+
+- `isConflicting(pr)` (`mergeable === "CONFLICTING" || mergeStateStatus ===
+  "DIRTY"`) drives all three gates; `prViewArgs` requests `mergeable` and
+  `prSummary` carries it; an open PR with `mergeable: UNKNOWN` adds a
+  `pr-mergeable-unknown` / `companion-pr-mergeable-unknown` warning, never a gap.
+- `reopenRoadmap(content, { date, codes })` — exported from
+  `scripts/delivery-roadmap-resolver.mjs` beside `completeRoadmap`, which moved
+  there with it because `agento.mjs` runs its CLI on import — sets `status:
+  in-review`, `last-updated`, and `next-step: "ship reopened (<codes>): resolve in
+  the build window, then re-review"`, and removes only `## Follow-ups (accepted at
+  ship)`.
+- `ship()` gains a `reopen(codes)` closure (switch the artifact checkout onto the
+  branch when there is no owner, fast-forward, commit `docs(<type>): reopen <slug>
+  (<codes>)`, push, restore, `actions[]: roadmap-reopened`, `rejectTo` build window
+  or `start-session --resume`) with three triggers at `checks`: a conflicting code
+  or companion PR before any write (`rejected` / `audit-gaps`), a `gh pr merge`
+  refused as not mergeable (`rejected` / `audit-gaps`, `pr-conflicting`), and a
+  failing required check (`failed` / `checks-failed`). The next send derives
+  `audit`. Pending checks never reopen.
+- Tests use GitHub's real values (`prStub` and `shipStub` emit `mergeable`;
+  `shipStub` gains `refuseMerge`); new tests cover the audit gate in both layouts,
+  the `UNKNOWN` warning, `reopenRoadmap`, and each reopen trigger including the
+  no-owner paths. The ship prompt (and its `commands/` mirror), `docs/commands.md`,
+  the policy §9 ship row, and `CHANGELOG.md` describe the change; `extension/cli/`
+  is refreshed.
+
+**Proof.**
+
+- Exposing test before the fix (step 1.1): `node --test scripts/agento.test.mjs` →
+  exit 1, 164 tests / 163 pass / 1 fail — `not ok 142 - ship audit rejects a PR
+  GitHub reports as conflicting (#107 ship-conflict-gate)`, the audit
+  `awaiting-confirm` with `gaps.hard: []`.
+- After the predicate (step 2.1): `--test-name-pattern='#107'` exit 0; after the
+  masking-test fix (2.2): 165/165; after the reopen triggers (3.2–3.4): the three
+  `#107` tests pass and the file is 168/168.
+- [evidence/repro-output-fixed.txt](evidence/repro-output-fixed.txt): the
+  reproduction against this branch's `HEAD` ends `exit=0` with `ok 1 - ship audit:
+  every hard gap code in the in-repo layout …`.
+- Scoped gate (step 5.2) against the `## Research` baseline: full node suite exit 0,
+  441 tests / 441 pass / 0 fail (baseline 436); both guard replays exit 0;
+  `extension` `npm ci` + `test:unit` exit 0 (167/167); `lint:hooks` exit 127
+  (`shellcheck` absent, as at baseline) with no `scripts/hooks/` or
+  `scripts/wait-for-checks.sh` path in `git diff --name-only origin/main...HEAD`.
