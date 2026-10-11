@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: complete
 branch: issue/ship-conflict-gate
 last-updated: 2026-10-11
 next-step: ""
