@@ -2,15 +2,15 @@
 status: in-progress
 branch: issue/ship-conflict-gate
 last-updated: 2026-10-11
-next-step: "1.1 Add the exposing regression test (#107)"
+next-step: "2.1 Conflict predicate isConflicting + mergeable in prViewArgs/prSummary"
 github-issue: "#107"
 artifact-pr: "#44"
 ```
 
 ## Phase 1: Expose the defect
 
-- [ ] 1.1 In `scripts/agento.test.mjs` add `test("ship audit rejects a PR GitHub reports as conflicting (#107 ship-conflict-gate)", …)`: with `makeWorktreeRepo()` + `shippable(fixture, "conflict107")` and `shipStub({ product: { prs: { [branch]: { mergeStateStatus: "DIRTY", mergeable: "CONFLICTING" } } } })`, assert the audit is `status: "rejected"`, `reason: "audit-gaps"`, `codes(gaps.hard)` deep-equals `["pr-conflicting"]`, `rejectTo` is the build-window `/agento build-feature conflict107`, and the audit wrote nothing (refs and stub state unchanged). Add a companion-mode case in the same test (`makePairRepo`, companion PR `{ number: 7, mergeStateStatus: "DIRTY", mergeable: "CONFLICTING" }`) expecting `["companion-pr-conflicting"]`. — verify: `node --test scripts/agento.test.mjs > /tmp/scg-1-1.txt 2>&1; echo "exit=$?"` prints `exit=1`; `grep -c '^not ok' /tmp/scg-1-1.txt` is 1 and that line names the #107 test; every other test is `ok`; record counts on this line
-- [ ] 1.2 Commit the failing test alone (`test(ship): expose conflict gate (#107)`) with this roadmap tick in the companion half. — verify: `git log -1 --name-only` in the product half lists only `scripts/agento.test.mjs`; the 1.1 counts are recorded here
+- [x] 1.1 In `scripts/agento.test.mjs` add `test("ship audit rejects a PR GitHub reports as conflicting (#107 ship-conflict-gate)", …)`: with `makeWorktreeRepo()` + `shippable(fixture, "conflict107")` and `shipStub({ product: { prs: { [branch]: { mergeStateStatus: "DIRTY", mergeable: "CONFLICTING" } } } })`, assert the audit is `status: "rejected"`, `reason: "audit-gaps"`, `codes(gaps.hard)` deep-equals `["pr-conflicting"]`, `rejectTo` is the build-window `/agento build-feature conflict107`, and the audit wrote nothing (refs and stub state unchanged). Add a companion-mode case in the same test (`makePairRepo`, companion PR `{ number: 7, mergeStateStatus: "DIRTY", mergeable: "CONFLICTING" }`) expecting `["companion-pr-conflicting"]`. — verify: `node --test scripts/agento.test.mjs > /tmp/scg-1-1.txt 2>&1; echo "exit=$?"` prints `exit=1`; `grep -c '^not ok' /tmp/scg-1-1.txt` is 1 and that line names the #107 test; every other test is `ok`; record counts on this line — 2026-10-11: `exit=1`, `# tests 164`, `# pass 163`, `# fail 1`; the one `not ok 142` is the #107 test (`0 !== 3`: audit `awaiting-confirm`, `gaps.hard: []` with `pr.mergeStateStatus: DIRTY`, `mergeable: CONFLICTING`)
+- [x] 1.2 Commit the failing test alone (`test(ship): expose conflict gate (#107)`) with this roadmap tick in the companion half. — verify: `git log -1 --name-only` in the product half lists only `scripts/agento.test.mjs`; the 1.1 counts are recorded here — 2026-10-11: 164 tests / 163 pass / 1 fail (the #107 test)
 
 ## Phase 2: Conflict predicate
 
