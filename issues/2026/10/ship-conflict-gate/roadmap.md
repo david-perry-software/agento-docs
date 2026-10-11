@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/ship-conflict-gate
 last-updated: 2026-10-11
-next-step: "4.2 docs/commands.md, policy §9 ship row, CHANGELOG"
+next-step: "5.1 copy-cli and the extension bundle test"
 github-issue: "#107"
 artifact-pr: "#44"
 ```
@@ -27,7 +27,7 @@ artifact-pr: "#44"
 ## Phase 4: Prompt, docs, policy, changelog
 
 - [x] 4.1 `.github/prompts/ship.prompt.md`: under `audit-gaps`, when `resumedAt` is `checks` say the roadmap was reopened (`roadmap-reopened` in `actions[]`, a write) and that the next `/agento ship` re-runs the full audit after the build-window fix and a fresh review; under `checks-failed`, the same reopen note. Copy byte-for-byte to `commands/ship.md`. — verify: `grep -c 'roadmap-reopened' .github/prompts/ship.prompt.md` ≥ 2; `cmp .github/prompts/ship.prompt.md commands/ship.md` silent; `node --test tests/customizations.test.mjs` exit 0 — 2026-10-11: count 2, `cmp=0`, customizations 38/38 (the first wording named `gh pr merge`, which the prompt must not; reworded to "a merge GitHub refused as not mergeable")
-- [ ] 4.2 `docs/commands.md`: `ship-preflight`'s `conflicting-pr` reads (`mergeable: CONFLICTING` / `mergeStateStatus: DIRTY`); the ship paragraph documents the checks-phase reopen (three triggers, `docs(<type>): reopen <slug> (<codes>)` commit, `roadmap-reopened` action, `rejectTo`), the `pr-mergeable-unknown` warning, and `mergeable` in `pr` / `companionPr`. `.github/instructions/delivery-policy.instructions.md` §9 `/agento ship` row gains: "a conflict, a refused merge, or a failing required check found at `checks` reopens the roadmap to `in-review` and rejects back to the build window." `CHANGELOG.md` `## Unreleased` gains one **Fixed.** bullet ending `(#107)`. — verify: `grep -rnE 'mergeStateStatus[^,]{0,6}CONFLICTING|mergeStateStatus: CONFLICTING' scripts docs .github commands` prints nothing; `grep -c 'reopen' .github/instructions/delivery-policy.instructions.md` ≥ 1; `grep -c '(#107)' CHANGELOG.md` = 1; `node --test tests/customizations.test.mjs` exit 0
+- [x] 4.2 `docs/commands.md`: `ship-preflight`'s `conflicting-pr` reads (`mergeable: CONFLICTING` / `mergeStateStatus: DIRTY`); the ship paragraph documents the checks-phase reopen (three triggers, `docs(<type>): reopen <slug> (<codes>)` commit, `roadmap-reopened` action, `rejectTo`), the `pr-mergeable-unknown` warning, and `mergeable` in `pr` / `companionPr`. `.github/instructions/delivery-policy.instructions.md` §9 `/agento ship` row gains: "a conflict, a refused merge, or a failing required check found at `checks` reopens the roadmap to `in-review` and rejects back to the build window." `CHANGELOG.md` `## Unreleased` gains one **Fixed.** bullet ending `(#107)`. — verify: `grep -rnE 'mergeStateStatus[^,]{0,6}CONFLICTING|mergeStateStatus: CONFLICTING' scripts docs .github commands` prints nothing; `grep -c 'reopen' .github/instructions/delivery-policy.instructions.md` ≥ 1; `grep -c '(#107)' CHANGELOG.md` = 1; `node --test tests/customizations.test.mjs` exit 0 — 2026-10-11: grep exit 1 (nothing), reopen count 2, `(#107)` count 1, customizations exit 0 (38/38)
 
 ## Phase 5: Bundle, gate, publish
 
