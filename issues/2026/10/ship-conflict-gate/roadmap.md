@@ -4,6 +4,7 @@ branch: issue/ship-conflict-gate
 last-updated: 2026-10-11
 next-step: "1.1 Add the exposing regression test (#107)"
 github-issue: "#107"
+artifact-pr: "#44"
 ```
 
 ## Phase 1: Expose the defect
