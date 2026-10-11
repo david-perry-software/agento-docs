@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: issue/ship-conflict-gate
 last-updated: 2026-10-11
 next-step: "1.1 Add the exposing regression test (#107)"
