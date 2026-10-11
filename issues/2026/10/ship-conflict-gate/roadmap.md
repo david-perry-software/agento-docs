@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/ship-conflict-gate
 last-updated: 2026-10-11
-next-step: "2.1 Conflict predicate isConflicting + mergeable in prViewArgs/prSummary"
+next-step: "2.2 Fix the masking tests (DIRTY/CONFLICTING, prStub mergeable, field lists)"
 github-issue: "#107"
 artifact-pr: "#44"
 ```
@@ -14,7 +14,7 @@ artifact-pr: "#44"
 
 ## Phase 2: Conflict predicate
 
-- [ ] 2.1 In `scripts/agento.mjs` add `isConflicting(pr)` (plan.md `## Approach` item 1) and use it at the audit's `companion-pr-conflicting` and `pr-conflicting` checks and at `ship-preflight`'s `conflicting-pr`. Add `mergeable` to `prViewArgs` and `prSummary`. In the audit, push `pr-mergeable-unknown` / `companion-pr-mergeable-unknown` onto `out.warnings` for an `OPEN` PR with `mergeable: "UNKNOWN"`. — verify: `node --test --test-name-pattern='#107' scripts/agento.test.mjs` exit 0; `grep -n 'isConflicting' scripts/agento.mjs` shows the definition and 3 uses
+- [x] 2.1 In `scripts/agento.mjs` add `isConflicting(pr)` (plan.md `## Approach` item 1) and use it at the audit's `companion-pr-conflicting` and `pr-conflicting` checks and at `ship-preflight`'s `conflicting-pr`. Add `mergeable` to `prViewArgs` and `prSummary`. In the audit, push `pr-mergeable-unknown` / `companion-pr-mergeable-unknown` onto `out.warnings` for an `OPEN` PR with `mergeable: "UNKNOWN"`. — verify: `node --test --test-name-pattern='#107' scripts/agento.test.mjs` exit 0; `grep -n 'isConflicting' scripts/agento.mjs` shows the definition and 3 uses
 - [ ] 2.2 Fix the masking tests in `scripts/agento.test.mjs`: L4822 and L4934 inputs become `{ mergeStateStatus: "DIRTY", mergeable: "CONFLICTING" }`; `prStub` (L1883) gains a per-side `mergeable` field (default `MERGEABLE`, `companionMergeable` option) and L1940 uses `{ companionMerge: "DIRTY", companionMergeable: "CONFLICTING" }`; update the exact `prViewArgs` field-list assertions (L1251, L1283, L1802, L1907) and every deep-equal `pr` / `companionPr` expectation that now carries `mergeable`. Add a unit case: an open PR with `mergeable: "UNKNOWN"` audits with no gap and a `pr-mergeable-unknown` warning. — verify: `node --test scripts/agento.test.mjs` exit 0, `# fail 0`; `grep -rnE 'mergeStateStatus[^,]{0,6}CONFLICTING' scripts` prints nothing
 
 ## Phase 3: Self-heal at phase checks
