@@ -1,0 +1,36 @@
+TAP version 13
+# warning: You appear to have cloned an empty repository.
+# Subtest: ship audit: every hard gap code in the in-repo layout rejects with the right reject-back command and no writes
+not ok 1 - ship audit: every hard gap code in the in-repo layout rejects with the right reject-back command and no writes
+  ---
+  duration_ms: 2728.673711
+  type: 'test'
+  location: '/tmp/ship-conflict-repro-rSVj/scripts/agento.test.mjs:4768:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    conflict: {"status":"ok","type":"feature","slug":"conflict","branch":"feature/conflict","mode":"in-repo","phase":"audit","resumedAt":"audit","outcome":"awaiting-confirm","audit":{"owner":{"path":"/tmp/agento-cli-mIRmzK/wt/feature-conflict","role":"build","dirPrefix":"feature","id":"conflict"},"ownerTree":{"tracked":[],"untracked":[],"ahead":0},"companion":null,"companionGaps":[],"companionTree":null,"layout":"checkout","artifactsRoot":"/tmp/agento-cli-mIRmzK/project","artifactRef":"origin/feature/conflict","roadmapPath":"features/2026/10/conflict/roadmap.md","roadmap":{"status":"in-review","unticked":[],"postShip":[]},"review":{"present":true,"verdict":"approve","stale":false,"reviewedAt":"2026-10-11T16:10:06.000Z","lastCodeCommit":{"sha":"16bb4966b5c7f22fb5525a842570f0933d206991","at":"2026-10-11T16:10:03.000Z"}},"issue":null,"changelog":{"versionChanged":false,"from":null,"to":null,"unreleasedHeading":null,"needsStamp":false,"headingWithoutVersionChange":false},"pr":{"number":15,"state":"OPEN","isDraft":true,"mergeStateStatus":"DIRTY","url":"https://example.test/product/pull/15","mergeCommit":null,"title":"feature/conflict","mergeable":"CONFLICTING"},"companionPr":null,"diffFiles":["features/2026/10/conflict/plan.md","features/2026/10/conflict/review.md","features/2026/10/conflict/roadmap.md"]},"gaps":{"hard":[],"confirm":[]},"confirmToken":"4e1bfbeef94a","rejectTo":null,"actions":[],"pr":{"number":15,"state":"OPEN","isDraft":true,"mergeStateStatus":"DIRTY","url":"https://example.test/product/pull/15","mergeCommit":null},"companionPr":null,"mergeSha":null,"release":null,"teardown":null,"postShip":null,"next":["/agento ship conflict"],"preflight":[],"reason":null,"message":null,"fix":null,"reauth":null,"allowed":["/agento continue","/agento start-session","/agento new-feature","/agento new-issue","/agento new-initiative","/agento delivery-status"],"elsewhere":[],"warnings":[],"root":"/tmp/agento-cli-mIRmzK/project","configSource":"/tmp/agento-cli-mIRmzK/project/.github/agento.json"}
+    
+    0 !== 3
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 3
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    expectHard (file:///tmp/ship-conflict-repro-rSVj/scripts/agento.test.mjs:4776:12)
+    TestContext.<anonymous> (file:///tmp/ship-conflict-repro-rSVj/scripts/agento.test.mjs:4822:20)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2783.445076

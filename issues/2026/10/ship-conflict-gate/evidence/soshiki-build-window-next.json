@@ -1,0 +1,37 @@
+{
+  "status": "ok",
+  "role": "build",
+  "lifecycle": "shipped",
+  "slug": "email-artifact-attachments",
+  "type": "feature",
+  "artifactPr": "#45",
+  "layout": "checkout",
+  "artifactsRoot": "/home/david/DP/soshiki-docs",
+  "next": {
+    "command": "ship",
+    "args": [
+      "email-artifact-attachments"
+    ],
+    "invocation": "/agento ship email-artifact-attachments",
+    "window": "primary",
+    "then": null,
+    "reason": "the delivery is merged: re-send ship from the primary window to tear this worktree down",
+    "target": {
+      "path": "/home/david/DP/soshiki",
+      "workspace": null
+    }
+  },
+  "candidates": [],
+  "reviewFresh": false,
+  "dispatch": {
+    "prompt": "/home/david/DP/agento-worktrees/plan-20261011-145952/commands/ship.md",
+    "agent": null
+  },
+  "warnings": [
+    "feature/api-service-splits: origin/feature/api-service-splits is absent, so review freshness and roadmap state reflect the local branch as of the last fetch",
+    "feature/async-resource-typed-deps: origin/feature/async-resource-typed-deps is absent, so review freshness and roadmap state reflect the local branch as of the last fetch"
+  ],
+  "reason": "the delivery is merged: re-send ship from the primary window to tear this worktree down",
+  "root": "/home/david/DP/soshiki-worktrees/plan-20261010-162041",
+  "configSource": "/home/david/DP/soshiki-worktrees/plan-20261010-162041/.github/agento.json"
+}

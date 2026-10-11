@@ -1,0 +1,50 @@
+{
+  "status": "ok",
+  "resolutionSource": "remote",
+  "branch": "feature/email-artifact-attachments",
+  "owner": {
+    "path": "/home/david/DP/soshiki-worktrees/plan-20261010-162041",
+    "role": "build",
+    "dirPrefix": "plan",
+    "id": "20261010-162041"
+  },
+  "message": "Ship preflight can proceed: roadmap resolved via remote fallback for feature/email-artifact-attachments.",
+  "companion": {
+    "path": "/home/david/DP/soshiki-docs-worktrees/plan-20261010-162041",
+    "branch": "feature/email-artifact-attachments",
+    "detached": false,
+    "dirty": false,
+    "ahead": 0,
+    "behind": 0,
+    "registered": true
+  },
+  "companionGaps": [],
+  "ownerTree": {
+    "tracked": [],
+    "untracked": [],
+    "ahead": 0
+  },
+  "companionTree": {
+    "tracked": [],
+    "untracked": []
+  },
+  "pr": {
+    "isDraft": false,
+    "mergeStateStatus": "DIRTY",
+    "number": 520,
+    "state": "OPEN",
+    "url": "https://github.com/david-perry-software/soshiki/pull/520"
+  },
+  "companionPr": {
+    "isDraft": false,
+    "mergeStateStatus": "CLEAN",
+    "number": 45,
+    "state": "OPEN",
+    "url": "https://github.com/david-perry-software/soshiki-docs/pull/45"
+  },
+  "warnings": [],
+  "layout": "checkout",
+  "artifactsRoot": "/home/david/DP/soshiki-docs",
+  "root": "/home/david/DP/soshiki",
+  "configSource": "/home/david/DP/soshiki/.github/agento.json"
+}
