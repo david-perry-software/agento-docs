@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/ship-conflict-gate
 last-updated: 2026-10-11
-next-step: "5.3 Re-run the reproduction against this branch"
+next-step: "5.4 Integrate, write ## Resolution, hand off to review"
 github-issue: "#107"
 artifact-pr: "#44"
 ```
@@ -33,7 +33,7 @@ artifact-pr: "#44"
 
 - [x] 5.1 `cd extension && npm run copy-cli`. — verify: `node --test tests/extension-bundle.test.mjs` exit 0 — 2026-10-11: exit 0, 4/4 (`extension/cli/agento.mjs` and `extension/cli/delivery-roadmap-resolver.mjs` refreshed)
 - [x] 5.2 Run the scoped gate against the plan.md `## Research` baseline (436/436/0; both replays exit 0; `lint:hooks` exit 127, shellcheck absent): `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`; `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`; `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`; `cd extension && npm ci && npm run test:unit`; `npm run lint:hooks; echo "exit=$?"`; `git diff --name-only origin/main...HEAD`. — verify: node suite exit 0, `# fail 0`, `# tests` > 436; both replays exit 0; `test:unit` exit 0; `lint:hooks` exit 0, or 127 with the diff naming no `scripts/hooks/` or `scripts/wait-for-checks.sh` path; record counts on this line — 2026-10-11: node suite exit 0, `# tests 441`, `# pass 441`, `# fail 0` (baseline 436); guard replays exit 0 and exit 0; `npm ci` exit 0, `test:unit` exit 0 (167/167); `lint:hooks` exit 127 (`shellcheck: not found`, as at baseline) and `git diff --name-only origin/main...HEAD` names no shell file (`.github/instructions/delivery-policy.instructions.md`, `.github/prompts/ship.prompt.md`, `CHANGELOG.md`, `commands/ship.md`, `docs/commands.md`, `extension/cli/agento.mjs`, `extension/cli/delivery-roadmap-resolver.mjs`, `scripts/agento.mjs`, `scripts/agento.test.mjs`, `scripts/delivery-roadmap-resolver.mjs`); no finding beyond the baseline
-- [ ] 5.3 Re-run the reproduction against this branch: `AGENTO=<product half> bash <companion half>/issues/2026/10/ship-conflict-gate/evidence/repro.sh > <companion half>/issues/2026/10/ship-conflict-gate/evidence/repro-output-fixed.txt 2>&1`. — verify: the file ends `exit=0` and shows `ok 1 - ship audit: every hard gap code in the in-repo layout …`; committed in the companion half
+- [x] 5.3 Re-run the reproduction against this branch: `AGENTO=<product half> bash <companion half>/issues/2026/10/ship-conflict-gate/evidence/repro.sh > <companion half>/issues/2026/10/ship-conflict-gate/evidence/repro-output-fixed.txt 2>&1`. — verify: the file ends `exit=0` and shows `ok 1 - ship audit: every hard gap code in the in-repo layout …`; committed in the companion half — 2026-10-11: [evidence/repro-output-fixed.txt](evidence/repro-output-fixed.txt) ends `exit=0` with `ok 1 - ship audit: every hard gap code in the in-repo layout rejects with the right reject-back command and no writes`
 - [ ] 5.4 Integrate and hand off: merge `origin/main` into the product half and the companion's `origin/main` into the companion half (never rebase); write plan.md `## Resolution` (root cause, the predicate and reopen changes, the 1.1 failing and Phase 2/3 passing runs, `repro-output-fixed.txt`); set `status: in-review`, `next-step: ""`; push product then companion. — verify: `git status --porcelain --untracked-files=all` empty in both halves; `node scripts/agento.mjs session --pr` shows `companion.dirty: false`, `companion.ahead: 0`, and the code PR body starts with `Fixes #107`
 
 ## Follow-ups
