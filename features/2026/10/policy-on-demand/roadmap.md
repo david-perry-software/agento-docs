@@ -2,14 +2,14 @@
 status: in-progress
 branch: feature/policy-on-demand
 last-updated: 2026-10-11
-next-step: "1.1 Record the always-on baseline"
+next-step: "2.1 Add the always-on core"
 artifact-pr: "#46"
 initiative: "spend-reduction"
 ```
 
 ## Phase 1: Baseline
 
-- [ ] 1.1 Record the always-on baseline in `evidence/step-1-1-baseline.md` (companion half): `wc -l -c` of every `.github/instructions/*.md` whose `applyTo` is `"**"` at the branch base, the `chat.includeReferencedInstructions` default (`default:!1` in `/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js`, VS Code 1.136.0), and the plugin-root env vars (`pluginRootEnvVars:["PLUGIN_ROOT","CLAUDE_PLUGIN_ROOT"]`) — verify: the file lists exactly `delivery-policy`, `command-invocation`, `ai-skills` with totals 517 lines / 32 063 bytes
+- [x] 1.1 Record the always-on baseline in [`evidence/step-1-1-baseline.md`](evidence/step-1-1-baseline.md) (companion half): `wc -l -c` of every `.github/instructions/*.md` whose `applyTo` is `"**"` at the branch base, the `chat.includeReferencedInstructions` default (`default:!1` in `/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js`, VS Code 1.136.0), and the plugin-root env vars (`pluginRootEnvVars:["PLUGIN_ROOT","CLAUDE_PLUGIN_ROOT"]`) — verify: the file lists exactly `delivery-policy`, `command-invocation`, `ai-skills` with totals 517 lines / 32 063 bytes
 
 ## Phase 2: Always-on core and policy on demand
 
