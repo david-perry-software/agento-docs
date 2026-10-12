@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "4.4 Rewire commit-current-changes, quick-fix, and finish-freehand"
+next-step: "4.5 Rewire the Architect, new-initiative, and triage-followups"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -157,7 +157,7 @@ initiative: "spend-reduction"
 
   — verify: `node --test scripts/agento.test.mjs` passes
 
-- [ ] 4.4 Rewire `commit-current-changes.prompt.md` (steps 8–10),
+- [x] 4.4 Rewire `commit-current-changes.prompt.md` (steps 8–10),
   `quick-fix.prompt.md` (steps 7–9), and `finish-freehand.prompt.md` (steps 7–9):
   - after the prompt's own commit, one `node <agento-root>/scripts/agento.mjs
     publish-pr --title … --body-file - --merge` call, re-sent on exit 2, stopping on
