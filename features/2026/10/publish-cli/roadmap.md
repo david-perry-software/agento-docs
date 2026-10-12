@@ -2,14 +2,14 @@
 status: in-progress
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "1.1 Lift ship's waitForChecks into a module-level helper"
+next-step: "1.2 Extract stepCommit's PR phase into ensureDeliveryPrs"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
 
 ## Phase 1: Shared helpers (no behaviour change)
 
-- [ ] 1.1 Lift `ship`'s `waitForChecks` closure in `scripts/agento.mjs` into a
+- [x] 1.1 Lift `ship`'s `waitForChecks` closure in `scripts/agento.mjs` into a
   module-level helper `waitForChecks(kind, target, cwd, { repo, maxSeconds })`
   (bounded by the caller's budget, `GH_PROMPT_DISABLED=1`, returns `{ code, last }`),
   and make `ship()` call it — verify: `node --test scripts/agento.test.mjs` passes
