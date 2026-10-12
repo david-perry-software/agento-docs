@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "1.2 Extract stepCommit's PR phase into ensureDeliveryPrs"
+next-step: "1.3 Restrict integrateHalves' default merge to named halves"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -16,7 +16,7 @@ initiative: "spend-reduction"
   with no ship test modified (`git diff origin/main -- scripts/agento.test.mjs` is
   empty)
 
-- [ ] 1.2 Extract `stepCommit`'s PR phase (draft code PR with `Fixes #<n>`, companion
+- [x] 1.2 Extract `stepCommit`'s PR phase (draft code PR with `Fixes #<n>`, companion
   draft PR, idempotent REST PATCH cross-link, `artifact-pr:` header commit + push)
   into `ensureDeliveryPrs(run, win, { type, slug, commit, messageDir })` and call
   it from `stepCommit` — verify: `node --test scripts/agento.test.mjs` passes with
