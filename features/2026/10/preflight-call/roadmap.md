@@ -2,23 +2,28 @@
 status: in-progress
 branch: feature/preflight-call
 last-updated: 2026-10-12
-next-step: "1.1"
+next-step: "1.2"
 artifact-pr: "#47"
 initiative: "spend-reduction"
 ```
 
 ## Phase 1: CLI subcommand
 
-- [ ] 1.1 Add `agento.mjs preflight <command> [<type> <slug>]` to
+- [x] 1.1 Add `agento.mjs preflight <command> [<type> <slug>]` to
   `scripts/agento.mjs`: a `WINDOW_ROLES` table (command → required role + §11
   branch conditions), an `opId(command, subject)` helper, and the `preflight` case
   composing `sessionRecord()`, `doctorDocument(command)`, `resolveWithLayout(type,
   slug)` when a slug is passed, the `config` document, and ready-to-print `receipt`
   + `preflightLines` strings; add the usage header line — verify: `node
-  scripts/agento.mjs preflight new-feature` in the primary checkout prints the
+  scripts/agento.mjs preflight delivery-status` in the primary checkout prints the
   named sections (`session`, `window`, `doctor`, `resolve`, `config`, `opId`,
-  `receipt`, `preflightLines`) and exits 0, and `node scripts/agento.mjs preflight
-  nope` is a usage error (exit 1)
+  `receipt`, `preflightLines`) and exits 0, `preflight new-feature` there exits 3
+  with the §9 window rejection (its window line requires role `plan`), and `node
+  scripts/agento.mjs preflight nope` is a usage error (exit 1) (verify repaired
+  2026-10-12: the planned `preflight new-feature` exit 0 contradicted new-feature's
+  own §11 window line; `WINDOW_ROLES` lives in `scripts/session-state.mjs` beside
+  `deriveAllowed`, and `preflight` also accepts `<type>/<slug>` or a bare `<slug>`
+  resolved like `find`)
 
 - [ ] 1.2 Add the `preflight` test group to `scripts/agento.test.mjs` — output
   shape, op-id derivation, `window` verdict rows (match and mismatch), `resolve`
@@ -60,3 +65,11 @@ initiative: "spend-reduction"
   verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` (447+ tests,
   0 fail), both replay-guard runs exit 0, `git ls-files '*.sh' | xargs pnpm dlx
   shellcheck` exits 0 with no new findings
+
+## Follow-ups
+
+- `deriveAllowed` lists `/agento new-feature` and `/agento new-issue` in the
+  primary window's `allowed[]` (`CREATE` in `scripts/session-state.mjs`), while both
+  commands' §11 window line requires role `plan` (or a promoted `build`); a
+  `preflight new-feature` rejection from the primary therefore offers the rejected
+  command as an alternative. Pre-existing; align the table with the window lines.
