@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "3.1 Add review-publish"
+next-step: "3.2 Add the review-publish test group"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -74,7 +74,7 @@ initiative: "spend-reduction"
 
 ## Phase 3: `agento.mjs review-publish`
 
-- [ ] 3.1 Add `review-publish <type> <slug> [--body-file <file|->]` per plan.md
+- [x] 3.1 Add `review-publish <type> <slug> [--body-file <file|->]` per plan.md
   Approach 3:
   - `buildWindow`; review.md with `# Review: <slug>` and exactly one `Verdict:` line;
     slug-dir-only changes (product half clean in companion mode);
