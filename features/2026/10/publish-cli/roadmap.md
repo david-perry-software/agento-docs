@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "3.3 Rewire the Reviewer publish"
+next-step: "4.1 Add publish-pr (push and pr phases)"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -98,7 +98,7 @@ initiative: "spend-reduction"
 
   — verify: `node --test scripts/agento.test.mjs` passes, including the new group
 
-- [ ] 3.3 Rewire the Reviewer publish:
+- [x] 3.3 Rewire the Reviewer publish:
   - replace `.github/agents/delivery-reviewer.agent.md` step 8 and the publish steps
     of `review-feature.prompt.md` / `review-issue.prompt.md` with one
     `node <agento-root>/scripts/agento.mjs review-publish <type> <slug>` call;
