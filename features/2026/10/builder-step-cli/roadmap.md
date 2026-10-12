@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/builder-step-cli
 last-updated: 2026-10-12
-next-step: "1.2 Add a buildWindow(type, slug) helper"
+next-step: "4.1 Rewrite the Builder agent to call sync and step-commit"
 artifact-pr: "#48"
 initiative: "spend-reduction"
 ```
@@ -18,7 +18,7 @@ initiative: "spend-reduction"
   passes with the ship tests unmodified (`git diff --stat origin/main --
   scripts/agento.test.mjs` shows no change)
 
-- [ ] 1.2 Add a `buildWindow(type, slug)` helper: `sessionRecord()` +
+- [x] 1.2 Add a `buildWindow(type, slug)` helper: `sessionRecord()` +
   `windowVerdict({ command: "build-<type>", slug })`, requiring `worktree.branch`
   equal to the roadmap `branch:` (never the default branch, never detached) and, in
   companion mode, `companion.branch` equal to it — verify: covered by the 2.2 and
@@ -26,7 +26,7 @@ initiative: "spend-reduction"
 
 ## Phase 2: `agento.mjs sync`
 
-- [ ] 2.1 Add `sync <type> <slug>`: window check; reject `dirty` when either half
+- [x] 2.1 Add `sync <type> <slug>`: window check; reject `dirty` when either half
   has tracked uncommitted changes; fetch both clones; per half merge
   `origin/<branch>` then `origin/<default>` when not ancestors (never rebase);
   conflict → abort, reject `integration-conflict` with `half`, `ref`,
@@ -36,7 +36,7 @@ initiative: "spend-reduction"
   §11 wrong-window reason, and `node scripts/agento.mjs sync` is a usage error
   (exit 1)
 
-- [ ] 2.2 Add the `sync` test group to `scripts/agento.test.mjs` (in-repo and
+- [x] 2.2 Add the `sync` test group to `scripts/agento.test.mjs` (in-repo and
   companion): merges an advanced `origin/main` into both halves and pushes;
   merges a remote-ahead `origin/<branch>`; already-integrated re-send is a no-op
   `ok`; a conflicting default aborts with the conflicted files and a clean tree,
@@ -46,7 +46,7 @@ initiative: "spend-reduction"
 
 ## Phase 3: `agento.mjs step-commit`
 
-- [ ] 3.1 Add `step-commit <type> <slug> [--step N.M] --message-file <f|->`:
+- [x] 3.1 Add `step-commit <type> <slug> [--step N.M] --message-file <f|->`:
   argument parsing (`--step`, `--message-file`, stdin `-`), message validation
   (Conventional Commit first line; names `N.M` with `--step`; file outside both
   halves), staging (product `add -A`; companion `add -A -- <slug dir>`, reject
@@ -58,7 +58,7 @@ initiative: "spend-reduction"
   </dev/null` from the primary checkout exits 3 with the wrong-window reason, and a
   missing `--message-file` is a usage error (exit 1)
 
-- [ ] 3.2 Add integration and push to `step-commit`: fetch; merge
+- [x] 3.2 Add integration and push to `step-commit`: fetch; merge
   `origin/<branch>` and `origin/<default>` when not ancestors; a default merge that
   brought commits → `status: "reverify"`, exit 2, nothing pushed; conflict → abort,
   `integration-conflict`, nothing pushed; push product then companion (`-u` on the
@@ -67,7 +67,7 @@ initiative: "spend-reduction"
   verify: `node --test scripts/agento.test.mjs` passes the 3.4 cases for this
   step
 
-- [ ] 3.3 Add draft-PR creation to `step-commit`: `gh pr view <branch>`; none →
+- [x] 3.3 Add draft-PR creation to `step-commit`: `gh pr view <branch>`; none →
   `gh pr create --draft --base <default>` titled after the slug (issues: body starts
   `Fixes #<n>`); companion mode the draft `docs(<type>): <slug>` companion PR from
   inside the half, the idempotent cross-link PATCH, and the `artifact-pr:` header
@@ -75,7 +75,7 @@ initiative: "spend-reduction"
   with `reauth: "gh auth login"` — verify: `node --test scripts/agento.test.mjs`
   passes the fake-`gh` PR cases of 3.4
 
-- [ ] 3.4 Add the `step-commit` test group to `scripts/agento.test.mjs` (in-repo
+- [x] 3.4 Add the `step-commit` test group to `scripts/agento.test.mjs` (in-repo
   and companion, fake `gh` via `restrictedPath`): two-commit order (product commit
   and push precede the companion's); no-code step is one companion commit; in-repo
   single commit includes roadmap.md; `reverify` exit 2 then re-send pushes;
