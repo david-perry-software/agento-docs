@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/builder-step-cli
 last-updated: 2026-10-12
-next-step: "5.1 Dogfood: commit 5.1 and 5.2 through agento.mjs step-commit, begin with agento.mjs sync (fresh rewired Builder)"
+next-step: "5.3 Run the full repository gate (then 5.2 records the after counts, including 5.3)"
 artifact-pr: "#48"
 initiative: "spend-reduction"
 ```
@@ -124,10 +124,14 @@ initiative: "spend-reduction"
 
 ## Phase 5: Measurement and full gate (run by the rewired Builder)
 
-- [ ] 5.1 Dogfood: commit this step and 5.2 through `agento.mjs step-commit` and
-  begin with `agento.mjs sync` — verify: the step commits on both branches carry
-  the step reference and `git log` shows they were pushed by the CLI call (the
-  call's `actions[]` lists `commit` and `push` for both halves)
+- [x] 5.1 Dogfood: commit this step and 5.2 through `agento.mjs step-commit` and
+  begin with `agento.mjs sync` — verify: the step commits carry the step
+  reference and `git log` shows they were pushed by the CLI call (the call's
+  `actions[]` lists `commit` and `push` for each half that changed; amended
+  2026-10-12: 5.1–5.3 change no code, so per the §7 two-commit rule each is one
+  companion commit — the product half has nothing to commit or push). Resume
+  began with one `sync` call (`outcome: up-to-date`, exit 0). 5.3 runs before
+  5.2 so the measurement can include it.
 
 - [ ] 5.2 Record `## Measurement` in plan.md: tool calls per roadmap step from the
   chat debug logs (`~/.config/Code/User/workspaceStorage/*/GitHub.copilot-chat/debug-logs/*/main.jsonl`)
