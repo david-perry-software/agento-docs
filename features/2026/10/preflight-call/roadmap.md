@@ -3,6 +3,7 @@ status: planned
 branch: feature/preflight-call
 last-updated: 2026-10-12
 next-step: "1.1"
+artifact-pr: "#47"
 initiative: "spend-reduction"
 ```
 
