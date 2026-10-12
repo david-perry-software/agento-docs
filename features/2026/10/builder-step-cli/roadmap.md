@@ -2,7 +2,7 @@
 status: in-review
 branch: feature/builder-step-cli
 last-updated: 2026-10-12
-next-step: "re-review after 5.5–5.6 (ship checks-failed fix): /agento review-feature builder-step-cli"
+next-step: "approved: /agento ship builder-step-cli"
 artifact-pr: "#48"
 initiative: "spend-reduction"
 ```
