@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "4.3 Add the publish-pr test group"
+next-step: "4.4 Rewire commit-current-changes, quick-fix, and finish-freehand"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -141,7 +141,7 @@ initiative: "spend-reduction"
 
   — verify: `node --test scripts/agento.test.mjs` passes, including 4.3's group
 
-- [ ] 4.3 Add the `publish-pr` test group (product checkout, companion clone via
+- [x] 4.3 Add the `publish-pr` test group (product checkout, companion clone via
   `--dir`, and a linked worktree). It covers:
   - each refusal and rejection, writing nothing;
   - opened-only without `--merge`;
