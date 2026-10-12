@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/builder-step-cli
 last-updated: 2026-10-12
-next-step: "5.5"
+next-step: "5.6"
 artifact-pr: "#48"
 initiative: "spend-reduction"
 ```
@@ -195,7 +195,7 @@ initiative: "spend-reduction"
   with no output, copy-cli + test:unit 167/167 pass, `git diff --quiet --
   extension/cli` exit 0 after a second copy-cli; final `sync` up-to-date
 
-- [ ] 5.5 Make the `ship --confirm (in-repo, owner)` fixture deterministic (ship
+- [x] 5.5 Make the `ship --confirm (in-repo, owner)` fixture deterministic (ship
   reopened, checks-failed: PR #111 CI run 38267310550 failed this one test with
   `review-stale` because the fixture's post-review "tracked shot" code commit
   landed one second after the review commit): pin that commit's
@@ -204,8 +204,19 @@ initiative: "spend-reduction"
   unmodified", not user-visible, so no CHANGELOG entry (added 2026-10-12) —
   verify: the test passes 10 times in a loop (`node --test --test-name-pattern
   'ship --confirm \(in-repo, owner\)' scripts/agento.test.mjs`), the full gate
-  `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` passes, `cd
-  extension && npm run copy-cli` leaves `git diff --quiet -- extension/cli`, and
-  the PR's `test` check passes on the new head (`scripts/wait-for-checks.sh`)
+  `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` passes, and `cd
+  extension && npm run copy-cli` leaves `git diff --quiet -- extension/cli` —
+  done 2026-10-12: root cause confirmed — `shippable()` commits review.md and the
+  code together, then the test adds the code commit "tracked shot"; the audit's
+  `review-stale` compares whole-second `%ct` (`reviewTs < codeTs`), so the gap
+  only fired when the two commits straddled a second boundary. Not caused by this
+  delivery: its test changes are appended after line 6311 and touch no ship
+  fixture or helper, and its `ship()` change (fetch/integrate/push lifted into
+  helpers) does not touch the audit's staleness logic. Loop 10/10 pass; full gate
+  465/465 pass; copy-cli exit 0, `git diff --quiet -- extension/cli` exit 0
+
+- [ ] 5.6 Confirm CI on the new head (added 2026-10-12) — verify:
+  `scripts/wait-for-checks.sh pr 111` exits 0 with the `test` check passing on
+  the head pushed by 5.5
 
 ## Follow-ups
