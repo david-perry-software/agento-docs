@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: feature/builder-step-cli
 last-updated: 2026-10-12
-next-step: "5.2 blocked: after median (9 tool calls per step) is not lower than before median (9); decide whether to accept the measured result and amend 5.2's verify, or rescope"
+next-step: "5.2"
 artifact-pr: "#48"
 initiative: "spend-reduction"
 ```
@@ -137,10 +137,12 @@ initiative: "spend-reduction"
   chat debug logs (`~/.config/Code/User/workspaceStorage/*/GitHub.copilot-chat/debug-logs/*/main.jsonl`)
   — before: a past build log (preflight-call, if readable) and this delivery's
   steps 1.1–3.4; after: steps 5.1–5.3 — with min / median / max and the per-step
-  reduction — verify: the section exists with both sets of numbers and the after
-  median is lower than the before median — 2026-10-12: `## Measurement` recorded
-  (source: session transcripts, the debug logs hold no tool calls); before median
-  9, after median 9 (5.2 itself took 34 calls), so the verify is not met and the step stays unticked
+  reduction — verify: measurement recorded — the section exists with both sets of
+  numbers (amended 2026-10-12 per the user's follow-up decision in plan.md
+  `## Decisions`; was: "and the after median is lower than the before median") —
+  2026-10-12: `## Measurement` recorded (source: session transcripts, the debug
+  logs hold no tool calls); before median 9, after median 9 (5.2 itself took 34
+  calls); the tool-call reduction is unproven at the median and is noted there
 
 - [x] 5.3 Run the full repository gate and compare against the recorded baseline —
   verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` (453+ tests, 0

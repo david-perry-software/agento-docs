@@ -62,6 +62,13 @@ recommended option for every question:
   lands; recorded in plan.md — no post-ship step. Not chosen: "Analytical only";
   "Post-ship measurement".
 
+Follow-up decision (2026-10-12), after step 5.2 paused because the after median (9)
+was not lower than the before median (9). The user's decision, verbatim:
+
+- "Option 1 — accept the measured result: amend 5.2's verify to 'measurement
+  recorded'; the delivery's value is safety/correctness of step commits rather than
+  a per-step call reduction."
+
 ## Research
 
 Skills consulted: agent-customization (built-in) — agents are `*.agent.md` in
@@ -386,6 +393,15 @@ does not touch. What `step-commit` adds is the guard-equivalent checks, the
 `reverify` stop, draft-PR creation, and the clean-handoff check inside the one call.
 The after sample is three steps with no code changes, so it is not like-for-like.
 
+**Initiative claim unproven (2026-10-12).** The spend-reduction initiative's
+claim that this member reduces tool calls per step is **unproven at the median**:
+this measurement shows no median reduction (9 → 9). Per the user's follow-up
+decision in `## Decisions`, step 5.2's `verify:` was amended to "measurement
+recorded" and the delivery is accepted for the safety and correctness of step
+commits, not for a per-step call reduction. The initiative's Definition of done
+("a reference `/agento ap` run takes measurably fewer tool calls than the baseline
+recorded by `builder-step-cli`") stays open and needs its own evidence.
+
 ## Acceptance checklist
 
 - [ ] `node scripts/agento.mjs sync <type> <slug>` fetches both halves, merges
@@ -417,7 +433,9 @@ The after sample is three steps with no code changes, so it is not like-for-like
   only the Builder references the two subcommands — enforced by
   `tests/customizations.test.mjs`.
 - [ ] `## Measurement` in this plan records before/after tool calls per roadmap
-  step from the chat debug logs and shows a reduction.
+  step (amended 2026-10-12 per the follow-up decision in `## Decisions`: the
+  measurement is recorded; a reduction is no longer required — it was not shown at
+  the median).
 - [ ] Docs (`docs/commands.md`, `docs/architecture.md`, AGENTS.md, the usage
   header, `concurrent-delivery.instructions.md`) and `CHANGELOG.md` describe the
   subcommands; `extension/cli/` is regenerated and `cd extension && npm run
