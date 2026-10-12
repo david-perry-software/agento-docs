@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/builder-step-cli
 last-updated: 2026-10-12
-next-step: "5.2"
+next-step: "completion: sync, then status in-review"
 artifact-pr: "#48"
 initiative: "spend-reduction"
 ```
@@ -133,7 +133,7 @@ initiative: "spend-reduction"
   began with one `sync` call (`outcome: up-to-date`, exit 0). 5.3 runs before
   5.2 so the measurement can include it.
 
-- [ ] 5.2 Record `## Measurement` in plan.md: tool calls per roadmap step from the
+- [x] 5.2 Record `## Measurement` in plan.md: tool calls per roadmap step from the
   chat debug logs (`~/.config/Code/User/workspaceStorage/*/GitHub.copilot-chat/debug-logs/*/main.jsonl`)
   — before: a past build log (preflight-call, if readable) and this delivery's
   steps 1.1–3.4; after: steps 5.1–5.3 — with min / median / max and the per-step
@@ -142,7 +142,9 @@ initiative: "spend-reduction"
   `## Decisions`; was: "and the after median is lower than the before median") —
   2026-10-12: `## Measurement` recorded (source: session transcripts, the debug
   logs hold no tool calls); before median 9, after median 9 (5.2 itself took 34
-  calls); the tool-call reduction is unproven at the median and is noted there
+  calls); the tool-call reduction is unproven at the median and is noted there;
+  amended verify passed 2026-10-12 (section present with before 5 / 9 / 53 and
+  1 / 9 / 49, after 3 / 9 / 34)
 
 - [x] 5.3 Run the full repository gate and compare against the recorded baseline —
   verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` (453+ tests, 0
