@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/builder-step-cli
 last-updated: 2026-10-12
-next-step: "4.3 Update docs, AGENTS.md, CHANGELOG.md; regenerate extension/cli"
+next-step: "5.1 Dogfood: commit 5.1 and 5.2 through agento.mjs step-commit, begin with agento.mjs sync (fresh rewired Builder)"
 artifact-pr: "#48"
 initiative: "spend-reduction"
 ```
@@ -109,7 +109,7 @@ initiative: "spend-reduction"
   tests/customizations.test.mjs` passes, and fails when a `git push` line is
   temporarily added to the Builder body (revert after checking)
 
-- [ ] 4.3 Update `docs/commands.md` (CLI listing), `docs/architecture.md` (scripts
+- [x] 4.3 Update `docs/commands.md` (CLI listing), `docs/architecture.md` (scripts
   bullet), AGENTS.md (`scripts/` subcommand list), and `CHANGELOG.md`; regenerate
   `extension/cli/` — verify: `cd extension && npm run copy-cli && npm run
   test:unit` passes, `git diff --quiet -- extension/cli` after a second `npm run
