@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "4.2 Add publish-pr's checks, merge, delete-branch, and sync phases"
+next-step: "4.3 Add the publish-pr test group"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -127,7 +127,7 @@ initiative: "spend-reduction"
   exits 3 with reason `default-branch`, and in this worktree on `feature/publish-cli`
   exits 3 with the delivery-prefix refusal
 
-- [ ] 4.2 Add the checks, merge, delete-branch, and sync phases:
+- [x] 4.2 Add the checks, merge, delete-branch, and sync phases:
   - a `BEHIND` PR merges `origin/<default>` (conflict → abort, reject
     `integration-conflict` with the files), pushes, and keeps waiting;
   - wait with `waitForChecks` bounded by `--wait` (≤ 60, default 50; `--repo` for a
