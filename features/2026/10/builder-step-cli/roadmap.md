@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: in-progress
 branch: feature/builder-step-cli
 last-updated: 2026-10-12
-next-step: "review: /agento review-feature builder-step-cli"
+next-step: "3.5 close the staged-rename escape in step-commit's companion scope check"
 artifact-pr: "#48"
 initiative: "spend-reduction"
 ```
@@ -87,6 +87,22 @@ initiative: "spend-reduction"
   inside a half — each leaving both halves unchanged — verify: `node --test
   scripts/agento.test.mjs` passes
 
+- [ ] 3.5 Close the staged-rename escape in `step-commit`'s companion scope check
+  (review Finding 1): reject when any rename/copy origin or staged path in the
+  companion half lies outside the slug directory, and assert the index holds only
+  slug-dir paths (`git diff --cached --name-only --no-renames`) right before the
+  companion commit (added 2026-10-12) — verify: a new guard-equivalence case (a
+  staged `git mv <outside> <slugDir>/x` in the half) rejects
+  `companion-outside-slug` listing the origin path and leaves both halves
+  unchanged; `node --test scripts/agento.test.mjs` passes
+
+- [ ] 3.6 Push with an explicit `refs/heads/<branch>:refs/heads/<branch>` refspec
+  in `sync`/`step-commit` so a `+`-prefixed branch can never force-push, and test
+  the `default-branch` and `branch-mismatch` rejections directly (companion half
+  switched to `main` / another branch) (review Findings 2, 3; added 2026-10-12) —
+  verify: `node --test scripts/agento.test.mjs` passes with the new cases; ship's
+  tests unmodified
+
 ## Phase 4: Builder rewiring, docs, copy
 
 - [x] 4.1 Rewrite `.github/agents/delivery-builder.agent.md`: resume step 1 → one
@@ -122,6 +138,13 @@ initiative: "spend-reduction"
   phase 5 runs in a fresh `/agento build-feature builder-step-cli` or `/agento ap
   builder-step-cli` invocation
 
+- [ ] 4.5 Correct the CHANGELOG entry (review Finding 4): drop the "instead of 8–12
+  git and gh calls per step" claim in line with plan.md `## Measurement`, and note
+  ship's additive `conflicts[]` field on `integration-conflict` (added 2026-10-12)
+  — verify: `grep -n '8–12' CHANGELOG.md` finds nothing in the builder-step-cli
+  entry and the entry names `conflicts[]`; regenerate `extension/cli/` if
+  `scripts/` changed
+
 ## Phase 5: Measurement and full gate (run by the rewired Builder)
 
 - [x] 5.1 Dogfood: commit this step and 5.2 through `agento.mjs step-commit` and
@@ -153,5 +176,10 @@ initiative: "spend-reduction"
   passes — done 2026-10-12 at product `cf20e51`: node --test 465/465 pass (baseline
   453), replay-guard exit 0 in both modes, shellcheck exit 0 with no output,
   extension test:unit 167/167 pass; no new findings against the baseline
+
+- [ ] 5.4 Rerun the full gate after 3.5–4.5 (added 2026-10-12) — verify: the same
+  commands as 5.3 exit 0 with no new findings against the baseline, `cd extension
+  && npm run copy-cli && npm run test:unit` passes, and `git diff --quiet --
+  extension/cli` after a second `copy-cli`
 
 ## Follow-ups
