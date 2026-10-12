@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "6.2 (manual) Before reference run"
+next-step: "6.2 (manual) Before reference run: reconcile the plugin clone's custom model pins, then run /agento quick-fix in another repository and share the debug log path and a screenshot"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -229,6 +229,13 @@ initiative: "spend-reduction"
   — verify: `evidence/step-6-2-quick-fix-before.png` is linked; the Builder counts
   the tool calls (publish phase from push to report, and total) from the log and
   records them with the log path in plan.md Measurement
+
+  - Note (2026-10-12): the Builder-first fast-forward is blocked. `/home/david/DP/agento-plugin`
+    is 17 commits behind `origin/main`, and `git merge --ff-only origin/main` aborts
+    because 56 prompt, agent, and command files carry model pins under
+    skip-worktree (`agento.mjs models list` reports `active: "custom"`, not a named
+    profile). Clearing them would discard the user's pins, so the Builder left the
+    clone untouched; the user decides how to reconcile them before the run.
 
 - [ ] 6.3 (manual) After reference run.
   - **Builder first:** `git -C /home/david/DP/agento-plugin switch --detach
