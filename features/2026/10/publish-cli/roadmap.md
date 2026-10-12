@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "4.5 Rewire the Architect, new-initiative, and triage-followups"
+next-step: "5.1 Document the three subcommands"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -170,7 +170,7 @@ initiative: "spend-reduction"
   — verify: `node --test tests/customizations.test.mjs` passes; `cmp` of the three
   mirrors exits 0
 
-- [ ] 4.5 Rewire `initiative-architect.agent.md` step 8 + `new-initiative.prompt.md`
+- [x] 4.5 Rewire `initiative-architect.agent.md` step 8 + `new-initiative.prompt.md`
   and `triage-followups.prompt.md` step 5:
   - one `publish-pr --merge` call, with `--dir <artifactsRoot>` in companion mode,
     replacing the `git -C` / `--repo` prose;
