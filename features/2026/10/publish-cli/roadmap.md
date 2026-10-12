@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "2.3 Rewire the Planner publish"
+next-step: "3.1 Add review-publish"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -57,7 +57,7 @@ initiative: "spend-reduction"
 
   — verify: `node --test scripts/agento.test.mjs` passes, including the new group
 
-- [ ] 2.3 Rewire the Planner publish:
+- [x] 2.3 Rewire the Planner publish:
   - replace `.github/agents/delivery-planner.agent.md` step 8,
     `.github/prompts/new-feature.prompt.md` step 5, and the matching
     `new-issue.prompt.md` step with one
