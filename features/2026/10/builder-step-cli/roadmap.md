@@ -2,14 +2,14 @@
 status: in-progress
 branch: feature/builder-step-cli
 last-updated: 2026-10-12
-next-step: "1.1 Lift ship's fetch/integrate/push closures to shared module-level helpers"
+next-step: "1.2 Add a buildWindow(type, slug) helper"
 artifact-pr: "#48"
 initiative: "spend-reduction"
 ```
 
 ## Phase 1: Shared helpers
 
-- [ ] 1.1 Lift ship's fetch (`fetch-auth` + `reauth`), `integrate` (merge
+- [x] 1.1 Lift ship's fetch (`fetch-auth` + `reauth`), `integrate` (merge
   `--no-edit`; conflict → collect `git diff --name-only --diff-filter=U`, `merge
   --abort`, `integration-conflict` with `conflicts[]`), and `push` (`-u` when no
   upstream; `push-auth` / `push-failed`) closures out of `ship()` in
