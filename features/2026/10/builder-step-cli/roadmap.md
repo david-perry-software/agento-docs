@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/builder-step-cli
 last-updated: 2026-10-12
-next-step: "4.5 correct the CHANGELOG entry"
+next-step: "5.4 rerun the full gate after 3.5–4.5"
 artifact-pr: "#48"
 initiative: "spend-reduction"
 ```
@@ -146,12 +146,14 @@ initiative: "spend-reduction"
   phase 5 runs in a fresh `/agento build-feature builder-step-cli` or `/agento ap
   builder-step-cli` invocation
 
-- [ ] 4.5 Correct the CHANGELOG entry (review Finding 4): drop the "instead of 8–12
+- [x] 4.5 Correct the CHANGELOG entry (review Finding 4): drop the "instead of 8–12
   git and gh calls per step" claim in line with plan.md `## Measurement`, and note
   ship's additive `conflicts[]` field on `integration-conflict` (added 2026-10-12)
   — verify: `grep -n '8–12' CHANGELOG.md` finds nothing in the builder-step-cli
   entry and the entry names `conflicts[]`; regenerate `extension/cli/` if
-  `scripts/` changed
+  `scripts/` changed — done 2026-10-12: `grep -n '8–12' CHANGELOG.md` exit 1, the
+  entry names ship's additive `conflicts[]` and the 3.5/3.6 hardening; no
+  `scripts/` change in this step
 
 ## Phase 5: Measurement and full gate (run by the rewired Builder)
 
