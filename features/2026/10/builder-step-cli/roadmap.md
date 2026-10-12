@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/builder-step-cli
 last-updated: 2026-10-12
 next-step: "1.1 Lift ship's fetch/integrate/push closures to shared module-level helpers"
