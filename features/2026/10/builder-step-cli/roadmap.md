@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: in-progress
 branch: feature/builder-step-cli
 last-updated: 2026-10-12
-next-step: "ship reopened (checks-failed): resolve in the build window, then re-review"
+next-step: "5.5"
 artifact-pr: "#48"
 initiative: "spend-reduction"
 ```
@@ -194,5 +194,18 @@ initiative: "spend-reduction"
   node --test 465/465 pass, replay-guard exit 0 in both modes, shellcheck exit 0
   with no output, copy-cli + test:unit 167/167 pass, `git diff --quiet --
   extension/cli` exit 0 after a second copy-cli; final `sync` up-to-date
+
+- [ ] 5.5 Make the `ship --confirm (in-repo, owner)` fixture deterministic (ship
+  reopened, checks-failed: PR #111 CI run 38267310550 failed this one test with
+  `review-stale` because the fixture's post-review "tracked shot" code commit
+  landed one second after the review commit): pin that commit's
+  `GIT_AUTHOR_DATE`/`GIT_COMMITTER_DATE` to the review commit's second; no
+  assertion or product change — a fixture-determinism exception to "ship tests
+  unmodified", not user-visible, so no CHANGELOG entry (added 2026-10-12) —
+  verify: the test passes 10 times in a loop (`node --test --test-name-pattern
+  'ship --confirm \(in-repo, owner\)' scripts/agento.test.mjs`), the full gate
+  `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` passes, `cd
+  extension && npm run copy-cli` leaves `git diff --quiet -- extension/cli`, and
+  the PR's `test` check passes on the new head (`scripts/wait-for-checks.sh`)
 
 ## Follow-ups
