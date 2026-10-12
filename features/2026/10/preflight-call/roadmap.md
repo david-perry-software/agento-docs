@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/preflight-call
 last-updated: 2026-10-12
-next-step: "3.1"
+next-step: "3.2"
 artifact-pr: "#47"
 initiative: "spend-reduction"
 ```
@@ -48,11 +48,12 @@ initiative: "spend-reduction"
 
 ## Phase 3: Policy wording, docs, extension copy
 
-- [ ] 3.1 Update §9–§11 wording in
+- [x] 3.1 Update §9–§11 wording in
   `.github/instructions/delivery-policy.instructions.md`: §9 op-id is returned by
   the CLI; §10 "When `doctor` runs" runs inside the `preflight` call; §11 step 1
   runs `preflight` — keeping every `## N.` anchor and all §9 spellings — verify:
-  `node --test tests/customizations.test.mjs` passes (canary and `§N` tests)
+  `node --test tests/customizations.test.mjs` passes (canary and `§N` tests) (also
+  corrected the §1 capabilities bullet, which named the old `doctor --for` call)
 
 - [ ] 3.2 Regenerate `extension/cli/` and update `docs/commands.md` and
   `CHANGELOG.md` for the new subcommand — verify: `cd extension && npm run
