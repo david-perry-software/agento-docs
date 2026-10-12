@@ -115,7 +115,7 @@ initiative: "spend-reduction"
   test:unit` passes, `git diff --quiet -- extension/cli` after a second `npm run
   copy-cli`, and the usage test in `scripts/agento.test.mjs` passes
 
-- [ ] 4.4 Session break so the rewired Builder is loaded: leave `status:
+- [x] 4.4 Session break so the rewired Builder is loaded: leave `status:
   in-progress`, `next-step` 5.1, commit and push (policy §3 session break) — verify:
   `node scripts/agento.mjs session` shows `delivery.status: in-progress`,
   `delivery.nextStep` naming 5.1, `companion.dirty: false`, `companion.ahead: 0`;
