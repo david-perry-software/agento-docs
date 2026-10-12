@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "5.3 Run the full gate"
+next-step: "6.1 Add the after static table to plan.md Measurement"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -199,7 +199,7 @@ initiative: "spend-reduction"
   && npm run test:unit` — verify: exit 0, and `diff -q scripts/agento.mjs
   extension/cli/agento.mjs` reports no difference
 
-- [ ] 5.3 Run the full gate and compare it with the plan.md baseline — verify, all
+- [x] 5.3 Run the full gate and compare it with the plan.md baseline — verify, all
   exit 0:
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`;
   - `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` (the v0.10.0 release
