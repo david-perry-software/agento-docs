@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/preflight-call
 last-updated: 2026-10-12
-next-step: "1.2"
+next-step: "2.1"
 artifact-pr: "#47"
 initiative: "spend-reduction"
 ```
@@ -25,7 +25,7 @@ initiative: "spend-reduction"
   `deriveAllowed`, and `preflight` also accepts `<type>/<slug>` or a bare `<slug>`
   resolved like `find`)
 
-- [ ] 1.2 Add the `preflight` test group to `scripts/agento.test.mjs` — output
+- [x] 1.2 Add the `preflight` test group to `scripts/agento.test.mjs` — output
   shape, op-id derivation, `window` verdict rows (match and mismatch), `resolve`
   embedding (present with a slug, `null` without), `receipt`/`preflightLines`
   strings, and exit codes (0 ok/warn, 3 fail/rejected) — verify: `node --test
