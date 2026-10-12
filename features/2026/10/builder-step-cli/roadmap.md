@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/builder-step-cli
 last-updated: 2026-10-12
-next-step: "5.3 Run the full repository gate (then 5.2 records the after counts, including 5.3)"
+next-step: "5.2 Record ## Measurement in plan.md from the session transcript"
 artifact-pr: "#48"
 initiative: "spend-reduction"
 ```
@@ -140,10 +140,12 @@ initiative: "spend-reduction"
   reduction — verify: the section exists with both sets of numbers and the after
   median is lower than the before median
 
-- [ ] 5.3 Run the full repository gate and compare against the recorded baseline —
+- [x] 5.3 Run the full repository gate and compare against the recorded baseline —
   verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` (453+ tests, 0
   fail), both replay-guard runs exit 0, `git ls-files '*.sh' | xargs pnpm dlx
   shellcheck` exits 0 with no new findings, `cd extension && npm run test:unit`
-  passes
+  passes — done 2026-10-12 at product `cf20e51`: node --test 465/465 pass (baseline
+  453), replay-guard exit 0 in both modes, shellcheck exit 0 with no output,
+  extension test:unit 167/167 pass; no new findings against the baseline
 
 ## Follow-ups
