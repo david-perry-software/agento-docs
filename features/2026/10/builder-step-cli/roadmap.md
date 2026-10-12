@@ -1,8 +1,8 @@
 ```yaml
-status: complete
+status: in-review
 branch: feature/builder-step-cli
 last-updated: 2026-10-12
-next-step: ""
+next-step: "ship reopened (checks-failed): resolve in the build window, then re-review"
 artifact-pr: "#48"
 initiative: "spend-reduction"
 ```
