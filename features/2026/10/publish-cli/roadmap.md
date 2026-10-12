@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "2.2 Add the plan-publish test group"
+next-step: "2.3 Rewire the Planner publish"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -45,7 +45,7 @@ initiative: "spend-reduction"
   checkout exits 3 with the §11 wrong-window reason; `node scripts/agento.mjs
   plan-publish` exits 1 (usage)
 
-- [ ] 2.2 Add the `plan-publish` test group to `scripts/agento.test.mjs` (in-repo and
+- [x] 2.2 Add the `plan-publish` test group to `scripts/agento.test.mjs` (in-repo and
   companion via `makePairRepo` / `planPair`, `shipStub` as gh). It covers:
   - a fresh publish: commits, both draft PRs, cross-link, `artifact-pr:` header;
   - an issue body that starts with `Fixes #<n>`;
