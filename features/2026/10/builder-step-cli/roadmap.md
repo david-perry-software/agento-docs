@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/builder-step-cli
 last-updated: 2026-10-12
-next-step: "5.6"
+next-step: "re-review after 5.5–5.6 (ship checks-failed fix): /agento review-feature builder-step-cli"
 artifact-pr: "#48"
 initiative: "spend-reduction"
 ```
@@ -215,8 +215,10 @@ initiative: "spend-reduction"
   helpers) does not touch the audit's staleness logic. Loop 10/10 pass; full gate
   465/465 pass; copy-cli exit 0, `git diff --quiet -- extension/cli` exit 0
 
-- [ ] 5.6 Confirm CI on the new head (added 2026-10-12) — verify:
+- [x] 5.6 Confirm CI on the new head (added 2026-10-12) — verify:
   `scripts/wait-for-checks.sh pr 111` exits 0 with the `test` check passing on
-  the head pushed by 5.5
+  the head pushed by 5.5 — done 2026-10-12: head `aef0074`, run 38289495094
+  `conclusion=success` (`wait-for-checks.sh run` exit 0), `wait-for-checks.sh pr
+  111` exit 0 (`pass=1 fail=0`, merge CLEAN); final `sync` up-to-date
 
 ## Follow-ups
