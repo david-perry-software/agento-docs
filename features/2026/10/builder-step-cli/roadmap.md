@@ -140,7 +140,7 @@ initiative: "spend-reduction"
   reduction — verify: the section exists with both sets of numbers and the after
   median is lower than the before median — 2026-10-12: `## Measurement` recorded
   (source: session transcripts, the debug logs hold no tool calls); before median
-  9, after median 9, so the verify is not met and the step stays unticked
+  9, after median 9 (5.2 itself took 34 calls), so the verify is not met and the step stays unticked
 
 - [x] 5.3 Run the full repository gate and compare against the recorded baseline —
   verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` (453+ tests, 0

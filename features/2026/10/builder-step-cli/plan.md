@@ -369,9 +369,9 @@ Resume protocol: 8 calls. Choreography: 1 call per step commit in
 | --- | --- | --- |
 | 5.1 | 3 | roadmap edit, `step-commit`, read its output |
 | 5.3 | 9 | 4 gate runs, 3 terminal polls, 1 call denied by the guard (redirect next to `scripts/hooks/`), 1 `step-commit` |
-| 5.2 | 33 | 27 discovering that the debug logs are empty and finding the transcripts, 6 to segment, write, and commit (through this step's commit call) |
+| 5.2 | 34 | 27 discovering that the debug logs are empty and finding the transcripts, 7 to segment, write, and commit (one a read retry; through this step's commit call) |
 
-min / median / max: 3 / 9 / 33; mean 15.0. Resume protocol: 8 calls (one `sync`),
+min / median / max: 3 / 9 / 34; mean 15.3. Resume protocol: 8 calls (one `sync`),
 plus 6 for the audit test run. Choreography: 1 call per step commit (1.0).
 
 **Per-step reduction.** Median 9 → 9: **no reduction**. The after median is not
