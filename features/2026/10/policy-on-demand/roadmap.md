@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/policy-on-demand
 last-updated: 2026-10-11
-next-step: "5.3 Merge the default branch and run the full gate"
+next-step: "5.2 (manual) Reload this build window, send `Reply OK` in a new Agent-mode chat, and attach a screenshot of the expanded References list"
 artifact-pr: "#46"
 initiative: "spend-reduction"
 ```
@@ -34,7 +34,7 @@ initiative: "spend-reduction"
 
 - [x] 5.1 Record the after measurement in [`evidence/step-5-1-after.md`](evidence/step-5-1-after.md) (same `wc -l -c` over the `applyTo: "**"` set) and add the after byte count to the CHANGELOG entry — verify: `grep -l '^applyTo: "\*\*"' .github/instructions/*.md` lists exactly `agento-core.instructions.md` and `ai-skills.instructions.md`; their `wc -c` total ≤ 4 096
 - [ ] 5.2 (manual) In this build window run *Developer: Reload Window*, open a new chat in Agent mode, send `Reply OK`, expand **References** on the answer, and attach a screenshot of the expanded list — verify: screenshot saved as `evidence/step-5-2-references.png` and linked here; it lists `agento-core.instructions.md` and `ai-skills.instructions.md` and neither `delivery-policy.instructions.md` nor `command-invocation.instructions.md`
-- [ ] 5.3 Merge `origin/main` into both halves (`git merge origin/main`; `git -C <companion.path> merge origin/main`), rerun `npm run copy-cli` if `scripts/` changed, then run the full gate and record the comparison with plan.md `## Research` on this line — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0, ≥ 441 pass, 0 fail; both replays exit 0; `git ls-files '*.sh' | xargs pnpm dlx shellcheck` exit 0, no findings; `cd extension && npm run copy-cli && npm run typecheck && npm run test:unit` exit 0; `node --test tests/extension-bundle.test.mjs` exit 0; `node scripts/agento.mjs initiative spend-reduction` `errors: []`
+- [x] 5.3 Merge `origin/main` into both halves (`git merge origin/main`; `git -C <companion.path> merge origin/main`), rerun `npm run copy-cli` if `scripts/` changed, then run the full gate and record the comparison with plan.md `## Research` on this line — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0, ≥ 441 pass, 0 fail; both replays exit 0; `git ls-files '*.sh' | xargs pnpm dlx shellcheck` exit 0, no findings; `cd extension && npm run copy-cli && npm run typecheck && npm run test:unit` exit 0; `node --test tests/extension-bundle.test.mjs` exit 0; `node scripts/agento.mjs initiative spend-reduction` `errors: []` — done 2026-10-11 (run before the manual 5.2, which changes no code): both halves already contained `origin/main` (`54ffd54` product, companion `main` up to date), `copy-cli` byte-identical; full suite exit 0, 447 tests, 447 pass, 0 fail (baseline 441/441; +6 new: three SessionStart cases, the `hook-wiring` doctor case, core tests (a)/(b) replacing the command-invocation test, and test (d)); both replays exit 0 (baseline 0); shellcheck exit 0, no findings (baseline none); extension typecheck exit 0, test:unit 167/167; extension-bundle 4/4; initiative `errors: []`
 - [ ] 5.4 Set `status: in-review`, push both halves, and confirm the clean handoff — verify: `git status --porcelain --untracked-files=all` empty in both halves; `node scripts/agento.mjs session --pr` shows `companion.dirty: false`, `companion.ahead: 0`, and both PRs open without `CONFLICTING`
 
 ## Follow-ups
