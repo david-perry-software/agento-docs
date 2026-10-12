@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "2.1 Add plan-publish"
+next-step: "2.2 Add the plan-publish test group"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -28,7 +28,7 @@ initiative: "spend-reduction"
 
 ## Phase 2: `agento.mjs plan-publish`
 
-- [ ] 2.1 Add `plan-publish <type> <slug>` per plan.md Approach 2:
+- [x] 2.1 Add `plan-publish <type> <slug>` per plan.md Approach 2:
   - window check via `windowVerdict({ command: "new-<type>", slug })`, with both
     halves on the roadmap branch, never default and never detached;
   - plan.md and roadmap.md present; reject `outside-slug` changes;
