@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/policy-on-demand
 last-updated: 2026-10-11
-next-step: "2.3 Drop command-invocation and add the core tests"
+next-step: "2.4 Update always-on and command-invocation guidance"
 artifact-pr: "#46"
 initiative: "spend-reduction"
 ```
@@ -15,7 +15,7 @@ initiative: "spend-reduction"
 
 - [x] 2.1 Add `.github/instructions/agento-core.instructions.md` (`description`, `applyTo: "**"`, whole file ≤ 40 lines) per plan.md `## Approach` item 1: policy pointer with the read-once rule, §1 work boundary, secrets and reauth, §7 git musts, §9 receipt one-liner, canonical form `/agento <name> [args]`, the six redirected forms with the redirect rule and its `/agento agento-init.prompt` example, and the only-this-file-quotes-old-forms guidance rule — verify: `wc -l .github/instructions/agento-core.instructions.md` ≤ 40; `node --test tests/customizations.test.mjs` exit 0 (§N citations resolve, no canary matches)
 - [x] 2.2 Change only the frontmatter of `.github/instructions/delivery-policy.instructions.md`: `description` starting "Use when running any /agento command or acting as an Agento agent …", `applyTo: ".github/agents/**,.github/prompts/**,.github/instructions/**,commands/**"` — verify: `git diff -U0 origin/main -- .github/instructions/delivery-policy.instructions.md | grep -c '^@@'` = 1 and the hunk covers lines 2–3 only; `grep -c '^## [0-9]*\. ' .github/instructions/delivery-policy.instructions.md` = 12; `node --test tests/customizations.test.mjs` exit 0
-- [ ] 2.3 Delete `.github/instructions/command-invocation.instructions.md`; in `tests/customizations.test.mjs` replace the "command-invocation instructions apply everywhere…" test with test (b) "the core states the canonical form and the six redirected forms", point the suffix-test allowlist at `agento-core.instructions.md` (c), and add test (a) "only the core and ai-skills are always-on" (exact `**` set, core ≤ 40 lines, policy `applyTo` not `**`) — verify: `node --test tests/customizations.test.mjs` exit 0; set the policy's `applyTo` back to `"**"`, rerun, observe test (a) fail naming `delivery-policy`, restore with `git checkout -- .github/instructions/delivery-policy.instructions.md`
+- [x] 2.3 Delete `.github/instructions/command-invocation.instructions.md`; in `tests/customizations.test.mjs` replace the "command-invocation instructions apply everywhere…" test with test (b) "the core states the canonical form and the six redirected forms", point the suffix-test allowlist at `agento-core.instructions.md` (c), and add test (a) "only the core and ai-skills are always-on" (exact `**` set, core ≤ 40 lines, policy `applyTo` not `**`) — verify: `node --test tests/customizations.test.mjs` exit 0; set the policy's `applyTo` back to `"**"`, rerun, observe test (a) fail naming `delivery-policy`, restore with `git checkout -- .github/instructions/delivery-policy.instructions.md`
 - [ ] 2.4 Update guidance that calls the policy always-on or names `command-invocation`: `docs/architecture.md` L50–L69, `docs/commands.md` L470, the AGENTS.md `.github/instructions/` layout bullet, `.github/agents/copilot-mechanic.agent.md` L72–L74 and L92 — verify: `git grep -n command-invocation -- ':!CHANGELOG.md'` prints nothing; `grep -c 'agento-core' docs/architecture.md docs/commands.md AGENTS.md` ≥ 1 each; `node --test tests/customizations.test.mjs` exit 0
 
 ## Phase 3: Explicit policy load
