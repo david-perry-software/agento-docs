@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/policy-on-demand
 last-updated: 2026-10-11
-next-step: "3.3 Add the explicit-load test"
+next-step: "4.1 Deduplicate plugin-mode SessionStart"
 artifact-pr: "#46"
 initiative: "spend-reduction"
 ```
@@ -22,7 +22,7 @@ initiative: "spend-reduction"
 
 - [x] 3.1 Insert the `Policy: read \`<agento-root>/.github/instructions/delivery-policy.instructions.md\` once …` line (exact text in plan.md `## Approach` item 4) directly after the `Capability vocabulary … §10.` line of all six `.github/agents/*.agent.md`, and give `copilot-mechanic.agent.md` the `[delivery-policy.instructions.md](../instructions/delivery-policy.instructions.md)` link the other agents carry — verify: `grep -c '^Policy: read `<agento-root>/.github/instructions/delivery-policy.instructions.md` once' .github/agents/*.agent.md` prints 1 for each of the six; `node --test tests/customizations.test.mjs` exit 0
 - [x] 3.2 Insert the same line into the 11 `agent: "agent"` prompts (`commit-current-changes`, `continue`, `delivery-status`, `doctor`, `finish-freehand`, `models`, `next-feature`, `quick-fix`, `ship`, `start-freehand`, `triage-followups`) and re-mirror every prompt into `commands/<name>.md` — verify: `grep -l '^Policy: read `<agento-root>' .github/prompts/*.prompt.md | wc -l` = 11; `for f in .github/prompts/*.prompt.md; do cmp -s "$f" "commands/$(basename "$f" .prompt.md).md" || echo "DIFF $f"; done` prints nothing; `node --test tests/customizations.test.mjs` exit 0
-- [ ] 3.3 Add test (d) "every agent and built-in-agent command loads the policy explicitly" to `tests/customizations.test.mjs` (six agents, every prompt whose `agent:` is `"agent"`, and each one's `commands/` mirror) — verify: `node --test tests/customizations.test.mjs` exit 0; delete the line from `.github/prompts/doctor.prompt.md`, rerun, observe the failure naming `doctor.prompt.md`, restore with `git checkout -- .github/prompts/doctor.prompt.md`
+- [x] 3.3 Add test (d) "every agent and built-in-agent command loads the policy explicitly" to `tests/customizations.test.mjs` (six agents, every prompt whose `agent:` is `"agent"`, and each one's `commands/` mirror) — verify: `node --test tests/customizations.test.mjs` exit 0; delete the line from `.github/prompts/doctor.prompt.md`, rerun, observe the failure naming `doctor.prompt.md`, restore with `git checkout -- .github/prompts/doctor.prompt.md`
 
 ## Phase 4: SessionStart dedupe and doctor check
 
