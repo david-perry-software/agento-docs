@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/builder-step-cli
 last-updated: 2026-10-12
-next-step: "4.1 Rewrite the Builder agent to call sync and step-commit"
+next-step: "4.3 Update docs, AGENTS.md, CHANGELOG.md; regenerate extension/cli"
 artifact-pr: "#48"
 initiative: "spend-reduction"
 ```
@@ -89,7 +89,7 @@ initiative: "spend-reduction"
 
 ## Phase 4: Builder rewiring, docs, copy
 
-- [ ] 4.1 Rewrite `.github/agents/delivery-builder.agent.md`: resume step 1 → one
+- [x] 4.1 Rewrite `.github/agents/delivery-builder.agent.md`: resume step 1 → one
   `agento.mjs sync <type> <slug>` call; resume step 4, work-loop steps 4–5, both
   pause kinds, and completion's commit → one `agento.mjs step-commit` call each
   (`--step N.M` for a ticked step, `--message-file -` via stdin); completion's
@@ -100,7 +100,7 @@ initiative: "spend-reduction"
   `.github/instructions/concurrent-delivery.instructions.md` to name the CLI
   calls — verify: `node --test tests/customizations.test.mjs` passes
 
-- [ ] 4.2 Add customizations tests: "the Builder integrates through one
+- [x] 4.2 Add customizations tests: "the Builder integrates through one
   `agento.mjs sync` call and commits through one `agento.mjs step-commit` call
   with no hand-run fallback" (Builder body has no `git push`, `git -C
   <companion.path> commit`, `merge-base --is-ancestor`, or `gh pr create`); "only
