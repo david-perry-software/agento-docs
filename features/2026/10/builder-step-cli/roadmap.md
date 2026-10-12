@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/builder-step-cli
 last-updated: 2026-10-12
-next-step: "3.5 close the staged-rename escape in step-commit's companion scope check"
+next-step: "4.5 correct the CHANGELOG entry"
 artifact-pr: "#48"
 initiative: "spend-reduction"
 ```
@@ -87,21 +87,29 @@ initiative: "spend-reduction"
   inside a half — each leaving both halves unchanged — verify: `node --test
   scripts/agento.test.mjs` passes
 
-- [ ] 3.5 Close the staged-rename escape in `step-commit`'s companion scope check
+- [x] 3.5 Close the staged-rename escape in `step-commit`'s companion scope check
   (review Finding 1): reject when any rename/copy origin or staged path in the
   companion half lies outside the slug directory, and assert the index holds only
   slug-dir paths (`git diff --cached --name-only --no-renames`) right before the
   companion commit (added 2026-10-12) — verify: a new guard-equivalence case (a
   staged `git mv <outside> <slugDir>/x` in the half) rejects
   `companion-outside-slug` listing the origin path and leaves both halves
-  unchanged; `node --test scripts/agento.test.mjs` passes
+  unchanged; `node --test scripts/agento.test.mjs` passes — done 2026-10-12: the
+  pre-check adds `git diff --cached --name-only --no-renames -z`, the companion
+  commit re-asserts the staged set right before committing and commits with a
+  `-- <pathspec>`; the new case rejects listing `features/2026/10/other/plan.md`
+  and the accepted commit leaves it untouched; step-commit tests 6/6 pass
 
-- [ ] 3.6 Push with an explicit `refs/heads/<branch>:refs/heads/<branch>` refspec
+- [x] 3.6 Push with an explicit `refs/heads/<branch>:refs/heads/<branch>` refspec
   in `sync`/`step-commit` so a `+`-prefixed branch can never force-push, and test
   the `default-branch` and `branch-mismatch` rejections directly (companion half
   switched to `main` / another branch) (review Findings 2, 3; added 2026-10-12) —
   verify: `node --test scripts/agento.test.mjs` passes with the new cases; ship's
-  tests unmodified
+  tests unmodified — done 2026-10-12 (committed with 3.5, same files):
+  `pushHalves` pushes `refs/heads/<b>:refs/heads/<b>` (asserted through a
+  git-logging PATH in the gh-auth test); `default-branch` (companion half on
+  `main` holding the roadmap) and `branch-mismatch` (half on `feature/elsewhere`)
+  rejections tested; ship's `pushRef` callers and tests unchanged
 
 ## Phase 4: Builder rewiring, docs, copy
 
