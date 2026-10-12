@@ -340,6 +340,52 @@ end at the same or better result.
 - Extension changes beyond regenerating `extension/cli/`.
 - Trimming prompt or agent prose beyond what the moved choreography requires.
 
+## Measurement
+
+Recorded 2026-10-12 by the rewired Builder (step 5.2).
+
+**Source.** The named chat debug logs (`debug-logs/<session>/main.jsonl`) carry no
+tool-call records: all ~400 on this machine hold only `session_start` lines (every
+file ≤ 1.9 KB, this session's is 264 bytes). The counts below come from the
+per-session transcript `GitHub.copilot-chat/transcripts/<session>.jsonl`, whose
+`tool.execution_start` records include subagent calls. Method: tool calls between
+consecutive step commits (the commit call ends its segment); a commit that ticks
+several steps splits its segment evenly. "Choreography" counts calls whose command
+is `git commit|fetch|merge|push`, `gh pr`, or `agento.mjs sync|step-commit|session`.
+
+**Before (hand-run git).**
+
+| Run | Per-step tool calls | min / median / max | mean |
+| --- | --- | --- | --- |
+| `policy-on-demand` build (transcript `15becd30…`, steps 1.1–4.3, 5.1) | 14, 14, 13, 8, 7, 9, 9, 8, 33, 53, 5, 5 | 5 / 9 / 53 | 14.8 |
+| This delivery, steps 1.1–4.4 (transcript `1b796133…` calls 112–231) | 1.1: 49; 1.2–3.4: 63 calls over 7 steps (one batched commit) = 9.0 each; 4.1–4.2: 2 calls over 2 steps = 1.0 each; 4.3: 2; 4.4: 4 | 1 / 9 / 49 | 10.0 |
+
+Resume protocol: 8 calls. Choreography: 1 call per step commit in
+`policy-on-demand` (one chained shell line), 8 calls over 5 commits (1.6) here.
+
+**After (`agento.mjs sync` + `step-commit`, calls 234 onward).**
+
+| Step | Tool calls | Notes |
+| --- | --- | --- |
+| 5.1 | 3 | roadmap edit, `step-commit`, read its output |
+| 5.3 | 9 | 4 gate runs, 3 terminal polls, 1 call denied by the guard (redirect next to `scripts/hooks/`), 1 `step-commit` |
+| 5.2 | 33 | 27 discovering that the debug logs are empty and finding the transcripts, 6 to segment, write, and commit (through this step's commit call) |
+
+min / median / max: 3 / 9 / 33; mean 15.0. Resume protocol: 8 calls (one `sync`),
+plus 6 for the audit test run. Choreography: 1 call per step commit (1.0).
+
+**Per-step reduction.** Median 9 → 9: **no reduction**. The after median is not
+lower than the before median, so step 5.2's `verify:` is not met and the step
+stays unticked. Choreography per commit fell from 1.6 to 1.0 against this
+delivery's own before, and is level (1.0 → 1.0) against `policy-on-demand`: both
+hand-run Builders already chained commit, fetch, merge, and push into one
+terminal call per step, so the breakdown's 8–12 calls per step did not occur in
+practice. Per-step totals are dominated by implementation and research and by
+terminal-capture retries (sync terminals returning no output), which this feature
+does not touch. What `step-commit` adds is the guard-equivalent checks, the
+`reverify` stop, draft-PR creation, and the clean-handoff check inside the one call.
+The after sample is three steps with no code changes, so it is not like-for-like.
+
 ## Acceptance checklist
 
 - [ ] `node scripts/agento.mjs sync <type> <slug>` fetches both halves, merges
