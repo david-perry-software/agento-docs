@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "5.2 Regenerate the extension copy"
+next-step: "5.3 Run the full gate"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -195,7 +195,7 @@ initiative: "spend-reduction"
   'publish-pr\|plan-publish\|review-publish' docs/commands.md docs/architecture.md
   CHANGELOG.md` is non-zero for each file
 
-- [ ] 5.2 Regenerate the extension copy: `cd extension && npm ci && npm run copy-cli
+- [x] 5.2 Regenerate the extension copy: `cd extension && npm ci && npm run copy-cli
   && npm run test:unit` — verify: exit 0, and `diff -q scripts/agento.mjs
   extension/cli/agento.mjs` reports no difference
 
