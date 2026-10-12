@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "4.1 Add publish-pr (push and pr phases)"
+next-step: "4.2 Add publish-pr's checks, merge, delete-branch, and sync phases"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -111,7 +111,7 @@ initiative: "spend-reduction"
 
 ## Phase 4: `agento.mjs publish-pr`
 
-- [ ] 4.1 Add `publish-pr [--dir <path>] [--branch <name>] [--title <text>]
+- [x] 4.1 Add `publish-pr [--dir <path>] [--branch <name>] [--title <text>]
   [--body-file <file|->] [--merge] [--wait N]`, covering the push and pr phases per
   plan.md Approach 4:
   - `--dir` must be a checkout of the product or companion repository (`unknown-repo`
