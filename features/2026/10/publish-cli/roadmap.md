@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "6.1 Add the after static table to plan.md Measurement"
+next-step: "6.2 (manual) Before reference run"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -212,7 +212,7 @@ initiative: "spend-reduction"
 
 ## Phase 6: Measurement
 
-- [ ] 6.1 Add the "after" static table to plan.md `## Research` → Measurement: hand-run
+- [x] 6.1 Add the "after" static table to plan.md `## Research` → Measurement: hand-run
   git/gh calls per publish for every flow, both layouts, read from the rewired files
   — verify: the table exists, and every row reads 1 call per send (+ re-sends on
   exit 2)

@@ -179,6 +179,24 @@ Each count excludes the commit the prompt still writes, and pending check re-pol
 one call each. The target is **1 call per send** (plus one re-send per pending wait),
 recorded in the "after" table that roadmap step 6.1 adds here.
 
+### Measurement — after (static count, read from the rewired files on `feature/publish-cli`)
+
+| Flow | In-repo | Companion | The one call |
+| --- | --- | --- | --- |
+| Planner publish (new-feature / new-issue) | 1 | 1 | `agento.mjs plan-publish <type> <slug>` |
+| Reviewer publish (review-feature / review-issue) | 1 | 1 | `agento.mjs review-publish <type> <slug> --body-file -` |
+| commit-current-changes (steps 8–10) | 1 (+1 per exit 2) | — | `agento.mjs publish-pr --title … --body-file - --merge` |
+| finish-freehand (steps 7–9) | 1 (+1 per exit 2) | — | `agento.mjs publish-pr --title … --body-file - --merge` |
+| quick-fix (steps 7–9) | 1 (+1 per exit 2) | — | `agento.mjs publish-pr --title … --body-file - --merge` |
+| new-initiative (Architect step 8) | 1 (+1 per exit 2) | 1 (+1 per exit 2) | `agento.mjs publish-pr … --merge` (`--dir <artifactsRoot>` in companion mode) |
+| triage-followups (step 5) | 1 (+1 per exit 2) | 1 (+1 per exit 2) | `agento.mjs publish-pr … --merge` (`--dir <artifactsRoot>` in companion mode) |
+
+Every count is 1 call per send, plus one identical re-send per `status: pending`
+(exit 2), against 2–14 hand-run git/gh calls before. The commits the prompts still
+write (Decision 1) are excluded on both sides. Customizations tests keep each file at
+that one call: none of the rewired bodies may contain `gh pr create`, `gh pr merge`,
+`gh pr comment`, `wait-for-checks.sh`, `git push`, or a `gh api …/pulls/… -X PATCH`.
+
 ## Approach
 
 All new code goes in `scripts/agento.mjs`, reusing the `builder-step-cli` and `ship`
