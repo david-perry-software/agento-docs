@@ -3,6 +3,7 @@ status: planned
 branch: feature/publish-cli
 last-updated: 2026-10-12
 next-step: "1.1 Lift ship's waitForChecks into a module-level helper"
+artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
 
