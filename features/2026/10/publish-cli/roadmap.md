@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "1.3 Restrict integrateHalves' default merge to named halves"
+next-step: "2.1 Add plan-publish"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -22,7 +22,7 @@ initiative: "spend-reduction"
   it from `stepCommit` — verify: `node --test scripts/agento.test.mjs` passes with
   no step-commit test modified
 
-- [ ] 1.3 Give `integrateHalves` an option restricting the `origin/<default>` merge to
+- [x] 1.3 Give `integrateHalves` an option restricting the `origin/<default>` merge to
   named halves (default: all, as today) — verify: `node --test
   scripts/agento.test.mjs` passes with no sync/step-commit test modified
 
