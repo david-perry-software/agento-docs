@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "5.1 Document the three subcommands"
+next-step: "5.2 Regenerate the extension copy"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -183,7 +183,7 @@ initiative: "spend-reduction"
 
 ## Phase 5: Docs, generated copy, full gate
 
-- [ ] 5.1 Document the three subcommands:
+- [x] 5.1 Document the three subcommands:
   - `docs/commands.md`: the CLI reference next to `step-commit`, plus the rewired
     commands' descriptions;
   - `docs/architecture.md`, next to the `step-commit` paragraph;
