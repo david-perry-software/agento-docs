@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/policy-on-demand
 last-updated: 2026-10-11
 next-step: "1.1 Record the always-on baseline"
