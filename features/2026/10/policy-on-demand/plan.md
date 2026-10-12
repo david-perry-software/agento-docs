@@ -64,6 +64,14 @@ recommended option for every question:
   don't by default. How should agents load it?"** A: "Explicit read line in all 6
   agents and the 11 built-in-agent prompts" (recommended). Not chosen: "Keep agent
   links, document enabling the setting, doctor warns when it is off".
+- **Q7 (amendment 2026-10-11).** Asked during the build, at the paused manual step
+  5.2: **"Step 5.2 cannot be verified as written: this VS Code build (1.136.0) shows
+  no References list on chat answers, and the Agent Debug Logs panel stays on 'Enable
+  in Settings' even with `github.copilot.chat.agentDebugLog.enabled: true` in user
+  settings and a reload. Replace 5.2 with agent-captured evidence of VS Code's own
+  instruction list, or keep digging?"** A: "1. But I want to see the evidence"
+  (option 1: replace 5.2 with that evidence and continue; the user wants to see the
+  evidence content). Roadmap step 5.2 is marked obsolete and replaced by 5.5.
 
 ## Research
 
@@ -405,8 +413,10 @@ Affected files:
   `/home/david/DP/agento`; `node scripts/agento.mjs doctor --for ship` lists no
   `hook-wiring`.
 - [ ] A fresh chat in an Agento window references the core and `ai-skills` but not the
-  delivery policy or `command-invocation`. Verify: the screenshot
-  `evidence/step-5-2-references.png` from the (manual) step 5.2.
+  delivery policy or `command-invocation`. Verify (amended 2026-10-11, Q7):
+  `evidence/step-5-5-instruction-list.md` from step 5.5 shows VS Code's injected
+  instruction list with `applyTo: **` only for the core and `ai-skills` among this
+  repository's files, and no `command-invocation`.
 - [ ] Docs and changelog describe the new loading model. Verify: `grep -n
   'agento-core' docs/architecture.md docs/commands.md AGENTS.md` ≥ 1 each; `grep -n
   -i 'plugin mode' docs/hooks.md` covers the dedupe; `CHANGELOG.md` `## Unreleased`
