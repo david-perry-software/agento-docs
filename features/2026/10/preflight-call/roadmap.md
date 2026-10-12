@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/preflight-call
 last-updated: 2026-10-12
-next-step: "2.2"
+next-step: "3.1"
 artifact-pr: "#47"
 initiative: "spend-reduction"
 ```
@@ -40,7 +40,7 @@ initiative: "spend-reduction"
   `commands/<name>.md` mirrors byte-identical — verify: `node --test
   tests/customizations.test.mjs` passes
 
-- [ ] 2.2 Rewrite the 6 `.github/agents/*.agent.md` files the same way, keeping
+- [x] 2.2 Rewrite the 6 `.github/agents/*.agent.md` files the same way, keeping
   the `Needs:`/`Fallback:` declarations and the `Policy:` read line — verify:
   `node --test tests/customizations.test.mjs` passes and
   `grep -R "doctor --for" .github/prompts .github/agents` shows no hand-run
