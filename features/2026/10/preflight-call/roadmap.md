@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/preflight-call
 last-updated: 2026-10-12
-next-step: "2.1"
+next-step: "2.2"
 artifact-pr: "#47"
 initiative: "spend-reduction"
 ```
@@ -33,7 +33,7 @@ initiative: "spend-reduction"
 
 ## Phase 2: Rewire prompts and agents
 
-- [ ] 2.1 Rewrite the 25 `.github/prompts/*.prompt.md` files to open with one
+- [x] 2.1 Rewrite the 25 `.github/prompts/*.prompt.md` files to open with one
   `node <agento-root>/scripts/agento.mjs preflight <name> [<type> <slug>]` call
   and print the returned `receipt`/`preflightLines`, removing their separate
   `session`/`doctor --for`/`resolve`/`rev-parse` opening calls; keep the
