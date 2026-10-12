@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "3.2 Add the review-publish test group"
+next-step: "3.3 Rewire the Reviewer publish"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -89,7 +89,7 @@ initiative: "spend-reduction"
   — verify: `node scripts/agento.mjs review-publish feature nope` from the primary
   checkout exits 3 with the wrong-window reason
 
-- [ ] 3.2 Add the `review-publish` test group (in-repo and companion). It covers:
+- [x] 3.2 Add the `review-publish` test group (in-repo and companion). It covers:
   - a first publish posting one comment, and a re-review PATCHing that same comment
     (the stub's comment list holds exactly one marked comment after two sends);
   - a companion default merged while the in-repo product half is not merged with
