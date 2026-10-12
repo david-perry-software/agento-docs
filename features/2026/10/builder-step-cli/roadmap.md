@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/builder-step-cli
 last-updated: 2026-10-12
-next-step: "approved: /agento ship builder-step-cli"
+next-step: ""
 artifact-pr: "#48"
 initiative: "spend-reduction"
 ```
