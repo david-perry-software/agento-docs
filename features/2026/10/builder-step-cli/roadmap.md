@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/builder-step-cli
 last-updated: 2026-10-12
-next-step: "completion: sync, then status in-review"
+next-step: "review: /agento review-feature builder-step-cli"
 artifact-pr: "#48"
 initiative: "spend-reduction"
 ```
