@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/builder-step-cli
 last-updated: 2026-10-12
-next-step: "5.4 rerun the full gate after 3.5–4.5"
+next-step: "review round 2: /agento review-feature builder-step-cli"
 artifact-pr: "#48"
 initiative: "spend-reduction"
 ```
@@ -187,9 +187,12 @@ initiative: "spend-reduction"
   453), replay-guard exit 0 in both modes, shellcheck exit 0 with no output,
   extension test:unit 167/167 pass; no new findings against the baseline
 
-- [ ] 5.4 Rerun the full gate after 3.5–4.5 (added 2026-10-12) — verify: the same
+- [x] 5.4 Rerun the full gate after 3.5–4.5 (added 2026-10-12) — verify: the same
   commands as 5.3 exit 0 with no new findings against the baseline, `cd extension
   && npm run copy-cli && npm run test:unit` passes, and `git diff --quiet --
-  extension/cli` after a second `copy-cli`
+  extension/cli` after a second `copy-cli` — done 2026-10-12 at product `42bf27b`:
+  node --test 465/465 pass, replay-guard exit 0 in both modes, shellcheck exit 0
+  with no output, copy-cli + test:unit 167/167 pass, `git diff --quiet --
+  extension/cli` exit 0 after a second copy-cli; final `sync` up-to-date
 
 ## Follow-ups
