@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/preflight-call
 last-updated: 2026-10-12
-next-step: "3.2"
+next-step: "4.1"
 artifact-pr: "#47"
 initiative: "spend-reduction"
 ```
@@ -55,7 +55,7 @@ initiative: "spend-reduction"
   `node --test tests/customizations.test.mjs` passes (canary and `§N` tests) (also
   corrected the §1 capabilities bullet, which named the old `doctor --for` call)
 
-- [ ] 3.2 Regenerate `extension/cli/` and update `docs/commands.md` and
+- [x] 3.2 Regenerate `extension/cli/` and update `docs/commands.md` and
   `CHANGELOG.md` for the new subcommand — verify: `cd extension && npm run
   copy-cli && npm run test:unit` passes and the `agento.test.mjs` usage test still
   passes
