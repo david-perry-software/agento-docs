@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/preflight-call
 last-updated: 2026-10-12
-next-step: "4.1"
+next-step: "review"
 artifact-pr: "#47"
 initiative: "spend-reduction"
 ```
@@ -62,10 +62,12 @@ initiative: "spend-reduction"
 
 ## Phase 4: Full gate
 
-- [ ] 4.1 Run the full repository gate and compare against the recorded baseline —
+- [x] 4.1 Run the full repository gate and compare against the recorded baseline —
   verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` (447+ tests,
   0 fail), both replay-guard runs exit 0, `git ls-files '*.sh' | xargs pnpm dlx
-  shellcheck` exits 0 with no new findings
+  shellcheck` exits 0 with no new findings (2026-10-12: 453 tests, 453 pass, 0 fail;
+  both replay-guard runs exit 0; shellcheck exit 0, no findings; `cd extension &&
+  npm run test:unit` 167 pass — matches the green baseline)
 
 ## Follow-ups
 
