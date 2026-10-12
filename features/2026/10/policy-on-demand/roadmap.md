@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/policy-on-demand
 last-updated: 2026-10-11
-next-step: "4.1 Deduplicate plugin-mode SessionStart"
+next-step: "4.2 Add the hook-wiring doctor check"
 artifact-pr: "#46"
 initiative: "spend-reduction"
 ```
@@ -26,7 +26,7 @@ initiative: "spend-reduction"
 
 ## Phase 4: SessionStart dedupe and doctor check
 
-- [ ] 4.1 In `scripts/hooks/session-context.mjs` (hook edit, approve when the guard asks), emit nothing when `CLAUDE_PLUGIN_ROOT` or `PLUGIN_ROOT` is set and the session repo root carries `.github/hooks/session-start.json` with the `./scripts/hooks/session-context.sh` SessionStart command plus that script; add the three cases from plan.md `## Approach` item 6 to `tests/session-context.test.mjs` — verify: `node --test tests/session-context.test.mjs` exit 0 with 22 tests; `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` exit 0; `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt` exit 0
+- [x] 4.1 In `scripts/hooks/session-context.mjs` (hook edit, approve when the guard asks), emit nothing when `CLAUDE_PLUGIN_ROOT` or `PLUGIN_ROOT` is set and the session repo root carries `.github/hooks/session-start.json` with the `./scripts/hooks/session-context.sh` SessionStart command plus that script; add the three cases from plan.md `## Approach` item 6 to `tests/session-context.test.mjs` — verify: `node --test tests/session-context.test.mjs` exit 0 with 22 tests; `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` exit 0; `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt` exit 0 — done 2026-10-11: the wiring probe is `hasAgentoWorkspaceWiring(root)` in `scripts/agento-config.mjs` (shared with the 4.2 doctor check, since `extension/cli/` copies `scripts/agento-config.mjs` but not `scripts/hooks/`); `session-context.mjs` adds `isDuplicatePluginRun` and the early return in `main()`; `extension/cli/` regenerated; 22/22 pass, both replays exit 0
 - [ ] 4.2 Add the informational `hook-wiring` doctor check to `scripts/agento.mjs` (`DOCTOR_CHECKS` and `LOCAL_DOCTOR_CHECKS`, not `CAPABILITY_CHECKS`; settings path from `AGENTO_VSCODE_SETTINGS` or the platform default; JSONC comments and trailing commas tolerated) per plan.md `## Approach` item 7, with `scripts/agento.test.mjs` cases (no wiring → ok; wiring, clone unregistered → ok; registered `true` → warn naming the path; registered `false` → ok; unreadable settings → ok) and the exact-id list assertions updated; then `cd extension && npm run copy-cli` — verify: `node --test scripts/agento.test.mjs` exit 0; `node scripts/agento.mjs doctor` in this worktree reports `hook-wiring` `warn` naming `/home/david/DP/agento`; `node scripts/agento.mjs doctor --for ship` lists no `hook-wiring`; `cd extension && npm run typecheck && npm run test:unit` exit 0
 - [ ] 4.3 Document the dedupe in `docs/hooks.md` (SessionStart section, including the untrusted-workspace caveat) and the `hook-wiring` check in `docs/install.md` ("When developing Agento …" paragraph); add one `CHANGELOG.md` `## Unreleased` entry covering the core, the on-demand policy, the dropped `command-invocation` file, the explicit read line, the dedupe, and the doctor check, with the before byte count (32 063) — verify: `grep -n -i 'plugin mode' docs/hooks.md` and `grep -n 'hook-wiring' docs/install.md` each ≥ 1; `awk '/^## Unreleased/,/^## [0-9]/' CHANGELOG.md | grep -c 'agento-core'` ≥ 1; `node --test tests/customizations.test.mjs` exit 0
 
