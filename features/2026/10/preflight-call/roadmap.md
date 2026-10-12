@@ -76,3 +76,9 @@ initiative: "spend-reduction"
   commands' §11 window line requires role `plan` (or a promoted `build`); a
   `preflight new-feature` rejection from the primary therefore offers the rejected
   command as an alternative. Pre-existing; align the table with the window lines.
+- (review 2026-10-12) `preflight` without a slug in a slug-bound window (`ap`,
+  `build-*`, `review-*`, `continue`) returns `resolve: null` and a session-id op-id;
+  default the slug to `session.delivery.slug` so the Autopilot's no-slug handoff and
+  duplicate detection match the slugged invocation.
+- (review 2026-10-12) Include `type` in `preflight`'s `resolve` section for typed
+  invocations (`<type> <slug>`, `<type>/<slug>`), as the bare-slug path already does.
