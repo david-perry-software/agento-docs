@@ -54,9 +54,11 @@ artifact-pr: "#52"
 
 ## Phase 2: Observe both harnesses
 
-- [ ] 2.1 Run `node tests/harness-probe/probe.mjs setup` and `status`, and record
+- [x] 2.1 Run `node tests/harness-probe/probe.mjs setup` and `status`, and record
   `code --version` and the Copilot Chat extension version
   (`code --list-extensions --show-versions`) for the doc.
+
+  Recorded 2026-10-13: VS Code `1.141.0` (commit `2a59476c9bfcb90b3ddc372c36762471b7dfad1c`, x64); Copilot Chat extension `GitHub.copilot-chat` `0.69.0` (built-in; version read from `/usr/share/code/resources/app/extensions/copilot/package.json` because it is not in `--list-extensions`). Probe workspace `/home/david/.cache/agento-harness-probe/workspace`, `~/.copilot/skills/agento` symlink, `~/.copilot/skills/agento-probe-copy`, and log dir `/home/david/.cache/agento-harness-probe/logs` are installed; `status` confirms all four and `chat.pluginLocations` has no probe entry.
 
   verify: `status` reports the workspace, the `~/.copilot/skills/agento` symlink, `agento-probe-copy`, and the log dir as installed.
 - [ ] 2.2 (manual) Open the probe workspace (`code --new-window <workspace path from setup>`), start a chat with Session Target **Local**, and run every prompt in `tests/harness-probe/PROMPTS.md` in order. Reply with what the model reported for each prompt and attach one screenshot of the chat — verify: screenshot saved as `evidence/step-2-2-local-session.png`; the log dir holds SessionStart and PreToolUse files.
