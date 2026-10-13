@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/model-pin-filter
 last-updated: 2026-10-13
-next-step: "review"
+next-step: ""
 artifact-pr: "#50"
 ```
 
