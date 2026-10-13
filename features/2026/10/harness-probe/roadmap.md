@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/harness-probe
 last-updated: 2026-10-13
-next-step: "2.5 run collect --harness copilot"
+next-step: "2.6 check command -v copilot; plugin install if present"
 initiative: "copilot-harness"
 artifact-pr: "#52"
 ```
@@ -81,7 +81,9 @@ artifact-pr: "#52"
 - [x] 2.4 (manual) In the same probe window, start a chat with Session Target **Copilot** and run every prompt in `PROMPTS.md` again. Then, in the primary Agento window with the chat Session Target set to Copilot, dispatch `/agento delivery-status` from the Agento dashboard and note what arrives (query text, mode, attachments). Reply with the observations and attach one screenshot per window — verify: `evidence/step-2-4-copilot-session.png` and `evidence/step-2-4-copilot-dispatch.png` saved; the log dir holds new files.
 
   Recorded 2026-10-13: [observations](evidence/step-2-4-copilot-observations.md); screenshots [session](evidence/step-2-4-copilot-session.png), [hook markers](evidence/step-2-4-copilot-hook-markers.png), [file edits](evidence/step-2-4-copilot-file-edits.png), [skills](evidence/step-2-4-copilot-skills.png), [subagent stall](evidence/step-2-4-copilot-subagent-stall.png), [exit2](evidence/step-2-4-copilot-exit2.png), [dispatch](evidence/step-2-4-copilot-dispatch.png).
-- [ ] 2.5 Run `node tests/harness-probe/probe.mjs collect --harness copilot`.
+- [x] 2.5 Run `node tests/harness-probe/probe.mjs collect --harness copilot`.
+
+  Recorded 2026-10-13: 12 sanitized fixtures collected into `tests/harness-probe/fixtures/copilot/` — 9 PreToolUse and 3 SessionStart (two `source:"new"` from the stalled and retry sessions, plus one `source:"resume"` when the EXIT2 prompt resumed the session); the log dir was emptied.
 
   verify: `tests/harness-probe/fixtures/copilot/` holds SessionStart and PreToolUse fixtures; probe tests pass.
 - [ ] 2.6 Check `command -v copilot`. When the CLI is present, run
