@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/harness-probe
 last-updated: 2026-10-13
-next-step: "2.33 Add the disable-Agento-plugin prompt to PROMPTS.md"
+next-step: "2.4 (manual) open the probe workspace and run the Copilot session prompts from PROMPTS.md"
 initiative: "copilot-harness"
 artifact-pr: "#52"
 ```
@@ -75,7 +75,7 @@ artifact-pr: "#52"
 - [x] 2.32 (added 2026-10-13) Teach `tests/harness-probe/PROMPTS.md` prompt 5 to enable the subagent tool via Configure Tools when the model claims it lacks one, and add a 5c: run `probe-pinned` with the parent switched to a different model (separates pin-override from inheritance).
 
   verify: PROMPTS.md prompt 5 names Configure Tools and 5c; `node --test tests/harness-probe/probe.test.mjs` passes.
-- [ ] 2.33 (added 2026-10-13) Add a prompt to `tests/harness-probe/PROMPTS.md` telling the user to disable the Agento plugin for the probe workspace (Extensions → Agent Plugins – Installed → Disable (Workspace)), retry `/agento delivery-status --probe-arg x`, then re-enable the plugin.
+- [x] 2.33 (added 2026-10-13) Add a prompt to `tests/harness-probe/PROMPTS.md` telling the user to disable the Agento plugin for the probe workspace (Extensions → Agent Plugins – Installed → Disable (Workspace)), retry `/agento delivery-status --probe-arg x`, then re-enable the plugin.
 
   verify: PROMPTS.md contains the disable/retry/re-enable instruction; `node --test tests/harness-probe/probe.test.mjs` passes.
 - [ ] 2.4 (manual) In the same probe window, start a chat with Session Target **Copilot** and run every prompt in `PROMPTS.md` again. Then, in the primary Agento window with the chat Session Target set to Copilot, dispatch `/agento delivery-status` from the Agento dashboard and note what arrives (query text, mode, attachments). Reply with the observations and attach one screenshot per window — verify: `evidence/step-2-4-copilot-session.png` and `evidence/step-2-4-copilot-dispatch.png` saved; the log dir holds new files.
