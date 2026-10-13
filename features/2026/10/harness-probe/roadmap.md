@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/harness-probe
 last-updated: 2026-10-13
-next-step: "2.3 Run node tests/harness-probe/probe.mjs collect --harness local"
+next-step: "2.31 Reorder tests/harness-probe/PROMPTS.md so the exit-2 marker is last"
 initiative: "copilot-harness"
 artifact-pr: "#52"
 ```
@@ -64,7 +64,9 @@ artifact-pr: "#52"
 - [x] 2.2 (manual) Open the probe workspace (`code --new-window <workspace path from setup>`), start a chat with Session Target **Local**, and run every prompt in `tests/harness-probe/PROMPTS.md` in order. Reply with what the model reported for each prompt and attach one screenshot of the chat — verify: screenshot saved as `evidence/step-2-2-local-session.png`; the log dir holds SessionStart and PreToolUse files.
 
   Recorded 2026-10-13: [observations](evidence/step-2-2-local-observations.md); screenshots [session](evidence/step-2-2-local-session.png), [file edits](evidence/step-2-2-local-file-edits.png), [pinned subagent](evidence/step-2-2-local-subagent-pinned.png), [unpinned subagent](evidence/step-2-2-local-subagent-unpinned.png).
-- [ ] 2.3 Run `node tests/harness-probe/probe.mjs collect --harness local`.
+- [x] 2.3 Run `node tests/harness-probe/probe.mjs collect --harness local`.
+
+  Recorded 2026-10-13: 27 sanitized fixtures (1 SessionStart + 26 PreToolUse) collected into `tests/harness-probe/fixtures/local/`; the log dir was emptied.
 
   verify: `tests/harness-probe/fixtures/local/` holds SessionStart and PreToolUse fixtures; `node --test tests/harness-probe/probe.test.mjs` passes.
 - [ ] 2.31 (added 2026-10-13) Reorder the markers in `tests/harness-probe/PROMPTS.md` so `AGENTO_PROBE_EXIT2` is sent last — its own prompt after prompts 3–5, instead of item 4 of prompt 2.
