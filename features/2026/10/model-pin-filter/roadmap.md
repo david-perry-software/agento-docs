@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-pin-filter
 last-updated: 2026-10-13
-next-step: "1.2 Add scripts/model-filter.test.mjs round-trip and pass-through tests"
+next-step: "2.1 Add installModelFilter / removeModelFilter in scripts/agento.mjs"
 artifact-pr: "#50"
 ```
 
@@ -20,7 +20,7 @@ artifact-pr: "#50"
   the `tests/extension-bundle.test.mjs` list here (pulled forward from 4.1) so the
   bundle stays a byte copy at every step
 
-- [ ] 1.2 Add `scripts/model-filter.test.mjs`: round-trips `clean(smudge(x)) === x`
+- [x] 1.2 Add `scripts/model-filter.test.mjs`: round-trips `clean(smudge(x)) === x`
   and `smudge(clean(y)) === y` for top-level string and list pins, handoff pins,
   CRLF files; pass-through for unrecorded paths, mismatched (hand-edited) values,
   and files without frontmatter; nonzero exit on invalid state — verify: `node
