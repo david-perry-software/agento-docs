@@ -2,14 +2,14 @@
 status: in-progress
 branch: feature/harness-probe
 last-updated: 2026-10-13
-next-step: "1.1 Author the probe fixtures under tests/harness-probe/"
+next-step: "1.2 Add tests/harness-probe/log-payload.mjs"
 initiative: "copilot-harness"
 artifact-pr: "#52"
 ```
 
 ## Phase 1: Probe tooling
 
-- [ ] 1.1 Author the static probe fixtures:
+- [x] 1.1 Author the static probe fixtures:
   - `tests/harness-probe/workspace/`: `.github/hooks/probe.json` with SessionStart and
     PreToolUse in PascalCase and no `version`; `probe-pinned.agent.md`
     (`model: "Claude Opus 5.5 (copilot)"`, tools incl. `vscode/askQuestions`);
