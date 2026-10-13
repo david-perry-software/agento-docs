@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/publish-cli
-last-updated: 2026-10-12
-next-step: "review: /agento review-feature publish-cli"
+last-updated: 2026-10-13
+next-step: ""
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
