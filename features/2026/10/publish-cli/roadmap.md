@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "6.2 (manual) Before reference run: reconcile the plugin clone's custom model pins, then run /agento quick-fix in another repository and share the debug log path and a screenshot"
+next-step: "6.2 Add the deterministic before/after publish replay harness (tests/publish-replay.test.mjs)"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -217,18 +217,24 @@ initiative: "spend-reduction"
   — verify: the table exists, and every row reads 1 call per send (+ re-sends on
   exit 2)
 
-- [ ] 6.2 (manual) Before reference run.
-  - **Builder first:** fast-forward the plugin clone with `git -C
-    /home/david/DP/agento-plugin merge --ff-only origin/main` after a fetch, and
-    confirm it is clean.
-  - **User:** in a VS Code window on a repository other than agento that loads the
-    plugin, run `/agento quick-fix <a small real change you want anyway>` to
-    completion. Then share the chat debug log path (`…/GitHub.copilot-chat/debug-logs/<id>/main.jsonl`)
-    and a screenshot of the final result line.
+- [ ] 6.2 Add the deterministic publish replay harness `tests/publish-replay.test.mjs`
+  (amended 2026-10-12; was a `(manual)` before reference `/agento quick-fix` chat run —
+  see plan.md Decisions 5, amendment). No new dependencies; it runs under the
+  AGENTS.md test command:
+  - per flow, two identical scratch sandboxes (product and companion clones, each
+    with a local bare `origin`; a fake `gh` on `PATH` logging every invocation);
+  - **before:** the hand-run git/gh sequence the `origin/main` prompts and agents
+    prescribe for that publish, one shell command per tool call;
+  - **after:** the single `agento.mjs` call;
+  - flows: new-feature companion (`plan-publish`), quick-fix (`publish-pr --merge`),
+    and review-feature companion (`review-publish`);
+  - asserts the equivalent end state (branches pushed, draft or merged PRs,
+    cross-link and `artifact-pr:`, the verdict comment, nothing readied or merged
+    where the flow must not) and that the after count is lower, and reports both
+    counts as test diagnostics.
 
-  — verify: `evidence/step-6-2-quick-fix-before.png` is linked; the Builder counts
-  the tool calls (publish phase from push to report, and total) from the log and
-  records them with the log path in plan.md Measurement
+  — verify: `node --test tests/publish-replay.test.mjs` passes and prints the
+  before/after counts for every flow
 
   - Note (2026-10-12): the Builder-first fast-forward is blocked. `/home/david/DP/agento-plugin`
     is 17 commits behind `origin/main`, and `git merge --ff-only origin/main` aborts
@@ -236,19 +242,21 @@ initiative: "spend-reduction"
     skip-worktree (`agento.mjs models list` reports `active: "custom"`, not a named
     profile). Clearing them would discard the user's pins, so the Builder left the
     clone untouched; the user decides how to reconcile them before the run.
+    **Resolved 2026-10-12 by the user:** the `mixed` profile in
+    `~/.config/agento/model-profiles.json` now matches the former custom pins
+    (default DeepSeek V4 Pro); `models clear`, `git merge --ff-only origin/main`
+    (clone at `4fb355e`, 0 behind), and `models apply mixed` (56 files) were run.
+    The amended measurement no longer switches the plugin clone, so the Builder
+    does not touch it.
 
-- [ ] 6.3 (manual) After reference run.
-  - **Builder first:** `git -C /home/david/DP/agento-plugin switch --detach
-    origin/feature/publish-cli` after a fetch.
-  - **User:** in the same kind of window, run `/agento quick-fix <another small real
-    change>` to completion, then share the debug log path and a screenshot of the
-    result line.
-  - **Builder after:** restore the clone with `git -C /home/david/DP/agento-plugin
-    switch main` and record the counts next to 6.2's.
-
-  — verify: `evidence/step-6-3-quick-fix-after.png` is linked;
-  `git -C /home/david/DP/agento-plugin status -sb` shows `main` with no changes; the
-  publish-phase count is lower than 6.2's
+- [ ] 6.3 Record the measured counts (amended 2026-10-12; was a `(manual)` after
+  reference run that pointed the plugin clone at `origin/feature/publish-cli`):
+  per flow, before vs after tool calls (and fake-`gh` invocations) in plan.md
+  `## Research` → Measurement next to the static tables, with the reproduce
+  command; commit the harness output as `evidence/step-6-2-replay-counts.txt` and
+  link it here — verify: the Measurement table and the linked evidence file agree
+  with a fresh `node --test tests/publish-replay.test.mjs` run, and every after
+  count is lower than its before count
 
 - [ ] 6.4 Final integration: `agento.mjs sync feature publish-cli`, re-run 5.3's gate
   if anything merged, and set `status: in-review` — verify: `sync` reports

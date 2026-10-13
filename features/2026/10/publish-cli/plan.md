@@ -54,6 +54,16 @@ on 2026-10-12, which selects the recommended option of every question:
    **(recommended)**; b. only the `/agento ap` reference run; c. static counts only.
    **Answer: a.**
 
+   **Amendment (2026-10-12).** The user found the manual before/after chat reference
+   runs too hard and chose from the options "1. Replay script (recommended)", "2.
+   Real model run via `code chat` in a new VS Code window", "both" — option 1: "do
+   the replay script". The reference runs are replaced by a deterministic replay
+   harness (`tests/publish-replay.test.mjs`): for each measured flow it replays the
+   hand-run git/gh sequence the `origin/main` prompts prescribed ("before") and the
+   single `agento.mjs` call ("after") in identical scratch sandboxes against a fake
+   `gh`, asserts the same end state, and counts the tool calls. The static counts
+   stay. Roadmap steps 6.2 and 6.3 are no longer `(manual)`.
+
 ## Research
 
 Skills consulted: none — no matching domain (the repository has no `.agents/skills/`
@@ -157,7 +167,8 @@ hooks).
 - **Concurrency:** `gh pr list --state open` returned no open PRs in either
   repository (2026-10-12), so there is no file overlap with other deliveries. The
   sibling `builder-step-cli` is complete.
-- **Reference-run inputs:** none of the 390 `main.jsonl` chat debug logs under
+- **Reference-run inputs** (superseded 2026-10-12 by the replay harness, Decision 5
+  amendment): none of the 390 `main.jsonl` chat debug logs under
   `~/.config/Code` contains a `/agento quick-fix` run, so the "before" reference run
   must be captured during the build. The plugin clone `/home/david/DP/agento-plugin`
   is on `main`, clean, and 17 commits behind `origin/main`; it has no `preflight`
@@ -349,7 +360,8 @@ and GitHub state.
    - `cd extension && npm run copy-cli`.
 
 Affected files: `scripts/agento.mjs`, `scripts/agento.test.mjs`,
-`tests/customizations.test.mjs`, `.github/agents/{delivery-planner,delivery-reviewer,initiative-architect}.agent.md`,
+`tests/customizations.test.mjs`, `tests/publish-replay.test.mjs` (added
+2026-10-12, Decision 5 amendment: the before/after replay harness), `.github/agents/{delivery-planner,delivery-reviewer,initiative-architect}.agent.md`,
 `.github/prompts/{new-feature,new-issue,review-feature,review-issue,commit-current-changes,finish-freehand,quick-fix,new-initiative,triage-followups}.prompt.md`
 and their `commands/` mirrors, `.github/instructions/delivery-policy.instructions.md`
 (§6 line only), `docs/commands.md`, `docs/architecture.md`, `CHANGELOG.md`,
@@ -385,14 +397,19 @@ and their `commands/` mirrors, `.github/instructions/delivery-policy.instruction
     as policy §7 requires; a freshly branched plan is normally a no-op merge.
 
   Both are recorded in the CHANGELOG.
-- **Reference runs need a real chat session.** Only the user can start a
-  `/agento quick-fix` chat run, so roadmap steps 6.2 and 6.3 are `(manual)`. Each
-  run merges a real small change of the user's choosing, in a repository other than
-  agento, so its prompts come from the plugin clone. For the "after" run the Builder
-  points the plugin clone `/home/david/DP/agento-plugin` at
-  `origin/feature/publish-cli`. That affects every window using the plugin until it
-  is restored, so the Builder restores `main` immediately after the run and verifies
-  it is clean.
+- ~~**Reference runs need a real chat session.**~~ (Resolved 2026-10-12 by the
+  Decision 5 amendment: the replay harness replaces the manual runs, and the plugin
+  clone `/home/david/DP/agento-plugin` is never switched.) *Original text:* only
+  the user can start a `/agento quick-fix` chat run, so roadmap steps 6.2 and 6.3
+  were `(manual)`, each merging a real small change in a repository other than
+  agento, with the plugin clone pointed at `origin/feature/publish-cli` for the
+  "after" run and restored to `main` immediately afterwards.
+- **The replay measures prescribed sequences, not model behaviour.** The "before"
+  side replays the commands the `origin/main` prose prescribes, one shell command
+  per tool call; a real model may batch commands with `&&` (fewer calls) or add
+  inspection calls (more). *Mitigation:* the harness keeps each prescribed command
+  as written, counts placeholder lookups (`gh repo view`) separately, and asserts
+  the identical end state, so the comparison is like for like.
 - **Concurrent edits to hotspot files** (`scripts/agento.mjs`, `docs/commands.md`,
   `CHANGELOG.md`, `tests/customizations.test.mjs`, `extension/cli/`). There are no
   open PRs today. *Mitigation:* integrate `origin/main` by merge before every push
@@ -458,6 +475,9 @@ and their `commands/` mirrors, `.github/instructions/delivery-policy.instruction
   - both guard replays;
   - `cd extension && npm ci && npm run test:unit`.
 - [ ] Savings recorded — verify: plan.md `## Research` holds the "after" static table
-  (1 call per send for every flow) and the before/after `/agento quick-fix` reference
-  counts (publish phase and total), with the debug-log paths and the linked evidence
-  screenshots from steps 6.2 and 6.3.
+  (1 call per send for every flow) and the measured before/after replay counts per
+  flow (amended 2026-10-12, Decision 5 amendment; was the before/after
+  `/agento quick-fix` reference counts with debug-log paths and screenshots), with
+  the reproduce command and the linked `evidence/step-6-2-replay-counts.txt`; and
+  `node --test tests/publish-replay.test.mjs` passes, asserting the equivalent end
+  state and a lower after count for every replayed flow.
