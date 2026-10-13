@@ -136,7 +136,13 @@ artifact-pr: "#50"
   `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` in the worktree →
   exit 0, 515 tests, 515 pass, 0 fail (commands/*.md ↔ prompt byte-equality held).
 
-- [ ] 4.3 Gate: integrate `origin/main`, then `node --test 'scripts/**/*.test.mjs'
+- [x] 4.3 Gate: integrate `origin/main`, then `node --test 'scripts/**/*.test.mjs'
   'tests/**/*.test.mjs'` and `cd extension && npm run build && npm run test:unit`;
   compare against the baseline (493/493, exit 0) and record both results here —
   verify: both exit 0 with no test removed
+  — result (2026-10-13): `sync` → up-to-date (origin/main already integrated in both
+  halves); `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` → exit 0,
+  515 tests, 515 pass, 0 fail (baseline 493/493; +22 new, none removed);
+  `cd extension && npm ci && npm run build && npm run test:unit` → build exit 0,
+  unit exit 0, 167/167; `git status --porcelain` empty. Shellcheck not run: no `.sh`
+  file changed.
