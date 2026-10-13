@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/model-pin-filter
 last-updated: 2026-10-13
 next-step: "1.1 Add scripts/model-filter.mjs with clean/smudge over a model-pins.json state file"
