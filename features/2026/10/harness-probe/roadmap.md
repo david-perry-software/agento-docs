@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: feature/harness-probe
 last-updated: 2026-10-13
-next-step: "2.4 (manual) open the probe workspace and run the Copilot session prompts from PROMPTS.md"
+next-step: "2.4 (manual) record the completed Copilot-session evidence and tick"
 initiative: "copilot-harness"
 artifact-pr: "#52"
 ```
