@@ -4,6 +4,7 @@ branch: feature/harness-probe
 last-updated: 2026-10-13
 next-step: "1.1 Author the probe fixtures under tests/harness-probe/"
 initiative: "copilot-harness"
+artifact-pr: "#52"
 ```
 
 ## Phase 1: Probe tooling
