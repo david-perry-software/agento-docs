@@ -2,19 +2,23 @@
 status: in-progress
 branch: feature/model-pin-filter
 last-updated: 2026-10-13
-next-step: "1.1 Add scripts/model-filter.mjs with clean/smudge over a model-pins.json state file"
+next-step: "1.2 Add scripts/model-filter.test.mjs round-trip and pass-through tests"
 artifact-pr: "#50"
 ```
 
 ## Phase 1: The filter script
 
-- [ ] 1.1 Add `scripts/model-filter.mjs` (`clean|smudge <path>`, stdin → stdout,
+- [x] 1.1 Add `scripts/model-filter.mjs` (`clean|smudge <path>`, stdin → stdout,
   imports only `./model-profiles.mjs`, reads `model-pins.json` from its own
   directory) per plan.md Approach 1: unrecorded paths and a missing state file pass
   through byte-identical; `clean` strips only pins equal to the recorded values;
   `smudge` inserts recorded pins only into empty slots; invalid state JSON exits
   nonzero with a one-line stderr — verify: `printf -- '---\nname: x\n---\n' | node
   scripts/model-filter.mjs clean a.md` echoes its input and exits 0
+  — note (2026-10-13): added the `handoffModelLines` export to
+  `scripts/model-profiles.mjs`; `model-filter.mjs` joined `copy-cli` `cliFiles` and
+  the `tests/extension-bundle.test.mjs` list here (pulled forward from 4.1) so the
+  bundle stays a byte copy at every step
 
 - [ ] 1.2 Add `scripts/model-filter.test.mjs`: round-trips `clean(smudge(x)) === x`
   and `smudge(clean(y)) === y` for top-level string and list pins, handoff pins,
