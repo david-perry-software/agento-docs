@@ -1,5 +1,5 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/harness-probe
 last-updated: 2026-10-13
 next-step: "2.7 (manual) register the probe plugin in chat.pluginLocations and run Local + Copilot prompt 1-2"
