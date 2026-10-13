@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/harness-probe
 last-updated: 2026-10-13
-next-step: "1.2 Add tests/harness-probe/log-payload.mjs"
+next-step: "1.3 Add tests/harness-probe/probe.mjs setup / status / teardown"
 initiative: "copilot-harness"
 artifact-pr: "#52"
 ```
@@ -24,7 +24,7 @@ artifact-pr: "#52"
   Expect three guard approvals, one per protected wiring file.
 
   verify: `node -e` parses all three JSON files; `node --test tests/customizations.test.mjs` passes.
-- [ ] 1.2 Add `tests/harness-probe/log-payload.mjs`:
+- [x] 1.2 Add `tests/harness-probe/log-payload.mjs`:
   - it writes one log file per call (source, event, argv, cwd, env-var names only,
     stdin);
   - it emits the marker-driven SessionStart and PreToolUse output shapes;
