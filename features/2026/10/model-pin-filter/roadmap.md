@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-pin-filter
 last-updated: 2026-10-13
-next-step: "2.1 Add installModelFilter / removeModelFilter in scripts/agento.mjs"
+next-step: "2.2 Rewire models apply onto the filter"
 artifact-pr: "#50"
 ```
 
@@ -28,7 +28,7 @@ artifact-pr: "#50"
 
 ## Phase 2: Install, migrate, and remove the filter in `models`
 
-- [ ] 2.1 Add `installModelFilter` / `removeModelFilter` in `scripts/agento.mjs`
+- [x] 2.1 Add `installModelFilter` / `removeModelFilter` in `scripts/agento.mjs`
   (common dir via `git rev-parse --path-format=absolute --git-common-dir`; state
   file + copied `model-filter.mjs` and `model-profiles.mjs` under
   `<common>/agento/`; `filter.agento-models.{clean,smudge,required}`; marker block
