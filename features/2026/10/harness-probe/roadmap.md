@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/harness-probe
 last-updated: 2026-10-13
-next-step: "2.6 check command -v copilot; plugin install if present"
+next-step: "2.7 (manual) register the probe plugin in chat.pluginLocations and run Local + Copilot prompt 1-2"
 initiative: "copilot-harness"
 artifact-pr: "#52"
 ```
@@ -86,9 +86,11 @@ artifact-pr: "#52"
   Recorded 2026-10-13: 12 sanitized fixtures collected into `tests/harness-probe/fixtures/copilot/` — 9 PreToolUse and 3 SessionStart (two `source:"new"` from the stalled and retry sessions, plus one `source:"resume"` when the EXIT2 prompt resumed the session); the log dir was emptied.
 
   verify: `tests/harness-probe/fixtures/copilot/` holds SessionStart and PreToolUse fixtures; probe tests pass.
-- [ ] 2.6 Check `command -v copilot`. When the CLI is present, run
+- [x] 2.6 Check `command -v copilot`. When the CLI is present, run
   `copilot plugin install` on the `tests/harness-probe/plugin` directory and record
   the `copilot plugin list` output; when it is absent, record that.
+
+  Recorded 2026-10-13: `command -v copilot` resolves to `/home/david/.config/Code/User/globalStorage/github.copilot-chat/copilotCli/copilot`, a POSIX shim that launches the extension's `copilotCLIShim.js` through the Code binary — but the standalone GitHub Copilot CLI is **not installed**. `copilot --version` (stdin closed) prints `Cannot find GitHub Copilot CLI (https://docs.github.com/en/copilot/how-tos/set-up/install-copilot-cli)` and prompts `Install GitHub Copilot CLI? ['y/N']`, then exits without installing. `copilot plugin install` was therefore not run and `copilot plugin list` is unobserved (CLI absent); this stays a harness-install finding for the doc.
 
   verify: the output or absence is recorded in this step's line.
 - [ ] 2.7 (manual) Add the `tests/harness-probe/plugin` absolute path (printed by `setup`) to `chat.pluginLocations` in user settings, reload the probe window, start one Local chat and one Copilot chat, send prompts 1–2 of `PROMPTS.md` in each, then remove the `chat.pluginLocations` entry and reload. Attach one screenshot — verify: `evidence/step-2-7-plugin-sessions.png` saved; the log dir holds plugin-source files or is empty (itself a finding).
