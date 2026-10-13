@@ -122,6 +122,14 @@ artifact-pr: "#50"
   profile applied (pins smudged into the worktree), and record the result here —
   verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exits 0 in that
   worktree
+  — note (2026-10-13): the first run in a pinned worktree failed 16/515 and exposed
+  two real problems, fixed before re-running: (1) the stat re-record (`git
+  update-index -- <files>`) staged pin-free content when HEAD itself carried pins —
+  it now re-records only files whose cleaned content equals HEAD and that have no
+  staged change; (2) tests that read the running checkout's working files —
+  `modelsFixture` copied pinned agents/prompts (it now strips pins after copying),
+  and two `doctor` tests read the running clone's `model-profile` state (they now
+  pass `--plugin-root` to their own repo).
 
 - [ ] 4.3 Gate: integrate `origin/main`, then `node --test 'scripts/**/*.test.mjs'
   'tests/**/*.test.mjs'` and `cd extension && npm run build && npm run test:unit`;
