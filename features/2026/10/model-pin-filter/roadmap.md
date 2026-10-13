@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-pin-filter
 last-updated: 2026-10-13
-next-step: "4.2 Run the full suite inside a linked worktree of a pinned temporary clone"
+next-step: "4.3 Gate: integrate origin/main, full suite, extension build and unit tests"
 artifact-pr: "#50"
 ```
 
@@ -118,7 +118,7 @@ artifact-pr: "#50"
   scripts/agento.mjs` shows only legacy-migration wording; `node --test
   tests/customizations.test.mjs tests/extension-bundle.test.mjs` passes
 
-- [ ] 4.2 Run the full suite inside a linked worktree of a temporary clone with a
+- [x] 4.2 Run the full suite inside a linked worktree of a temporary clone with a
   profile applied (pins smudged into the worktree), and record the result here —
   verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exits 0 in that
   worktree
@@ -130,6 +130,11 @@ artifact-pr: "#50"
   `modelsFixture` copied pinned agents/prompts (it now strips pins after copying),
   and two `doctor` tests read the running clone's `model-profile` state (they now
   pass `--plugin-root` to their own repo).
+  — result (2026-10-13, at the repair commit): temporary clone of the branch,
+  `models apply t` (56 files changed, `filter.installed: true`), `git worktree add`
+  → 56 pinned files in the worktree, `git status --porcelain` empty before and after;
+  `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` in the worktree →
+  exit 0, 515 tests, 515 pass, 0 fail (commands/*.md ↔ prompt byte-equality held).
 
 - [ ] 4.3 Gate: integrate `origin/main`, then `node --test 'scripts/**/*.test.mjs'
   'tests/**/*.test.mjs'` and `cd extension && npm run build && npm run test:unit`;
