@@ -1,0 +1,19 @@
+# publish-cli replay counts (roadmap step 6.2 / 6.3)
+# command: node --test --test-reporter=spec tests/publish-replay.test.mjs
+# product branch feature/publish-cli, base 33510a8 + tests/publish-replay.test.mjs; run 2026-10-13T02:52Z; node v22.23.2
+
+✔ replay new-feature (companion): the Planner's hand-run publish vs one plan-publish call reach the same state in fewer calls (…ms)
+ℹ new-feature companion (plan-publish): before 13 tool calls (10 shell, 2 lookup, 1 file edit); after 1 (agento.mjs); fake gh invocations before 6, after 9
+✔ replay quick-fix: the hand-run push → PR → wait → merge → sync vs one publish-pr --merge call reach the same state in fewer calls (…ms)
+ℹ quick-fix (publish-pr --merge): before 10 tool calls (10 shell, 0 lookup, 0 file edit); after 1 (agento.mjs); fake gh invocations before 3, after 6
+✔ replay review-feature (companion): the Reviewer's hand-run publish vs one review-publish call reach the same state in fewer calls (…ms)
+ℹ review-feature companion (review-publish): before 8 tool calls (7 shell, 1 lookup, 0 file edit); after 1 (agento.mjs); fake gh invocations before 2, after 6
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms …
+exit: 0
