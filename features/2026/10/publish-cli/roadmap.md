@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "6.4 Final integration: sync, full gate, status in-review"
+next-step: "review: /agento review-feature publish-cli"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -261,8 +261,11 @@ initiative: "spend-reduction"
   publish-pr 10 → 1, review-publish 8 → 1; plan.md "Measurement — replayed";
   [evidence/step-6-2-replay-counts.txt](evidence/step-6-2-replay-counts.txt))
 
-- [ ] 6.4 Final integration: `agento.mjs sync feature publish-cli`, re-run 5.3's gate
+- [x] 6.4 Final integration: `agento.mjs sync feature publish-cli`, re-run 5.3's gate
   if anything merged, and set `status: in-review` — verify: `sync` reports
   `up-to-date` or `pushed`, `git status --porcelain --untracked-files=all` is empty
   in both halves, and `agento.mjs session` shows `companion.dirty: false` and
-  `ahead: 0`
+  `ahead: 0` (2026-10-12: `sync` up-to-date, both halves clean; full gate re-run
+  after the replay harness landed — 493 tests pass, 0 fail; shellcheck v0.10.0
+  clean; both guard replays exit 0; `scripts/` unchanged since 5.2, so
+  `extension/cli/agento.mjs` stays identical)
