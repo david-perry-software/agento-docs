@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/harness-probe
 last-updated: 2026-10-13
-next-step: "1.4 Add probe.mjs collect --harness <label>"
+next-step: "2.1 Run probe setup and status; record versions"
 initiative: "copilot-harness"
 artifact-pr: "#52"
 ```
@@ -43,7 +43,7 @@ artifact-pr: "#52"
   Add tests.
 
   verify: `node --test tests/harness-probe/probe.test.mjs` passes, including the foreign-skill refusal and untouched-foreign-entry cases.
-- [ ] 1.4 Add `probe.mjs collect --harness <label>`:
+- [x] 1.4 Add `probe.mjs collect --harness <label>`:
   - it sanitizes logs into `tests/harness-probe/fixtures/<label>/` with the
     placeholders and dropped keys;
   - the deny-pattern scan fails without writing anything.
