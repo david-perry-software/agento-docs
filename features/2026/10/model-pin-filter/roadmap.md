@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/model-pin-filter
 last-updated: 2026-10-13
-next-step: "4.3 Gate: integrate origin/main, full suite, extension build and unit tests"
+next-step: "review"
 artifact-pr: "#50"
 ```
 
