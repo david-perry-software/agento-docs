@@ -208,6 +208,40 @@ write (Decision 1) are excluded on both sides. Customizations tests keep each fi
 that one call: none of the rewired bodies may contain `gh pr create`, `gh pr merge`,
 `gh pr comment`, `wait-for-checks.sh`, `git push`, or a `gh api …/pulls/… -X PATCH`.
 
+### Measurement — replayed (before vs after, measured 2026-10-12)
+
+Replaces the manual `/agento quick-fix` reference runs (Decision 5 amendment).
+Reproduce from the product repository root:
+
+```sh
+node --test --test-reporter=spec tests/publish-replay.test.mjs
+```
+
+Each flow runs in two identical scratch sandboxes (product and companion clones with
+local bare origins, a logging fake `gh` on `PATH`). "Before" replays the sequence the
+`origin/main` prompts and agents prescribe, one shell command per tool call; a
+*lookup* is a `gh repo view` that fills a placeholder the prose leaves to the agent
+(`<companion repo URL>`, `<owner>/<repo>`); the *file edit* is the `artifact-pr:`
+header write. "After" is the one `agento.mjs` call. The harness asserts the same end
+state for both (branches pushed and clean, draft or merged PRs, cross-link and
+`artifact-pr:`, one verdict comment, nothing readied or merged where the flow must
+not) and that the after count is lower. Checks are green on the first poll, so
+neither side re-sends; a pending wait adds one call to each side.
+
+| Flow (layout) | Before: tool calls | of which shell / lookup / edit | After: tool calls | Fake `gh` calls before → after |
+| --- | --- | --- | --- | --- |
+| new-feature, Planner publish (companion) | 13 | 10 / 2 / 1 | 1 (`plan-publish feature widget`) | 6 → 9 |
+| quick-fix steps 7–9 (in-repo) | 10 | 10 / 0 / 0 | 1 (`publish-pr --title … --body-file - --merge`) | 3 → 6 |
+| review-feature, Reviewer publish (companion) | 8 | 7 / 1 / 0 | 1 (`review-publish feature widget`) | 2 → 6 |
+
+Output: [evidence/step-6-2-replay-counts.txt](evidence/step-6-2-replay-counts.txt).
+The fake-`gh` column counts subprocesses, not model round-trips: the CLI does more
+`gh` reads (existing-PR lookups for idempotent re-sends, `repo view`), all inside the
+single tool call. The replayed counts sit at or above the static estimates (Planner
+8–9, Reviewer 5, quick-fix ≈10) because the replay also counts the placeholder
+lookups, the header edit, the companion fetch before the merge, and the Reviewer's
+`agento.mjs session` confirmation the prose prescribes.
+
 ## Approach
 
 All new code goes in `scripts/agento.mjs`, reusing the `builder-step-cli` and `ship`

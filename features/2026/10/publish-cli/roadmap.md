@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "6.3 Record the measured replay counts in plan.md Measurement"
+next-step: "6.4 Final integration: sync, full gate, status in-review"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -250,14 +250,16 @@ initiative: "spend-reduction"
     The amended measurement no longer switches the plugin clone, so the Builder
     does not touch it.
 
-- [ ] 6.3 Record the measured counts (amended 2026-10-12; was a `(manual)` after
+- [x] 6.3 Record the measured counts (amended 2026-10-12; was a `(manual)` after
   reference run that pointed the plugin clone at `origin/feature/publish-cli`):
   per flow, before vs after tool calls (and fake-`gh` invocations) in plan.md
   `## Research` → Measurement next to the static tables, with the reproduce
   command; commit the harness output as `evidence/step-6-2-replay-counts.txt` and
   link it here — verify: the Measurement table and the linked evidence file agree
   with a fresh `node --test tests/publish-replay.test.mjs` run, and every after
-  count is lower than its before count
+  count is lower than its before count (2026-10-12: plan-publish 13 → 1,
+  publish-pr 10 → 1, review-publish 8 → 1; plan.md "Measurement — replayed";
+  [evidence/step-6-2-replay-counts.txt](evidence/step-6-2-replay-counts.txt))
 
 - [ ] 6.4 Final integration: `agento.mjs sync feature publish-cli`, re-run 5.3's gate
   if anything merged, and set `status: in-review` — verify: `sync` reports
