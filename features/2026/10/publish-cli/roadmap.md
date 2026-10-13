@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/publish-cli
 last-updated: 2026-10-12
-next-step: "6.2 Add the deterministic before/after publish replay harness (tests/publish-replay.test.mjs)"
+next-step: "6.3 Record the measured replay counts in plan.md Measurement"
 artifact-pr: "#49"
 initiative: "spend-reduction"
 ```
@@ -217,7 +217,7 @@ initiative: "spend-reduction"
   — verify: the table exists, and every row reads 1 call per send (+ re-sends on
   exit 2)
 
-- [ ] 6.2 Add the deterministic publish replay harness `tests/publish-replay.test.mjs`
+- [x] 6.2 Add the deterministic publish replay harness `tests/publish-replay.test.mjs`
   (amended 2026-10-12; was a `(manual)` before reference `/agento quick-fix` chat run —
   see plan.md Decisions 5, amendment). No new dependencies; it runs under the
   AGENTS.md test command:
@@ -234,7 +234,8 @@ initiative: "spend-reduction"
     counts as test diagnostics.
 
   — verify: `node --test tests/publish-replay.test.mjs` passes and prints the
-  before/after counts for every flow
+  before/after counts for every flow (2026-10-12: 3 pass, 0 fail; output in
+  [evidence/step-6-2-replay-counts.txt](evidence/step-6-2-replay-counts.txt))
 
   - Note (2026-10-12): the Builder-first fast-forward is blocked. `/home/david/DP/agento-plugin`
     is 17 commits behind `origin/main`, and `git merge --ff-only origin/main` aborts
