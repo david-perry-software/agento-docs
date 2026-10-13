@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/harness-probe
 last-updated: 2026-10-13
-next-step: "2.31 Reorder tests/harness-probe/PROMPTS.md so the exit-2 marker is last"
+next-step: "2.32 Teach PROMPTS.md prompt 5 the Configure Tools note and 5c"
 initiative: "copilot-harness"
 artifact-pr: "#52"
 ```
@@ -69,7 +69,7 @@ artifact-pr: "#52"
   Recorded 2026-10-13: 27 sanitized fixtures (1 SessionStart + 26 PreToolUse) collected into `tests/harness-probe/fixtures/local/`; the log dir was emptied.
 
   verify: `tests/harness-probe/fixtures/local/` holds SessionStart and PreToolUse fixtures; `node --test tests/harness-probe/probe.test.mjs` passes.
-- [ ] 2.31 (added 2026-10-13) Reorder the markers in `tests/harness-probe/PROMPTS.md` so `AGENTO_PROBE_EXIT2` is sent last — its own prompt after prompts 3–5, instead of item 4 of prompt 2.
+- [x] 2.31 (added 2026-10-13) Reorder the markers in `tests/harness-probe/PROMPTS.md` so `AGENTO_PROBE_EXIT2` is sent last — its own prompt after prompts 3–5, instead of item 4 of prompt 2.
 
   verify: `grep -n 'echo AGENTO_PROBE_EXIT2' tests/harness-probe/PROMPTS.md` shows it only in the final prompt; `node --test tests/harness-probe/probe.test.mjs` passes.
 - [ ] 2.32 (added 2026-10-13) Teach `tests/harness-probe/PROMPTS.md` prompt 5 to enable the subagent tool via Configure Tools when the model claims it lacks one, and add a 5c: run `probe-pinned` with the parent switched to a different model (separates pin-override from inheritance).
