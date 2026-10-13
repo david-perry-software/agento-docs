@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/harness-probe
 last-updated: 2026-10-13
-next-step: "1.3 Add tests/harness-probe/probe.mjs setup / status / teardown"
+next-step: "1.4 Add probe.mjs collect --harness <label>"
 initiative: "copilot-harness"
 artifact-pr: "#52"
 ```
@@ -33,7 +33,7 @@ artifact-pr: "#52"
   Add its tests in `tests/harness-probe/probe.test.mjs`.
 
   verify: `node --test tests/harness-probe/probe.test.mjs` passes.
-- [ ] 1.3 Add `tests/harness-probe/probe.mjs` `setup` / `status` / `teardown`:
+- [x] 1.3 Add `tests/harness-probe/probe.mjs` `setup` / `status` / `teardown`:
   - temp-HOME aware; setup copies the workspace, git-inits it, and rewrites
     `probe.json` with the absolute logger path;
   - setup refuses a foreign `~/.copilot/skills/agento`;
