@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-pin-filter
 last-updated: 2026-10-13
-next-step: "4.1 Update docs, the models prompt and its mirror, and the CHANGELOG"
+next-step: "4.2 Run the full suite inside a linked worktree of a pinned temporary clone"
 artifact-pr: "#50"
 ```
 
@@ -109,7 +109,7 @@ artifact-pr: "#50"
 
 ## Phase 4: Docs, prompt, bundle, gate
 
-- [ ] 4.1 Update `docs/model-profiles.md`, `docs/install.md`, `docs/commands.md`,
+- [x] 4.1 Update `docs/model-profiles.md`, `docs/install.md`, `docs/commands.md`,
   `.github/prompts/models.prompt.md` (argument-hint + `adopt` + filter health
   reporting) and its byte mirror `commands/models.md`, and add a **Fixed** entry to
   `CHANGELOG.md` `## Unreleased`; add `model-filter.mjs` to
