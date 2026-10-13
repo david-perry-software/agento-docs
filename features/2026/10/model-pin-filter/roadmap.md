@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-pin-filter
 last-updated: 2026-10-13
-next-step: "3.1 Extend the doctor model-profile check with filter health"
+next-step: "4.1 Update docs, the models prompt and its mirror, and the CHANGELOG"
 artifact-pr: "#50"
 ```
 
@@ -81,26 +81,31 @@ artifact-pr: "#50"
 
 ## Phase 3: Doctor and sync paths
 
-- [ ] 3.1 Extend the `doctor` `model-profile` check: `warn` for legacy bits
+- [x] 3.1 Extend the `doctor` `model-profile` check: `warn` for legacy bits
   (fallback names `models adopt` / `models apply <name>`), for pins without a
   healthy filter (missing config, attributes, state, or script; stale script copy),
   and for non-empty `unrecorded[]`; drop the clear → pull → apply advice; tests per
   case — verify: `node --test scripts/agento.test.mjs` passes
 
-- [ ] 3.2 Ship acceptance test: a ship fixture whose primary clone has a named
+- [x] 3.2 Ship acceptance test: a ship fixture whose primary clone has a named
   profile applied ships a delivery changing a pinned prompt + mirror through
   `sync` with no manual step; `models list` `active` unchanged and pinned files equal
   the merged content plus the same pins; a second variant with an `adopt`ed custom
   pin set — verify: `node --test scripts/agento.test.mjs` passes
 
-- [ ] 3.3 `publish-pr --merge` sync and ship `reopen` (`checks-failed`) fast-forward
+- [x] 3.3 `publish-pr --merge` sync and ship `reopen` (`checks-failed`) fast-forward
   tests with pins active on the clone that fast-forwards — verify: `node --test
   scripts/agento.test.mjs` passes
 
-- [ ] 3.4 Commit-hygiene test: with pins active, `git status --porcelain` is empty
+- [x] 3.4 Commit-hygiene test: with pins active, `git status --porcelain` is empty
   in the primary and a linked worktree, and a commit touching a pinned file's body in
   each has no `model:` line in `git show HEAD:<file>` — verify: `node --test
   scripts/agento.test.mjs` passes
+  — note (2026-10-13): 3.1–3.4 committed together, verified by one run of
+  `node --test scripts/model-filter.test.mjs scripts/agento.test.mjs` (223/223,
+  exit 0). The ship/publish-pr fixtures pin a minimal plugin layout committed to the
+  primary (`pinPrimary`); the reopen test covers both an owner worktree and the
+  ownerless primary switched onto the branch.
 
 ## Phase 4: Docs, prompt, bundle, gate
 
