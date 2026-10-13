@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/harness-probe
 last-updated: 2026-10-13
-next-step: "2.32 Teach PROMPTS.md prompt 5 the Configure Tools note and 5c"
+next-step: "2.33 Add the disable-Agento-plugin prompt to PROMPTS.md"
 initiative: "copilot-harness"
 artifact-pr: "#52"
 ```
@@ -72,7 +72,7 @@ artifact-pr: "#52"
 - [x] 2.31 (added 2026-10-13) Reorder the markers in `tests/harness-probe/PROMPTS.md` so `AGENTO_PROBE_EXIT2` is sent last — its own prompt after prompts 3–5, instead of item 4 of prompt 2.
 
   verify: `grep -n 'echo AGENTO_PROBE_EXIT2' tests/harness-probe/PROMPTS.md` shows it only in the final prompt; `node --test tests/harness-probe/probe.test.mjs` passes.
-- [ ] 2.32 (added 2026-10-13) Teach `tests/harness-probe/PROMPTS.md` prompt 5 to enable the subagent tool via Configure Tools when the model claims it lacks one, and add a 5c: run `probe-pinned` with the parent switched to a different model (separates pin-override from inheritance).
+- [x] 2.32 (added 2026-10-13) Teach `tests/harness-probe/PROMPTS.md` prompt 5 to enable the subagent tool via Configure Tools when the model claims it lacks one, and add a 5c: run `probe-pinned` with the parent switched to a different model (separates pin-override from inheritance).
 
   verify: PROMPTS.md prompt 5 names Configure Tools and 5c; `node --test tests/harness-probe/probe.test.mjs` passes.
 - [ ] 2.33 (added 2026-10-13) Add a prompt to `tests/harness-probe/PROMPTS.md` telling the user to disable the Agento plugin for the probe workspace (Extensions → Agent Plugins – Installed → Disable (Workspace)), retry `/agento delivery-status --probe-arg x`, then re-enable the plugin.
