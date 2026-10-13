@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-pin-filter
 last-updated: 2026-10-13
-next-step: "2.2 Rewire models apply onto the filter"
+next-step: "3.1 Extend the doctor model-profile check with filter health"
 artifact-pr: "#50"
 ```
 
@@ -35,7 +35,7 @@ artifact-pr: "#50"
   in `<common>/info/attributes`) and a git ≥ 2.31 check — verify: `node --test
   scripts/agento.test.mjs` still passes (no behaviour wired yet)
 
-- [ ] 2.2 Rewire `models apply`: migrate legacy skip-worktree bits, install the
+- [x] 2.2 Rewire `models apply`: migrate legacy skip-worktree bits, install the
   filter with the resolved per-file pins (top-level + handoffs), write the files,
   `git update-index -q --refresh`; keep the worktree and dirty refusals (reword the
   worktree message); update the existing apply/clear/handoff tests in
@@ -43,29 +43,41 @@ artifact-pr: "#50"
   (config, attributes block, state file, no `S` bits, `git status --porcelain`
   empty) — verify: `node --test scripts/agento.test.mjs` passes
 
-- [ ] 2.3 Rewire `models clear` (strip pins, remove filter config / attribute block
+- [x] 2.3 Rewire `models clear` (strip pins, remove filter config / attribute block
   / `<common>/agento/` and any legacy bits, refresh; from a linked worktree leave the
   shared state alone) and add the clear acceptance test (no config, no attributes
   block, no state dir, no `S` bits, `git diff --quiet HEAD`) — verify: `node --test
   scripts/agento.test.mjs` passes
 
-- [ ] 2.4 Add `models adopt` (record current file pins as filter state, clear
+- [x] 2.4 Add `models adopt` (record current file pins as filter state, clear
   legacy bits, file bytes unchanged, idempotent `changed: []`, same refusals) with
   usage header line; tests: legacy named-profile clone migrated by `apply` with
   identical pins, legacy `active: custom` clone migrated by `adopt` with
   byte-identical files and `active: custom` — verify: `node --test
   scripts/agento.test.mjs` passes
 
-- [ ] 2.5 `modelsState` / `modelsReport`: add `legacySkipWorktree` (keep
+- [x] 2.5 `modelsState` / `modelsReport`: add `legacySkipWorktree` (keep
   `skipWorktree` as its alias) and `filter { installed, stateFile, script,
   scriptCurrent, attributes, unrecorded[] }`; replace `MODELS_HINT`; test that a new
   prompt committed after apply appears in `filter.unrecorded` — verify: `node --test
   scripts/agento.test.mjs` passes
 
-- [ ] 2.6 Dirty detection under the filter: tests that a body edit and a different
+- [x] 2.6 Dirty detection under the filter: tests that a body edit and a different
   hand-edited `model:` value both show in `git status --porcelain` and make `apply`
   refuse with `status: "dirty"` — verify: `node --test scripts/agento.test.mjs`
   passes
+  — note (2026-10-13): 2.2–2.6 landed as one commit because apply, adopt, and clear
+  share one code block in `case "models"`; verified together by one full
+  `node --test scripts/agento.test.mjs` run (206/206, exit 0). Repairs to the plan:
+  `git update-index -q --refresh` is not enough — git treats a size change as a
+  modification without consulting the filter, so every verb re-records the stat of
+  each tracked target file with `git update-index -- <files>` (cleaned content equals
+  the index, nothing staged; files dirty beyond their pins are skipped). The pin
+  state records every target file (unpinned ones as `model: null`), so
+  `filter.unrecorded` lists only files that arrived after the last apply/adopt. A
+  hand-edited `model:` value counts as dirty for `apply` only (`adopt` records it);
+  `git restore` brings the recorded pin back. The report also carries
+  `filter.config` and `filter.state` (`ok | missing | invalid`).
 
 ## Phase 3: Doctor and sync paths
 
