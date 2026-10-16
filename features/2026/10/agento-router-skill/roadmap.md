@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/agento-router-skill
 last-updated: 2026-10-16
-next-step: "2.1 Link the router: if `~/.copilot/skills/agento` does not exist, `ln -s <this worktree>/skills/agento ~/.copilot/skills/agento`; if it exists, stop and report it (pause `blocked:`) — verify: `readlink -f ~/.copilot/skills/agento` prints `<this worktree>/skills/agento`"
+next-step: "2.2 Create a throwaway planning session for the Planner check with the CLI from the primary checkout (`node scripts/agento.mjs start-session` in `/home/david/DP/agento`, per its usage) and record its worktree path on this line — verify: `agento.mjs session` run in that worktree reports `role: plan`"
 initiative: "copilot-harness"
 artifact-pr: "#55"
 ```
@@ -19,7 +19,7 @@ artifact-pr: "#55"
 
 ## Phase 2: Live verification
 
-- [ ] 2.1 Link the router: if `~/.copilot/skills/agento` does not exist, `ln -s <this worktree>/skills/agento ~/.copilot/skills/agento`; if it exists, stop and report it (pause `blocked:`) — verify: `readlink -f ~/.copilot/skills/agento` prints `<this worktree>/skills/agento`
+- [x] 2.1 Link the router: if `~/.copilot/skills/agento` does not exist, `ln -s <this worktree>/skills/agento ~/.copilot/skills/agento`; if it exists, stop and report it (pause `blocked:`) — verify: `readlink -f ~/.copilot/skills/agento` prints `<this worktree>/skills/agento`
 - [ ] 2.2 Create a throwaway planning session for the Planner check with the CLI from the primary checkout (`node scripts/agento.mjs start-session` in `/home/david/DP/agento`, per its usage) and record its worktree path on this line — verify: `agento.mjs session` run in that worktree reports `role: plan`
 - [ ] 2.3 (manual) In the primary window (`/home/david/DP/agento`), open a new chat with Session Target **Copilot** and send, one per turn: `/agento delivery-status`, then `/agento delivery-status.prompt`, then `/agento not-a-command`; then in the throwaway plan session window from 2.2, a new Copilot chat with `/agento new-feature router smoke test` and stop after its clarifying questions appear (do not answer them); screenshot each reply including the "Read skill · agento" line — verify: `evidence/step-2-3-copilot-delivery-status.png` (receipt + result line), `evidence/step-2-3-copilot-redirect.png` (redirect sentence, then the receipt), `evidence/step-2-3-copilot-unknown.png` (command list, no receipt), `evidence/step-2-3-copilot-new-feature.png` (new-feature receipt + numbered questions with a recommended option); if `/agento` does not reach the router, capture that instead as `evidence/step-2-3-copilot-unresolved.png`
 - [ ] 2.4 Only if 2.3 showed `/agento` not reaching the router: set `disable-model-invocation: false` in the skill, update the frontmatter test and the plan's decision note, and record the finding in `docs/copilot-harness.md`; otherwise mark 2.4 and 2.5 obsolete citing 2.3's evidence — verify: `node --test tests/customizations.test.mjs` exits 0
