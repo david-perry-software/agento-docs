@@ -172,13 +172,22 @@ artifact-pr: "#52"
   `probe.test.mjs`.
 
   verify: `node --test tests/harness-probe/probe.test.mjs tests/customizations.test.mjs` passes.
-- [ ] 3.2 Update `initiatives/2026/10/copilot-harness/breakdown.md` in the companion
+- [x] 3.2 Update `initiatives/2026/10/copilot-harness/breakdown.md` in the companion
   half per plan decision 5:
   - Research bullets become observed facts citing `docs/copilot-harness.md`;
   - adjust affected members' Summary, Brief, and Independence, and `## Risks`;
   - bump `last-updated`;
   - leave the `### harness-probe` block unchanged; any `Requires:` change is named
     in this line.
+
+  Recorded 2026-10-15: `### Harness behavior` rewritten as observed facts citing
+  `docs/copilot-harness.md`; Brief/Independence adjusted for
+  `copilot-hook-compat`, `agents-copilot-models`, `agento-router-skill`,
+  `harness-install`, and `dispatch-copilot-harness`; `## Risks` updated to the
+  observed outcomes (nesting unavailable in Local, dual-shape output safe,
+  exit-2 fail-closed, `chat.pluginLocations` not loading prompt commands in
+  Copilot, `copilot plugin install` unobserved). `last-updated` bumped to
+  2026-10-15. The `### harness-probe` block is unchanged; no `Requires:` changed.
 
   verify: `node <agento-root>/scripts/agento.mjs initiative copilot-harness` returns `status: ok` with empty `errors` and `anomalies`.
 - [ ] 3.3 Run `node tests/harness-probe/probe.mjs teardown`, then `status`.
