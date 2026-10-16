@@ -1,0 +1,43 @@
+```yaml
+status: planned
+branch: feature/agents-copilot-models
+last-updated: 2026-10-16
+next-step: "1.1 Add pin-variant probe agents and operator prompts"
+initiative: "copilot-harness"
+```
+
+# Roadmap: agents-copilot-models
+
+## Phase 1: Probe the Copilot harness for agents and models
+
+- [ ] 1.1 Add pin-variant probe agents under `tests/harness-probe/workspace/.github/agents/` (BYOK picker form `DeepSeek V4 Pro (deepseek)`; list form `[<picker>, <Copilot id candidate>]`), extend each probe agent's body to report its effective model, its full tool list (naming any ask-user and browser tools), and whether its subagent tool accepts a `model` parameter; add the operator steps to `tests/harness-probe/PROMPTS.md` — verify: `node --test tests/harness-probe/probe.test.mjs` exits 0 with new structural cases for the added agents
+- [ ] 1.2 (manual) Open `tests/harness-probe/workspace` in VS Code, start a chat with Session Target **Copilot**, select each probe agent from the agent picker in turn and send the PROMPTS.md prompt; capture each reply plus the model picker label; then repeat for `probe-pinned` and `probe-unpinned` in a **Local** session — verify: screenshots saved as `evidence/step-1-2-copilot-probe-<agent>.png` and `evidence/step-1-2-local-probe.png`, each reply line readable
+- [ ] 1.3 Record the findings in `docs/copilot-harness.md`: update the "Can a subagent ask the user" and "Do model pins apply" rows and add an `## Agents and models` section (accepted model form, BYOK result, ask-user/browser tool names, `Agent` model parameter), and write the outcome on this step line as `finding: picker-honoured` or `finding: picker-rejected` — verify: `node --test tests/harness-probe/probe.test.mjs` exits 0 and the section links the 1.2 evidence
+
+## Phase 2: Tools lists
+
+- [ ] 2.1 Add a `tests/customizations.test.mjs` test: every `.github/agents/*.agent.md` `tools:` entry is a GitHub primary alias (`execute`, `read`, `edit`, `search`, `agent`, `web`, `todo`) or on an explicit harness-specific allowlist (`browser`, `vscode/askQuestions` as VS Code-only) — verify: `node --test tests/customizations.test.mjs` exits 0, and a temporary unknown entry in one agent makes the new test fail (revert afterwards)
+- [ ] 2.2 Only if 1.3 observed Copilot ask-user or browser tools: add their names to the agents that list `vscode/askQuestions` / `browser` and to the allowlist as Copilot-only; otherwise mark this step obsolete and state in `docs/copilot-harness.md` that the §10 `ask-questions` and `browser` fallbacks apply in Copilot — verify: `node --test tests/customizations.test.mjs` exits 0
+
+## Phase 3: Copilot model aliases in model profiles (only on `finding: picker-rejected`)
+
+- [ ] 3.1 `scripts/model-profiles.mjs`: accept an optional top-level `copilotModels` object (qualified picker name → Copilot model id), validated with the existing value rules; unknown shapes are errors — verify: new `scripts/model-profiles.test.mjs` cases (valid map, non-object, empty/placeholder/control values, unknown top-level key still rejected) pass
+- [ ] 3.2 `resolveTargets`: expand every agent pin into a prioritized list (each picker entry followed by its Copilot alias, deduplicated, order kept); prompt and handoff pins unchanged — verify: `scripts/model-profiles.test.mjs` cases for string, list, unmapped, and handoff values pass
+- [ ] 3.3 `scripts/agento.mjs`: `models show`/`apply`/`pins` add a warning naming applied agent pins without a Copilot alias, and doctor's `model-profile` check returns `warn` with it (joined with existing details by `; `) — verify: new `scripts/agento.test.mjs` cases pass using `AGENTO_CONFIG_HOME`
+- [ ] 3.4 Add an example `copilotModels` to `templates/model-profiles.json` and document it in `docs/model-profiles.md` (profiles file, Resolution table, warnings, replacing "Copilot-harness (Agent Host) behavior is unverified") — verify: `node --test scripts/agento.test.mjs` `models init` cases pass and the doc section reads correctly
+- [ ] 3.5 On `finding: picker-honoured` instead: mark 3.1–3.4 obsolete with the finding and update `docs/model-profiles.md` "Subagents and handoffs" to state the picker form applies in Copilot — verify: doc section reads correctly
+
+## Phase 4: Harness-aware subagent model
+
+- [ ] 4.1 `models pins` reports `copilotModel` per agent (Copilot alias of the first picker entry, else the first entry 1.3 showed Copilot accepts, else `null`) — verify: `scripts/agento.test.mjs` `models pins` case asserts `copilotModel` for mapped, unmapped, and unpinned agents
+- [ ] 4.2 `.github/agents/delivery-autopilot.agent.md`: add the harness rule — `runSubagent` available → pass `subagentModel`; `Agent` available → pass `copilotModel` if 1.3 showed `Agent` takes a model, else omit it; extend the Autopilot assertion in `tests/customizations.test.mjs` — verify: `node --test tests/customizations.test.mjs` exits 0
+- [ ] 4.3 `cd extension && npm run copy-cli`, then run the extension unit tests — verify: `diff -r scripts extension/cli` shows no difference for copied files and `cd extension && npm run test:unit` exits 0
+
+## Phase 5: Live verification and gates
+
+- [ ] 5.1 Prepare a scratch clone of `feature/agents-copilot-models` outside the worktrees dir and apply a test profile there with `AGENTO_CONFIG_HOME` pointing at a scratch profiles file (six distinct pins incl. one BYOK, plus `copilotModels` if Phase 3 ran); never touch `~/.config/agento/model-profiles.json` or the primary clone — verify: `agento.mjs models pins --plugin-root <scratch>` (with the same `AGENTO_CONFIG_HOME`) lists the expected `model` and `copilotModel` for all six agents
+- [ ] 5.2 (manual) Open the scratch clone in VS Code, start a chat with Session Target **Copilot**, select each of the six Agento agents from the picker and ask "Report the model you are running on and list your tools"; capture each reply with the model picker label — verify: six screenshots `evidence/step-5-2-copilot-<agent>.png`, each showing the pinned model (or the documented fallback from 1.3)
+- [ ] 5.3 (manual) In the same scratch clone, start a **Local** chat, select 🔨 Agento Builder (pinned) and then an agent unpinned in the test profile, ask the same question — verify: `evidence/step-5-3-local-parity.png` shows the pin overriding and the unpinned agent inheriting the session model
+- [ ] 5.4 Delete the scratch clone and scratch profiles file — verify: neither path exists and `git status --porcelain --untracked-files=all` is empty in both halves
+- [ ] 5.5 Run the full gates: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`, the four guard replays from AGENTS.md, and (if installed) `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` — verify: all exit 0; record results on this line
+- [ ] 5.6 Push and wait for CI — verify: `scripts/wait-for-checks.sh pr <n>` reports the `ci` run (tests + Shellcheck, the full-repository lint gate) green with zero shellcheck findings, matching the baseline
