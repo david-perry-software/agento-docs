@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/agents-copilot-models
 last-updated: 2026-10-16
 next-step: ""
