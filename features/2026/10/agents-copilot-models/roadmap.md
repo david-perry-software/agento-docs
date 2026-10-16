@@ -1,5 +1,5 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/agents-copilot-models
 last-updated: 2026-10-16
 next-step: "1.2 (manual) select probe agents in Copilot and Local sessions and capture screenshots"
