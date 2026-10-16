@@ -18,7 +18,7 @@ artifact-pr: "#54"
 ## Phase 2: Tools lists
 
 - [x] 2.1 Add a `tests/customizations.test.mjs` test: every `.github/agents/*.agent.md` `tools:` entry is a GitHub primary alias (`execute`, `read`, `edit`, `search`, `agent`, `web`, `todo`) or on an explicit harness-specific allowlist (`browser`, `vscode/askQuestions` as VS Code-only) — verify: `node --test tests/customizations.test.mjs` exits 0, and a temporary unknown entry in one agent makes the new test fail (revert afterwards)
-- [ ] 2.2 Only if 1.3 observed Copilot ask-user or browser tools: add their names to the agents that list `vscode/askQuestions` / `browser` and to the allowlist as Copilot-only; otherwise mark this step obsolete and state in `docs/copilot-harness.md` that the §10 `ask-questions` and `browser` fallbacks apply in Copilot — verify: `node --test tests/customizations.test.mjs` exits 0
+- [x] 2.2 ~Only if 1.3 observed Copilot ask-user or browser tools: add their names to the agents that list `vscode/askQuestions` / `browser` and to the allowlist as Copilot-only; otherwise mark this step obsolete and state in `docs/copilot-harness.md` that the §10 `ask-questions` and `browser` fallbacks apply in Copilot~ (obsolete: 1.3 observed no ask-user or browser tool in Copilot, so there are no Copilot tool names to add; `docs/copilot-harness.md` `## Agents and models` already states the §10 `ask-questions` and `browser` fallbacks apply in Copilot) — verify: `node --test tests/customizations.test.mjs` exits 0
 
 ## Phase 3: Copilot model aliases in model profiles (only on `finding: picker-rejected`)
 
