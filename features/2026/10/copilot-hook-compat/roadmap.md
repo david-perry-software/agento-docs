@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/copilot-hook-compat
 last-updated: 2026-10-15
-next-step: "1.2 Emit dual-shape output from session-context.mjs main()"
+next-step: "1.3 Normalize tool input in decide()"
 initiative: "copilot-harness"
 artifact-pr: "#53"
 ```
@@ -12,7 +12,7 @@ artifact-pr: "#53"
 ## Phase 1: Hook scripts speak both harnesses
 
 - [x] 1.1 Emit dual-shape output from `scripts/hooks/delivery-guard.mjs` `main()` (top-level `permissionDecision` + `permissionDecisionReason` alongside `hookSpecificOutput`) and update the `tests/guard.test.mjs` `decide()` helper to assert both slots are present and equal — verify: `node --test tests/guard.test.mjs` exits 0
-- [ ] 1.2 Emit dual-shape output from `scripts/hooks/session-context.mjs` `main()` (top-level `additionalContext` alongside `hookSpecificOutput`); assert both slots equal in `tests/session-context.test.mjs` and add a case feeding the Copilot SessionStart fixture payload (`tests/harness-probe/fixtures/copilot/workspace-SessionStart-1.json` `parsedStdin`, cwd replaced) that yields an `Agento CLI:` line — verify: `node --test tests/session-context.test.mjs` exits 0
+- [x] 1.2 Emit dual-shape output from `scripts/hooks/session-context.mjs` `main()` (top-level `additionalContext` alongside `hookSpecificOutput`); assert both slots equal in `tests/session-context.test.mjs` and add a case feeding the Copilot SessionStart fixture payload (`tests/harness-probe/fixtures/copilot/workspace-SessionStart-1.json` `parsedStdin`, cwd replaced) that yields an `Agento CLI:` line — verify: `node --test tests/session-context.test.mjs` exits 0
 - [ ] 1.3 Normalize tool input in `decide()`: explicit Copilot↔Local tool map (`Bash`/`run_in_terminal` shell; `Write`/`Edit`/`create_file`/`replace_string_in_file` write; `Read`/`Agent`/`tool_search_tool` neither) and tool input from `tool_input`/`toolInput`/`toolArgs` as object or JSON-string object, `{}` otherwise; add Copilot-shaped cases (Bash push to main → deny; Write and Edit `path` on `.github/hooks/x.json` → ask; Read → allow; `toolArgs` string → same verdict as object; malformed `toolArgs` and array `tool_input` → allow, exit 0) — verify: `node --test tests/guard.test.mjs` exits 0
 - [ ] 1.4 Add a fixture-driven test that pipes every `tests/harness-probe/fixtures/{local,copilot}/*PreToolUse*.json` `parsedStdin` (placeholders replaced with a temp repo) through `delivery-guard.sh` and asserts exit 0 and allow — verify: `node --test tests/guard.test.mjs` exits 0
 
