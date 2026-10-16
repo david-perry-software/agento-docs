@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/copilot-hook-compat
 last-updated: 2026-10-15
-next-step: "3.1 Make the probe plugin self-contained"
+next-step: "4.1 Local live check from the build window"
 initiative: "copilot-harness"
 artifact-pr: "#53"
 ```
@@ -24,7 +24,7 @@ artifact-pr: "#53"
 
 ## Phase 3: Plugin hooks in Copilot (re-probe, then fix)
 
-- [ ] 3.1 Make the probe plugin self-contained: `tests/harness-probe/plugin/hooks/hooks.json` (approval-gated) runs a logger inside the plugin root (no `..`) and adds a token-free diagnostic entry recording cwd, `command -v node`, and the names/values of `*PLUGIN_ROOT*` env vars only into the probe log dir; extend `probe.mjs collect` sanitization and `PROMPTS.md` accordingly — verify: `node --test tests/harness-probe/probe.test.mjs` exits 0; running both hook commands locally with and without `CLAUDE_PLUGIN_ROOT` set writes the expected log entries
+- [x] 3.1 Make the probe plugin self-contained: `tests/harness-probe/plugin/hooks/hooks.json` (approval-gated) runs a logger inside the plugin root (no `..`) and adds a token-free diagnostic entry recording cwd, `command -v node`, and the names/values of `*PLUGIN_ROOT*` env vars only into the probe log dir; extend `probe.mjs collect` sanitization and `PROMPTS.md` accordingly — verify: `node --test tests/harness-probe/probe.test.mjs` exits 0; running both hook commands locally with and without `CLAUDE_PLUGIN_ROOT` set writes the expected log entries
 - [ ] 3.2 (manual) Run `node tests/harness-probe/probe.mjs setup`, add the printed plugin path to user `chat.pluginLocations`, reload the probe window, start one **Copilot** chat and send `PROMPTS.md` prompts 1–2, then remove the entry and reload; attach one screenshot of the Copilot chat — verify: `evidence/step-3-2-copilot-plugin.png` saved; the probe log dir holds plugin-source or diagnostic files (their absence is itself the finding)
 - [ ] 3.3 Collect with `probe.mjs collect --harness copilot-plugin`, commit the sanitized captures, and replace the hedged row in `docs/copilot-harness.md` with the proven cause — verify: new files under `tests/harness-probe/fixtures/copilot-plugin/`; `node --test tests/harness-probe/probe.test.mjs` exits 0; the doc row names one cause and links the capture
 - [ ] 3.4 Fix `hooks/hooks.json` per 3.3 (approval-gated) so the guard and session context resolve in Copilot while `${CLAUDE_PLUGIN_ROOT}` keeps working in Local; update `tests/customizations.test.mjs` L905–L950 and `isDuplicatePluginRun()` (with a test) to the proven detection; if `scripts/agento.mjs` changes, run `cd extension && npm run copy-cli`. If 3.3 shows no in-plugin wiring can work, mark this step obsolete with the cause and add a `harness-install` Follow-up — verify: `node --test tests/customizations.test.mjs tests/session-context.test.mjs` exits 0; the hook commands run from a copy of the plugin root with the proven env exit 0 and produce output
