@@ -126,9 +126,26 @@ artifact-pr: "#52"
   plugin hook was invoked but the logger never ran (likely a path/token expansion
   failure in the Copilot harness — recorded as a finding for the doc).
 
-- [ ] 2.8 Run `collect --harness local-plugin` and `collect --harness copilot-plugin`,
+- [x] 2.8 Run `collect --harness local-plugin` and `collect --harness copilot-plugin`,
   splitting the logs by session per the user's step 2.7 order (or record that none
   arrived).
+
+  Recorded 2026-10-15: `collect` has no time/session filter, so the 4 Copilot
+  files (01:18Z) were moved aside, `collect --harness local-plugin` consumed the
+  8 Local files (01:16–01:17Z), the Copilot files were restored, and
+  `collect --harness copilot-plugin` consumed them; the hold dir was removed and
+  the log dir ended empty.
+
+  `local-plugin/`: 8 fixtures — `plugin-SessionStart-1`,
+  `workspace-SessionStart-1`, `plugin-PreToolUse` ×3, `workspace-PreToolUse` ×3
+  (the plugin hook fired alongside the workspace hook in the Local run).
+
+  `copilot-plugin/`: 4 fixtures — `workspace-SessionStart-1`,
+  `workspace-PreToolUse` ×3. **No plugin-source files arrived from the Copilot
+  session**: the Copilot model reported the plugin hook errored, so the plugin
+  hook was invoked but its logger never ran. This is the recorded absence
+  (likely a path/token expansion failure in the Copilot harness) and is a
+  finding for `docs/copilot-harness.md`.
 
   verify: plugin fixtures exist, or the absence is recorded for the doc; probe tests pass.
 
