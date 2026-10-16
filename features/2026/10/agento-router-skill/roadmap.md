@@ -1,0 +1,33 @@
+```yaml
+status: planned
+branch: feature/agento-router-skill
+last-updated: 2026-10-16
+next-step: "1.1 Add the router and commands-agent tests to tests/customizations.test.mjs"
+initiative: "copilot-harness"
+```
+
+# Roadmap: agento-router-skill
+
+## Phase 1: Router skill and tests
+
+- [ ] 1.1 Add the router and commands-agent tests to `tests/customizations.test.mjs`: router frontmatter (`skills/agento/SKILL.md` exists; `name` is `agento` and equals its directory; `argument-hint` is `<command> [args]`; `user-invocable: true`; `disable-model-invocation: true`; `description` starts with `Use when`), every `commands/*.md` `agent:` absent / `"agent"` / an existing agent `name:`, the router dispatch table naming every `.github/agents` agent exactly once with the inline set exactly Planner, Architect, Mechanic, Autopilot, the router body naming `models pins`, `task`, `runSubagent`, `copilotModel`, `subagentModel`, `Agento CLI:`, and `realpath`; add `skills/**/SKILL.md` to `guidanceFiles` and to the relative-link test — verify: `node --test tests/customizations.test.mjs` fails only on the new router tests (skill missing); the commands-agent test passes
+- [ ] 1.2 Create `skills/agento/SKILL.md` with the frontmatter from plan.md `## Approach` and the parse, redirect (placeholders only), root discovery, and unknown-name/no-argument listing sections — verify: `node --test tests/customizations.test.mjs` passes the frontmatter, guidance, and link tests; only the dispatch-content test still fails
+- [ ] 1.3 Add the dispatch section to the skill: the `agent:` → mode table, the inline and "inline, as that agent" procedures (with the §10 `ask-questions`/`browser` fallbacks), the subagent procedure (`agento.mjs models pins`; `task` + `copilotModel` or `runSubagent` + `subagentModel`, omitted when `null`; relay the final message verbatim), and the no-own-receipt rule — verify: `node --test tests/customizations.test.mjs` exits 0
+- [ ] 1.4 Prove the guidance coverage: temporarily add a bare `/<command>` (e.g. a slash directly before `delivery-status`) to the skill and confirm the qualified-command test fails, then revert — verify: the test fails with the temporary line and `node --test tests/customizations.test.mjs` exits 0 after the revert; `git diff` shows no leftover
+- [ ] 1.5 Add `## Router skill` to `docs/copilot-harness.md` (location `skills/agento`, the by-hand link `ln -s <clone>/skills/agento ~/.copilot/skills/agento` until `harness-install`, the dispatch table, a placeholder for the Phase 2 results) and update the "Implication for `agento-router-skill`" paragraph — verify: `node --test tests/harness-probe/probe.test.mjs tests/customizations.test.mjs` exits 0
+
+## Phase 2: Live verification
+
+- [ ] 2.1 Link the router: if `~/.copilot/skills/agento` does not exist, `ln -s <this worktree>/skills/agento ~/.copilot/skills/agento`; if it exists, stop and report it (pause `blocked:`) — verify: `readlink -f ~/.copilot/skills/agento` prints `<this worktree>/skills/agento`
+- [ ] 2.2 Create a throwaway planning session for the Planner check with the CLI from the primary checkout (`node scripts/agento.mjs start-session` in `/home/david/DP/agento`, per its usage) and record its worktree path on this line — verify: `agento.mjs session` run in that worktree reports `role: plan`
+- [ ] 2.3 (manual) In the primary window (`/home/david/DP/agento`), open a new chat with Session Target **Copilot** and send, one per turn: `/agento delivery-status`, then `/agento delivery-status.prompt`, then `/agento not-a-command`; then in the throwaway plan session window from 2.2, a new Copilot chat with `/agento new-feature router smoke test` and stop after its clarifying questions appear (do not answer them); screenshot each reply including the "Read skill · agento" line — verify: `evidence/step-2-3-copilot-delivery-status.png` (receipt + result line), `evidence/step-2-3-copilot-redirect.png` (redirect sentence, then the receipt), `evidence/step-2-3-copilot-unknown.png` (command list, no receipt), `evidence/step-2-3-copilot-new-feature.png` (new-feature receipt + numbered questions with a recommended option); if `/agento` does not reach the router, capture that instead as `evidence/step-2-3-copilot-unresolved.png`
+- [ ] 2.4 Only if 2.3 showed `/agento` not reaching the router: set `disable-model-invocation: false` in the skill, update the frontmatter test and the plan's decision note, and record the finding in `docs/copilot-harness.md`; otherwise mark 2.4 and 2.5 obsolete citing 2.3's evidence — verify: `node --test tests/customizations.test.mjs` exits 0
+- [ ] 2.5 (manual) Only if 2.4 ran: reload the window and repeat 2.3's four prompts in new Copilot chats — verify: the four `evidence/step-2-5-copilot-*.png` screenshots show the outcomes listed in 2.3
+- [ ] 2.6 (manual) In the primary window, open a new chat with Session Target **Local** and send `/agento delivery-status` — verify: `evidence/step-2-6-local-delivery-status.png` shows the delivery-status receipt and no "Read skill · agento" (the Local prompt command still runs)
+- [ ] 2.7 Record the Phase 2 results (and the settled `disable-model-invocation` value) in `docs/copilot-harness.md` `## Router skill`, replacing the placeholder — verify: `node --test tests/harness-probe/probe.test.mjs` exits 0
+- [ ] 2.8 Tear down: close the throwaway plan session with `agento.mjs close-session` (CLI), and remove `~/.copilot/skills/agento` only if it still resolves to this worktree's `skills/agento` — verify: the session worktree is gone from `git worktree list`, `~/.copilot/skills/agento` is absent (or untouched if it pointed elsewhere), and `git status --porcelain --untracked-files=all` is empty in both halves
+
+## Phase 3: Gates
+
+- [ ] 3.1 Run the full gates: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`, the guard replays listed in AGENTS.md (Local, companion, Copilot format, Copilot format companion, Copilot fixtures), and `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` when installed (else record `not installed` and rely on 3.2) — verify: all exit 0; record the pass counts and shellcheck result on this line, compared against the plan's baseline
+- [ ] 3.2 Integrate `origin/main`, push, and wait for CI — verify: `scripts/wait-for-checks.sh pr <n>` reports the `ci` run green (unit tests, Shellcheck with zero findings matching the `main` `6ee4bdd` baseline, guard replays)
