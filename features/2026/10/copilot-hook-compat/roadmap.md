@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/copilot-hook-compat
 last-updated: 2026-10-15
-next-step: "5.2 full gate: shellcheck, full node test suite, both default replays, and the three Copilot replays"
+next-step: "4.2 (manual) run the Copilot live check in this worktree's window and attach a screenshot"
 initiative: "copilot-harness"
 artifact-pr: "#53"
 ```
@@ -38,7 +38,7 @@ artifact-pr: "#53"
 ## Phase 5: Docs and gate
 
 - [x] 5.1 Update `docs/hooks.md` (dual-shape output, tool normalization, `REPLAY_FORMAT=copilot`, Copilot `ask` semantics) and `docs/copilot-harness.md` (`copilot-hook-compat` outcome; `ask` caveat) — verify: `grep -n "REPLAY_FORMAT=copilot\|additionalContext" docs/hooks.md` and `grep -n "ask" docs/copilot-harness.md` show the new text; `node --test tests/customizations.test.mjs` exits 0 — 2026-10-15: dual-shape output, tool normalization, and Copilot replay documented in docs/hooks.md; the ask caveat added to docs/copilot-harness.md; the `copilot-hook-compat` proven-cause row in docs/copilot-harness.md is written by 3.3 once the re-probe settles the cause
-- [ ] 5.2 Full gate: shellcheck (npx-cached binary; compare with the green 2026-10-15 baseline), `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`, both default replays, the three Copilot replays — verify: every command exits 0 and shellcheck reports no findings; results recorded on this line
+- [x] 5.2 Full gate: shellcheck (npx-cached binary; compare with the green 2026-10-15 baseline), `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`, both default replays, the three Copilot replays — verify: every command exits 0 and shellcheck reports no findings; results recorded on this line — 2026-10-15: shellcheck (npx-cached, ShellCheck 0.11.0) exit 0, no findings (matches the green baseline); `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exit 0 — 541 tests, 541 pass, 0 fail; `node --test tests/harness-probe/probe.test.mjs tests/customizations.test.mjs tests/session-context.test.mjs` exit 0 — 95 pass (re-run after the 3.3 fixture/docs change); both default-format replays exit 0; the three Copilot replays exit 0 with 0 mismatches
 
 ## Follow-ups
 
