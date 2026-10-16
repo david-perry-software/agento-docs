@@ -151,7 +151,7 @@ artifact-pr: "#52"
 
 ## Phase 3: Findings, breakdown, teardown
 
-- [ ] 3.1 Write `docs/copilot-harness.md`:
+- [x] 3.1 Write `docs/copilot-harness.md`:
   - the versions observed;
   - the findings table (question | Local | Copilot | evidence | member impact);
   - payload field names per event and the honored output fields;
@@ -162,6 +162,14 @@ artifact-pr: "#52"
   - the Reproduce section.
 
   Use canonical `/agento <name>` spellings only. Add the doc-link resolution test.
+
+  Recorded 2026-10-15: `docs/copilot-harness.md` written with the versions, the
+  findings table (evidence column links the committed fixtures; screenshots are
+  named inline under `features/2026/10/harness-probe/evidence/` in the companion
+  repo), per-event payload field tables, honored output shapes, exit-2, skill
+  resolution, subagents, dispatch, and Reproduce. Added the
+  `every relative link in docs/copilot-harness.md resolves` test to
+  `probe.test.mjs`.
 
   verify: `node --test tests/harness-probe/probe.test.mjs tests/customizations.test.mjs` passes.
 - [ ] 3.2 Update `initiatives/2026/10/copilot-harness/breakdown.md` in the companion
