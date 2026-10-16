@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/harness-probe
-last-updated: 2026-10-15
-next-step: "review — /agento review-feature harness-probe"
+last-updated: 2026-10-16
+next-step: ""
 initiative: "copilot-harness"
 artifact-pr: "#52"
 ```
