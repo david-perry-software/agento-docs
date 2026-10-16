@@ -190,7 +190,15 @@ artifact-pr: "#52"
   2026-10-15. The `### harness-probe` block is unchanged; no `Requires:` changed.
 
   verify: `node <agento-root>/scripts/agento.mjs initiative copilot-harness` returns `status: ok` with empty `errors` and `anomalies`.
-- [ ] 3.3 Run `node tests/harness-probe/probe.mjs teardown`, then `status`.
+- [x] 3.3 Run `node tests/harness-probe/probe.mjs teardown`, then `status`.
+
+  Recorded 2026-10-15: teardown removed `~/.copilot/skills/agento`,
+  `~/.copilot/skills/agento-probe-copy`, and `~/.cache/agento-harness-probe`
+  (nothing foreign kept). `status` reports nothing installed (workspace, symlink,
+  copy, and log dir all `false`, `logFileCount: 0`); `~/.copilot/skills/` holds
+  only the pre-existing `use-railway` skill; the cache dir is gone; `copilot
+  plugin list` lacks `agento-probe-plugin`; and `chat.pluginLocations` has no
+  entry naming the probe plugin.
 
   verify:
   - `status` reports nothing installed;
