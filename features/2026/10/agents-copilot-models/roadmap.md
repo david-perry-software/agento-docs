@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/agents-copilot-models
 last-updated: 2026-10-16
-next-step: "5.6"
+next-step: "5.2"
 initiative: "copilot-harness"
 artifact-pr: "#54"
 ```
@@ -41,4 +41,4 @@ artifact-pr: "#54"
 - [ ] 5.3 (manual) In the same scratch clone, start a **Local** chat, select 🔨 Agento Builder (pinned) and then an agent unpinned in the test profile, ask the same question — verify: `evidence/step-5-3-local-parity.png` shows the pin overriding and the unpinned agent inheriting the session model
 - [ ] 5.4 Delete the scratch clone and scratch profiles file — verify: neither path exists and `git status --porcelain --untracked-files=all` is empty in both halves
 - [x] 5.5 Run the full gates: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`, the four guard replays from AGENTS.md, and (if installed) `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` — verify: all exit 0; record results on this line — results: tests exit 0 (551 pass, 0 fail, ~274 s); four guard replays exit 0; shellcheck exit 0 (zero findings, v0.10.0)
-- [ ] 5.6 Push and wait for CI — verify: `scripts/wait-for-checks.sh pr <n>` reports the `ci` run (tests + Shellcheck, the full-repository lint gate) green with zero shellcheck findings, matching the baseline
+- [x] 5.6 Push and wait for CI — verify: `scripts/wait-for-checks.sh pr <n>` reports the `ci` run (tests + Shellcheck, the full-repository lint gate) green with zero shellcheck findings, matching the baseline — result: `scripts/wait-for-checks.sh pr 116` → `RESULT: success` (pass=1, fail=0, pending=0, skipped=0, merge=CLEAN)
