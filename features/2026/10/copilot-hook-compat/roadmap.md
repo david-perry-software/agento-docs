@@ -1,5 +1,5 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/copilot-hook-compat
 last-updated: 2026-10-15
 next-step: "4.2 (manual) run the Copilot live check in this worktree's window and attach a screenshot"
