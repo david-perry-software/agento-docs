@@ -1,5 +1,5 @@
 ```yaml
-status: paused
+status: in-progress
 branch: feature/copilot-hook-compat
 last-updated: 2026-10-15
 next-step: "3.2 (manual) run probe setup, register the probe plugin, run prompts 1-2 in a Copilot chat, screenshot, then remove the plugin"
