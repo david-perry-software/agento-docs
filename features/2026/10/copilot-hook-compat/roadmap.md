@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/copilot-hook-compat
 last-updated: 2026-10-15
 next-step: "1.1 Emit dual-shape output from delivery-guard.mjs main()"
