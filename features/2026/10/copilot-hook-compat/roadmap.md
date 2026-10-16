@@ -37,7 +37,7 @@ artifact-pr: "#53"
 
 ## Phase 5: Docs and gate
 
-- [ ] 5.1 Update `docs/hooks.md` (dual-shape output, tool normalization, `REPLAY_FORMAT=copilot`, Copilot `ask` semantics) and `docs/copilot-harness.md` (`copilot-hook-compat` outcome; `ask` caveat) — verify: `grep -n "REPLAY_FORMAT=copilot\|additionalContext" docs/hooks.md` and `grep -n "ask" docs/copilot-harness.md` show the new text; `node --test tests/customizations.test.mjs` exits 0
+- [x] 5.1 Update `docs/hooks.md` (dual-shape output, tool normalization, `REPLAY_FORMAT=copilot`, Copilot `ask` semantics) and `docs/copilot-harness.md` (`copilot-hook-compat` outcome; `ask` caveat) — verify: `grep -n "REPLAY_FORMAT=copilot\|additionalContext" docs/hooks.md` and `grep -n "ask" docs/copilot-harness.md` show the new text; `node --test tests/customizations.test.mjs` exits 0 — 2026-10-15: dual-shape output, tool normalization, and Copilot replay documented in docs/hooks.md; the ask caveat added to docs/copilot-harness.md; the `copilot-hook-compat` proven-cause row in docs/copilot-harness.md is written by 3.3 once the re-probe settles the cause
 - [ ] 5.2 Full gate: shellcheck (npx-cached binary; compare with the green 2026-10-15 baseline), `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`, both default replays, the three Copilot replays — verify: every command exits 0 and shellcheck reports no findings; results recorded on this line
 
 ## Follow-ups
