@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/agents-copilot-models
 last-updated: 2026-10-16
-next-step: "5.4 delete the scratch clone and scratch profiles file"
+next-step: ""
 initiative: "copilot-harness"
 artifact-pr: "#54"
 ```
