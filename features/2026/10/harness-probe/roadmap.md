@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: feature/harness-probe
-last-updated: 2026-10-13
-next-step: "2.7 (manual) register the probe plugin in chat.pluginLocations and run Local + Copilot prompt 1-2"
+last-updated: 2026-10-15
+next-step: "2.8 collect --harness local-plugin and copilot-plugin"
 initiative: "copilot-harness"
 artifact-pr: "#52"
 ```
@@ -93,7 +93,39 @@ artifact-pr: "#52"
   Recorded 2026-10-13: `command -v copilot` resolves to `/home/david/.config/Code/User/globalStorage/github.copilot-chat/copilotCli/copilot`, a POSIX shim that launches the extension's `copilotCLIShim.js` through the Code binary — but the standalone GitHub Copilot CLI is **not installed**. `copilot --version` (stdin closed) prints `Cannot find GitHub Copilot CLI (https://docs.github.com/en/copilot/how-tos/set-up/install-copilot-cli)` and prompts `Install GitHub Copilot CLI? ['y/N']`, then exits without installing. `copilot plugin install` was therefore not run and `copilot plugin list` is unobserved (CLI absent); this stays a harness-install finding for the doc.
 
   verify: the output or absence is recorded in this step's line.
-- [ ] 2.7 (manual) Add the `tests/harness-probe/plugin` absolute path (printed by `setup`) to `chat.pluginLocations` in user settings, reload the probe window, start one Local chat and one Copilot chat, send prompts 1–2 of `PROMPTS.md` in each, then remove the `chat.pluginLocations` entry and reload. Attach one screenshot — verify: `evidence/step-2-7-plugin-sessions.png` saved; the log dir holds plugin-source files or is empty (itself a finding).
+- [x] 2.7 (manual) Add the `tests/harness-probe/plugin` absolute path (printed by `setup`) to `chat.pluginLocations` in user settings, reload the probe window, start one Local chat and one Copilot chat, send prompts 1–2 of `PROMPTS.md` in each, then remove the `chat.pluginLocations` entry and reload. Attach one screenshot — verify: `evidence/step-2-7-plugin-sessions.png` saved; the log dir holds plugin-source files or is empty (itself a finding).
+
+  Recorded 2026-10-15, Local then Copilot. Screenshots
+  [Local](evidence/step-2-7-plugin-sessions.png),
+  [Copilot](evidence/step-2-7-plugin-sessions-copilot.png).
+
+  Local session (DeepSeek V4 Pro, Agent mode): prompt 1 reported exactly
+  `PROBE_CTX_NESTED`; prompt 2 — `echo AGENTO_PROBE_DENY_NESTED` denied with
+  "Tool execution denied: probe: AGENTO_PROBE_DENY_NESTED",
+  `echo AGENTO_PROBE_DENY_TOPLEVEL` ran, `echo AGENTO_PROBE_ASK_TOPLEVEL` ran
+  (no prompt).
+
+  Copilot session (Claude Opus 5.5, Interactive, manual permissions): prompt 1
+  reported `PROBE_CTX_TOPLEVEL`; prompt 2 — all three denied, none ran:
+  `DENY_NESTED` denied with reason "probe: AGENTO_PROBE_DENY_NESTED";
+  `DENY_TOPLEVEL` denied with "No reason provided"; `ASK_TOPLEVEL` denied because
+  "the hook from \"agento-probe-plugin\" errored", and no permission prompt was
+  shown.
+
+  Confound: the user's real Agento plugin (`/home/david/DP/agento-plugin`,
+  registered in user `chat.pluginLocations`) was also active in the probe window
+  (both screenshots list `agento` and `agento-probe-plugin` under Agent Plugins –
+  Installed).
+
+  Post-step state: user `chat.pluginLocations` no longer contains the probe plugin
+  path (only the pre-existing `/home/david/DP/agento-plugin: true` remains). The
+  probe log dir holds 12 files — Local 01:16–01:17Z (`plugin-SessionStart`,
+  `workspace-SessionStart`, `plugin-PreToolUse` ×3, `workspace-PreToolUse` ×3)
+  and Copilot 01:18Z (`workspace-SessionStart`, `workspace-PreToolUse` ×3), no
+  plugin-source files. The Copilot model reported the plugin hook errored, so the
+  plugin hook was invoked but the logger never ran (likely a path/token expansion
+  failure in the Copilot harness — recorded as a finding for the doc).
+
 - [ ] 2.8 Run `collect --harness local-plugin` and `collect --harness copilot-plugin`,
   splitting the logs by session per the user's step 2.7 order (or record that none
   arrived).
