@@ -26,7 +26,7 @@ artifact-pr: "#54"
 - [x] 3.2 ~`resolveTargets`: expand every agent pin into a prioritized list (each picker entry followed by its Copilot alias, deduplicated, order kept); prompt and handoff pins unchanged~ (obsolete: `finding: picker-rejected` — the probe's list form `["Claude Opus 5.5 (copilot)", "claude-opus-5.5"]` also ran on the session model, so writing the Copilot id into an agent's `model:` pin does not help and list pins are not written)
 - [x] 3.3 `scripts/agento.mjs`: `models show`/`apply`/`pins` add a warning naming applied agent pins without a Copilot alias, and doctor's `model-profile` check returns `warn` with it (joined with existing details by `; `) — verify: new `scripts/agento.test.mjs` cases pass using `AGENTO_CONFIG_HOME`
 - [x] 3.4 Add an example `copilotModels` to `templates/model-profiles.json` and document it in `docs/model-profiles.md` (profiles file, Resolution table, warnings, replacing "Copilot-harness (Agent Host) behavior is unverified") — verify: `node --test scripts/agento.test.mjs` `models init` cases pass and the doc section reads correctly
-- [ ] 3.5 On `finding: picker-honoured` instead: mark 3.1–3.4 obsolete with the finding and update `docs/model-profiles.md` "Subagents and handoffs" to state the picker form applies in Copilot — verify: doc section reads correctly
+- [x] 3.5 ~On `finding: picker-honoured` instead: mark 3.1–3.4 obsolete with the finding and update `docs/model-profiles.md` "Subagents and handoffs" to state the picker form applies in Copilot~ (obsolete: the probe returned `finding: picker-rejected`, not `picker-honoured`, so this branch does not apply)
 
 ## Phase 4: Harness-aware subagent model
 
