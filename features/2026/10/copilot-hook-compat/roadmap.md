@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/copilot-hook-compat
 last-updated: 2026-10-15
-next-step: "4.1 Local live check from the build window"
+next-step: "3.2 (manual) run probe setup, register the probe plugin, run prompts 1-2 in a Copilot chat, screenshot, then remove the plugin"
 initiative: "copilot-harness"
 artifact-pr: "#53"
 ```
