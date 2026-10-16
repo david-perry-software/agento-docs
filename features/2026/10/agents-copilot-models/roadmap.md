@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/agents-copilot-models
 last-updated: 2026-10-16
-next-step: "5.2"
+next-step: "5.2 (manual) open the scratch clone in VS Code and run the Copilot six-agent probe"
 initiative: "copilot-harness"
 artifact-pr: "#54"
 ```
