@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/agento-router-skill
 last-updated: 2026-10-16
 next-step: "1.1 Add the router and commands-agent tests to tests/customizations.test.mjs"
