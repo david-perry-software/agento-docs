@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/copilot-hook-compat
 last-updated: 2026-10-15
-next-step: "2.2 Add tests/guard-fixtures-copilot.txt"
+next-step: "2.3 Run Copilot replays in CI and AGENTS.md"
 initiative: "copilot-harness"
 artifact-pr: "#53"
 ```
@@ -19,7 +19,7 @@ artifact-pr: "#53"
 ## Phase 2: Copilot replay
 
 - [x] 2.1 Add `REPLAY_FORMAT=copilot` to `scripts/hooks/replay-guard.sh` (approval-gated edit): Bash payloads, read the top-level decision, report a MISMATCH when the nested slot disagrees; add the `<verdict> @<Tool> <path>` line form for file-tool payloads — verify: `REPLAY_FORMAT=copilot ./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt` and `REPLAY_FORMAT=copilot REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt` exit 0; both default-format replays still exit 0
-- [ ] 2.2 Add `tests/guard-fixtures-copilot.txt` (Write/Edit on `.github/hooks/x.json`, `scripts/hooks/x.sh`, `hooks/hooks.json` → ask; Write/Read on ordinary files → allow; Bash push/force-push → deny) — verify: `REPLAY_FORMAT=copilot ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-copilot.txt` exits 0
+- [x] 2.2 Add `tests/guard-fixtures-copilot.txt` (Write/Edit on `.github/hooks/x.json`, `scripts/hooks/x.sh`, `hooks/hooks.json` → ask; Write/Read on ordinary files → allow; Bash push/force-push → deny) — verify: `REPLAY_FORMAT=copilot ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-copilot.txt` exits 0
 - [ ] 2.3 Run the Copilot replays in `.github/workflows/ci.yml` and list them in AGENTS.md `## Commands` — verify: `grep -c REPLAY_FORMAT=copilot .github/workflows/ci.yml AGENTS.md` shows each ≥ 1; full shellcheck (npx-cached binary on `PATH`) exits 0 with no findings
 
 ## Phase 3: Plugin hooks in Copilot (re-probe, then fix)
