@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/copilot-hook-compat
 last-updated: 2026-10-16
 next-step: ""
