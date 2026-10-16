@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/harness-probe
 last-updated: 2026-10-15
-next-step: "2.8 collect --harness local-plugin and copilot-plugin"
+next-step: "4.1 Run the full gate"
 initiative: "copilot-harness"
 artifact-pr: "#52"
 ```
