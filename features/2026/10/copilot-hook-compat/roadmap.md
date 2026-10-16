@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/copilot-hook-compat
 last-updated: 2026-10-16
-next-step: "6.5 full gate and docs"
+next-step: ""
 initiative: "copilot-harness"
 artifact-pr: "#53"
 ```
