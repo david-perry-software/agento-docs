@@ -4,6 +4,7 @@ branch: feature/agents-copilot-models
 last-updated: 2026-10-16
 next-step: "1.1 Add pin-variant probe agents and operator prompts"
 initiative: "copilot-harness"
+artifact-pr: "#54"
 ```
 
 # Roadmap: agents-copilot-models
