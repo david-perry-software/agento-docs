@@ -22,7 +22,7 @@ artifact-pr: "#54"
 
 ## Phase 3: Copilot model aliases in model profiles (only on `finding: picker-rejected`)
 
-- [ ] 3.1 `scripts/model-profiles.mjs`: accept an optional top-level `copilotModels` object (qualified picker name → Copilot model id), validated with the existing value rules; unknown shapes are errors — verify: new `scripts/model-profiles.test.mjs` cases (valid map, non-object, empty/placeholder/control values, unknown top-level key still rejected) pass
+- [x] 3.1 `scripts/model-profiles.mjs`: accept an optional top-level `copilotModels` object (qualified picker name → Copilot model id), validated with the existing value rules; unknown shapes are errors — verify: new `scripts/model-profiles.test.mjs` cases (valid map, non-object, empty/placeholder/control values, unknown top-level key still rejected) pass
 - [ ] 3.2 `resolveTargets`: expand every agent pin into a prioritized list (each picker entry followed by its Copilot alias, deduplicated, order kept); prompt and handoff pins unchanged — verify: `scripts/model-profiles.test.mjs` cases for string, list, unmapped, and handoff values pass
 - [ ] 3.3 `scripts/agento.mjs`: `models show`/`apply`/`pins` add a warning naming applied agent pins without a Copilot alias, and doctor's `model-profile` check returns `warn` with it (joined with existing details by `; `) — verify: new `scripts/agento.test.mjs` cases pass using `AGENTO_CONFIG_HOME`
 - [ ] 3.4 Add an example `copilotModels` to `templates/model-profiles.json` and document it in `docs/model-profiles.md` (profiles file, Resolution table, warnings, replacing "Copilot-harness (Agent Host) behavior is unverified") — verify: `node --test scripts/agento.test.mjs` `models init` cases pass and the doc section reads correctly
