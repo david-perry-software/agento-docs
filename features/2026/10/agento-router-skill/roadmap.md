@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/agento-router-skill
 last-updated: 2026-10-16
-next-step: "1.5 Add `## Router skill` to `docs/copilot-harness.md` (location `skills/agento`, the by-hand link `ln -s <clone>/skills/agento ~/.copilot/skills/agento` until `harness-install`, the dispatch table, a placeholder for the Phase 2 results) and update the `Implication for \`agento-router-skill\`` paragraph — verify: `node --test tests/harness-probe/probe.test.mjs tests/customizations.test.mjs` exits 0"
+next-step: "2.1 Link the router: if `~/.copilot/skills/agento` does not exist, `ln -s <this worktree>/skills/agento ~/.copilot/skills/agento`; if it exists, stop and report it (pause `blocked:`) — verify: `readlink -f ~/.copilot/skills/agento` prints `<this worktree>/skills/agento`"
 initiative: "copilot-harness"
 artifact-pr: "#55"
 ```
@@ -15,7 +15,7 @@ artifact-pr: "#55"
 - [x] 1.2 Create `skills/agento/SKILL.md` with the frontmatter from plan.md `## Approach` and the parse, redirect (placeholders only), root discovery, and unknown-name/no-argument listing sections — verify: `node --test tests/customizations.test.mjs` passes the frontmatter, guidance, and link tests; only the dispatch-content test still fails
 - [x] 1.3 Add the dispatch section to the skill: the `agent:` → mode table, the inline and "inline, as that agent" procedures (with the §10 `ask-questions`/`browser` fallbacks), the subagent procedure (`agento.mjs models pins`; `task` + `copilotModel` or `runSubagent` + `subagentModel`, omitted when `null`; relay the final message verbatim), and the no-own-receipt rule — verify: `node --test tests/customizations.test.mjs` exits 0
 - [x] 1.4 Prove the guidance coverage: temporarily add a bare `/<command>` (e.g. a slash directly before `delivery-status`) to the skill and confirm the qualified-command test fails, then revert — verify: the test fails with the temporary line and `node --test tests/customizations.test.mjs` exits 0 after the revert; `git diff` shows no leftover
-- [ ] 1.5 Add `## Router skill` to `docs/copilot-harness.md` (location `skills/agento`, the by-hand link `ln -s <clone>/skills/agento ~/.copilot/skills/agento` until `harness-install`, the dispatch table, a placeholder for the Phase 2 results) and update the "Implication for `agento-router-skill`" paragraph — verify: `node --test tests/harness-probe/probe.test.mjs tests/customizations.test.mjs` exits 0
+- [x] 1.5 Add `## Router skill` to `docs/copilot-harness.md` (location `skills/agento`, the by-hand link `ln -s <clone>/skills/agento ~/.copilot/skills/agento` until `harness-install`, the dispatch table, a placeholder for the Phase 2 results) and update the "Implication for `agento-router-skill`" paragraph — verify: `node --test tests/harness-probe/probe.test.mjs tests/customizations.test.mjs` exits 0
 
 ## Phase 2: Live verification
 
