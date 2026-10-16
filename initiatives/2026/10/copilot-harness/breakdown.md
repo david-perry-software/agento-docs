@@ -1,7 +1,7 @@
 ```yaml
 initiative: copilot-harness
 created: 2026-10-13
-last-updated: 2026-10-13
+last-updated: 2026-10-15
 ```
 
 # Copilot harness: Agento commands, agents, and hooks on the VS Code Agent Host
@@ -47,35 +47,50 @@ Skills consulted: agent-customization (built-in VS Code skill: skill, agent, and
 file formats and locations). The Agento repository has no `.agents/skills/` directory
 and its AGENTS.md has no skills table (verified 2026-10-13 on `main` `15e67eb`).
 
-### Harness behavior (VS Code and GitHub docs, edited 2026-10-07; unverified until `harness-probe`)
+### Harness behavior (observed by `harness-probe`; see docs/copilot-harness.md)
 
-- **Prompt files.** The Copilot harness does not load `*.prompt.md`. Prompt files are
-  deprecated for Agent Host, and the Local harness "will be removed in a future
-  release". The documented conversion to a skill sets `disable-model-invocation: true`
-  and drops `agent:`, `model:`, and `tools:`.
-- **What the Copilot harness loads.** `.github/instructions`, `AGENTS.md`,
-  `.github/agents`, skills from `.github/skills`, `.agents/skills`, `~/.copilot/skills`,
-  `~/.agents/skills`, and plugin `skills/`, plus hooks and `.mcp.json`. Plugin skills
-  are prefixed `/<plugin>:<skill>`, which is why the router has to be a user-level
-  skill to keep `/agento <name>`.
-- **Plugin inventories.** Agent Host plugins (`/plugin`, `~/.copilot/installed-plugins`)
-  are tracked separately from `chat.pluginLocations` and the Customizations editor.
-  The legacy Copilot plugin manifest accepts `agents`, `skills`, `commands`, and
-  `hooks` path fields.
-- **Hooks (GitHub Copilot hooks reference).**
-  - Under the PascalCase event `PreToolUse`, input is snake_case (`tool_name`,
-    `tool_input`) with Claude tool names: `bash` maps to `Bash`, `create` to `Write`,
-    `edit`/`apply_patch` to `Edit`, `view` to `Read`, `task` to `Agent`.
-  - The decision is read from top-level `permissionDecision` and
-    `permissionDecisionReason`.
-  - `sessionStart` output is read from top-level `additionalContext`.
-  - A preToolUse command hook that crashes or exits 2 fails closed; a timeout fails
-    open.
-  - A malformed item is dropped; a bad `version` rejects the whole file.
-- **Subagents and agents.** Copilot custom agents accept tool aliases (`execute`,
-  `read`, `edit`, `search`, `agent`, `web`). `browser` and `vscode/askQuestions` are
-  VS Code-specific. Model ids in the Copilot runtime may differ from the VS Code
-  picker's `Name (vendor)` form.
+Observed 2026-10-13/2026-10-15 on VS Code 1.141.0 and Copilot Chat 0.69.0. The
+sanitized fixture evidence and per-event field tables live in
+`docs/copilot-harness.md` (the product repository).
+
+- **Prompt files.** Confirmed: the Copilot harness does not load `*.prompt.md`,
+  and a plugin's prompt commands are not loaded either (a same-named user skill is
+  not shadowed). Each `/name` goes through a "Read skill" step (~4 min per turn).
+- **What the Copilot harness loads.** Confirmed for user skills: the symlinked
+  `~/.copilot/skills/agento` and a copied `~/.copilot/skills/agento-probe-copy`
+  both resolve with the full argument tail. The router therefore has to be a
+  user-level skill to keep `/agento <name>`.
+- **Plugin loading.** `chat.pluginLocations` loads the plugin's hooks in Local
+  (the plugin hook fires alongside the workspace hook, and the plugin's
+  `/agento <name>` prompt commands shadow a same-named user skill). In Copilot the
+  plugin's prompt commands are **not** loaded, and the plugin hook is invoked but
+  its `${CLAUDE_PLUGIN_ROOT}` path did not resolve to the logger (the model
+  reported the hook errored; no plugin-source log was written). `copilot plugin
+  install` is unobserved: the standalone Copilot CLI is not installed.
+- **Hooks.** Workspace `.github/hooks/*.json` (PascalCase event names, no
+  `version`) is discovered in both harnesses. Input payload fields are snake_case:
+  - Local `PreToolUse` uses VS Code tool ids (`run_in_terminal`, `create_file`,
+    `replace_string_in_file`) and carries `tool_use_id` and `transcript_path`.
+  - Copilot `PreToolUse` uses Claude names (`Bash`, `Write`, `Read`, `Edit`,
+    `Agent`) and has no `tool_use_id` or `transcript_path`. There is no
+    `apply_patch` tool in either harness.
+  - Local `SessionStart` carries `model` and `transcript_path`; Copilot carries
+    `initial_prompt` and no `model` field.
+  - Copilot reads the `PreToolUse` decision from **both** the nested
+    `hookSpecificOutput.permissionDecision` (+ reason) and the top-level
+    `permissionDecision`; Local reads only the nested slot. Copilot reads
+    `SessionStart` context from top-level `additionalContext`; Local reads
+    `hookSpecificOutput.additionalContext`. A dual-shape output is therefore safe.
+  - A `PreToolUse` hook that exits 2 fails closed in both harnesses. A malformed
+    item dropped / a bad `version` rejecting the file, and the timeout direction,
+    were not exercised by the probe.
+- **Subagents and agents.** In Local, `vscode/askQuestions` works from a subagent,
+  the VS Code picker pin (`Claude Opus 5.5 (copilot)`) overrides the parent model,
+  and an unpinned agent inherits the parent model — but a nested subagent has no
+  subagent tool, so nesting is unavailable. In Copilot the subagent stalled
+  ("Reasoning" 10+ min) and ask-user/nesting/pins are unobserved; the SessionStart
+  payload has no `model` field, so the Copilot runtime's model-name format is
+  still to verify.
 - **Handoff and default target.** Handoff to another harness starts only from a
   Local session. No documented setting picks a default Session Target.
 
@@ -137,7 +152,7 @@ and its AGENTS.md has no skills table (verified 2026-10-13 on `main` `15e67eb`).
 ### copilot-hook-compat
 
 - Summary: Make the delivery guard and session context work under the Copilot hook schema without regressing Local.
-- Brief: Hooks: each hook emits one JSON object carrying both shapes (top-level Copilot fields plus hookSpecificOutput for Local); decide() normalizes bash/Bash, edit/create/Write (file path in `path`), and apply_patch (patch-text paths for hook-file self-protection) and parses toolArgs JSON strings; hook wiring files change only if the spike requires it (approval-gated); a Copilot-format guard fixture set and replay-guard.sh support for it.
+- Brief: Hooks: each hook emits one JSON object carrying both shapes (top-level Copilot fields plus hookSpecificOutput for Local); the probe confirmed Copilot reads top-level `additionalContext` for SessionStart and both the nested and top-level PreToolUse decision slots, while Local reads the nested slots, so decide() normalizes the observed Copilot tool names (`Bash`, `Write`, `Read`, `Edit`, `Agent`) and the Local ids (`run_in_terminal`, `create_file`, `replace_string_in_file`) (file path in `path`/`filePath`) and parses toolArgs JSON strings; there is no apply_patch tool in either harness; hook wiring files change only if the spike requires it (approval-gated); a Copilot-format guard fixture set and replay-guard.sh support for it.
 - Requires: harness-probe
 - Recommended after: none
 - Wave: 2
@@ -147,17 +162,17 @@ and its AGENTS.md has no skills table (verified 2026-10-13 on `main` `15e67eb`).
 ### agents-copilot-models
 
 - Summary: Make the six custom agents load correctly in the Copilot harness, with tool lists and model pins it understands.
-- Brief: Agents and models: check the tools: lists in .github/agents against Copilot tool aliases (browser and vscode/askQuestions may be ignored); if the Copilot harness needs a different model id format, make `agento.mjs models` write it.
+- Brief: Agents and models: check the tools: lists in .github/agents against Copilot tool aliases (the probe observed `vscode/askQuestions` works from a Local subagent and the VS Code picker pin format overrides the parent model there; the Copilot runtime's model-name format is still to verify — its SessionStart payload has no `model` field).
 - Requires: harness-probe
 - Recommended after: copilot-hook-compat
 - Wave: 2
 - Size: S
-- Independence: Touches only `.github/agents/*.agent.md` frontmatter and the `models` subcommand, verified by selecting each agent in a Copilot session and by the models tests. Useful on its own whenever a user selects an Agento agent from the picker.
+- Independence: Touches only `.github/agents/*.agent.md` frontmatter and the `models` subcommand, verified by selecting each agent in a Copilot session (the subagent model check the probe could not complete in Copilot) and by the models tests. Useful on its own whenever a user selects an Agento agent from the picker.
 
 ### agento-router-skill
 
 - Summary: Add the `agento` router skill so `/agento <name> [args]` runs the matching commands/<name>.md in a Copilot session.
-- Brief: Router skill: skills/agento/SKILL.md in the clone with name agento, argument-hint "<command> [args]", disable-model-invocation: true; it parses the command name, applies the agento-core redirect rule, resolves commands/<name>.md, and delegates to the `agent:` custom agent as a subagent or runs inline (decision 3); tests/customizations.test.mjs asserts the router skill's frontmatter and name rules and that every commands/*.md `agent:` names an existing agent or "agent".
+- Brief: Router skill: skills/agento/SKILL.md in the clone with name agento, argument-hint "<command> [args]", disable-model-invocation: true; it parses the command name, applies the agento-core redirect rule, resolves commands/<name>.md, and delegates to the `agent:` custom agent as a subagent or runs inline (decision 3); the probe confirmed a user-level `agento` skill receives the full argument tail in Copilot and that subagents cannot nest, so decision 3's inline fallback applies to interactive/orchestrating agents (Autopilot) — recorded with the user's approval; tests/customizations.test.mjs asserts the router skill's frontmatter and name rules and that every commands/*.md `agent:` names an existing agent or "agent".
 - Requires: harness-probe, copilot-hook-compat
 - Recommended after: agents-copilot-models
 - Wave: 3
@@ -167,7 +182,7 @@ and its AGENTS.md has no skills table (verified 2026-10-13 on `main` `15e67eb`).
 ### harness-install
 
 - Summary: Add `agento.mjs harness install|status` and a doctor `harness` check that install and verify the router skill for Copilot sessions.
-- Brief: `agento.mjs harness install|status`, which symlinks ~/.copilot/skills/agento to the clone, plus a doctor `harness` check; edit scripts/, then run `cd extension && npm run copy-cli`; the extension only surfaces the doctor result (no install action).
+- Brief: `agento.mjs harness install|status`, which symlinks ~/.copilot/skills/agento to the clone, plus a doctor `harness` check; the probe confirmed the user-level symlink is the load path that works in Copilot (`chat.pluginLocations` plugins do not load prompt commands there and the plugin hook's `${CLAUDE_PLUGIN_ROOT}` path failed to resolve), and `copilot plugin install` is unobserved because the Copilot CLI is absent; edit scripts/, then run `cd extension && npm run copy-cli`; the extension only surfaces the doctor result (no install action).
 - Requires: agento-router-skill
 - Recommended after: none
 - Wave: 4
@@ -177,12 +192,12 @@ and its AGENTS.md has no skills table (verified 2026-10-13 on `main` `15e67eb`).
 ### dispatch-copilot-harness
 
 - Summary: Make the extension's dashboard and cross-window dispatch submit Agento commands correctly in Copilot sessions.
-- Brief: Extension: adjust chatOpenOptions in extension/src/commandDispatcher.ts only if the spike shows a gap, and update its unit tests; verification includes dashboard dispatch working in a Copilot session.
+- Brief: Extension: the spike found a gap — `workbench.action.chat.open {query, mode, attachFiles}` fills the Copilot chat input with the slash-leading query, attaches the command file, and sets the mode, but does not submit, and the Copilot input refuses to send a message that begins with a slash in this dispatch case; adjust chatOpenOptions in extension/src/commandDispatcher.ts accordingly and update its unit tests; verification includes dashboard dispatch working in a Copilot session.
 - Requires: harness-install
 - Recommended after: agents-copilot-models
 - Wave: 5
 - Size: S
-- Independence: Limited to the extension's dispatch path and its unit tests. If the spike finds no gap, it ships as a verification-only delivery whose evidence is a recorded Copilot-session dispatch.
+- Independence: Limited to the extension's dispatch path and its unit tests; the spike named a concrete gap (slash-leading query not submittable), so it is a real fix whose evidence is a recorded Copilot-session dispatch.
 
 ### harness-docs
 
@@ -228,28 +243,40 @@ graph LR
 
 ## Risks
 
-- **The docs may not match the shipped harness.** Mitigation: harness-probe records
-  observed payloads as fixtures, and later members build against those fixtures, not
-  the prose.
+- **The docs may not match the shipped harness.** Mitigation: harness-probe recorded
+  observed payloads as fixtures (and `docs/copilot-harness.md`), and later members
+  build against those fixtures, not the prose.
 - **Subagents may not be able to ask the user or nest** (Planner, Architect, Mechanic,
-  Autopilot). Mitigation: decision 3's inline fallback, used only with the user's
-  approval and recorded in agento-router-skill's plan.
-- **A dual-shape hook output could confuse one harness.** Mitigation: both replay
-  formats, plus a manual Local and Copilot check in every hook-touching member, per
-  the Local-parity decision.
-- **A preToolUse crash fails closed and blocks every tool.** Mitigation: the guard
-  keeps its no-node early exit 0 and wraps normalization so malformed input yields
-  `allow`, never a crash.
+  Autopilot). Observed: nesting is unavailable in Local (a nested subagent has no
+  subagent tool) and the Copilot subagent stalled, so ask-user/nesting/pins in
+  Copilot are unobserved. Mitigation: decision 3's inline fallback for
+  interactive/orchestrating agents, used with the user's approval and recorded in
+  agento-router-skill's plan.
+- **A dual-shape hook output could confuse one harness.** Resolved by the probe:
+  Local reads `hookSpecificOutput` and Copilot reads the top-level fields, so one
+  object carrying both shapes is safe. Mitigation remains: both replay formats, plus
+  a manual Local and Copilot check in every hook-touching member, per the
+  Local-parity decision.
+- **A preToolUse crash fails closed and blocks every tool.** Confirmed: exit 2 fails
+  closed in both harnesses. Mitigation: the guard keeps its no-node early exit 0 and
+  wraps normalization so malformed input yields `allow`, never a crash.
 - **A plugin clone registered through chat.pluginLocations may not load in Agent
-  Host.** Mitigation: the probe decides between documenting `copilot plugin install`
-  from a local directory marketplace and making the hooks/router self-sufficient. The
-  harness-install member follows that finding.
+  Host.** Confirmed: in Copilot the plugin's prompt commands are not loaded and the
+  plugin hook's `${CLAUDE_PLUGIN_ROOT}` path failed to resolve (the hook errored,
+  the logger never ran); `copilot plugin install` is unobserved because the Copilot
+  CLI is absent. Mitigation: make the hooks/router self-sufficient through the
+  user-level `~/.copilot/skills/agento` symlink; harness-install follows this
+  finding.
 - **Two plugin checkouts (`agento`, `agento-plugin`) could both claim the router.**
   Mitigation: `harness install` takes an explicit plugin root and `harness status`
-  reports which clone the symlink points at.
+  reports which clone the symlink points at. (The probe window additionally had the
+  user's real `/home/david/DP/agento-plugin` active — a recorded confound in the
+  harness-probe evidence.)
 - **Model pins could silently fall back** if the Copilot runtime rejects the picker
   names. Mitigation: agents-copilot-models verifies each agent's effective model in a
-  Copilot session, not just its frontmatter.
+  Copilot session, not just its frontmatter; the probe confirmed the VS Code picker
+  pin format works in Local but could not observe the Copilot runtime's model-name
+  format (its SessionStart payload has no `model` field).
 
 ## Out of scope
 
