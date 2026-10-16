@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/agents-copilot-models
 last-updated: 2026-10-16
-next-step: "1.1 Add pin-variant probe agents and operator prompts"
+next-step: "1.2 (manual) select probe agents in Copilot and Local sessions and capture screenshots"
 initiative: "copilot-harness"
 artifact-pr: "#54"
 ```
@@ -11,7 +11,7 @@ artifact-pr: "#54"
 
 ## Phase 1: Probe the Copilot harness for agents and models
 
-- [ ] 1.1 Add pin-variant probe agents under `tests/harness-probe/workspace/.github/agents/` (BYOK picker form `DeepSeek V4 Pro (deepseek)`; list form `[<picker>, <Copilot id candidate>]`), extend each probe agent's body to report its effective model, its full tool list (naming any ask-user and browser tools), and whether its subagent tool accepts a `model` parameter; add the operator steps to `tests/harness-probe/PROMPTS.md` — verify: `node --test tests/harness-probe/probe.test.mjs` exits 0 with new structural cases for the added agents
+- [x] 1.1 Add pin-variant probe agents under `tests/harness-probe/workspace/.github/agents/` (BYOK picker form `DeepSeek V4 Pro (deepseek)`; list form `[<picker>, <Copilot id candidate>]`), extend each probe agent's body to report its effective model, its full tool list (naming any ask-user and browser tools), and whether its subagent tool accepts a `model` parameter; add the operator steps to `tests/harness-probe/PROMPTS.md` — verify: `node --test tests/harness-probe/probe.test.mjs` exits 0 with new structural cases for the added agents
 - [ ] 1.2 (manual) Open `tests/harness-probe/workspace` in VS Code, start a chat with Session Target **Copilot**, select each probe agent from the agent picker in turn and send the PROMPTS.md prompt; capture each reply plus the model picker label; then repeat for `probe-pinned` and `probe-unpinned` in a **Local** session — verify: screenshots saved as `evidence/step-1-2-copilot-probe-<agent>.png` and `evidence/step-1-2-local-probe.png`, each reply line readable
 - [ ] 1.3 Record the findings in `docs/copilot-harness.md`: update the "Can a subagent ask the user" and "Do model pins apply" rows and add an `## Agents and models` section (accepted model form, BYOK result, ask-user/browser tool names, `Agent` model parameter), and write the outcome on this step line as `finding: picker-honoured` or `finding: picker-rejected` — verify: `node --test tests/harness-probe/probe.test.mjs` exits 0 and the section links the 1.2 evidence
 
