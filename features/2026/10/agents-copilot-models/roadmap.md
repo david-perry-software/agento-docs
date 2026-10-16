@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/agents-copilot-models
 last-updated: 2026-10-16
-next-step: "4.3"
+next-step: "5.1"
 initiative: "copilot-harness"
 artifact-pr: "#54"
 ```
@@ -32,7 +32,7 @@ artifact-pr: "#54"
 
 - [x] 4.1 `models pins` reports `copilotModel` per agent (Copilot alias of the first picker entry, else the first entry 1.3 showed Copilot accepts, else `null`) — verify: `scripts/agento.test.mjs` `models pins` case asserts `copilotModel` for mapped, unmapped, and unpinned agents — implemented as: the `copilotModels` alias of the pin's first entry, else `null` (2026-10-16 design consequence)
 - [x] 4.2 `.github/agents/delivery-autopilot.agent.md`: add the harness rule — `runSubagent` available → pass `subagentModel`; `task` available → pass `copilotModel` as the `task` tool's `model` (1.3 showed `task` takes a `model`; omit it when `copilotModel` is `null`); extend the Autopilot assertion in `tests/customizations.test.mjs` — verify: `node --test tests/customizations.test.mjs` exits 0
-- [ ] 4.3 `cd extension && npm run copy-cli`, then run the extension unit tests — verify: `diff -r scripts extension/cli` shows no difference for copied files and `cd extension && npm run test:unit` exits 0
+- [x] 4.3 `cd extension && npm run copy-cli`, then run the extension unit tests — verify: `diff -r scripts extension/cli` shows no difference for copied files and `cd extension && npm run test:unit` exits 0
 
 ## Phase 5: Live verification and gates
 
