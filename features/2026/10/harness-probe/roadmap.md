@@ -209,11 +209,18 @@ artifact-pr: "#52"
 
 ## Phase 4: Gate
 
-- [ ] 4.1 Run the full gate:
+- [x] 4.1 Run the full gate:
   - `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` (exit 0 vs. the green
     baseline);
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`;
   - `./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt`;
   - `REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt`.
+
+  Recorded 2026-10-15: `shellcheck` exit 0 (ShellCheck 0.11.0 via the npx-cached
+  binary, per the plan's lint-baseline note); `node --test` exit 0 — 535 tests,
+  535 pass, 0 fail (≈248 s); both replay-guard smokes exit 0;
+  `git diff --name-only origin/main...HEAD` lists only `docs/copilot-harness.md`
+  and `tests/harness-probe/**`; `git status --porcelain --untracked-files=all` is
+  empty in both halves.
 
   verify: every command exits 0; `git diff --name-only origin/main...HEAD` lists only `tests/harness-probe/**` and `docs/copilot-harness.md`; `git status --porcelain --untracked-files=all` is empty in both halves.
