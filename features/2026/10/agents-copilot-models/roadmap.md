@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/agents-copilot-models
 last-updated: 2026-10-16
-next-step: "5.1"
+next-step: "5.2"
 initiative: "copilot-harness"
 artifact-pr: "#54"
 ```
@@ -36,7 +36,7 @@ artifact-pr: "#54"
 
 ## Phase 5: Live verification and gates
 
-- [ ] 5.1 Prepare a scratch clone of `feature/agents-copilot-models` outside the worktrees dir and apply a test profile there with `AGENTO_CONFIG_HOME` pointing at a scratch profiles file (six distinct pins incl. one BYOK, plus `copilotModels` if Phase 3 ran); never touch `~/.config/agento/model-profiles.json` or the primary clone — verify: `agento.mjs models pins --plugin-root <scratch>` (with the same `AGENTO_CONFIG_HOME`) lists the expected `model` and `copilotModel` for all six agents
+- [x] 5.1 Prepare a scratch clone of `feature/agents-copilot-models` outside the worktrees dir and apply a test profile there with `AGENTO_CONFIG_HOME` pointing at a scratch profiles file (six distinct pins incl. one BYOK, plus `copilotModels` if Phase 3 ran); never touch `~/.config/agento/model-profiles.json` or the primary clone — verify: `agento.mjs models pins --plugin-root <scratch>` (with the same `AGENTO_CONFIG_HOME`) lists the expected `model` and `copilotModel` for all six agents — scratch clone `/home/david/DP/agento-scratch/agents-copilot-models` (branch `feature/agents-copilot-models` @ `a654bad`); scratch profile `/home/david/DP/agento-scratch/config/model-profiles.json` (`probe-six`: planner `Claude Opus 5.5 (copilot)`→`claude-opus-5.5`, builder `DeepSeek V4 Pro (deepseek)`→`deepseek/deepseek-v4-pro` (BYOK), reviewer `Claude Fable 5.1 (copilot)`→`claude-fable-5.1`, autopilot `Claude Sonnet 5.5 (copilot)`→`claude-sonnet-5.5`, mechanic `GPT-6 Luna (copilot)`→`gpt-6-luna`, architect `Gemini 4 Argon (copilot)`→`gemini-4-argon`); `models pins` confirmed all six
 - [ ] 5.2 (manual) Open the scratch clone in VS Code, start a chat with Session Target **Copilot**, select each of the six Agento agents from the picker and ask "Report the model you are running on and list your tools"; capture each reply with the model picker label — verify: six screenshots `evidence/step-5-2-copilot-<agent>.png`, each showing the pinned model (or the documented fallback from 1.3)
 - [ ] 5.3 (manual) In the same scratch clone, start a **Local** chat, select 🔨 Agento Builder (pinned) and then an agent unpinned in the test profile, ask the same question — verify: `evidence/step-5-3-local-parity.png` shows the pin overriding and the unpinned agent inheriting the session model
 - [ ] 5.4 Delete the scratch clone and scratch profiles file — verify: neither path exists and `git status --porcelain --untracked-files=all` is empty in both halves
