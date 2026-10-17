@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/agento-router-skill
 last-updated: 2026-10-16
-next-step: "3.1 Run the full gates: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`, the guard replays listed in AGENTS.md (Local, companion, Copilot format, Copilot format companion, Copilot fixtures), and `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` when installed (else record `not installed` and rely on 3.2) — verify: all exit 0; record the pass counts and shellcheck result on this line, compared against the plan's baseline"
+next-step: "2.3 (manual) In the primary window, open a new chat with Session Target Copilot and send `/agento delivery-status`, then `/agento delivery-status.prompt`, then `/agento not-a-command`; then in the throwaway plan session window from 2.2, a new Copilot chat with `/agento new-feature router smoke test` and stop after its clarifying questions appear (do not answer them); screenshot each reply including the 'Read skill · agento' line"
 initiative: "copilot-harness"
 artifact-pr: "#55"
 ```
