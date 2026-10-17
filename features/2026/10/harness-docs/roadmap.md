@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/harness-docs
 last-updated: 2026-10-17
-next-step: "2.1 Bump version to 0.8.0 across manifests and lockfile"
+next-step: "2.2 CHANGELOG.md: Added entry and rename Unreleased to 0.8.0"
 initiative: "copilot-harness"
 artifact-pr: "#58"
 ```
@@ -26,7 +26,7 @@ commit message or the doc) before it is written. Prose uses only the canonical
 
 ## Phase 2: Release metadata
 
-- [ ] 2.1 Bump the version to `0.8.0` in `.claude-plugin/plugin.json`, `package.json`, `extension/package.json`, and both root entries of `extension/package-lock.json` — verify: `grep -n '"version": "0.8.0"'` matches each file (two lockfile lines) and `node --test tests/customizations.test.mjs` passes its version-parity test
+- [x] 2.1 Bump the version to `0.8.0` in `.claude-plugin/plugin.json`, `package.json`, `extension/package.json`, and both root entries of `extension/package-lock.json` — verify: `grep -n '"version": "0.8.0"'` matches each file (two lockfile lines) and `node --test tests/customizations.test.mjs` passes its version-parity test
 - [ ] 2.2 CHANGELOG.md: add an **Added** entry for Copilot-harness support (router skill, `harness install|status|uninstall`, doctor `harness` check, dual-harness hooks, agent pins under `task`, dashboard dispatch in both harnesses, the Local takeover gap) at the top of `## Unreleased`, then rename `## Unreleased` to `## 0.8.0 (<build date>)` — verify: `grep -n "^## " CHANGELOG.md` shows `## 0.8.0 (` first and no `## Unreleased`, and the entry names `harness install`
 
 ## Phase 3: Two-harness acceptance in soshiki
