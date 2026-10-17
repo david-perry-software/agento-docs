@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "5.2 Record /home/david/DP/agento-plugin HEAD, require clean, fetch and detach at origin/issue/dispatch-router-only"
+next-step: "5.3 (manual) In the soshiki primary window run Developer: Reload Window; click a dashboard action that submits /agento delivery-status in four cells (Copilot new, Copilot existing, Local new, Local existing) and screenshot each"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -97,7 +97,7 @@ artifact-pr: "#59"
   build + unit 167/167 pass; shellcheck unavailable locally — deferred to the PR's
   CI shellcheck step (baseline clean; no shell files changed); `commands` and
   `.github/prompts` unchanged
-- [ ] 5.2 Record `/home/david/DP/agento-plugin`'s HEAD in
+- [x] 5.2 Record `/home/david/DP/agento-plugin`'s HEAD in
   `evidence/step-5-2-plugin-clone-head.txt`, require it clean, then `git -C
   /home/david/DP/agento-plugin fetch origin && git -C /home/david/DP/agento-plugin
   switch --detach origin/issue/dispatch-router-only` — verify: its `.claude-plugin/
