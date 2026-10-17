@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "6.2 (added 2026-10-17) git mv commands/*.md into skills/agento/commands/"
+next-step: "6.3 (added 2026-10-17) update every consumer of the commands/ path"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -133,10 +133,10 @@ artifact-pr: "#59"
   tests/customizations.test.mjs` exits nonzero on the "no root commands/"
   assertion (the move has not happened yet)
 
-- [ ] 6.2 (added 2026-10-17) `git mv commands/*.md skills/agento/commands/` — verify:
+- [x] 6.2 (added 2026-10-17) `git mv commands/*.md skills/agento/commands/` — verify:
   `test ! -d commands`; every moved file exists under `skills/agento/commands/` and
-  is byte-identical to its `.github/prompts/<name>.prompt.md`; `node --test
-  --test-name-pattern '#121' tests/customizations.test.mjs` passes
+  is byte-identical to its `.github/prompts/<name>.prompt.md` (25/25); the #121 test
+  itself passes once 6.3 updates the other consumers that still read `commands/`
 
 - [ ] 6.3 (added 2026-10-17) Update every consumer of the `commands/` path to
   `skills/agento/commands/`: `skills/agento/SKILL.md` §3/§4;
