@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: feature/agento-router-skill
 last-updated: 2026-10-17
-next-step: "2.10 (manual) In a Copilot session with the link still installed, send /agento new-feature router smoke test again and confirm the Receipt: accepted new-feature:… line now appears verbatim before the clarifying question; screenshot it"
+next-step: "2.10 record evidence + tick (user completed the re-check 2026-10-17); then 2.8 teardown, then 3.2 CI"
 initiative: "copilot-harness"
 artifact-pr: "#55"
 ```
