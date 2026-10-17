@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: feature/agento-router-skill
 last-updated: 2026-10-17
-next-step: "2.6 (manual) In the primary window, open a new chat with Session Target Local and send /agento delivery-status; screenshot exactly what Local shows — note: the user skill ~/.copilot/skills/agento may shadow the plugin command in Local, so a 'Read skill · agento' line is possible; capture whatever Local actually shows"
+next-step: "2.6 (manual) In the primary window, open a new chat with Session Target Local and send /agento delivery-status — completed by the user 2026-10-17 (screenshots provided); tick 2.6 with the Local-takeover outcome and linked evidence"
 initiative: "copilot-harness"
 artifact-pr: "#55"
 ```
