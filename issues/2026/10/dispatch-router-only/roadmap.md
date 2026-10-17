@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "6.5 (added 2026-10-17) run the full gate"
+next-step: "6.6 (added 2026-10-17) move the plugin clone to the new branch head"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -161,7 +161,7 @@ artifact-pr: "#59"
   the files copy-cli excludes; `git status --porcelain` shows only
   `extension/cli/agento.mjs`
 
-- [ ] 6.5 (added 2026-10-17) Run the full gate — verify:
+- [x] 6.5 (added 2026-10-17) Run the full gate — verify:
   `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` passes; the five
   AGENTS.md guard replays pass; `cd extension && npm run build && npm run
   test:unit` pass; `git diff origin/main --stat -- .github/prompts` is empty;
