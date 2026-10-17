@@ -187,8 +187,13 @@ into the VS Code chat), each with linked screenshots.
   branch changes docs and versions only, and every behavior under test shipped with
   the earlier members.
 - **The throwaway soshiki session leaves state.** Mitigation: the Planner is stopped
-  at its first question (before any branch exists); 3.7 closes the session and
+  at its first question (before any branch exists); 3.8 closes the session and
   verifies no worktree or branch remains in soshiki or soshiki-docs.
+- **The guard fix itself is a runtime change.** If the step 3.5 diagnostic confirms
+  the Copilot plugin-mode guard does not deny `git push origin main` in soshiki, the
+  fix lives in `scripts/hooks/delivery-guard.sh` (or the plugin hook wiring), which is
+  out of this docs-only scope and would need its own issue. This delivery records the
+  failure and the diagnosis only; it does not change runtime behavior.
 - **The hook-file check could create `.github/hooks/x.json` in soshiki** if the
   approval is accepted. Mitigation: the user denies it; the step verifies soshiki's
   `git status --porcelain` is empty.
@@ -249,9 +254,9 @@ into the VS Code chat), each with linked screenshots.
 - [ ] In soshiki, Copilot session: `/agento delivery-status` prints its receipt, the
   `Agento CLI:` line is present, an agent-typed `git push origin main` is denied,
   editing `.github/hooks/x.json` asks for approval, `/agento new-feature` runs in the
-  Planner, and dashboard dispatch works — verified by the linked step 3.4/3.5
+  Planner, and dashboard dispatch works — verified by the linked step 3.4/3.6
   screenshots.
-- [ ] The same six checks pass in a Local session — verified by the step 3.6
+- [ ] The same six checks pass in a Local session — verified by the step 3.7
   screenshots.
 - [ ] The throwaway soshiki session is closed with no leftover worktree or branch,
   and soshiki's primary checkout is clean — verified by `git worktree list`,
