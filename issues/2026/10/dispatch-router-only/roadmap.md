@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "4.1 Merge origin/main (picking up PR #120 if shipped), then update docs/install.md, docs/copilot-harness.md, docs/model-profiles.md, README.md, CHANGELOG.md"
+next-step: "5.1 Run the full gate: node --test suites, five guard replays, extension build + test:unit, shellcheck, git diff origin/main --stat -- commands .github/prompts empty"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -72,7 +72,7 @@ artifact-pr: "#59"
 
 ## Phase 4: Documentation
 
-- [ ] 4.1 Merge `origin/main` (picking up PR #120 `feature/harness-docs` if it has
+- [x] 4.1 Merge `origin/main` (picking up PR #120 `feature/harness-docs` if it has
   shipped), then update `docs/install.md` (`harness install` is a required step),
   `docs/copilot-harness.md` (the manifest registers no commands; both harnesses
   route `/agento` through the router; `harness uninstall` removes `/agento`; the
