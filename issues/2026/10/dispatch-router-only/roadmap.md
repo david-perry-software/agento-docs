@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "3.3 Reword skills/agento/SKILL.md line 11 to route /agento in every session (Copilot and Local), no mention of plugin prompt commands"
+next-step: "3.4 Regenerate the extension's CLI copy (cd extension && npm run copy-cli) and run extension build + unit tests"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -62,7 +62,7 @@ artifact-pr: "#59"
   switch) and make `harness uninstall` output warn that `/agento` stops resolving;
   update `scripts/agento.test.mjs` harness tests to expect `fail` — verify: `node
   --test scripts/agento.test.mjs` passes
-- [ ] 3.3 Reword `skills/agento/SKILL.md` line 11 to route `/agento` in every session
+- [x] 3.3 Reword `skills/agento/SKILL.md` line 11 to route `/agento` in every session
   (Copilot and Local), no mention of plugin prompt commands loading anywhere —
   verify: `node --test tests/customizations.test.mjs` passes; `grep -n "prompt
   commands" skills/agento/SKILL.md` prints nothing
