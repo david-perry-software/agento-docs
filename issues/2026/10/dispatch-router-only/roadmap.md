@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "3.1 Delete \"commands\" from .claude-plugin/plugin.json and update the suffix-less command names test to read rel(\"commands\") directly"
+next-step: "3.2 Make doctor harness return fail for absent/foreign/dangling/not-a-link, rewrite LOCAL_TAKEOVER, warn on harness uninstall, and update scripts/agento.test.mjs"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -50,7 +50,7 @@ artifact-pr: "#59"
 
 ## Phase 3: Fix
 
-- [ ] 3.1 Delete `"commands": "commands"` from `.claude-plugin/plugin.json` and
+- [x] 3.1 Delete `"commands": "commands"` from `.claude-plugin/plugin.json` and
   change the "plugin manifest uses suffix-less command names…" test to read
   `rel("commands")` directly instead of `plugin.commands` — verify: `node --test
   tests/customizations.test.mjs` passes, including the #121 test
