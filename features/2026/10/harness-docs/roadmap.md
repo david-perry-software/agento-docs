@@ -1,5 +1,5 @@
 ```yaml
-status: paused
+status: in-progress
 branch: feature/harness-docs
 last-updated: 2026-10-17
 next-step: "3.4 (manual) run the six Copilot-session checks in soshiki"
