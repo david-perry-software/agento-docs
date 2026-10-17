@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "1.2 (manual) In the soshiki primary window run Developer: Reload Window; verify dispatch sends in an existing Copilot chat and Local /agento delivery-status routes through the router; attach both screenshots"
+next-step: "1.3 Restore chat.pluginLocations to the recorded value and delete /tmp/agento-scratch-plugin"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -21,7 +21,7 @@ artifact-pr: "#59"
   untouched) — verify: `node -e` shows the scratch manifest has no `commands`;
   settings.json `chat.pluginLocations` names the scratch copy and not
   `agento-plugin`
-- [ ] 1.2 (manual) In the soshiki primary window run "Developer: Reload Window"; with
+- [x] 1.2 (manual) In the soshiki primary window run "Developer: Reload Window"; with
   Session Target **Copilot**, open a chat that already has history and click a
   dashboard action that submits `/agento delivery-status`; then switch Session
   Target to **Local**, type `/agento delivery-status` in a chat and send; screenshot
@@ -29,7 +29,11 @@ artifact-pr: "#59"
   request sent, "Read skill · agento" (or "Reviewed SKILL.md…"), and `Receipt:
   accepted delivery-status:…`; `evidence/step-1-2-local-router.png` shows the
   receipt reached through the router skill. A failure pauses the delivery as `1.2
-  blocked: premise not confirmed` for a re-plan
+  blocked: premise not confirmed` for a re-plan. Completed 2026-10-17:
+  [Copilot existing chat](evidence/step-1-2-copilot-existing-chat.png),
+  [Local router](evidence/step-1-2-local-router.png). Side observation: with
+  commands unregistered the Copilot turn took ~1m 8s versus ~12m in the earlier
+  router check
 - [ ] 1.3 Restore `chat.pluginLocations` to the value in
   `evidence/step-1-1-plugin-locations.txt` and delete `/tmp/agento-scratch-plugin` —
   verify: settings value equals the recorded one; the scratch path no longer exists
