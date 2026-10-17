@@ -53,6 +53,21 @@ Carried from the initiative breakdown (decisions 2–4): one router skill named
 skills); `commands/*.md` stays the single source the router reads;
 `.github/prompts/` is unchanged.
 
+Clarifying question asked as numbered chat questions on 2026-10-17 (the
+ask-questions tool was disabled; options lettered, the recommended one bold):
+
+- **Q: In Local, `/agento delivery-status` ran through the router skill, not the
+  plugin prompt (the probe said the reverse). Output was correct. How should this
+  delivery treat it?** Before the answer, a follow-up was asked: "if 1, are we
+  just giving up the ability for our system to automatically switch models?" The
+  Autopilot's answer: in Local with the link installed, Builder/Reviewer pins are
+  kept via `runSubagent` + `subagentModel` (also inside Autopilot runs); what is
+  lost is the command file's profile-applied prompt `model:` and the agent-mode/pin
+  switch for Planner, Architect, Mechanic, and Autopilot, which run inline on the
+  session model; in Copilot nothing extra is lost. **A (chosen): "1 — Accept the
+  Local takeover and record the lost model switching as a known gap for
+  harness-install/harness-docs"** (recommended).
+
 ## Research
 
 Skills consulted: agent-customization (built-in VS Code skill: SKILL.md frontmatter
@@ -239,6 +254,16 @@ chat sessions cannot be driven by the agent's browser tools, so the live checks 
   run (not in this member's live checks, per decision 4).
 - **Concurrent deliveries:** none open on 2026-10-16. Mitigation if that changes:
   integrate `origin/main` before every push.
+- **Accepted 2026-10-17 (2.6): Local model switching is lost when the router link
+  is installed.** With `~/.copilot/skills/agento` linked, Local routes
+  `/agento <name>` through the router skill instead of the plugin prompt command
+  — the reverse of the harness-probe finding. Builder/Reviewer pins survive through
+  `runSubagent` + `subagentModel`; lost are the command file's profile-applied
+  prompt `model:` and the agent-mode/pin switch for Planner, Architect, Mechanic,
+  and Autopilot, which run inline on the session model. Recorded as a known gap
+  for `harness-install` (which must decide whether Local should be taken over —
+  e.g. a Copilot-only skill location, if one exists, is unverified) and
+  `harness-docs` (which must document the Local model-switch gap).
 
 ## Out of scope
 
