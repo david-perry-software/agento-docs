@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
 next-step: "1.1 prepare the scratch plugin copy without commands"
