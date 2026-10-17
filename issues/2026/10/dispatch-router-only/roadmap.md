@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "5.1 Run the full gate: node --test suites, five guard replays, extension build + test:unit, shellcheck, git diff origin/main --stat -- commands .github/prompts empty"
+next-step: "5.2 Record /home/david/DP/agento-plugin HEAD, require clean, fetch and detach at origin/issue/dispatch-router-only"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -86,13 +86,17 @@ artifact-pr: "#59"
 
 ## Phase 5: Verification
 
-- [ ] 5.1 Run the full gate — verify: `node --test 'scripts/**/*.test.mjs'
+- [x] 5.1 Run the full gate — verify: `node --test 'scripts/**/*.test.mjs'
   'tests/**/*.test.mjs'` passes; the five AGENTS.md guard replays (default, companion,
   Copilot, Copilot companion, Copilot fixtures) pass; `cd extension && npm run build
   && npm run test:unit` pass; `shellcheck scripts/hooks/*.sh
   scripts/wait-for-checks.sh` reports zero findings locally when shellcheck is
   available, otherwise the PR's CI shellcheck step is green (baseline: clean, CI run
-  39054365546); `git diff origin/main --stat -- commands .github/prompts` is empty
+  39054365546); `git diff origin/main --stat -- commands .github/prompts` is empty.
+  Results: node suite 566/566 pass; all five guard replays 0 mismatches; extension
+  build + unit 167/167 pass; shellcheck unavailable locally — deferred to the PR's
+  CI shellcheck step (baseline clean; no shell files changed); `commands` and
+  `.github/prompts` unchanged
 - [ ] 5.2 Record `/home/david/DP/agento-plugin`'s HEAD in
   `evidence/step-5-2-plugin-clone-head.txt`, require it clean, then `git -C
   /home/david/DP/agento-plugin fetch origin && git -C /home/david/DP/agento-plugin
