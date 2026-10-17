@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "3.2 Make doctor harness return fail for absent/foreign/dangling/not-a-link, rewrite LOCAL_TAKEOVER, warn on harness uninstall, and update scripts/agento.test.mjs"
+next-step: "3.3 Reword skills/agento/SKILL.md line 11 to route /agento in every session (Copilot and Local), no mention of plugin prompt commands"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -54,7 +54,7 @@ artifact-pr: "#59"
   change the "plugin manifest uses suffix-less command names…" test to read
   `rel("commands")` directly instead of `plugin.commands` — verify: `node --test
   tests/customizations.test.mjs` passes, including the #121 test
-- [ ] 3.2 Make doctor `harness` return `fail` for `absent`, `foreign`, `dangling`,
+- [x] 3.2 Make doctor `harness` return `fail` for `absent`, `foreign`, `dangling`,
   and `not-a-link` (detail says `/agento` cannot run in any session; fallbacks
   unchanged), keep `ok` for installed and for a root with no router skill, keep it
   out of `CAPABILITY_CHECKS`; rewrite `LOCAL_TAKEOVER` (router is the only `/agento`
