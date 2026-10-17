@@ -29,6 +29,6 @@ artifact-pr: "#57"
 
 ## Phase 4: Gates
 
-- [ ] 4.1 Run the full gates: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`, the five guard replays in AGENTS.md, `cd extension && npm run typecheck && npm run test:unit && npm run test:electron`, and `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` when installed (else record `not installed` and rely on 4.2) — verify: all exit 0; pass counts recorded on this line and compared with plan.md's baseline (extension unit 167/167; CI `39046556589` on `2a39ba1`)
+- [ ] 4.1 Run the full gates: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`, the five guard replays in AGENTS.md, `cd extension && npm run typecheck && npm run test:unit && npm run test:electron`, and `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` when installed (else record `not installed` and rely on 4.2) — verify: all exit 0; pass counts recorded on this line and compared with plan.md's baseline (node suite 560/560; extension unit 167/167; CI `39046556589` on `2a39ba1`)
 - [ ] 4.2 Integrate `origin/main` (both halves), push, and wait for CI — verify: `scripts/wait-for-checks.sh pr <n>` reports the `ci` run green (unit tests, Shellcheck with zero findings matching `2a39ba1`, guard replays)
 - [ ] 4.3 Clean handoff — verify: `git status --porcelain --untracked-files=all` is empty in both halves (no stray `.vsix`, `out/`, or probe logs)

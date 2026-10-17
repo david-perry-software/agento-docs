@@ -169,9 +169,8 @@ Other baselines on `main` `2a39ba1`, recorded 2026-10-17:
 - `cd extension && npm ci && npm run test:unit`: exit 0, 167 tests, 167 pass,
   0 fail.
 - `cd extension && npm run typecheck`: exit 0.
-- `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`: green in the same
-  CI run. The local run was started during planning; see the Builder's step 4.1
-  comparison.
+- `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`: exit 0, 560 tests,
+  560 pass, 0 fail (~269 s), and green in the same CI run.
 
 **Overlap decision:** none. This delivery touches no shell script, so no lint
 cleanup is in scope. The gate is:
