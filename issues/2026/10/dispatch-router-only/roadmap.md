@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "1.3 Restore chat.pluginLocations to the recorded value and delete /tmp/agento-scratch-plugin"
+next-step: "2.1 Add the exposing regression test to tests/customizations.test.mjs; it must exit nonzero on the plugin.commands assertion"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -34,7 +34,7 @@ artifact-pr: "#59"
   [Local router](evidence/step-1-2-local-router.png). Side observation: with
   commands unregistered the Copilot turn took ~1m 8s versus ~12m in the earlier
   router check
-- [ ] 1.3 Restore `chat.pluginLocations` to the value in
+- [x] 1.3 Restore `chat.pluginLocations` to the value in
   `evidence/step-1-1-plugin-locations.txt` and delete `/tmp/agento-scratch-plugin` —
   verify: settings value equals the recorded one; the scratch path no longer exists
 
