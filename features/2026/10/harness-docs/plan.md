@@ -205,6 +205,24 @@ into the VS Code chat), each with linked screenshots.
   days.
 - **Concurrent delivery.** No open PRs. Mitigation: integrate `origin/main` before
   every push.
+- **Copilot plugin-mode guard bypass under a multi-solver mode (found during step
+  3.5).** The step 3.5 diagnostic on a standard model (Claude Opus 5.5, High,
+  "Manual permissions") shows the plugin-mode PreToolUse hook fires and is honored
+  in a target repo (`evidence/step-3-5-guard-debug.jsonl`: `Bash` `git push origin
+  main --dry-run` → `deny`). The step 3.4 non-denial therefore happened under the
+  HydraFusion "Critique" multi-solver mode, before the debug marker existed, so the
+  log cannot show whether the hook fired then; the likeliest explanation is that
+  HydraFusion's solver passes run tools outside the hook path. This is a
+  guard-bypass finding outside this docs-only scope. **Follow-up: file a GitHub
+  issue** to investigate/harden the guard against multi-solver tool execution
+  outside the hook path. Also record it as a known limitation in
+  docs/copilot-harness.md during step 3.9 (the acceptance-results table), not now.
+- **Hook process cwd is the staged plugin root (found during step 3.5).** The step
+  3.5 debug entry's top-level `cwd` is the staged plugin root
+  `/home/david/.config/Code/agentPlugins/file-home-david-DP-agento-plugin/1a14b243302`,
+  while the tool payload's `cwd` is correctly `/home/david/DP/soshiki` — so
+  repository-dependent guard rules that read the process cwd may evaluate the wrong
+  repo. Same **follow-up: file a GitHub issue**.
 
 ## Out of scope
 
