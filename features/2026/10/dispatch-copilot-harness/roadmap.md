@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/dispatch-copilot-harness
 last-updated: 2026-10-17
 next-step: "1.1 Add the dispatch probe extension and its variant-table test"
