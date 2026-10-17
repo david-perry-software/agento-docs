@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/dispatch-copilot-harness
 last-updated: 2026-10-17
-next-step: "2.1 Update the payload assertions to the chosen variant"
+next-step: "3.2 (manual) Run the Session & Doctor delivery-status action in a Copilot chat and a Local chat and screenshot each"
 initiative: "copilot-harness"
 artifact-pr: "#57"
 ```
@@ -17,14 +17,14 @@ artifact-pr: "#57"
 
 ## Phase 2: Fix
 
-- [ ] 2.1 Update the payload assertions to the chosen variant first — `extension/test/unit/commandDispatcher.test.ts` (L117, L131, L138–L173 renamed to state the reason if `mode` is dropped, L238), `extension/test/unit/planPlayButtonHandoff.test.ts` (L92–L129), `extension/test/unit/newInitiativeFlow.test.ts` (L152), plus fallback tests (clipboard written, info shown, not awaited) only if the fallback applies — verify: `cd extension && npm run test:unit` fails only on the updated assertions (failing names recorded on this line); every other test passes
-- [ ] 2.2 Implement the chosen payload in `chatOpenOptions` (`extension/src/commandDispatcher.ts`), adding the `workbench.action.chat.submit` follow-up for V6 or the `writeClipboard`/`info` dependencies wired in `extension/src/extension.ts` for the fallback; remove `resolveChatMode` and its log only if it becomes unused — verify: `cd extension && npm run typecheck` exits 0 and `npm run test:unit` exits 0 with ≥ 167 passing
-- [ ] 2.3 Update `extension/test/electron/suite.ts` (L438, L728, L773) to the new payload — verify: `cd extension && npm run test:electron` exits 0 (`xvfb-run -a npm run test:electron` when no display)
-- [ ] 2.4 Update `docs/extension.md` "Command routing" (L216–L231) to the shipped payload (and fallback, if any) — verify: `grep -n "workbench.action.chat.open" docs/extension.md` describes the new options and `node --test tests/customizations.test.mjs` exits 0
+- [x] 2.1 ~Update the payload assertions to the chosen variant first — `extension/test/unit/commandDispatcher.test.ts` (L117, L131, L138–L173 renamed to state the reason if `mode` is dropped, L238), `extension/test/unit/planPlayButtonHandoff.test.ts` (L92–L129), `extension/test/unit/newInitiativeFlow.test.ts` (L152), plus fallback tests (clipboard written, info shown, not awaited) only if the fallback applies — verify: `cd extension && npm run test:unit` fails only on the updated assertions (failing names recorded on this line); every other test passes~ (obsolete: chosen variant V1 equals the current payload, which the tests already pin — `commandDispatcher.test.ts` L138–L173 and `planPlayButtonHandoff.test.ts` L92–L129 — so no assertion change is required)
+- [x] 2.2 ~Implement the chosen payload in `chatOpenOptions` (`extension/src/commandDispatcher.ts`), adding the `workbench.action.chat.submit` follow-up for V6 or the `writeClipboard`/`info` dependencies wired in `extension/src/extension.ts` for the fallback; remove `resolveChatMode` and its log only if it becomes unused — verify: `cd extension && npm run typecheck` exits 0 and `npm run test:unit` exits 0 with ≥ 167 passing~ (obsolete: V1 is already `chatOpenOptions`'s payload `{query, mode, attachFiles}`, so no code change; `npm run typecheck` exits 0 and `npm run test:unit` passes 167/167 unchanged, verified 2026-10-17)
+- [x] 2.3 ~Update `extension/test/electron/suite.ts` (L438, L728, L773) to the new payload — verify: `cd extension && npm run test:electron` exits 0 (`xvfb-run -a npm run test:electron` when no display)~ (obsolete: no payload change, so the electron assertions already match)
+- [x] 2.4 ~Update `docs/extension.md` "Command routing" (L216–L231) to the shipped payload (and fallback, if any) — verify: `grep -n "workbench.action.chat.open" docs/extension.md` describes the new options and `node --test tests/customizations.test.mjs` exits 0~ (obsolete: `docs/extension.md` "Command routing" already describes the shipped `{query, mode, attachFiles}` payload accurately and never claimed the Copilot non-submission; the superseded claim lived in `docs/copilot-harness.md`, updated in 1.3)
 
 ## Phase 3: Live verification
 
-- [ ] 3.1 Build and install the branch extension: `cd extension && npm run package`, then `code --install-extension <vsix> --force`; record the replaced version (0.7.0) and the restore command on this line — verify: `code --list-extensions --show-versions | grep agento-dashboard` shows the branch build's version and `node scripts/agento.mjs harness status --plugin-root /home/david/DP/agento-plugin` reports `installed`
+- [x] 3.1 ~Build and install the branch extension: `cd extension && npm run package`, then `code --install-extension <vsix> --force`; record the replaced version (0.7.0) and the restore command on this line — verify: `code --list-extensions --show-versions | grep agento-dashboard` shows the branch build's version and `node scripts/agento.mjs harness status --plugin-root /home/david/DP/agento-plugin` reports `installed`~ (obsolete: no code change, so the installed `david-perry-software.agento-dashboard@0.7.0` already carries the V1 payload — confirmed with `code --list-extensions --show-versions` 2026-10-17; 3.2 verifies the installed build directly)
 - [ ] 3.2 (manual) In the primary window (`/home/david/DP/agento`), reload the window; open a new chat with Session Target **Copilot**, then in the Agento sidebar's Session & Doctor panel run the **delivery-status** action and wait for the receipt; then open a new chat with Session Target **Local** and run the same action; screenshot each — verify: `evidence/step-3-2-copilot-dispatch.png` shows the dispatched `/agento delivery-status` request sent with no retyping and `Receipt: accepted delivery-status:…` (or, in the fallback case, the info message and the pasted command's receipt); `evidence/step-3-2-local-dispatch.png` shows the Local request and its receipt
 
 ## Phase 4: Gates
