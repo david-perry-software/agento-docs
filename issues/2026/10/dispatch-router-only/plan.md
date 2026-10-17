@@ -124,6 +124,21 @@ Skills consulted: none — no matching domain (this repository has no
   the Copilot harness does not execute plugin prompt commands, so the submit is
   dropped. In a fresh chat the binding is absent and the token falls through to the
   `agento` skill. Unregistering `commands` leaves the skill as the only binding.
+- **Step 5.3 finding (2026-10-17)** — the Phase 1 pre-check (step 1.2) passed but
+  the final soshiki acceptance fails in the existing-Copilot-chat cell, so the
+  manifest-field hypothesis is disproved:
+  1. Removing `"commands"` from `plugin.json` does not stop VS Code from exposing
+     `commands/<name>.md` as a prompt command. VS Code 1.141.0's workbench
+     (`/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js`,
+     `expandPluginContents`) scans the default plugin directories
+     `["agents","skills","commands","rules"]` mapped to types
+     `["agent","skill","prompt","instructions"]`, so a root `commands/` directory
+     is auto-discovered as prompts regardless of the manifest.
+  2. The step 1.2 pre-check passed in an existing chat that had no prior `/agento`
+     turn; 5.3 fails in a chat whose previous turn was an `/agento` dispatch
+     (matching the original report, where the earlier successful turn was in the
+     same chat). The trigger appears to be a chat that already ran an `/agento`
+     dispatch, so 1.2 did not exercise the failing condition.
 
 Lint baseline (policy §5): the full-repository lint is `shellcheck
 scripts/hooks/*.sh scripts/wait-for-checks.sh` (AGENTS.md). Locally it exited 127

@@ -2,7 +2,7 @@
 status: paused
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "5.3 (manual) In the soshiki primary window run Developer: Reload Window; click a dashboard action that submits /agento delivery-status in four cells (Copilot new, Copilot existing, Local new, Local existing) and screenshot each"
+next-step: "5.3 blocked: existing-chat dispatch still binds /agento <name> to commands/<name>.md after removing the manifest field — VS Code auto-discovers the commands/ directory; re-plan needed (user decision)"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -110,7 +110,16 @@ artifact-pr: "#59"
   `evidence/step-5-3-copilot-existing.png`, `evidence/step-5-3-local-new.png`,
   `evidence/step-5-3-local-existing.png` each show the request sent and `Receipt:
   accepted delivery-status:…`; `git -C /home/david/DP/soshiki status --porcelain`
-  is empty
+  is empty. Attempted 2026-10-17 and failed in the existing-chat cell: Copilot new
+  chat sent and printed `Receipt: accepted delivery-status:main:897c27bf`
+  ([evidence/step-5-3-copilot-new.png](evidence/step-5-3-copilot-new.png)), but a
+  second dashboard click in the same chat left `/agento delivery-status` bound as
+  one prompt-command token (tooltip "Click to open
+  ~/DP/agento-plugin/commands/delivery-status.md") and unsent
+  ([evidence/step-5-3-copilot-existing-fails.png](evidence/step-5-3-copilot-existing-fails.png))
+  — identical to the original symptom, although `/home/david/DP/agento-plugin` is
+  at a127d8c whose `.claude-plugin/plugin.json` has no `commands` field (verified).
+  Findings: see plan.md `## Research` "Step 5.3 finding (2026-10-17)".
 - [ ] 5.4 Restore `/home/david/DP/agento-plugin` to the HEAD recorded in
   `evidence/step-5-2-plugin-clone-head.txt` (`git switch` back to its branch) —
   verify: `git -C /home/david/DP/agento-plugin rev-parse HEAD` and its branch match
