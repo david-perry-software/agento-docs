@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/agento-router-skill
 last-updated: 2026-10-17
-next-step: "2.9 add the dispatched-command receipt rule to skills/agento/SKILL.md and assert it in tests/customizations.test.mjs"
+next-step: "2.6 (manual) In the primary window, open a new chat with Session Target Local and send /agento delivery-status; screenshot exactly what Local shows"
 initiative: "copilot-harness"
 artifact-pr: "#55"
 ```
@@ -27,7 +27,7 @@ artifact-pr: "#55"
 - [ ] 2.6 (manual) In the primary window, open a new chat with Session Target **Local** and send `/agento delivery-status` — verify: `evidence/step-2-6-local-delivery-status.png` shows the delivery-status receipt and no "Read skill · agento" (the Local prompt command still runs)
 - [ ] 2.7 Record the Phase 2 results (and the settled `disable-model-invocation` value) in `docs/copilot-harness.md` `## Router skill`, replacing the placeholder — verify: `node --test tests/harness-probe/probe.test.mjs` exits 0
 - [ ] 2.8 Tear down: close the throwaway plan session with `agento.mjs close-session` (CLI), and remove `~/.copilot/skills/agento` only if it still resolves to this worktree's `skills/agento` — verify: the session worktree is gone from `git worktree list`, `~/.copilot/skills/agento` is absent (or untouched if it pointed elsewhere), and `git status --porcelain --untracked-files=all` is empty in both halves
-- [ ] 2.9 (added 2026-10-17) Add the dispatched-command receipt rule to `skills/agento/SKILL.md` step 5 — the dispatched command's §9 receipt line must be printed verbatim as visible text before any question or other output — and assert it in `tests/customizations.test.mjs` (the 2.3 new-feature check showed the Planner summarised the preflight instead of printing the receipt) — verify: `node --test tests/customizations.test.mjs` exits 0
+- [x] 2.9 (added 2026-10-17) Add the dispatched-command receipt rule to `skills/agento/SKILL.md` step 5 — the dispatched command's §9 receipt line must be printed verbatim as visible text before any question or other output — and assert it in `tests/customizations.test.mjs` (the 2.3 new-feature check showed the Planner summarised the preflight instead of printing the receipt) — verify: `node --test tests/customizations.test.mjs` exits 0 — **Done 2026-10-17: tests exit 0 (55/55)**
 - [ ] 2.10 (manual, added 2026-10-17) In a Copilot session with the link still installed, send `/agento new-feature router smoke test` again and confirm the `Receipt: accepted new-feature:…` line now appears verbatim before the clarifying question; screenshot it — verify: `evidence/step-2-10-copilot-new-feature-receipt.png` shows the receipt line before the question
 
 ## Phase 3: Gates
