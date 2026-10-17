@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/agento-router-skill
 last-updated: 2026-10-17
 next-step: ""
