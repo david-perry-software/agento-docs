@@ -1,0 +1,33 @@
+```yaml
+status: planned
+branch: feature/dispatch-copilot-harness
+last-updated: 2026-10-17
+next-step: "1.1 Add the dispatch probe extension and its variant-table test"
+initiative: "copilot-harness"
+```
+
+# Roadmap: dispatch-copilot-harness
+
+## Phase 1: Diagnose
+
+- [ ] 1.1 Add `tests/harness-probe/dispatch-probe/` (dependency-free dev extension: `package.json`, `extension.js`, pure `variants.js` exporting V1–V8 from plan.md `## Approach` §1) and `tests/harness-probe/dispatch-probe.test.mjs` asserting unique ids, every query canonical (`/agento delivery-status`, V8 with its trailing space), V1 equal to today's `{query, mode: "agent", attachFiles}` shape, and V5 carrying no `attachFiles` — verify: `node --test tests/harness-probe/dispatch-probe.test.mjs tests/harness-probe/probe.test.mjs` exits 0
+- [ ] 1.2 (manual) The Builder first launches `code --new-window --extensionDevelopmentPath=<worktree>/tests/harness-probe/dispatch-probe /home/david/DP/agento` itself. In that window, for each variant V1–V8, open a **new** chat with Session Target **Copilot**, run **Agento Probe: Dispatch variant** from the Command Palette, pick the variant, and note whether the query was filled, whether it was sent, and whether `Receipt: accepted delivery-status:…` printed (you may stop the turn after the receipt); then repeat V1–V8 with Session Target **Local**; screenshot each Copilot result and at least the Local V1 and the chosen variant — verify: `evidence/step-1-2-dispatch-matrix.md` (written by the Builder from your report plus the probe's output-channel log) has a filled/submitted/receipt row per variant per harness, and every row links an `evidence/step-1-2-*.png`
+- [ ] 1.3 Apply the plan's selection rule to the matrix and record the chosen variant (or the fallback) in `docs/copilot-harness.md` "Dispatch" and as an `(added <date>)` entry in plan.md `## Decisions` — verify: `node --test tests/harness-probe/probe.test.mjs tests/customizations.test.mjs` exits 0 and `grep -n "dispatch-copilot-harness" docs/copilot-harness.md` names the chosen variant id
+
+## Phase 2: Fix
+
+- [ ] 2.1 Update the payload assertions to the chosen variant first — `extension/test/unit/commandDispatcher.test.ts` (L117, L131, L138–L173 renamed to state the reason if `mode` is dropped, L238), `extension/test/unit/planPlayButtonHandoff.test.ts` (L92–L129), `extension/test/unit/newInitiativeFlow.test.ts` (L152), plus fallback tests (clipboard written, info shown, not awaited) only if the fallback applies — verify: `cd extension && npm run test:unit` fails only on the updated assertions (failing names recorded on this line); every other test passes
+- [ ] 2.2 Implement the chosen payload in `chatOpenOptions` (`extension/src/commandDispatcher.ts`), adding the `workbench.action.chat.submit` follow-up for V6 or the `writeClipboard`/`info` dependencies wired in `extension/src/extension.ts` for the fallback; remove `resolveChatMode` and its log only if it becomes unused — verify: `cd extension && npm run typecheck` exits 0 and `npm run test:unit` exits 0 with ≥ 167 passing
+- [ ] 2.3 Update `extension/test/electron/suite.ts` (L438, L728, L773) to the new payload — verify: `cd extension && npm run test:electron` exits 0 (`xvfb-run -a npm run test:electron` when no display)
+- [ ] 2.4 Update `docs/extension.md` "Command routing" (L216–L231) to the shipped payload (and fallback, if any) — verify: `grep -n "workbench.action.chat.open" docs/extension.md` describes the new options and `node --test tests/customizations.test.mjs` exits 0
+
+## Phase 3: Live verification
+
+- [ ] 3.1 Build and install the branch extension: `cd extension && npm run package`, then `code --install-extension <vsix> --force`; record the replaced version (0.7.0) and the restore command on this line — verify: `code --list-extensions --show-versions | grep agento-dashboard` shows the branch build's version and `node scripts/agento.mjs harness status --plugin-root /home/david/DP/agento-plugin` reports `installed`
+- [ ] 3.2 (manual) In the primary window (`/home/david/DP/agento`), reload the window; open a new chat with Session Target **Copilot**, then in the Agento sidebar's Session & Doctor panel run the **delivery-status** action and wait for the receipt; then open a new chat with Session Target **Local** and run the same action; screenshot each — verify: `evidence/step-3-2-copilot-dispatch.png` shows the dispatched `/agento delivery-status` request sent with no retyping and `Receipt: accepted delivery-status:…` (or, in the fallback case, the info message and the pasted command's receipt); `evidence/step-3-2-local-dispatch.png` shows the Local request and its receipt
+
+## Phase 4: Gates
+
+- [ ] 4.1 Run the full gates: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`, the five guard replays in AGENTS.md, `cd extension && npm run typecheck && npm run test:unit && npm run test:electron`, and `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` when installed (else record `not installed` and rely on 4.2) — verify: all exit 0; pass counts recorded on this line and compared with plan.md's baseline (extension unit 167/167; CI `39046556589` on `2a39ba1`)
+- [ ] 4.2 Integrate `origin/main` (both halves), push, and wait for CI — verify: `scripts/wait-for-checks.sh pr <n>` reports the `ci` run green (unit tests, Shellcheck with zero findings matching `2a39ba1`, guard replays)
+- [ ] 4.3 Clean handoff — verify: `git status --porcelain --untracked-files=all` is empty in both halves (no stray `.vsix`, `out/`, or probe logs)
