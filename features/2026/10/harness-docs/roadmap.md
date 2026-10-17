@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/harness-docs
 last-updated: 2026-10-17
-next-step: "3.3 Open a throwaway soshiki planning session from the CLI"
+next-step: "3.4 (manual) Copilot soshiki checks"
 initiative: "copilot-harness"
 artifact-pr: "#58"
 ```
@@ -33,7 +33,7 @@ commit message or the doc) before it is written. Prose uses only the canonical
 
 - [x] 3.1 Run the full gate on the branch: the node suite, the five guard replays from AGENTS.md, and `cd extension && npm ci && npm run build && npm run test:unit` — verify: node suite exit 0 with pass count ≥ the recorded baseline, each replay exit 0, extension build and unit tests exit 0
 - [x] 3.2 Fast-forward the router's plugin clone and confirm the link: `git -C /home/david/DP/agento-plugin pull --ff-only` (stop and report if it is not a fast-forward or the clone is dirty), then `node /home/david/DP/agento-plugin/scripts/agento.mjs harness status --plugin-root /home/david/DP/agento-plugin` and `doctor --plugin-root /home/david/DP/agento-plugin` — verify: plugin HEAD equals its `origin/main`, `harness status` reports `installed`, doctor's `harness` check is `ok`
-- [ ] 3.3 Open a throwaway soshiki planning session from the CLI: `node /home/david/DP/agento-plugin/scripts/agento.mjs start-session --no-open` with cwd `/home/david/DP/soshiki` (primary on clean `main`); record the session id and target on this step — verify: the CLI returns `status: ok` and `git -C /home/david/DP/soshiki worktree list` shows the new `plan-<id>` worktree
+- [x] 3.3 Open a throwaway soshiki planning session from the CLI: `node /home/david/DP/agento-plugin/scripts/agento.mjs start-session --no-open` with cwd `/home/david/DP/soshiki` (primary on clean `main`); record the session id and target on this step — session id `20261017-183454`, target `/home/david/DP/soshiki-worktrees/plan-20261017-183454.code-workspace` — verify: the CLI returns `status: ok` and `git -C /home/david/DP/soshiki worktree list` shows the new `plan-<id>` worktree
 - [ ] 3.4 (manual) In the soshiki primary window with Session Target **Copilot**, in a new chat: run `/agento delivery-status`; ask "what is the Agento CLI context line?"; ask the agent to run `git push origin main --dry-run`; ask it to create `.github/hooks/x.json` and deny the approval; then click a dashboard action that submits `/agento delivery-status` — verify: screenshots `evidence/step-3-4-copilot-*.png` show the receipt line, the `Agento CLI:` line, the push denied by the guard, the hook-file approval card (no file created: `git -C /home/david/DP/soshiki status --porcelain` empty), and the dispatched command's receipt
 - [ ] 3.5 (manual) In the soshiki planning-session window from 3.3 (open its `.code-workspace` target), Session Target **Copilot**: run `/agento new-feature harness acceptance smoke` and stop at the first clarifying question without answering — verify: screenshot `evidence/step-3-5-copilot-new-feature.png` shows `Receipt: accepted new-feature:…` and the Planner's question; `git -C <session worktree> branch --show-current` is empty (still detached)
 - [ ] 3.6 (manual) Repeat 3.4 and 3.5 with Session Target **Local** — verify: screenshots `evidence/step-3-6-local-*.png` show the same six results; soshiki primary and the session worktree remain clean
