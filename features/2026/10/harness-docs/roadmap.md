@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/harness-docs
 last-updated: 2026-10-17
-next-step: "1.7 docs/copilot-harness.md: shipped wording and two reconciliations"
+next-step: "1.8 README.md and AGENTS.md: Copilot-harness pointers and skills/ layout"
 initiative: "copilot-harness"
 artifact-pr: "#58"
 ```
@@ -21,7 +21,7 @@ commit message or the doc) before it is written. Prose uses only the canonical
 - [x] 1.4 docs/extension.md: in "Command routing", state that the same `{ query, mode, attachFiles }` dispatch submits in both Copilot and Local once the router link is installed (dispatch-copilot-harness V1), that a Copilot window without the link cannot resolve `/agento`, and that Session & Doctor surfaces the doctor `harness` check (no install action); add the item to "Limitations" — verify: `grep -c "Copilot\|harness" docs/extension.md` rises by ≥ 3 over `main` and the customizations test passes
 - [x] 1.5 docs/commands.md: document the `harness <status|install|uninstall> [--plugin-root <dir>] [--force]` CLI subcommand (fields, exit codes, refusal states) beside the other CLI entries; add `hook-wiring` and `harness` to the `doctor` check list; in "Invocation", say how `/agento <name>` resolves per harness and that Planner/Architect/Mechanic/Autopilot run inline while Builder/Reviewer run as subagents under the router — verify: `grep -n "harness install\|\`harness\`\|hook-wiring" docs/commands.md` shows each and the customizations test passes
 - [x] 1.6 docs/model-profiles.md: update the `models pins` paragraph to list `copilotModel` and the `runSubagent` (Local) / `task` (Copilot) selection rule, and state that directly selected agents ignore their pin in Copilot and that the Local router takeover drops prompt-level and inline-agent pins (agents-copilot-models F1) — verify: `grep -c "copilotModel\|\`task\`" docs/model-profiles.md` ≥ 2 and the customizations test passes
-- [ ] 1.7 docs/copilot-harness.md: update the intro to "shipped" wording with links to install.md and commands.md; soften the "Dispatch" sentence that the earlier non-submit "predates the router install" into a stated, untested hypothesis; reconcile "no ask-user tool" (true for `task` subagents and directly selected agents) with the structured ask-user card seen when the router runs the Planner inline — verify: `node --test tests/harness-probe/probe.test.mjs tests/customizations.test.mjs` passes (relative links resolve)
+- [x] 1.7 docs/copilot-harness.md: update the intro to "shipped" wording with links to install.md and commands.md; soften the "Dispatch" sentence that the earlier non-submit "predates the router install" into a stated, untested hypothesis; reconcile "no ask-user tool" (true for `task` subagents and directly selected agents) with the structured ask-user card seen when the router runs the Planner inline — verify: `node --test tests/harness-probe/probe.test.mjs tests/customizations.test.mjs` passes (relative links resolve)
 - [ ] 1.8 README.md and AGENTS.md: README "Requirements"/"Install the plugin" gain a short Copilot-harness paragraph (run `harness install`, see docs/install.md), "Verifying and troubleshooting" names `harness status` and the doctor `harness` check, and "Documentation" links docs/copilot-harness.md; AGENTS.md layout lists `skills/` (the `agento` router skill) and `scripts/harness.mjs` — verify: `grep -c "copilot-harness.md\|harness install" README.md` ≥ 2, `grep -n "skills/" AGENTS.md` matches, and the customizations test passes
 
 ## Phase 2: Release metadata
