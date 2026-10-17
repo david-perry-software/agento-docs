@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: feature/dispatch-copilot-harness
 last-updated: 2026-10-17
-next-step: "1.2 (manual) Run dispatch probe variants V1–V8 in Copilot and Local and report the matrix"
+next-step: "1.3 Record the chosen variant (V1) in docs/copilot-harness.md and plan.md"
 initiative: "copilot-harness"
 artifact-pr: "#57"
 ```
@@ -12,7 +12,7 @@ artifact-pr: "#57"
 ## Phase 1: Diagnose
 
 - [x] 1.1 Add `tests/harness-probe/dispatch-probe/` (dependency-free dev extension: `package.json`, `extension.js`, pure `variants.js` exporting V1–V8 from plan.md `## Approach` §1) and `tests/harness-probe/dispatch-probe.test.mjs` asserting unique ids, every query canonical (`/agento delivery-status`, V8 with its trailing space), V1 equal to today's `{query, mode: "agent", attachFiles}` shape, and V5 carrying no `attachFiles` — verify: `node --test tests/harness-probe/dispatch-probe.test.mjs tests/harness-probe/probe.test.mjs` exits 0 (verified 2026-10-17: 28 pass, 0 fail)
-- [ ] 1.2 (manual) The Builder first launches `code --new-window --extensionDevelopmentPath=<worktree>/tests/harness-probe/dispatch-probe /home/david/DP/agento` itself. In that window, for each variant V1–V8, open a **new** chat with Session Target **Copilot**, run **Agento Probe: Dispatch variant** from the Command Palette, pick the variant, and note whether the query was filled, whether it was sent, and whether `Receipt: accepted delivery-status:…` printed (you may stop the turn after the receipt); then repeat V1–V8 with Session Target **Local**; screenshot each Copilot result and at least the Local V1 and the chosen variant — verify: `evidence/step-1-2-dispatch-matrix.md` (written by the Builder from your report plus the probe's output-channel log) has a filled/submitted/receipt row per variant per harness, and every row links an `evidence/step-1-2-*.png`
+- [x] 1.2 (manual) The Builder first launches `code --new-window --extensionDevelopmentPath=<worktree>/tests/harness-probe/dispatch-probe /home/david/DP/agento` itself. In that window, for each variant V1–V8, open a **new** chat with Session Target **Copilot**, run **Agento Probe: Dispatch variant** from the Command Palette, pick the variant, and note whether the query was filled, whether it was sent, and whether `Receipt: accepted delivery-status:…` printed (you may stop the turn after the receipt); then repeat V1–V8 with Session Target **Local**; screenshot each Copilot result and at least the Local V1 and the chosen variant — verify: `evidence/step-1-2-dispatch-matrix.md` (written by the Builder from your report plus the probe's output-channel log) has a filled/submitted/receipt row per variant per harness, and every row links an `evidence/step-1-2-*.png` (completed 2026-10-17; [matrix](evidence/step-1-2-dispatch-matrix.md), [Copilot V1](evidence/step-1-2-copilot-v1.png), [Local V1](evidence/step-1-2-local-v1.png))
 - [ ] 1.3 Apply the plan's selection rule to the matrix and record the chosen variant (or the fallback) in `docs/copilot-harness.md` "Dispatch" and as an `(added <date>)` entry in plan.md `## Decisions` — verify: `node --test tests/harness-probe/probe.test.mjs tests/customizations.test.mjs` exits 0 and `grep -n "dispatch-copilot-harness" docs/copilot-harness.md` names the chosen variant id
 
 ## Phase 2: Fix
