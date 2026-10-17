@@ -71,6 +71,16 @@ answer below is that choice, flagged for the user's review:
   the VS Code chat input or its Session Target picker (policy §1, operating the
   user's own VS Code UI). Unit and electron tests cover the payload.
 
+- **(added 2026-10-17) The probe found V1 already submits in both harnesses.** The
+  user ran the dispatch probe on 2026-10-17: V1 — today's
+  `{ query, mode: "agent", attachFiles }` payload — submitted in both Copilot and
+  Local (filled, sent, command file attached, Agent mode set, router receipt
+  printed). The selection rule therefore chose V1 and the remaining variants
+  V2–V8 were not run. **Consequence: the chosen variant equals the current
+  payload, so no `chatOpenOptions` code change is required**; Phase 2 steps
+  2.1–2.3 and the Phase 3 branch-build step 3.1 are obsolete. Evidence:
+  `evidence/step-1-2-dispatch-matrix.md`.
+
 Carried from the initiative breakdown: every member verifies Local too, and the
 extension does not perform the harness install (it only surfaces the doctor result).
 
