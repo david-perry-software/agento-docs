@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "3.4 Regenerate the extension's CLI copy (cd extension && npm run copy-cli) and run extension build + unit tests"
+next-step: "4.1 Merge origin/main (picking up PR #120 if shipped), then update docs/install.md, docs/copilot-harness.md, docs/model-profiles.md, README.md, CHANGELOG.md"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -66,7 +66,7 @@ artifact-pr: "#59"
   (Copilot and Local), no mention of plugin prompt commands loading anywhere —
   verify: `node --test tests/customizations.test.mjs` passes; `grep -n "prompt
   commands" skills/agento/SKILL.md` prints nothing
-- [ ] 3.4 Regenerate the extension's CLI copy — verify: `cd extension && npm run
+- [x] 3.4 Regenerate the extension's CLI copy — verify: `cd extension && npm run
   copy-cli && npm run build && npm run test:unit` pass and `diff -r scripts
   extension/cli` reports only the files copy-cli excludes
 
