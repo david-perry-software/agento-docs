@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "1.1 prepare the scratch plugin copy without commands"
+next-step: "1.2 (manual) In the soshiki primary window run Developer: Reload Window; verify dispatch sends in an existing Copilot chat and Local /agento delivery-status routes through the router; attach both screenshots"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -11,7 +11,7 @@ artifact-pr: "#59"
 
 ## Phase 1: Pre-check the fix premise
 
-- [ ] 1.1 Create a scratch plugin copy of `origin/main` outside every repository
+- [x] 1.1 Create a scratch plugin copy of `origin/main` outside every repository
   (`git clone --depth 1 https://github.com/david-perry-software/agento.git
   /tmp/agento-scratch-plugin`),
   delete its `.claude-plugin/plugin.json` `"commands"` line, record the current
