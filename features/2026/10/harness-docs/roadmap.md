@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/harness-docs
 last-updated: 2026-10-17
 next-step: "1.1 docs/install.md: add the Copilot harness section"
