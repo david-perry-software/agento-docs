@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/harness-install
 last-updated: 2026-10-17
-next-step: "3.1"
+next-step: "3.2"
 initiative: "copilot-harness"
 artifact-pr: "#56"
 ```
@@ -26,6 +26,6 @@ artifact-pr: "#56"
 
 ## Phase 3: Gates
 
-- [ ] 3.1 Run the full gates: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` (with `ls -la ~/.copilot/skills` captured before and after to prove the suite never touches it), the five guard replays listed in AGENTS.md, `cd extension && npm run test:unit`, and `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` when installed (else record `not installed` and rely on 3.2) — verify: all exit 0; the `~/.copilot/skills` listing is identical; pass counts and shellcheck result recorded on this line, compared against the plan's baseline
+- [x] 3.1 Run the full gates: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` (with `ls -la ~/.copilot/skills` captured before and after to prove the suite never touches it), the five guard replays listed in AGENTS.md, `cd extension && npm run test:unit`, and `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` when installed (else record `not installed` and rely on 3.2) — verify: all exit 0; the `~/.copilot/skills` listing is identical; pass counts and shellcheck result recorded on this line, compared against the plan's baseline — Results: full suite exit 0, **560 tests / 560 pass / 0 fail** (~268 s; plan baseline 554 pass on `main` `1d6139d`); the five guard replays each exit 0; `cd extension && npm run test:unit` exit 0, **167 pass / 0 fail**; `shellcheck` not installed locally (recorded `not installed`, relying on 3.2 CI); `ls -la ~/.copilot/skills` identical before and after the suite (`agento -> /home/david/DP/agento-plugin/skills/agento` plus `use-railway`).
 - [ ] 3.2 Integrate `origin/main`, push, and wait for CI — verify: `scripts/wait-for-checks.sh pr <n>` reports the `ci` run green (unit tests, Shellcheck with zero findings matching the `main` `1d6139d` baseline, guard replays)
 - [ ] 3.3 Clean handoff — verify: `git status --porcelain --untracked-files=all` is empty in both halves and `harness status --plugin-root <root>` matches the choice recorded in 2.3
