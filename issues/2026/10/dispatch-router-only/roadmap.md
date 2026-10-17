@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "6.1 (added 2026-10-17) update the #121 test to assert no root commands/ and verify it fails"
+next-step: "6.2 (added 2026-10-17) git mv commands/*.md into skills/agento/commands/"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -125,7 +125,7 @@ artifact-pr: "#59"
 
 ## Phase 6: Move the router's command files out of `commands/` (re-plan A, 2026-10-17)
 
-- [ ] 6.1 (added 2026-10-17) Update the #121 regression test in
+- [x] 6.1 (added 2026-10-17) Update the #121 regression test in
   `tests/customizations.test.mjs` to resolve the mirrors at
   `skills/agento/commands/` and to assert no root-level `commands/` directory exists
   (keeping the existing `plugin.commands === undefined` and `skills/agento/SKILL.md`
