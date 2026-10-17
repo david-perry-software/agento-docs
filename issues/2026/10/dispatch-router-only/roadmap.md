@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "6.7 (manual, added 2026-10-17) four-cell re-check incl. existing chat with a prior /agento turn"
+next-step: "6.7 (manual) four-cell re-check incl. existing chat with a prior /agento turn"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
