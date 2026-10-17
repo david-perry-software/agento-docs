@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/dispatch-copilot-harness
 last-updated: 2026-10-17
 next-step: ""
