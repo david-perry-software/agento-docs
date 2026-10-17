@@ -1,5 +1,5 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/dispatch-copilot-harness
 last-updated: 2026-10-17
 next-step: "1.2 (manual) Run dispatch probe variants V1–V8 in Copilot and Local and report the matrix"
