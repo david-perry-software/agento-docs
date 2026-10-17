@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/harness-install
 last-updated: 2026-10-17
-next-step: "Hand off to the Reviewer: /agento review-feature harness-install"
+next-step: ""
 initiative: "copilot-harness"
 artifact-pr: "#56"
 ```
