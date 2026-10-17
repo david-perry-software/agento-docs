@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: feature/agento-router-skill
 last-updated: 2026-10-17
-next-step: "2.8 blocked: occupied — close the plan-20261016-191841 VS Code window/processes, then re-send"
+next-step: "2.8"
 initiative: "copilot-harness"
 artifact-pr: "#55"
 ```
