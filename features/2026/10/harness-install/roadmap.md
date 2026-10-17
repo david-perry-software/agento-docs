@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/harness-install
 last-updated: 2026-10-17
-next-step: "2.3"
+next-step: "2.3 (manual) In the primary window, reload the window, open a new chat with Session Target Copilot and send /agento delivery-status; then open a new chat with Session Target Local and send /agento delivery-status; screenshot each reply; then say whether to keep the link installed"
 initiative: "copilot-harness"
 artifact-pr: "#56"
 ```
