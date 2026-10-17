@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "6.6 (added 2026-10-17) move the plugin clone to the new branch head"
+next-step: "6.7 (manual, added 2026-10-17) four-cell re-check incl. existing chat with a prior /agento turn"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -167,7 +167,7 @@ artifact-pr: "#59"
   test:unit` pass; `git diff origin/main --stat -- .github/prompts` is empty;
   `test ! -d commands`
 
-- [ ] 6.6 (added 2026-10-17) Record `/home/david/DP/agento-plugin`'s new HEAD in
+- [x] 6.6 (added 2026-10-17) Record `/home/david/DP/agento-plugin`'s new HEAD in
   `evidence/step-6-6-plugin-clone-head.txt`, require it clean, then
   `git -C /home/david/DP/agento-plugin fetch origin && git -C
   /home/david/DP/agento-plugin switch --detach
