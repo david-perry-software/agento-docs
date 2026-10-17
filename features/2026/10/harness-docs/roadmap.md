@@ -4,6 +4,7 @@ branch: feature/harness-docs
 last-updated: 2026-10-17
 next-step: "1.1 docs/install.md: add the Copilot harness section"
 initiative: "copilot-harness"
+artifact-pr: "#58"
 ```
 
 # Roadmap: harness-docs
