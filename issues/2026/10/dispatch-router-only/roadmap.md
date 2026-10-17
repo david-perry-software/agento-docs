@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "5.3 blocked: existing-chat dispatch still binds /agento <name> to commands/<name>.md after removing the manifest field — VS Code auto-discovers the commands/ directory; re-plan needed (user decision)"
+next-step: "6.1 (added 2026-10-17) update the #121 test to assert no root commands/ and verify it fails"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -103,24 +103,89 @@ artifact-pr: "#59"
   switch --detach origin/issue/dispatch-router-only` — verify: its `.claude-plugin/
   plugin.json` has no `commands`; `node /home/david/DP/agento-plugin/scripts/agento.mjs
   harness status` reports `installed`
-- [ ] 5.3 (manual) In the soshiki primary window run "Developer: Reload Window", then
+- [x] 5.3 (manual) ~In the soshiki primary window run "Developer: Reload Window", then
   click a dashboard action that submits `/agento delivery-status` in four cells:
   Copilot new chat, Copilot existing chat, Local new chat, Local existing chat;
   screenshot each — verify: `evidence/step-5-3-copilot-new.png`,
   `evidence/step-5-3-copilot-existing.png`, `evidence/step-5-3-local-new.png`,
   `evidence/step-5-3-local-existing.png` each show the request sent and `Receipt:
   accepted delivery-status:…`; `git -C /home/david/DP/soshiki status --porcelain`
-  is empty. Attempted 2026-10-17 and failed in the existing-chat cell: Copilot new
-  chat sent and printed `Receipt: accepted delivery-status:main:897c27bf`
-  ([evidence/step-5-3-copilot-new.png](evidence/step-5-3-copilot-new.png)), but a
-  second dashboard click in the same chat left `/agento delivery-status` bound as
-  one prompt-command token (tooltip "Click to open
-  ~/DP/agento-plugin/commands/delivery-status.md") and unsent
-  ([evidence/step-5-3-copilot-existing-fails.png](evidence/step-5-3-copilot-existing-fails.png))
-  — identical to the original symptom, although `/home/david/DP/agento-plugin` is
-  at a127d8c whose `.claude-plugin/plugin.json` has no `commands` field (verified).
-  Findings: see plan.md `## Research` "Step 5.3 finding (2026-10-17)".
-- [ ] 5.4 Restore `/home/david/DP/agento-plugin` to the HEAD recorded in
+  is empty.~ (obsolete: failed 2026-10-17 in the existing-chat cell — VS Code
+  auto-discovers the root `commands/` directory as prompt commands, so removing the
+  manifest field alone does not fix dispatch; superseded by 6.7. Failure evidence:
+  [step-5-3-copilot-new.png](evidence/step-5-3-copilot-new.png) sent,
+  [step-5-3-copilot-existing-fails.png](evidence/step-5-3-copilot-existing-fails.png)
+  bound-and-unsent; findings in plan.md `## Research` "Step 5.3 finding".)
+- [x] 5.4 ~Restore `/home/david/DP/agento-plugin` to the HEAD recorded in
   `evidence/step-5-2-plugin-clone-head.txt` (`git switch` back to its branch) —
   verify: `git -C /home/david/DP/agento-plugin rev-parse HEAD` and its branch match
-  the record; `git -C /home/david/DP/agento-plugin status --porcelain` is empty
+  the record; `git -C /home/david/DP/agento-plugin status --porcelain` is empty~
+  (obsolete: re-runs as 6.8 after the clone moves to the new branch head and the
+  6.7 re-check completes)
+
+## Phase 6: Move the router's command files out of `commands/` (re-plan A, 2026-10-17)
+
+- [ ] 6.1 (added 2026-10-17) Update the #121 regression test in
+  `tests/customizations.test.mjs` to resolve the mirrors at
+  `skills/agento/commands/` and to assert no root-level `commands/` directory exists
+  (keeping the existing `plugin.commands === undefined` and `skills/agento/SKILL.md`
+  assertions) — verify: `node --test --test-name-pattern '#121'
+  tests/customizations.test.mjs` exits nonzero on the "no root commands/"
+  assertion (the move has not happened yet)
+
+- [ ] 6.2 (added 2026-10-17) `git mv commands/*.md skills/agento/commands/` — verify:
+  `test ! -d commands`; every moved file exists under `skills/agento/commands/` and
+  is byte-identical to its `.github/prompts/<name>.prompt.md`; `node --test
+  --test-name-pattern '#121' tests/customizations.test.mjs` passes
+
+- [ ] 6.3 (added 2026-10-17) Update every consumer of the `commands/` path to
+  `skills/agento/commands/`: `skills/agento/SKILL.md` §3/§4;
+  `scripts/agento.mjs` `dispatchFor`, `MODEL_ATTR_PATTERNS`, and `modelTargetFiles`'
+  mirror; `extension/src/commandAgent.ts` `resolveChatMode`/`resolveCommandFile`;
+  `scripts/agento.test.mjs`, `tests/customizations.test.mjs`,
+  `extension/test/unit/commandAgent.test.ts`,
+  `extension/test/unit/planPlayButtonHandoff.test.ts`,
+  `tests/harness-probe/dispatch-probe/extension.js`,
+  `tests/harness-probe/dispatch-probe.test.mjs`; the delivery-policy `applyTo`
+  pattern; `docs/model-profiles.md`, `docs/commands.md`, `docs/copilot-harness.md`,
+  `docs/extension.md`; and a `CHANGELOG.md` Unreleased note — verify:
+  `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` passes and
+  `git grep -n "commands/" -- scripts extension/src skills docs tests
+  extension/test CHANGELOG.md | grep -v 'skills/agento/commands'` prints nothing
+
+- [ ] 6.4 (added 2026-10-17) Regenerate the extension's CLI copy — verify:
+  `cd extension && npm run copy-cli`; `diff -r scripts extension/cli` reports only
+  the files copy-cli excludes; `git status --porcelain` shows only
+  `extension/cli/agento.mjs`
+
+- [ ] 6.5 (added 2026-10-17) Run the full gate — verify:
+  `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` passes; the five
+  AGENTS.md guard replays pass; `cd extension && npm run build && npm run
+  test:unit` pass; `git diff origin/main --stat -- .github/prompts` is empty;
+  `test ! -d commands`
+
+- [ ] 6.6 (added 2026-10-17) Record `/home/david/DP/agento-plugin`'s new HEAD in
+  `evidence/step-6-6-plugin-clone-head.txt`, require it clean, then
+  `git -C /home/david/DP/agento-plugin fetch origin && git -C
+  /home/david/DP/agento-plugin switch --detach
+  origin/issue/dispatch-router-only` — verify: its `rev-parse HEAD` equals the
+  branch head; `.claude-plugin/plugin.json` has no `commands` and there is no root
+  `commands/` directory; `node /home/david/DP/agento-plugin/scripts/agento.mjs
+  harness status` reports `installed`
+
+- [ ] 6.7 (manual, added 2026-10-17) In the soshiki primary window run "Developer:
+  Reload Window"; with Session Target **Copilot**, open a new chat and click a
+  dashboard action that submits `/agento delivery-status`; then in an **existing
+  chat whose previous turn was an `/agento` dispatch** click the same dashboard
+  action AND type `/agento delivery-status` by hand and send; switch Session Target
+  to **Local** and repeat both cells (new chat, existing chat with a prior `/agento`
+  turn, hand-typed in the existing one); screenshot each — verify:
+  `evidence/step-6-7-copilot-new.png`, `evidence/step-6-7-copilot-existing.png`,
+  `evidence/step-6-7-local-new.png`, `evidence/step-6-7-local-existing.png` each
+  show the request sent and `Receipt: accepted delivery-status:…`
+
+- [ ] 6.8 (added 2026-10-17) Restore `/home/david/DP/agento-plugin` to the HEAD
+  recorded in `evidence/step-5-2-plugin-clone-head.txt` (`git switch` back to its
+  branch) — verify: `git -C /home/david/DP/agento-plugin rev-parse HEAD` and its
+  branch match the record; `git -C /home/david/DP/agento-plugin status --porcelain`
+  is empty

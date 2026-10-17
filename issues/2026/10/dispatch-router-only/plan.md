@@ -85,6 +85,24 @@ Clarifying questions (2026-10-17; every answer was the recommended option):
    handle it?* — "Docs in scope; integrate origin/main before every push and
    rebase-free merge after harness-docs ships" (recommended).
 
+### Re-plan decision (2026-10-17)
+
+Step 5.3 disproved the manifest-field hypothesis (see Research "Step 5.3 finding"),
+so the Autopilot asked the user to choose among three re-plan options, and the user
+answered verbatim:
+
+> "Options for the re-plan: A. Move the router's command files out of `commands/`
+> (e.g. to `skills/agento/commands/`) — reverses the earlier decision to keep
+> `commands/*.md` as the router's source; `dispatchFor`, the extension's
+> command-file lookup, the model-pin filter and the tests all change. B. Stop
+> attaching `commands/<name>.md` on dashboard dispatch. C. Both."
+
+**Answer: "A".** Move the router's command files out of the root `commands/`
+directory so VS Code stops auto-discovering them as prompt commands. This supersedes
+the intake's "keep `commands/*.md` as the router's source and `.github/prompts/`
+unchanged (initiative decision 4)"; `.github/prompts/` still stays unchanged, and
+the moved mirrors stay byte-identical to it.
+
 ## Research
 
 Skills consulted: none — no matching domain (this repository has no
@@ -156,6 +174,24 @@ changes `.claude-plugin/plugin.json`, `AGENTS.md`, `CHANGELOG.md`, `README.md`,
 except the tests and scripts. Its step 3.4 dashboard-dispatch sub-check is the
 symptom this issue fixes.
 
+- **Directory choice (2026-10-17, re-plan).** VS Code 1.141.0's workbench
+  (`/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js`)
+  `expandPluginContents` scans the default plugin directories
+  `["agents","skills","commands","rules"]` mapped to types
+  `["agent","skill","prompt","instructions"]`, then routes each to one of two
+  collectors. `collectFromSkillDir` (for `skills/`) iterates only the direct
+  children of `skills/` and treats only child **directories** as skills, reading
+  each one's `SKILL.md` (`yF="SKILL.md"`); it ignores files and never recurses.
+  `collectFromRegularDir` (for `agents`/`commands`/`rules`) iterates only the direct
+  children and collects only **files** ending in `.md` (or `.mdc` for instructions),
+  skipping directories and never recursing. A root `commands/` directory's `.md`
+  files are therefore auto-discovered as prompts, while `.md` files nested under
+  `skills/agento/commands/` are invisible to both collectors — they are neither a
+  direct child directory of `skills/` (they sit under `skills/agento/`) nor a file
+  in a regular directory. **Decision: use `skills/agento/commands/`** (the router
+  skill's own directory). `.github/agents/` is not one of the four default
+  directories and is unaffected.
+
 ## Approach
 
 1. **Pre-check the premise (Phase 1).** Build a scratch plugin copy of `origin/main`
@@ -197,6 +233,21 @@ Affected files: `.claude-plugin/plugin.json`, `tests/customizations.test.mjs`,
 `skills/agento/SKILL.md`, `docs/install.md`, `docs/copilot-harness.md`,
 `docs/model-profiles.md`, `README.md`, `CHANGELOG.md`.
 
+6. **Re-plan (Phase 6, 2026-10-17): move the router's command files.** `git mv
+   commands/*.md` to `skills/agento/commands/` (the router skill's own directory,
+   which VS Code's plugin-content expansion does not scan — see Research). Update
+   every consumer of the `commands/` path to the new location:
+   `skills/agento/SKILL.md` (§3 root discovery / §4 resolve); `scripts/agento.mjs`
+   `dispatchFor`, `MODEL_ATTR_PATTERNS` (the `agento-models` clean/smudge attribute
+   block), and `modelTargetFiles`' mirror path; `extension/src/commandAgent.ts`
+   `resolveChatMode`/`resolveCommandFile`; the tests in `scripts/agento.test.mjs`,
+   `tests/customizations.test.mjs`, `extension/test/unit/`, and
+   `tests/harness-probe/`; the docs (`docs/model-profiles.md`, `docs/commands.md`,
+   `docs/copilot-harness.md`, `docs/extension.md`), `CHANGELOG.md`, and the
+   delivery-policy `applyTo` pattern. `.github/prompts/` stays unchanged and the
+   moved mirrors stay byte-identical. The #121 regression test additionally asserts
+   no root-level `commands/` directory exists.
+
 ## Risks
 
 - **Hypothesis wrong** — the existing-chat drop could have another cause (e.g. the
@@ -220,6 +271,12 @@ Affected files: `.claude-plugin/plugin.json`, `tests/customizations.test.mjs`,
 - **Doctor `fail` changes `/agento doctor` exit status** for users with a foreign
   link (e.g. a second clone). Mitigation: the fallback names `harness install
   --force`; preflight is unaffected because `harness` is not a capability check.
+- **The new directory could still be auto-discovered.** Mitigation: the workbench
+  bundle evidence (Research) shows `collectFromSkillDir` treats only direct child
+  directories of `skills/` as skills and neither collector recurses, so
+  `skills/agento/commands/*.md` is invisible to plugin-content expansion; the #121
+  test asserts no root `commands/` directory remains, and the manual re-check
+  (step 6.7) re-runs the failing existing-chat condition.
 
 ## Out of scope
 
@@ -263,3 +320,13 @@ Affected files: `.claude-plugin/plugin.json`, `tests/customizations.test.mjs`,
 - [ ] In soshiki, dashboard dispatch of `/agento delivery-status` sends and prints
   its receipt in a new and an existing chat, in both Copilot and Local — verify:
   four screenshots `evidence/step-5-3-*.png`.
+- [ ] The #121 regression test asserts no root-level `commands/` directory exists in
+  the plugin and that the command mirrors live under `skills/agento/commands/`
+  (suffix-less, byte-identical to `.github/prompts/`) — verify:
+  `node --test --test-name-pattern '#121' tests/customizations.test.mjs` fails
+  before the move and passes after it.
+- [ ] No root-level `commands/` directory exists and every consumer reads
+  `skills/agento/commands/` — verify: `test ! -d commands`; the full node suite
+  passes; the moved mirrors stay byte-identical to `.github/prompts/`.
+- [ ] `.github/prompts/` is unchanged by this delivery — verify:
+  `git diff origin/main --stat -- .github/prompts` is empty.
