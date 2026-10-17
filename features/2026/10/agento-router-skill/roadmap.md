@@ -1,5 +1,5 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/agento-router-skill
 last-updated: 2026-10-16
 next-step: "2.3 (manual) In the primary window, open a new chat with Session Target Copilot and send `/agento delivery-status`, then `/agento delivery-status.prompt`, then `/agento not-a-command`; then in the throwaway plan session window from 2.2, a new Copilot chat with `/agento new-feature router smoke test` and stop after its clarifying questions appear (do not answer them); screenshot each reply including the 'Read skill · agento' line"
