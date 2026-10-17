@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "6.3 (added 2026-10-17) update every consumer of the commands/ path"
+next-step: "6.4 (added 2026-10-17) regenerate the extension's CLI copy"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -138,7 +138,7 @@ artifact-pr: "#59"
   is byte-identical to its `.github/prompts/<name>.prompt.md` (25/25); the #121 test
   itself passes once 6.3 updates the other consumers that still read `commands/`
 
-- [ ] 6.3 (added 2026-10-17) Update every consumer of the `commands/` path to
+- [x] 6.3 (added 2026-10-17) Update every consumer of the `commands/` path to
   `skills/agento/commands/`: `skills/agento/SKILL.md` §3/§4;
   `scripts/agento.mjs` `dispatchFor`, `MODEL_ATTR_PATTERNS`, and `modelTargetFiles`'
   mirror; `extension/src/commandAgent.ts` `resolveChatMode`/`resolveCommandFile`;
@@ -151,7 +151,10 @@ artifact-pr: "#59"
   `docs/extension.md`; and a `CHANGELOG.md` Unreleased note — verify:
   `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` passes and
   `git grep -n "commands/" -- scripts extension/src skills docs tests
-  extension/test CHANGELOG.md | grep -v 'skills/agento/commands'` prints nothing
+  extension/test CHANGELOG.md | grep -v 'skills/agento/commands'` prints nothing.
+  Also re-normalized the mirrors (`git add --renormalize`) so the step 6.2 move no
+  longer commits the local `model:` pins: `models adopt` migrated the shared
+  `agento-models` attribute block and pin state to the new path first
 
 - [ ] 6.4 (added 2026-10-17) Regenerate the extension's CLI copy — verify:
   `cd extension && npm run copy-cli`; `diff -r scripts extension/cli` reports only
