@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "2.1 Add the exposing regression test to tests/customizations.test.mjs; it must exit nonzero on the plugin.commands assertion"
+next-step: "3.1 Delete \"commands\" from .claude-plugin/plugin.json and update the suffix-less command names test to read rel(\"commands\") directly"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -40,7 +40,7 @@ artifact-pr: "#59"
 
 ## Phase 2: Exposing regression test
 
-- [ ] 2.1 Add the test `"#121 dispatch-router-only: plugin manifest registers no
+- [x] 2.1 Add the test `"#121 dispatch-router-only: plugin manifest registers no
   commands; the router skill reaches every commands/*.md"` to
   `tests/customizations.test.mjs` (asserts `plugin.commands === undefined`,
   `skills/agento/SKILL.md` exists, every `commands/<name>.md` is suffix-less and
