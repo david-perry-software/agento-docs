@@ -4,6 +4,7 @@ branch: issue/dispatch-router-only
 last-updated: 2026-10-17
 next-step: "1.1 prepare the scratch plugin copy without commands"
 github-issue: "#121"
+artifact-pr: "#59"
 ```
 
 # Roadmap: dispatch-router-only
