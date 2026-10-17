@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: feature/dispatch-copilot-harness
 last-updated: 2026-10-17
-next-step: "3.2 (manual) Run the Session & Doctor delivery-status action in a Copilot chat and a Local chat and screenshot each"
+next-step: "4.1 Run the full gates: node suite, guard replays, extension typecheck/unit/electron, shellcheck (not installed -> CI)"
 initiative: "copilot-harness"
 artifact-pr: "#57"
 ```
@@ -25,7 +25,7 @@ artifact-pr: "#57"
 ## Phase 3: Live verification
 
 - [x] 3.1 ~Build and install the branch extension: `cd extension && npm run package`, then `code --install-extension <vsix> --force`; record the replaced version (0.7.0) and the restore command on this line — verify: `code --list-extensions --show-versions | grep agento-dashboard` shows the branch build's version and `node scripts/agento.mjs harness status --plugin-root /home/david/DP/agento-plugin` reports `installed`~ (obsolete: no code change, so the installed `david-perry-software.agento-dashboard@0.7.0` already carries the V1 payload — confirmed with `code --list-extensions --show-versions` 2026-10-17; 3.2 verifies the installed build directly)
-- [ ] 3.2 (manual) In the primary window (`/home/david/DP/agento`), reload the window; open a new chat with Session Target **Copilot**, then in the Agento sidebar's Session & Doctor panel run the **delivery-status** action and wait for the receipt; then open a new chat with Session Target **Local** and run the same action; screenshot each — verify: `evidence/step-3-2-copilot-dispatch.png` shows the dispatched `/agento delivery-status` request sent with no retyping and `Receipt: accepted delivery-status:…` (or, in the fallback case, the info message and the pasted command's receipt); `evidence/step-3-2-local-dispatch.png` shows the Local request and its receipt
+- [x] 3.2 (manual) In the primary window (`/home/david/DP/agento`), reload the window; open a new chat with Session Target **Copilot**, then in the Agento sidebar's Session & Doctor panel run the **delivery-status** action and wait for the receipt; then open a new chat with Session Target **Local** and run the same action; screenshot each — verify: `evidence/step-3-2-copilot-dispatch.png` shows the dispatched `/agento delivery-status` request sent with no retyping and `Receipt: accepted delivery-status:…` (or, in the fallback case, the info message and the pasted command's receipt); `evidence/step-3-2-local-dispatch.png` shows the Local request and its receipt (completed 2026-10-17; [Copilot dispatch](evidence/step-3-2-copilot-dispatch.png), [Local dispatch](evidence/step-3-2-local-dispatch.png); deviation: the check ran in the BUILD window, not the primary window — the user reports "The agento UI doesnt work in the primary"; the dispatch path `chatOpenOptions` is identical in every window, so the check is equivalent; follow-up: primary-window Agento UI does not work — out of scope here, the Reviewer lists it under Follow-ups)
 
 ## Phase 4: Gates
 
