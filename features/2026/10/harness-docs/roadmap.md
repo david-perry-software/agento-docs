@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/harness-docs
 last-updated: 2026-10-17
-next-step: "3.4 (manual) Copilot soshiki checks"
+next-step: "3.4 (manual) run the six Copilot-session checks in soshiki"
 initiative: "copilot-harness"
 artifact-pr: "#58"
 ```
