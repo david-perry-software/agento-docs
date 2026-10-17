@@ -4,6 +4,7 @@ branch: feature/dispatch-copilot-harness
 last-updated: 2026-10-17
 next-step: "1.1 Add the dispatch probe extension and its variant-table test"
 initiative: "copilot-harness"
+artifact-pr: "#57"
 ```
 
 # Roadmap: dispatch-copilot-harness
