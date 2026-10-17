@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "6.4 (added 2026-10-17) regenerate the extension's CLI copy"
+next-step: "6.5 (added 2026-10-17) run the full gate"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -156,7 +156,7 @@ artifact-pr: "#59"
   longer commits the local `model:` pins: `models adopt` migrated the shared
   `agento-models` attribute block and pin state to the new path first
 
-- [ ] 6.4 (added 2026-10-17) Regenerate the extension's CLI copy — verify:
+- [x] 6.4 (added 2026-10-17) Regenerate the extension's CLI copy — verify:
   `cd extension && npm run copy-cli`; `diff -r scripts extension/cli` reports only
   the files copy-cli excludes; `git status --porcelain` shows only
   `extension/cli/agento.mjs`
