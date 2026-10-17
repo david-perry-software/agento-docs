@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/harness-docs
 last-updated: 2026-10-17
-next-step: "1.1 docs/install.md: add the Copilot harness section"
+next-step: "1.2 docs/hooks.md: document Copilot-harness behavior"
 initiative: "copilot-harness"
 artifact-pr: "#58"
 ```
@@ -15,7 +15,7 @@ Every claim is checked against the code on `main` (file and line cited in the
 commit message or the doc) before it is written. Prose uses only the canonical
 `/agento <name>` spelling.
 
-- [ ] 1.1 docs/install.md: add a "Copilot harness (Session Target Copilot)" section after Option C — what each harness loads (Local: plugin prompt commands; Copilot: no `*.prompt.md`, the user-level router skill), the `harness install --plugin-root <clone>` / `status` / `uninstall` / `install --force` commands and their states, the Local takeover and its model-switch gap with `harness uninstall` as the way back, the Copilot CLI (`copilot plugin install`) being unobserved; extend "Verifying the install" with the per-harness checks and the doctor `harness` check — verify: `grep -c "harness install\|Session Target\|harness uninstall" docs/install.md` ≥ 3 and `node --test tests/customizations.test.mjs` passes
+- [x] 1.1 docs/install.md: add a "Copilot harness (Session Target Copilot)" section after Option C — what each harness loads (Local: plugin prompt commands; Copilot: no `*.prompt.md`, the user-level router skill), the `harness install --plugin-root <clone>` / `status` / `uninstall` / `install --force` commands and their states, the Local takeover and its model-switch gap with `harness uninstall` as the way back, the Copilot CLI (`copilot plugin install`) being unobserved; extend "Verifying the install" with the per-harness checks and the doctor `harness` check — verify: `grep -c "harness install\|Session Target\|harness uninstall" docs/install.md` ≥ 3 and `node --test tests/customizations.test.mjs` passes
 - [ ] 1.2 docs/hooks.md: document Copilot-harness behavior — the normalized tool names (`Bash`, `Write`, `Read`, `Edit`, `Agent`) and `tool_input` shapes, `toolArgs` JSON strings, the dual-shape PreToolUse output, the weaker Copilot `ask` (runs under the session permission mode), exit 2 failing closed in both, and the three Copilot replay commands from AGENTS.md — verify: `grep -c "REPLAY_FORMAT=copilot\|Session Target\|toolArgs" docs/hooks.md` ≥ 3 and the customizations test passes
 - [ ] 1.3 docs/architecture.md: add the router skill (`skills/agento/SKILL.md`, user-level link `~/.copilot/skills/agento`), `scripts/harness.mjs` and the `harness` subcommand to "Pieces", and a short "Two harnesses" subsection with a table of what loads where and the inline-vs-subagent dispatch rule (linking docs/copilot-harness.md "Router skill") — verify: `grep -c "skills/agento\|harness" docs/architecture.md` ≥ 3 and the customizations test passes
 - [ ] 1.4 docs/extension.md: in "Command routing", state that the same `{ query, mode, attachFiles }` dispatch submits in both Copilot and Local once the router link is installed (dispatch-copilot-harness V1), that a Copilot window without the link cannot resolve `/agento`, and that Session & Doctor surfaces the doctor `harness` check (no install action); add the item to "Limitations" — verify: `grep -c "Copilot\|harness" docs/extension.md` rises by ≥ 3 over `main` and the customizations test passes
