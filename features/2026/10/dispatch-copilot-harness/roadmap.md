@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/dispatch-copilot-harness
 last-updated: 2026-10-17
-next-step: "4.3 Clean handoff — git status empty in both halves"
+next-step: ""
 initiative: "copilot-harness"
 artifact-pr: "#57"
 ```
@@ -31,4 +31,4 @@ artifact-pr: "#57"
 
 - [x] 4.1 Run the full gates: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`, the five guard replays in AGENTS.md, `cd extension && npm run typecheck && npm run test:unit && npm run test:electron`, and `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` when installed (else record `not installed` and rely on 4.2) — verify: all exit 0; pass counts recorded on this line and compared with plan.md's baseline (node suite 560/560; extension unit 167/167; CI `39046556589` on `2a39ba1`) (verified 2026-10-17: node suite 565/565 exit 0 — 5 above the 560 baseline from the dispatch-probe tests added in this delivery; five guard replays exit 0 with no mismatches; extension typecheck exit 0; extension unit 167/167 exit 0; extension electron exit 0 with all four scenarios passing — in-repo, companion, workspace, no-markdown — on `DISPLAY=:0`; shellcheck not installed → recorded, rely on 4.2 CI)
 - [x] 4.2 Integrate `origin/main` (both halves), push, and wait for CI — verify: `scripts/wait-for-checks.sh pr <n>` reports the `ci` run green (unit tests, Shellcheck with zero findings matching `2a39ba1`, guard replays) (verified 2026-10-17: `sync` up-to-date — both halves at origin with `merged: false`; `scripts/wait-for-checks.sh pr 119` → `RESULT: success`; `gh pr checks 119` → all successful, `ci/test` 4m48s green covering the node suite, Shellcheck with zero findings, and the guard replays)
-- [ ] 4.3 Clean handoff — verify: `git status --porcelain --untracked-files=all` is empty in both halves (no stray `.vsix`, `out/`, or probe logs)
+- [x] 4.3 Clean handoff — verify: `git status --porcelain --untracked-files=all` is empty in both halves (no stray `.vsix`, `out/`, or probe logs) (verified 2026-10-17: both halves clean; `extension/out` and `extension/.vscode-test` are gitignored build/test byproducts)
