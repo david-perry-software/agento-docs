@@ -1,5 +1,5 @@
 ```yaml
-status: in-progress
+status: paused
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
 next-step: "1.2 (manual) In the soshiki primary window run Developer: Reload Window; verify dispatch sends in an existing Copilot chat and Local /agento delivery-status routes through the router; attach both screenshots"
