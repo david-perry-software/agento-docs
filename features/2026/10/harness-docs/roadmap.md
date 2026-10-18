@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/harness-docs
 last-updated: 2026-10-18
-next-step: "4.1 Integrate origin/main, rerun the full gate, and confirm PR CI green with scripts/wait-for-checks.sh"
+next-step: ""
 initiative: "copilot-harness"
 artifact-pr: "#58"
 ```
@@ -87,4 +87,5 @@ commit message or the doc) before it is written. Prose uses only the canonical
 
 ## Phase 4: Final gate
 
-- [ ] 4.1 Integrate `origin/main`, rerun the node suite, the five replays, and the extension build and unit tests, and confirm the PR's CI (including Shellcheck) is green with `scripts/wait-for-checks.sh pr <n>` — verify: every local command exits 0, the node pass count is ≥ the baseline, CI concludes `success` with zero Shellcheck findings (the `main` baseline)
+- [x] 4.1 Integrate `origin/main`, rerun the node suite, the five replays, and the extension build and unit tests, and confirm the PR's CI (including Shellcheck) is green with `scripts/wait-for-checks.sh pr <n>` — verify: every local command exits 0, the node pass count is ≥ the baseline, CI concludes `success` with zero Shellcheck findings (the `main` baseline)
+  - **PASS 2026-10-18.** `origin/main` merged into both halves (ancestor of both heads). Node suite `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` → 566 pass, 0 fail (≥ baseline 565). Five guard replays exit 0. `cd extension && npm ci && npm run build && npm run test:unit` → 167 pass, exit 0. `scripts/wait-for-checks.sh pr 120` → `RESULT: success`; the single `ci/test` check includes Shellcheck (zero findings) and succeeded.
