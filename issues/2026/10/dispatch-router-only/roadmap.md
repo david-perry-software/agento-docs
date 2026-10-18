@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "6.9 (manual) re-check the remaining cells with the branch extension"
+next-step: "6.9 (manual) reload window and run the three remaining re-check cells (Copilot existing + Local new + Local existing) with the branch extension"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
