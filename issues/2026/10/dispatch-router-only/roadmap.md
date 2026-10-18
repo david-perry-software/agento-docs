@@ -1,7 +1,7 @@
 ```yaml
-status: in-review
+status: complete
 branch: issue/dispatch-router-only
-last-updated: 2026-10-17
+last-updated: 2026-10-18
 next-step: ""
 github-issue: "#121"
 artifact-pr: "#59"
