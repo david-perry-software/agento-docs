@@ -233,6 +233,20 @@ into the VS Code chat), each with linked screenshots.
   the file was never created and `git -C /home/david/DP/soshiki status --porcelain`
   stayed clean). The guard should distinguish read-only inspection from writes to
   hook files. Same **follow-up: file a GitHub issue**.
+- **Copilot `ask` is not honored under "Allow all" (found during step 3.12).** In a
+  Copilot session with the chat permission mode set to **Allow all** (auto-approve),
+  the guard's `ask` decision for a hook-file `Write` is not honored as a blocking
+  approval card: the agent's read-only `ls`/`cat` of `.github/hooks` was falsely
+  denied ("Destructive shell changes to hook files"), then the `Write` of
+  `.github/hooks/x.json` went through with **no approval card** and the file was
+  created (the user removed it) —
+  `evidence/step-3-12-copilot-hook-write-unapproved-allow-all.png`. Under **Manual
+  permissions** the same write showed the "Allow tool call?" card and a Skip left
+  nothing created — `evidence/step-3-12-copilot-hook-approval-card.png`,
+  `evidence/step-3-12-guard-debug.jsonl`. Hook-file protection in Copilot therefore
+  requires **Manual permissions** (not Allow all / auto-approve); docs/hooks.md,
+  docs/install.md, and docs/copilot-harness.md state this plainly. **Follow-up:
+  filed as #123** — deny rather than ask for hook-file writes in Copilot.
 
 ## Out of scope
 
