@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/harness-docs
 last-updated: 2026-10-18
 next-step: ""
