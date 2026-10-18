@@ -223,6 +223,16 @@ into the VS Code chat), each with linked screenshots.
   while the tool payload's `cwd` is correctly `/home/david/DP/soshiki` — so
   repository-dependent guard rules that read the process cwd may evaluate the wrong
   repo. Same **follow-up: file a GitHub issue**.
+- **Read-only hook-file reads are falsely denied as "destructive" (found during
+  step 3.4).** The guard's hook self-protection denies a plain read-only
+  `ls`/`cat`/`grep` of `.github/hooks/*` as "Destructive shell changes to hook
+  files" — `evidence/step-3-4-copilot-hook-read-false-deny.png` shows the read
+  command denied, and `evidence/step-3-4-copilot-hook-approval-card.png` the
+  subsequent "Allow tool call?" card for the `create` of `.github/hooks/x.json`,
+  which the user skipped (`evidence/step-3-4-copilot-hook-skipped-not-created.png`;
+  the file was never created and `git -C /home/david/DP/soshiki status --porcelain`
+  stayed clean). The guard should distinguish read-only inspection from writes to
+  hook files. Same **follow-up: file a GitHub issue**.
 
 ## Out of scope
 
