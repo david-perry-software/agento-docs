@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: feature/harness-docs
 last-updated: 2026-10-18
-next-step: "3.12 (manual) reload soshiki and re-check the five Copilot checks on a standard model (existing + new chat dispatch)"
+next-step: "3.12 (manual) record the user-provided soshiki Copilot re-check evidence and tick"
 initiative: "copilot-harness"
 artifact-pr: "#58"
 ```
@@ -41,7 +41,7 @@ commit message or the doc) before it is written. Prose uses only the canonical
 - [x] 3.1 Run the full gate on the branch: the node suite, the five guard replays from AGENTS.md, and `cd extension && npm ci && npm run build && npm run test:unit` — verify: node suite exit 0 with pass count ≥ the recorded baseline, each replay exit 0, extension build and unit tests exit 0
 - [x] 3.2 Fast-forward the router's plugin clone and confirm the link: `git -C /home/david/DP/agento-plugin pull --ff-only` (stop and report if it is not a fast-forward or the clone is dirty), then `node /home/david/DP/agento-plugin/scripts/agento.mjs harness status --plugin-root /home/david/DP/agento-plugin` and `doctor --plugin-root /home/david/DP/agento-plugin` — verify: plugin HEAD equals its `origin/main`, `harness status` reports `installed`, doctor's `harness` check is `ok`
 - [x] 3.3 Open a throwaway soshiki planning session from the CLI: `node /home/david/DP/agento-plugin/scripts/agento.mjs start-session --no-open` with cwd `/home/david/DP/soshiki` (primary on clean `main`); record the session id and target on this step — session id `20261017-183454`, target `/home/david/DP/soshiki-worktrees/plan-20261017-183454.code-workspace` — verify: the CLI returns `status: ok` and `git -C /home/david/DP/soshiki worktree list` shows the new `plan-<id>` worktree
-- [ ] 3.4 (manual) In the soshiki primary window with Session Target **Copilot**, in a new chat: run `/agento delivery-status`; ask "what is the Agento CLI context line?"; ask the agent to run `git push origin main --dry-run`; ask it to create `.github/hooks/x.json` and deny the approval; then click a dashboard action that submits `/agento delivery-status` — verify: screenshots `evidence/step-3-4-copilot-*.png` show the receipt line, the `Agento CLI:` line, the push denied by the guard, the hook-file approval card (no file created: `git -C /home/david/DP/soshiki status --porcelain` empty), and the dispatched command's receipt
+- [x] 3.4 ~(manual) In the soshiki primary window with Session Target **Copilot**, in a new chat: run `/agento delivery-status`; ask "what is the Agento CLI context line?"; ask the agent to run `git push origin main --dry-run`; ask it to create `.github/hooks/x.json` and deny the approval; then click a dashboard action that submits `/agento delivery-status`~ (obsolete: superseded by 3.12 after #122 moved the command files) — verify: screenshots `evidence/step-3-4-copilot-*.png` show the receipt line, the `Agento CLI:` line, the push denied by the guard, the hook-file approval card (no file created: `git -C /home/david/DP/soshiki status --porcelain` empty), and the dispatched command's receipt
   - **FAILED 2026-10-17 — not ticked.** User report (Copilot, soshiki primary window):
     - `evidence/step-3-4-copilot-delivery-status.png` — `/agento delivery-status` printed `Receipt: accepted delivery-status:main:897c27bf` (PASS). The session model was HydraFusion running a Critique solver (first pass GPT-5.6 Luna, critique pass GPT-5.6 Terra).
     - `evidence/step-3-4-copilot-context-line.png` — the `Agento CLI:` line is present, pointing at the staged plugin copy `/home/david/.config/Code/agentPlugins/file-home-david-DP-agento-plugin/1a14b243302/scripts/...` (PASS).

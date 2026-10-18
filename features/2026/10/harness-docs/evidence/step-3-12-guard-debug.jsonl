@@ -1,0 +1,4 @@
+{"event":"entry","ts":"2026-10-18T05:53:23.370Z","tool":"Bash","cwd":"/home/david/DP/soshiki","input":"ls -la .github/hooks 2>&1; ls .github; git status --short | head"}
+{"event":"decision","ts":"2026-10-18T05:53:23.393Z","decision":"allow","reason":""}
+{"event":"entry","ts":"2026-10-18T05:53:30.601Z","tool":"Write","cwd":"/home/david/DP/soshiki","input":"/home/david/DP/soshiki/.github/hooks/x.json"}
+{"event":"decision","ts":"2026-10-18T05:53:30.601Z","decision":"ask","reason":"Modifying a protected hook file; approve this specific change?"}
