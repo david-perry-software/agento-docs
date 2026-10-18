@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/harness-docs
 last-updated: 2026-10-18
-next-step: "3.8 Abandon the throwaway soshiki session with close-session 20261017-183454 and verify no worktree or branch remains"
+next-step: "3.9 docs/copilot-harness.md: add the Two-harness acceptance (harness-docs) table with per-harness pass/fail rows"
 initiative: "copilot-harness"
 artifact-pr: "#58"
 ```
@@ -80,7 +80,8 @@ commit message or the doc) before it is written. Prose uses only the canonical
     - Second dashboard dispatch of `/agento delivery-status` from the **existing** chat (history 02:17–02:20) → it sent and printed `Receipt: accepted delivery-status:main:897c27bf`, but the chat view shows it as a **fresh** conversation ("Start Over" divider at top, message at 2:20) — in Local the dispatch from an existing chat opened/started a new chat rather than appending (observed; the user performed both new- and existing-chat dispatches) — `evidence/step-3-7-local-dashboard-existing-chat.png`.
     - Throwaway planning-session window, Session Target Local: `/agento new-feature harness acceptance smoke` → `Receipt: accepted new-feature:plan-20261017-183454:897c27bf`, Planner question card unanswered — `evidence/step-3-7-local-new-feature.png`.
   - Machine check (Builder): `git -C /home/david/DP/soshiki status --porcelain` empty; session worktree `/home/david/DP/soshiki-worktrees/plan-20261017-183454` clean and detached (no branch created).
-- [ ] 3.8 Abandon the throwaway session: `node /home/david/DP/agento-plugin/scripts/agento.mjs close-session <session-id>` with cwd `/home/david/DP/soshiki` — verify: `git -C /home/david/DP/soshiki worktree list` no longer lists it, no `feature/harness-acceptance-smoke` branch exists locally or on origin in soshiki or soshiki-docs
+- [x] 3.8 Abandon the throwaway session: `node /home/david/DP/agento-plugin/scripts/agento.mjs close-session <session-id>` with cwd `/home/david/DP/soshiki` — verify: `git -C /home/david/DP/soshiki worktree list` no longer lists it, no `feature/harness-acceptance-smoke` branch exists locally or on origin in soshiki or soshiki-docs
+  - **PASS 2026-10-18.** `close-session 20261017-183454` (cwd `/home/david/DP/soshiki`) first blocked on the occupant gate (the throwaway session's VS Code windows were still open), then applied with `--ignore-occupants` — `applied: true`, both halves clean and detached, `.code-workspace` removed. Verify: `git -C /home/david/DP/soshiki worktree list` no longer lists `plan-20261017-183454`; no `*harness-acceptance-smoke*` branch locally or on `origin` in soshiki or soshiki-docs; both primary checkouts clean.
 - [ ] 3.9 docs/copilot-harness.md: add "Two-harness acceptance (harness-docs)" with the date, VS Code / Copilot Chat versions, plugin clone SHA, and a pass/fail row per check per harness, linking the companion evidence paths — verify: the section exists with 12 rows and `node --test tests/harness-probe/probe.test.mjs tests/customizations.test.mjs` passes
 
 ## Phase 4: Final gate
