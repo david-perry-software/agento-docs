@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "6.8 (added) install the branch dashboard extension (prereq for the 6.9 re-check)"
+next-step: "6.9 (manual) re-check the remaining cells with the branch extension"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -200,13 +200,19 @@ artifact-pr: "#59"
   did not exercise the branch extension, which attaches
   `skills/agento/commands/<name>.md`. Tick 6.7 once 6.9's Local cells complete.
 
-- [ ] 6.8 (added 2026-10-17) Record the installed dashboard extension id, version,
+- [x] 6.8 (added 2026-10-17) Record the installed dashboard extension id, version,
   and path in `evidence/step-6-8-extension-before.txt`, package the branch extension
   (`cd extension && npm run package`), install the resulting `.vsix` with
   `code --install-extension <vsix> --force`, and keep the `.vsix` out of git (delete
   it or route it to an ignored sink; both halves must stay clean) — verify:
-  `code --list-extensions --show-versions` shows the branch build's version;
-  `git status --porcelain --untracked-files=all` prints nothing in both halves
+  `code --list-extensions --show-versions` shows
+  `david-perry-software.agento-dashboard@0.7.0`; the installed `out/commandAgent.js`
+  resolves `skills/agento/commands/<name>.md` (branch build); `git status --porcelain
+  --untracked-files=all` prints nothing in both halves. Done 2026-10-17: branch build
+  packaged and installed (`--force`; same version 0.7.0, so the installed
+  `out/commandAgent.js` and `cli/agento.mjs` were checked for
+  `skills/agento/commands/<name>.md`); the `.vsix` was deleted and both halves are
+  clean.
 
 - [ ] 6.9 (manual, added 2026-10-17) In the soshiki primary window run "Developer:
   Reload Window" (picks up the branch extension), then with Session Target
