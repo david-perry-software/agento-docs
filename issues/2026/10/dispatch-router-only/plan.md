@@ -347,3 +347,45 @@ Affected files: `.claude-plugin/plugin.json`, `tests/customizations.test.mjs`,
   passes; the moved mirrors stay byte-identical to `.github/prompts/`.
 - [ ] `.github/prompts/` is unchanged by this delivery — verify:
   `git diff origin/main --stat -- .github/prompts` is empty.
+
+## Resolution
+
+**Root cause.** VS Code 1.141.0's workbench auto-discovers a plugin's root
+`commands/` directory as prompt commands regardless of the plugin manifest
+(`expandPluginContents` scans the default directories
+`["agents","skills","commands","rules"]`; `collectFromRegularDir` collects every
+direct `.md` file under `commands/` as a prompt). In a chat that had already run an
+`/agento` dispatch, the input therefore bound `/agento <name>` to the plugin prompt
+command — which the Copilot harness does not execute — instead of the `agento`
+router skill, so dashboard dispatch filled the input but never sent. The original
+hypothesis (that the `.claude-plugin/plugin.json` `"commands"` field alone caused
+the binding) was disproved in step 5.3: removing the field did not stop the
+auto-discovery, and the failure only reproduced in chats with a prior `/agento`
+turn.
+
+**What changed and why.** The router's command files moved from the root
+`commands/` directory into `skills/agento/commands/` — the router skill's own
+directory, which neither `collectFromSkillDir` (only direct child *directories* of
+`skills/`, reading each `SKILL.md`) nor `collectFromRegularDir` (only direct `.md`
+*files*) ever scans — so VS Code no longer auto-discovers them as prompt commands.
+The manifest `"commands"` field was removed, and every consumer of the old
+`commands/` path (`scripts/agento.mjs` `dispatchFor`/`MODEL_ATTR_PATTERNS`/
+`modelTargetFiles`, `extension/src/commandAgent.ts`
+`resolveChatMode`/`resolveCommandFile`, `skills/agento/SKILL.md`, the docs, and
+all affected tests) now reads `skills/agento/commands/`. `.github/prompts/` is
+unchanged and the moved mirrors remain byte-identical to it.
+
+**Proof.** The #121 regression test in `tests/customizations.test.mjs` now asserts
+`plugin.commands === undefined`, `skills/agento/SKILL.md` exists, the mirrors live
+under `skills/agento/commands/` suffix-less and byte-identical to
+`.github/prompts/`, and no root-level `commands/` directory exists; it failed
+before the fix and passes after it, and the full node suite (scripts + tests) and
+extension build/unit tests are green. The live soshiki re-check (steps 6.7/6.9)
+confirms the fix end to end: in a Copilot existing chat with a prior `/agento`
+turn the dashboard dispatch now attaches the `delivery-status.md` chip from
+`skills/agento/commands/` and sends, and in Local both a new chat and an existing
+chat (dashboard dispatch and hand-typed `/agento delivery-status`) send with
+`Receipt: accepted delivery-status:…` — see
+`evidence/step-6-7-copilot-existing-attached.png`, `evidence/step-6-7-local-new.png`,
+`evidence/step-6-7-local-existing.png`, and
+`evidence/step-6-7-local-existing-typed.png`.

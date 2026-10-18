@@ -1,5 +1,5 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
 next-step: ""
