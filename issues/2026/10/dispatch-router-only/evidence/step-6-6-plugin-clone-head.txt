@@ -1,0 +1,5 @@
+/home/david/DP/agento-plugin
+recorded 2026-10-17 during step 6.6
+
+branch: (detached)
+HEAD: 0a672542abbd06abb29d12248ca90cbcab70793d

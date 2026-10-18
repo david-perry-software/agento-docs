@@ -1,0 +1,6 @@
+chat.pluginLocations (VS Code user settings, /home/david/.config/Code/User/settings.json)
+recorded 2026-10-17 during step 1.1
+
+{
+    "/home/david/DP/agento-plugin": true
+}

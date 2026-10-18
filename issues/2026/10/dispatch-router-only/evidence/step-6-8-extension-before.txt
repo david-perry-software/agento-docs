@@ -1,0 +1,5 @@
+Installed dashboard extension (recorded 2026-10-17 during step 6.8)
+
+id: david-perry-software.agento-dashboard
+version: 0.7.0
+path: /home/david/.vscode/extensions/david-perry-software.agento-dashboard-0.7.0
