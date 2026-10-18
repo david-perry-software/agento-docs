@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "6.10"
+next-step: ""
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -236,7 +236,7 @@ artifact-pr: "#59"
   [step-6-7-local-existing-typed.png](evidence/step-6-7-local-existing-typed.png)
   (Local existing, hand-typed).
 
-- [ ] 6.10 (added 2026-10-17) Restore `/home/david/DP/agento-plugin` to the HEAD
+- [x] 6.10 (added 2026-10-17) Restore `/home/david/DP/agento-plugin` to the HEAD
   recorded in `evidence/step-5-2-plugin-clone-head.txt` (`git switch` back to its
   branch), and reinstall the previously installed dashboard extension version
   recorded in `evidence/step-6-8-extension-before.txt` (from the recorded
@@ -245,4 +245,7 @@ artifact-pr: "#59"
   `git -C /home/david/DP/agento-plugin rev-parse HEAD` and its branch match the
   record and `git -C /home/david/DP/agento-plugin status --porcelain` is empty;
   `code --list-extensions --show-versions` shows the recorded previous version, or
-  the evidence note documents why the branch build remains
+  the evidence note documents why the branch build remains. Completed 2026-10-17:
+  clone restored to `main` @ `1f0d3de` (clean); released 0.7.0 reinstalled from the
+  local `/home/david/DP/agento/extension/agento-dashboard-0.7.0.vsix` —
+  [step-6-10-restore.txt](evidence/step-6-10-restore.txt).
