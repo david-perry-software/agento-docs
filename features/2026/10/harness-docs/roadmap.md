@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/harness-docs
 last-updated: 2026-10-18
-next-step: "3.9 docs/copilot-harness.md: add the Two-harness acceptance (harness-docs) table with per-harness pass/fail rows"
+next-step: "4.1 Integrate origin/main, rerun the full gate, and confirm PR CI green with scripts/wait-for-checks.sh"
 initiative: "copilot-harness"
 artifact-pr: "#58"
 ```
@@ -82,7 +82,8 @@ commit message or the doc) before it is written. Prose uses only the canonical
   - Machine check (Builder): `git -C /home/david/DP/soshiki status --porcelain` empty; session worktree `/home/david/DP/soshiki-worktrees/plan-20261017-183454` clean and detached (no branch created).
 - [x] 3.8 Abandon the throwaway session: `node /home/david/DP/agento-plugin/scripts/agento.mjs close-session <session-id>` with cwd `/home/david/DP/soshiki` — verify: `git -C /home/david/DP/soshiki worktree list` no longer lists it, no `feature/harness-acceptance-smoke` branch exists locally or on origin in soshiki or soshiki-docs
   - **PASS 2026-10-18.** `close-session 20261017-183454` (cwd `/home/david/DP/soshiki`) first blocked on the occupant gate (the throwaway session's VS Code windows were still open), then applied with `--ignore-occupants` — `applied: true`, both halves clean and detached, `.code-workspace` removed. Verify: `git -C /home/david/DP/soshiki worktree list` no longer lists `plan-20261017-183454`; no `*harness-acceptance-smoke*` branch locally or on `origin` in soshiki or soshiki-docs; both primary checkouts clean.
-- [ ] 3.9 docs/copilot-harness.md: add "Two-harness acceptance (harness-docs)" with the date, VS Code / Copilot Chat versions, plugin clone SHA, and a pass/fail row per check per harness, linking the companion evidence paths — verify: the section exists with 12 rows and `node --test tests/harness-probe/probe.test.mjs tests/customizations.test.mjs` passes
+- [x] 3.9 docs/copilot-harness.md: add "Two-harness acceptance (harness-docs)" with the date, VS Code / Copilot Chat versions, plugin clone SHA, and a pass/fail row per check per harness, linking the companion evidence paths — verify: the section exists with 12 rows and `node --test tests/harness-probe/probe.test.mjs tests/customizations.test.mjs` passes
+  - **PASS 2026-10-18.** `## Two-harness acceptance (harness-docs)` added with date (2026-10-18), VS Code `1.142.0`, Copilot Chat `0.70.0`, plugin clone SHA `4dc0e3e`, staged copy `1a14d7020a8`, permission modes, a 12-row pass/fail table (six checks × Copilot/Local) linking the companion evidence paths, and the four guard findings as known limitations. Verify: the section has 12 data rows; `node --test tests/harness-probe/probe.test.mjs tests/customizations.test.mjs` → 79 pass, 0 fail.
 
 ## Phase 4: Final gate
 
