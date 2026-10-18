@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "6.7 (manual) four-cell re-check incl. existing chat with a prior /agento turn"
+next-step: "6.8 (added) install the branch dashboard extension (prereq for the 6.9 re-check)"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -120,8 +120,8 @@ artifact-pr: "#59"
   `evidence/step-5-2-plugin-clone-head.txt` (`git switch` back to its branch) —
   verify: `git -C /home/david/DP/agento-plugin rev-parse HEAD` and its branch match
   the record; `git -C /home/david/DP/agento-plugin status --porcelain` is empty~
-  (obsolete: re-runs as 6.8 after the clone moves to the new branch head and the
-  6.7 re-check completes)
+  (obsolete: re-runs as 6.10 after the clone moves to the new branch head and the
+  6.7/6.9 re-check completes)
 
 ## Phase 6: Move the router's command files out of `commands/` (re-plan A, 2026-10-17)
 
@@ -185,10 +185,49 @@ artifact-pr: "#59"
   turn, hand-typed in the existing one); screenshot each — verify:
   `evidence/step-6-7-copilot-new.png`, `evidence/step-6-7-copilot-existing.png`,
   `evidence/step-6-7-local-new.png`, `evidence/step-6-7-local-existing.png` each
-  show the request sent and `Receipt: accepted delivery-status:…`
+  show the request sent and `Receipt: accepted delivery-status:…`. Copilot cells
+  done 2026-10-17 (all sent + receipt):
+  [step-6-7-copilot-new.png](evidence/step-6-7-copilot-new.png),
+  [step-6-7-copilot-existing.png](evidence/step-6-7-copilot-existing.png),
+  [step-6-7-copilot-existing-typed.png](evidence/step-6-7-copilot-existing-typed.png).
+  Local new + Local existing remain and run against the branch extension in 6.9,
+  after 6.8 installs it. Autopilot finding 2026-10-17: the installed dashboard
+  extension is the released `david-perry-software.agento-dashboard-0.7.0`
+  (`~/.vscode/extensions`), which resolves `<pluginRoot>/commands/<name>.md`; that
+  file no longer exists on this branch, so these dispatches attached NO command
+  file (no attachment chip; the editor kept a stale
+  `agento-plugin/commands/delivery-status.md` "file not found" tab) — the re-check
+  did not exercise the branch extension, which attaches
+  `skills/agento/commands/<name>.md`. Tick 6.7 once 6.9's Local cells complete.
 
-- [ ] 6.8 (added 2026-10-17) Restore `/home/david/DP/agento-plugin` to the HEAD
+- [ ] 6.8 (added 2026-10-17) Record the installed dashboard extension id, version,
+  and path in `evidence/step-6-8-extension-before.txt`, package the branch extension
+  (`cd extension && npm run package`), install the resulting `.vsix` with
+  `code --install-extension <vsix> --force`, and keep the `.vsix` out of git (delete
+  it or route it to an ignored sink; both halves must stay clean) — verify:
+  `code --list-extensions --show-versions` shows the branch build's version;
+  `git status --porcelain --untracked-files=all` prints nothing in both halves
+
+- [ ] 6.9 (manual, added 2026-10-17) In the soshiki primary window run "Developer:
+  Reload Window" (picks up the branch extension), then with Session Target
+  **Copilot** in an **existing chat whose previous turn was an `/agento` dispatch**
+  click the dashboard action — the request must now show the `delivery-status.md`
+  attachment chip from `skills/agento/commands/` — and confirm it sends with a
+  receipt; switch Session Target to **Local** and open a **new chat** and click the
+  dashboard action, then in an **existing chat with a prior `/agento` turn** click
+  the dashboard action AND hand-type `/agento delivery-status` and send; screenshot
+  each — verify: `evidence/step-6-7-copilot-existing-attached.png`,
+  `evidence/step-6-7-local-new.png`, `evidence/step-6-7-local-existing.png` each
+  show the request sent and `Receipt: accepted delivery-status:…`; the Copilot one
+  shows the `delivery-status.md` attachment chip. Ticks 6.7 and 6.9.
+
+- [ ] 6.10 (added 2026-10-17) Restore `/home/david/DP/agento-plugin` to the HEAD
   recorded in `evidence/step-5-2-plugin-clone-head.txt` (`git switch` back to its
-  branch) — verify: `git -C /home/david/DP/agento-plugin rev-parse HEAD` and its
-  branch match the record; `git -C /home/david/DP/agento-plugin status --porcelain`
-  is empty
+  branch), and reinstall the previously installed dashboard extension version
+  recorded in `evidence/step-6-8-extension-before.txt` (from the recorded
+  path/version; if no `.vsix` for the previous version is available locally, record
+  that in evidence and leave the branch build installed with a note) — verify:
+  `git -C /home/david/DP/agento-plugin rev-parse HEAD` and its branch match the
+  record and `git -C /home/david/DP/agento-plugin status --porcelain` is empty;
+  `code --list-extensions --show-versions` shows the recorded previous version, or
+  the evidence note documents why the branch build remains

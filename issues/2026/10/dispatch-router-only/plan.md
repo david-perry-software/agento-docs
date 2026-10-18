@@ -192,6 +192,23 @@ symptom this issue fixes.
   skill's own directory). `.github/agents/` is not one of the four default
   directories and is unaffected.
 
+- **Step 6.7 Copilot re-check finding (2026-10-17, Autopilot).** The three Copilot
+  cells of the 6.7 re-check were run against the released dashboard extension
+  `david-perry-software.agento-dashboard-0.7.0` installed at
+  `~/.vscode/extensions/david-perry-software.agento-dashboard-0.7.0` (confirmed by
+  `code --list-extensions --show-versions`), not against the branch build. The
+  released extension still resolves `<pluginRoot>/commands/<name>.md`, which no
+  longer exists on the fix branch (the mirrors moved to
+  `skills/agento/commands/`), so those dispatches attached NO command file — the
+  request showed no attachment chip and the editor kept a stale
+  `agento-plugin/commands/delivery-status.md` tab ("file not found"). Dispatch
+  still sent and printed the receipt (the router skill is the execution path), so
+  the Copilot cells pass, but they did not exercise the branch extension's
+  `skills/agento/commands/<name>.md` attachment. Roadmap 6.8 therefore installs the
+  branch build before the remaining re-check cells (6.9). Compatibility note: a
+  released dashboard extension older than this fix loses the command-file
+  attachment (dispatch still works) until updated — recorded in CHANGELOG.md.
+
 ## Approach
 
 1. **Pre-check the premise (Phase 1).** Build a scratch plugin copy of `origin/main`
