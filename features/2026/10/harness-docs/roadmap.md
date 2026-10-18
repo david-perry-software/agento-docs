@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/harness-docs
 last-updated: 2026-10-18
-next-step: "3.12 (manual, added 2026-10-18) re-check the five Copilot checks in soshiki on the shipped main"
+next-step: "3.12 (manual) reload soshiki and re-check the five Copilot checks on a standard model (existing + new chat dispatch)"
 initiative: "copilot-harness"
 artifact-pr: "#58"
 ```
