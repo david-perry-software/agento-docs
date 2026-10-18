@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: feature/harness-docs
 last-updated: 2026-10-18
-next-step: "3.6 (manual) run /agento new-feature harness acceptance smoke in the throwaway soshiki session window (Session Target Copilot, Manual permissions) and stop at the first question"
+next-step: "3.8 Abandon the throwaway soshiki session with close-session 20261017-183454 and verify no worktree or branch remains"
 initiative: "copilot-harness"
 artifact-pr: "#58"
 ```
@@ -69,8 +69,17 @@ commit message or the doc) before it is written. Prose uses only the canonical
     - Dashboard dispatch into a **new** chat → `Receipt: accepted delivery-status:main:897c27bf` — `evidence/step-3-12-copilot-dashboard-new-chat.png`.
     - Dashboard dispatch into the **existing** chat → `Receipt: accepted delivery-status:main:897c27bf (duplicate of delivery-status:main:897c27bf; resuming)` — the #122 fix works — `evidence/step-3-12-copilot-dashboard-existing-chat.png`.
     - Machine check (Builder): `git -C /home/david/DP/soshiki status --porcelain` empty, no `.github/hooks/x.json`.
-- [ ] 3.6 (manual) In the soshiki planning-session window from 3.3 (open its `.code-workspace` target), Session Target **Copilot**: run `/agento new-feature harness acceptance smoke` and stop at the first clarifying question without answering — verify: screenshot `evidence/step-3-6-copilot-new-feature.png` shows `Receipt: accepted new-feature:…` and the Planner's question; `git -C <session worktree> branch --show-current` is empty (still detached)
-- [ ] 3.7 (manual) Repeat 3.12 and 3.6 with Session Target **Local** — verify: screenshots `evidence/step-3-7-local-*.png` show the same results; soshiki primary and the session worktree remain clean
+- [x] 3.6 (manual) In the soshiki planning-session window from 3.3 (open its `.code-workspace` target), Session Target **Copilot**: run `/agento new-feature harness acceptance smoke` and stop at the first clarifying question without answering — verify: screenshot `evidence/step-3-6-copilot-new-feature.png` shows `Receipt: accepted new-feature:…` and the Planner's question; `git -C <session worktree> branch --show-current` is empty (still detached)
+  - **PASS 2026-10-18.** Soshiki planning-session window (`plan-20261017-183454`), Session Target Copilot, Claude Opus 5.5, "Manual permissions". `/agento new-feature harness acceptance smoke` → `Read skill · agento`, then `Receipt: accepted new-feature:plan-20261017-183454:897c27bf`, and the Planner's first clarifying-question card ("What should the smoke prove?", 1/5, option A recommended) left unanswered — `evidence/step-3-6-copilot-new-feature.png`. Machine check (Builder): `git -C /home/david/DP/soshiki-worktrees/plan-20261017-183454 branch --show-current` empty (still detached), `status --porcelain` empty.
+- [x] 3.7 (manual) Repeat 3.12 and 3.6 with Session Target **Local** — verify: screenshots `evidence/step-3-7-local-*.png` show the same results; soshiki primary and the session worktree remain clean
+  - **PASS 2026-10-18.** Soshiki primary window, Session Target Local, Claude Opus 5.5, "Allow all"; all of 3.12's checks re-run in Local, and the throwaway planning session re-run in Local.
+    - Dashboard dispatch of `/agento delivery-status` → `Receipt: accepted delivery-status:main:897c27bf` — `evidence/step-3-7-local-dashboard-dispatch.png`.
+    - `Agento CLI:` line names the **real** clone `node /home/david/DP/agento-plugin/scripts/agento.mjs` — in Local the line points at `/home/david/DP/agento-plugin`, whereas Copilot names the staged copy `…/agentPlugins/…/1a14d7020a8` — `evidence/step-3-7-local-context-line.png` (recorded difference).
+    - `git push origin main --dry-run` denied — "Direct commits/pushes to main are forbidden; use a work branch and a pull request." — `evidence/step-3-7-local-push-denied.png`.
+    - `create .github/hooks/x.json` → "the write was skipped when it came up for your approval" (no file created) — `evidence/step-3-7-local-hook-write-skipped.png`. **Notable:** Local honored the guard's `ask` even under "Allow all", unlike Copilot (#123) — recorded in docs/copilot-harness.md acceptance section.
+    - Second dashboard dispatch of `/agento delivery-status` from the **existing** chat (history 02:17–02:20) → it sent and printed `Receipt: accepted delivery-status:main:897c27bf`, but the chat view shows it as a **fresh** conversation ("Start Over" divider at top, message at 2:20) — in Local the dispatch from an existing chat opened/started a new chat rather than appending (observed; the user performed both new- and existing-chat dispatches) — `evidence/step-3-7-local-dashboard-existing-chat.png`.
+    - Throwaway planning-session window, Session Target Local: `/agento new-feature harness acceptance smoke` → `Receipt: accepted new-feature:plan-20261017-183454:897c27bf`, Planner question card unanswered — `evidence/step-3-7-local-new-feature.png`.
+  - Machine check (Builder): `git -C /home/david/DP/soshiki status --porcelain` empty; session worktree `/home/david/DP/soshiki-worktrees/plan-20261017-183454` clean and detached (no branch created).
 - [ ] 3.8 Abandon the throwaway session: `node /home/david/DP/agento-plugin/scripts/agento.mjs close-session <session-id>` with cwd `/home/david/DP/soshiki` — verify: `git -C /home/david/DP/soshiki worktree list` no longer lists it, no `feature/harness-acceptance-smoke` branch exists locally or on origin in soshiki or soshiki-docs
 - [ ] 3.9 docs/copilot-harness.md: add "Two-harness acceptance (harness-docs)" with the date, VS Code / Copilot Chat versions, plugin clone SHA, and a pass/fail row per check per harness, linking the companion evidence paths — verify: the section exists with 12 rows and `node --test tests/harness-probe/probe.test.mjs tests/customizations.test.mjs` passes
 
