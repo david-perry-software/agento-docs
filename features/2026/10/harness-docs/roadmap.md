@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/harness-docs
 last-updated: 2026-10-18
-next-step: "3.12 (manual) record the user-provided soshiki Copilot re-check evidence and tick"
+next-step: "3.6 (manual) run /agento new-feature harness acceptance smoke in the throwaway soshiki session window (Session Target Copilot, Manual permissions) and stop at the first question"
 initiative: "copilot-harness"
 artifact-pr: "#58"
 ```
