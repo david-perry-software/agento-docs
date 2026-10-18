@@ -198,10 +198,12 @@ artifact-pr: "#59"
   extension is the released `david-perry-software.agento-dashboard-0.7.0`
   (`~/.vscode/extensions`), which resolves `<pluginRoot>/commands/<name>.md`; that
   file no longer exists on this branch, so these dispatches attached NO command
-  file (no attachment chip; the editorCompleted 2026-10-17
+  file (no attachment chip; the editor kept a stale
   `agento-plugin/commands/delivery-status.md` "file not found" tab) — the re-check
   did not exercise the branch extension, which attaches
-  `skills/agento/commands/<name>.md`. Tick 6.7 once 6.9's Local cells complete.
+  `skills/agento/commands/<name>.md`. Ticked 2026-10-17 once 6.9's cells completed
+  against the branch extension (review repair 2026-10-18: restored the sentence a
+  mis-spliced "Completed 2026-10-17" had broken).
 
 - [x] 6.8 (added 2026-10-17) Record the installed dashboard extension id, version,
   and path in `evidence/step-6-8-extension-before.txt`, package the branch extension
