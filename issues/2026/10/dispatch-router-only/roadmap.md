@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "6.9"
+next-step: "6.10"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -217,7 +217,7 @@ artifact-pr: "#59"
   `skills/agento/commands/<name>.md`); the `.vsix` was deleted and both halves are
   clean.
 
-- [ ] 6.9 (manual, added 2026-10-17) In the soshiki primary window run "Developer:
+- [x] 6.9 (manual, added 2026-10-17) In the soshiki primary window run "Developer:
   Reload Window" (picks up the branch extension), then with Session Target
   **Copilot** in an **existing chat whose previous turn was an `/agento` dispatch**
   click the dashboard action — the request must now show the `delivery-status.md`
@@ -228,7 +228,13 @@ artifact-pr: "#59"
   each — verify: `evidence/step-6-7-copilot-existing-attached.png`,
   `evidence/step-6-7-local-new.png`, `evidence/step-6-7-local-existing.png` each
   show the request sent and `Receipt: accepted delivery-status:…`; the Copilot one
-  shows the `delivery-status.md` attachment chip. Ticks 6.7 and 6.9.
+  shows the `delivery-status.md` attachment chip. Completed 2026-10-17:
+  [step-6-7-copilot-existing-attached.png](evidence/step-6-7-copilot-existing-attached.png)
+  (Copilot existing, attachment chip),
+  [step-6-7-local-new.png](evidence/step-6-7-local-new.png),
+  [step-6-7-local-existing.png](evidence/step-6-7-local-existing.png),
+  [step-6-7-local-existing-typed.png](evidence/step-6-7-local-existing-typed.png)
+  (Local existing, hand-typed).
 
 - [ ] 6.10 (added 2026-10-17) Restore `/home/david/DP/agento-plugin` to the HEAD
   recorded in `evidence/step-5-2-plugin-clone-head.txt` (`git switch` back to its
