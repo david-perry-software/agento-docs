@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/dispatch-router-only
 last-updated: 2026-10-17
-next-step: "6.7"
+next-step: "6.9"
 github-issue: "#121"
 artifact-pr: "#59"
 ```
@@ -176,7 +176,7 @@ artifact-pr: "#59"
   `commands/` directory; `node /home/david/DP/agento-plugin/scripts/agento.mjs
   harness status` reports `installed`
 
-- [ ] 6.7 (manual, added 2026-10-17) In the soshiki primary window run "Developer:
+- [x] 6.7 (manual, added 2026-10-17) In the soshiki primary window run "Developer:
   Reload Window"; with Session Target **Copilot**, open a new chat and click a
   dashboard action that submits `/agento delivery-status`; then in an **existing
   chat whose previous turn was an `/agento` dispatch** click the same dashboard
@@ -190,12 +190,15 @@ artifact-pr: "#59"
   [step-6-7-copilot-new.png](evidence/step-6-7-copilot-new.png),
   [step-6-7-copilot-existing.png](evidence/step-6-7-copilot-existing.png),
   [step-6-7-copilot-existing-typed.png](evidence/step-6-7-copilot-existing-typed.png).
-  Local new + Local existing remain and run against the branch extension in 6.9,
-  after 6.8 installs it. Autopilot finding 2026-10-17: the installed dashboard
+  Local cells done 2026-10-17 against the branch extension:
+  [step-6-7-local-new.png](evidence/step-6-7-local-new.png),
+  [step-6-7-local-existing.png](evidence/step-6-7-local-existing.png),
+  [step-6-7-local-existing-typed.png](evidence/step-6-7-local-existing-typed.png).
+  Autopilot finding 2026-10-17: the installed dashboard
   extension is the released `david-perry-software.agento-dashboard-0.7.0`
   (`~/.vscode/extensions`), which resolves `<pluginRoot>/commands/<name>.md`; that
   file no longer exists on this branch, so these dispatches attached NO command
-  file (no attachment chip; the editor kept a stale
+  file (no attachment chip; the editorCompleted 2026-10-17
   `agento-plugin/commands/delivery-status.md` "file not found" tab) — the re-check
   did not exercise the branch extension, which attaches
   `skills/agento/commands/<name>.md`. Tick 6.7 once 6.9's Local cells complete.
