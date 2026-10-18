@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/harness-docs
 last-updated: 2026-10-18
-next-step: "1.14 (added 2026-10-18) align README.md and AGENTS.md with #122"
+next-step: "2.3 (added 2026-10-18) rewrite the CHANGELOG 0.8.0 Added entry"
 initiative: "copilot-harness"
 artifact-pr: "#58"
 ```
@@ -28,7 +28,7 @@ commit message or the doc) before it is written. Prose uses only the canonical
 - [x] 1.11 (added 2026-10-18) Align docs/extension.md "Command routing" with #122: the `{ query, mode, attachFiles }` dispatch submits in both harnesses through the router skill (neither harness loads plugin prompt commands), and without the link `/agento` cannot resolve in any session — verify: `grep -n "Local. session the plugin prompt command does\|no prompt command behind it" docs/extension.md` prints nothing and `grep -c "router skill" docs/extension.md` ≥ 2; the customizations test passes
 - [x] 1.12 (added 2026-10-18) Align docs/install.md "Verifying the install" with #122: the doctor `harness` check reports `fail` (not `warn`) when the link is absent/foreign/dangling/not-a-link — verify: `grep -n "harness" docs/install.md` shows the link-state line reads `fail` with no `warn`; the customizations test passes
 - [x] 1.13 (added 2026-10-18) Align docs/model-profiles.md "models pins" with #122: the router takeover (link now required) drops prompt-level and inline-agent model pins in both harnesses — verify: `grep -n "once the router link is installed" docs/model-profiles.md` prints nothing; the customizations test passes
-- [ ] 1.14 (added 2026-10-18) Align README.md and AGENTS.md with #122: README says `/agento <name>` resolves through the router skill in every session (neither harness loads prompt commands); AGENTS.md's `skills/` layout names the router skill and its `skills/agento/commands/` mirrors and says it resolves `/agento` in every session — verify: `grep -n "prompt commands do not load\|in Copilot sessions" README.md AGENTS.md` prints nothing, `grep -n "skills/agento/commands" AGENTS.md` matches, and the customizations test passes
+- [x] 1.14 (added 2026-10-18) Align README.md and AGENTS.md with #122: README says `/agento <name>` resolves through the router skill in every session (neither harness loads prompt commands); AGENTS.md's `skills/` layout names the router skill and its `skills/agento/commands/` mirrors and says it resolves `/agento` in every session — verify: `grep -n "prompt commands do not load\|in Copilot sessions" README.md AGENTS.md` prints nothing, `grep -n "skills/agento/commands" AGENTS.md` matches, and the customizations test passes
 
 ## Phase 2: Release metadata
 
