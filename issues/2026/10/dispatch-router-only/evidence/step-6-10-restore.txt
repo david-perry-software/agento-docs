@@ -1,0 +1,18 @@
+Restore of plugin clone + dashboard extension (recorded 2026-10-17 during step 6.10)
+
+Plugin clone /home/david/DP/agento-plugin:
+  branch: main (matches step-5-2 record)
+  HEAD:   1f0d3decc30b00ac7ade07516f8625667892cc42 (matches step-5-2 record)
+  status: clean (no tracked/untracked changes)
+
+Dashboard extension:
+  previous version recorded in step-6-8-extension-before.txt:
+    id: david-perry-software.agento-dashboard
+    version: 0.7.0
+  restored from local vsix: /home/david/DP/agento/extension/agento-dashboard-0.7.0.vsix
+    (built Oct 8 15:39; resolves commands/<name>.md — the released pre-fix build)
+  command: code --install-extension /home/david/DP/agento/extension/agento-dashboard-0.7.0.vsix --force
+  result: Extension 'agento-dashboard-0.7.0.vsix' was successfully installed.
+  verify: code --list-extensions --show-versions -> david-perry-software.agento-dashboard@0.7.0
+  verify: installed out/commandAgent.js resolves commands/<name>.md (released), not
+    skills/agento/commands/<name>.md (branch build) — the branch build has been replaced.

@@ -1,0 +1,21 @@
+$ git rev-parse --short HEAD
+1f0d3de
+$ grep -n commands .claude-plugin/plugin.json
+11:  "commands": "commands",
+$ ls commands | wc -l
+25
+$ ls -l ~/.copilot/skills/agento
+lrwxrwxrwx 1 david david 42 Oct 17 02:58 /home/david/.copilot/skills/agento -> /home/david/DP/agento-plugin/skills/agento
+$ node scripts/agento.mjs harness status
+{
+  "status": "ok",
+  "verb": "status",
+  "link": "/home/david/.copilot/skills/agento",
+  "expected": "/home/david/DP/agento/skills/agento",
+  "state": "foreign",
+  "target": "/home/david/DP/agento-plugin/skills/agento",
+  "pluginRoot": "/home/david/DP/agento-worktrees/plan-20261017-204347",
+  "changed": false,
+  "localTakeover": "With the link installed, Local sessions also route /agento through the router — Builder/Reviewer keep their pins, Planner/Architect/Mechanic/Autopilot and prompt model pins do not switch; harness uninstall restores the Local prompt commands."
+}
+exit=0
