@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profile-editor
 last-updated: 2026-10-21
-next-step: "4.3 Wire commands and ExtensionApi profileEditor"
+next-step: "5.1 Electron coverage for the editor"
 initiative: "model-profile-manager"
 artifact-pr: "#63"
 ```
@@ -52,7 +52,7 @@ artifact-pr: "#63"
   - `handleMessage` is exported, and every inbound message goes through `parseWebviewMessage`.
 
   Verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exits 0
-- [ ] 4.3 Wire the commands in `extension/src/extension.ts` and `extension/package.json`:
+- [x] 4.3 Wire the commands in `extension/src/extension.ts` and `extension/package.json`:
   - `agento.modelProfiles.edit` opens the editor;
   - the new palette command `agento.editModelProfile` (*Agento: Edit Model Profile*, category Agento) shows a quick pick of profiles, with the missing-plugin-root and no-file handling;
   - `new` and `duplicate` open the editor on the created profile;
