@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profiles-view
 last-updated: 2026-10-21
-next-step: "4.1 Isolate electron scenarios with temp config home and plugin clone"
+next-step: "4.2 Drive the view in the in-repo electron scenario"
 initiative: "model-profile-manager"
 artifact-pr: "#62"
 ```
@@ -48,7 +48,7 @@ artifact-pr: "#62"
 
 ## Phase 4: Electron coverage
 
-- [ ] 4.1 In `extension/test/electron/runTest.ts`, create a temp `AGENTO_CONFIG_HOME` for every scenario and pass it in `extensionTestsEnv`. Also create a temp git plugin clone holding `.claude-plugin/plugin.json`, `.github/agents`, `.github/prompts`, `skills/agento/commands`, and `templates/model-profiles.json`, committed once and passed as `AGENTO_E2E_PLUGIN_ROOT`. Remove both in the scenario's `finally` block, and add both to the existing removal assertion. Add the new commands to the registration assertions in `suite.ts` — verify: `cd extension && xvfb-run -a npm run test:electron` exits 0 with all four scenarios passing, and `git status --porcelain --untracked-files=all` is empty afterwards
+- [x] 4.1 In `extension/test/electron/runTest.ts`, create a temp `AGENTO_CONFIG_HOME` for every scenario and pass it in `extensionTestsEnv`. Also create a temp git plugin clone holding `.claude-plugin/plugin.json`, `.github/agents`, `.github/prompts`, `skills/agento/commands`, and `templates/model-profiles.json`, committed once and passed as `AGENTO_E2E_PLUGIN_ROOT`. Remove both in the scenario's `finally` block, and add both to the existing removal assertion. Add the new commands to the registration assertions in `suite.ts` — verify: `cd extension && xvfb-run -a npm run test:electron` exits 0 with all four scenarios passing, and `git status --porcelain --untracked-files=all` is empty afterwards
 - [ ] 4.2 In the in-repo scenario of `suite.ts`, set `agento.pluginRoot` to `AGENTO_E2E_PLUGIN_ROOT` and assert that `profilesFile.path` is under the temp `AGENTO_CONFIG_HOME` before any write. Then drive the view through the registered commands with stubbed prompts:
   1. the `no-file` state, then `init`;
   2. write valid profiles through the CLI and check the listed rows and the tooltip pins;
