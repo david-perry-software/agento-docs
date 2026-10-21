@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profile-editor
 last-updated: 2026-10-21
-next-step: "5.1 Electron coverage for the editor"
+next-step: "6.1 Add profileEditorHarness.html and 6.2 screenshot evidence"
 initiative: "model-profile-manager"
 artifact-pr: "#63"
 ```
@@ -64,7 +64,7 @@ artifact-pr: "#63"
 
 ## Phase 5: Electron coverage
 
-- [ ] 5.1 In the in-repo scenario of `extension/test/electron/suite.ts`, add `agento.editModelProfile` to the registration assertions. Assert that `profilesFile.path` is under the temp `AGENTO_CONFIG_HOME` before any write, install a stubbed `ModelSource` (one Copilot and one BYOK model), and drive through the registered commands and `profileEditor.handleMessage`:
+- [x] 5.1 In the in-repo scenario of `extension/test/electron/suite.ts`, add `agento.editModelProfile` to the registration assertions. Assert that `profilesFile.path` is under the temp `AGENTO_CONFIG_HOME` before any write, install a stubbed `ModelSource` (one Copilot and one BYOK model), and drive through the registered commands and `profileEditor.handleMessage`:
   1. row Edit opens one panel, and a second Edit reveals the same one;
   2. load posts `state` with `pinnable` and the stubbed choices;
   3. `validate` with a custom-agent command override reports the CLI error;
