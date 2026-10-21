@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profiles-view
 last-updated: 2026-10-21
-next-step: "5.1 Document the view in extension README and docs"
+next-step: "5.2 Bump version to 0.10.0 and add changelog entry"
 initiative: "model-profile-manager"
 artifact-pr: "#62"
 ```
@@ -64,7 +64,7 @@ artifact-pr: "#62"
 
 ## Phase 5: Docs, release, and gate
 
-- [ ] 5.1 Document the view:
+- [x] 5.1 Document the view:
   - `extension/README.md`: a new `## Model Profiles` section (rows, badges, tooltip, actions, empty states, refresh behavior) and the Commands list entry;
   - `docs/extension.md`: rewrite `## Model profiles` around the view and keep the quick pick;
   - `docs/model-profiles.md`: a pointer to the view from `## Editing profiles` and `## Applying and clearing`.
