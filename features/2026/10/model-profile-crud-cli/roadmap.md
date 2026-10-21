@@ -4,6 +4,7 @@ branch: feature/model-profile-crud-cli
 last-updated: 2026-10-21
 next-step: "1.1 Add serializeProfiles, profilesHash, and aliasErrors to scripts/model-profiles.mjs with unit tests"
 initiative: "model-profile-manager"
+artifact-pr: "#61"
 ```
 
 ## Phase 1: Pure helpers
