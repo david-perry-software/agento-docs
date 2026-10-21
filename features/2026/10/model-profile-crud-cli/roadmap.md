@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profile-crud-cli
 last-updated: 2026-10-21
-next-step: "2.7 Update usage comment and messages; smoke the real CLI"
+next-step: "3.1 Update models.prompt.md and skills/agento/commands/models.md"
 initiative: "model-profile-manager"
 artifact-pr: "#61"
 ```
@@ -67,7 +67,7 @@ artifact-pr: "#61"
   - `models pins` picks up a new alias as `copilotModel`;
 
   then run copy-cli — verify: `node --test scripts/agento.test.mjs tests/extension-bundle.test.mjs` exits 0
-- [ ] 2.7 Update the header usage comment (`scripts/agento.mjs:32`) and the `models` usage messages to list every verb and option, and run copy-cli. Smoke the real CLI against a throwaway config home without touching the clone. Run `AGENTO_CONFIG_HOME=$(mktemp -d)`, then in order:
+- [x] 2.7 Update the header usage comment (`scripts/agento.mjs:32`) and the `models` usage messages to list every verb and option, and run copy-cli. Smoke the real CLI against a throwaway config home without touching the clone. Run `AGENTO_CONFIG_HOME=$(mktemp -d)`, then in order:
   1. `models create a --description x`
   2. `models show a` (keep the hash)
   3. `models update a --dry-run` and `models update a --expect <hash>`, each with JSON on stdin
@@ -76,7 +76,7 @@ artifact-pr: "#61"
   6. `models list`
   7. `models delete b`
 
-  Record each status on this line — verify: every smoke call exits 0 with the expected `status`, `git status --porcelain --untracked-files=all` is empty apart from the intended `scripts/`/`extension/cli/` edits, and `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exits 0
+  Record each status on this line — smoke statuses: 1 ok, 2 ok, 3 dry-run ok + expect ok, 4 ok, 5 ok, 6 ok, 7 ok — verify: every smoke call exits 0 with the expected `status`, `git status --porcelain --untracked-files=all` is empty apart from the intended `scripts/`/`extension/cli/` edits, and `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exits 0
 
 ## Phase 3: Command, docs, and release
 
