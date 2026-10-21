@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profile-editor
 last-updated: 2026-10-21
-next-step: "7.1 Document the editor in docs and README"
+next-step: "7.2 Bump version to 0.11.0 and CHANGELOG entry"
 initiative: "model-profile-manager"
 artifact-pr: "#63"
 ```
@@ -86,7 +86,7 @@ artifact-pr: "#63"
 
 ## Phase 7: Docs, release, and gate
 
-- [ ] 7.1 Document the editor:
+- [x] 7.1 Document the editor:
   - `docs/model-profiles.md` `## Editing profiles`: the editor as the UI for `update`/`rename`/`alias set`;
   - `docs/extension.md` `## Model profiles`: the editor, Save / Save & Apply, dry-run feedback, conflicts and Reload, aliases, free text and the empty-model-list hint, and drafts being lost on close;
   - `extension/README.md` `## Model Profiles`: the editor and the *Agento: Edit Model Profile* entry in the Commands list.
