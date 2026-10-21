@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profile-crud-cli
 last-updated: 2026-10-21
-next-step: "2.1 Make loadProfiles return raw and profilesFile.hash, and add copilotModels to models list"
+next-step: "2.2 Add --from/--description/--expect options and the per-verb models spec"
 initiative: "model-profile-manager"
 artifact-pr: "#61"
 ```
@@ -21,7 +21,7 @@ artifact-pr: "#61"
 
 ## Phase 2: CLI verbs and write path
 
-- [ ] 2.1 Make `loadProfiles()` in `scripts/agento.mjs` return `raw` and `profilesFile.hash` (`null` when the file is absent), and add `copilotModels` to `models list` output. In `scripts/agento.test.mjs`, assert:
+- [x] 2.1 Make `loadProfiles()` in `scripts/agento.mjs` return `raw` and `profilesFile.hash` (`null` when the file is absent), and add `copilotModels` to `models list` output. In `scripts/agento.test.mjs`, assert:
   - `profilesFile.hash` is `null` without a file;
   - after `writeProfiles`, it equals the sha256 of the file bytes;
   - `list` reports `copilotModels`.
