@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profiles-view
 last-updated: 2026-10-21
-next-step: "3.1 Add modelProfilesProvider and package.json view contributions"
+next-step: "3.2 Extract runModelsSelection and implement view commands"
 initiative: "model-profile-manager"
 artifact-pr: "#62"
 ```
@@ -25,7 +25,7 @@ artifact-pr: "#62"
 
 ## Phase 3: View, commands, and watchers
 
-- [ ] 3.1 Add `extension/src/modelProfilesProvider.ts`, a `TreeDataProvider` over the model with `current` and `update(model)` that sets the context key `agento.modelProfiles.state`. Contribute the following in `extension/package.json`, following plan.md `## Approach` item 6:
+- [x] 3.1 Add `extension/src/modelProfilesProvider.ts`, a `TreeDataProvider` over the model with `current` and `update(model)` that sets the context key `agento.modelProfiles.state`. Contribute the following in `extension/package.json`, following plan.md `## Approach` item 6:
   - the `agento.modelProfiles` view (after Session & Doctor);
   - every `agento.modelProfiles.*` command with its icon;
   - the `view/title` entries (New, Clear when ready, Refresh via `agento.refresh`, and the overflow Open Profiles File);
