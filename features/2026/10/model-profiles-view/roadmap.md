@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: in-progress
 branch: feature/model-profiles-view
 last-updated: 2026-10-21
 next-step: "5.2 restore the origin/main formatting of extension/package.json contributes.colors (review request-changes 2026-10-21)"
@@ -78,3 +78,9 @@ artifact-pr: "#62"
   - `cd extension && npm ci && npm run build && npm run typecheck && npm run test:unit && xvfb-run -a npm run test:electron`.
 
   Record the counts in this step's line — verify: shellcheck exits 0 with no findings, at least 607 root tests plus the new ones pass, every guard replay passes, at least 167 unit tests plus the new ones pass, all four electron scenarios pass, and `git status --porcelain --untracked-files=all` is empty in both halves. Recorded 2026-10-21: shellcheck 0 findings; 609/609 root tests; 5/5 guard replays; 182/182 unit tests; 4/4 electron scenarios; both halves clean.
+
+## Phase 6: Review round 1 fixes (added 2026-10-21)
+
+- [ ] 6.1 Rebuild the Model Profiles watchers only when the plugin root or the profiles-file path actually changes, not on every reload (review 2026-10-21 Finding 2) — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exits 0
+- [ ] 6.2 Surface the CLI `message` for a non-zero `models list` in the view's error row instead of the generic missing-profilesFile text (review 2026-10-21 Finding 3) — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exits 0 with the new listError-precedence unit test passing
+- [ ] 6.3 Make the electron conflict assertion deterministic by waiting for the conflict retry warning, not the watcher reload (review 2026-10-21 Finding 4) — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit && DISPLAY=:0 npm run test:electron` exits 0 with the in-repo conflict scenario passing
