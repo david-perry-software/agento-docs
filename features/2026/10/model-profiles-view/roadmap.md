@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/model-profiles-view
 last-updated: 2026-10-21
-next-step: "5.3 re-run the full gate after the review fixes"
+next-step: ""
 initiative: "model-profile-manager"
 artifact-pr: "#62"
 ```
@@ -77,7 +77,7 @@ artifact-pr: "#62"
   - the five guard smoke replays from AGENTS.md;
   - `cd extension && npm ci && npm run build && npm run typecheck && npm run test:unit && xvfb-run -a npm run test:electron`.
 
-  Record the counts in this step's line — verify: shellcheck exits 0 with no findings, at least 607 root tests plus the new ones pass, every guard replay passes, at least 167 unit tests plus the new ones pass, all four electron scenarios pass, and `git status --porcelain --untracked-files=all` is empty in both halves. Recorded 2026-10-21: shellcheck 0 findings; 609/609 root tests; 5/5 guard replays; 182/182 unit tests; 4/4 electron scenarios; both halves clean.
+  Record the counts in this step's line — verify: shellcheck exits 0 with no findings, at least 607 root tests plus the new ones pass, every guard replay passes, at least 167 unit tests plus the new ones pass, all four electron scenarios pass, and `git status --porcelain --untracked-files=all` is empty in both halves. Recorded 2026-10-21: shellcheck 0 findings; 609/609 root tests; 5/5 guard replays; 182/182 unit tests; 4/4 electron scenarios; both halves clean. Re-run after the review fixes (2026-10-21): shellcheck 0 findings; 609/609 root tests; 5/5 guard replays; 183/183 unit tests; 4/4 electron scenarios; both halves clean.
 
 ## Phase 6: Review round 1 fixes (added 2026-10-21)
 
