@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profiles-view
 last-updated: 2026-10-21
-next-step: "2.1 Add modelProfilesTree.ts pure model and tests"
+next-step: "2.2 Extend modelProfiles.ts arg builders and result summaries"
 initiative: "model-profile-manager"
 artifact-pr: "#62"
 ```
@@ -14,7 +14,7 @@ artifact-pr: "#62"
 
 ## Phase 2: Pure model and helpers
 
-- [ ] 2.1 Add `extension/src/modelProfilesTree.ts` (no `vscode` import), per plan.md `## Approach` item 2:
+- [x] 2.1 Add `extension/src/modelProfilesTree.ts` (no `vscode` import), per plan.md `## Approach` item 2:
   - `createModelProfilesModel`, with the states `no-plugin-root`, `no-file`, `error`, and `ready`, plus the `custom` info row;
   - `profileItemSpec` (label, description, icon, contextValue, Markdown tooltip);
   - `summarizePins` (agents by name, command files collapsed by value, fallback lists as `A → B`);
