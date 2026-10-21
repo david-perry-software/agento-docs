@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profile-crud-cli
 last-updated: 2026-10-21
-next-step: "2.4 Implement models update with stdin JSON, --dry-run, and --expect"
+next-step: "2.5 Implement models rename and delete"
 initiative: "model-profile-manager"
 artifact-pr: "#61"
 ```
@@ -42,7 +42,7 @@ artifact-pr: "#61"
   - create while the template's placeholder `mixed` profile exists still succeeds;
 
   then run copy-cli — verify: `node --test scripts/agento.test.mjs tests/extension-bundle.test.mjs` exits 0
-- [ ] 2.4 Implement `models update <name> [--dry-run] [--expect]`: stdin JSON, TTY stdin is a usage error, `not-found`, and `invalid` with `parseProfiles` plus `resolveProfile` errors (for example a `prompts.<custom-agent-prompt>` key, a placeholder, an unknown agent alias). `--dry-run` reports `errors`/`warnings`/`written: false`/`dryRun: true` and does not write. Updating the applied profile reports `activeBefore`/`active`/`reapply`. Tests include:
+- [x] 2.4 Implement `models update <name> [--dry-run] [--expect]`: stdin JSON, TTY stdin is a usage error, `not-found`, and `invalid` with `parseProfiles` plus `resolveProfile` errors (for example a `prompts.<custom-agent-prompt>` key, a placeholder, an unknown agent alias). `--dry-run` reports `errors`/`warnings`/`written: false`/`dryRun: true` and does not write. Updating the applied profile reports `activeBefore`/`active`/`reapply`. Tests include:
   - `init` then `update mixed` with real models succeeds while keeping position;
   - non-JSON and array input → `invalid`, file byte-identical;
   - a dry run leaves the file byte-identical;
