@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profiles-view
 last-updated: 2026-10-21
-next-step: "6.2 surface the CLI message for a non-zero models list in the view's error row"
+next-step: "6.3 make the electron conflict assertion deterministic by waiting for the retry warning"
 initiative: "model-profile-manager"
 artifact-pr: "#62"
 ```
@@ -82,5 +82,5 @@ artifact-pr: "#62"
 ## Phase 6: Review round 1 fixes (added 2026-10-21)
 
 - [x] 6.1 Rebuild the Model Profiles watchers only when the plugin root or the profiles-file path actually changes, not on every reload (review 2026-10-21 Finding 2) — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exits 0
-- [ ] 6.2 Surface the CLI `message` for a non-zero `models list` in the view's error row instead of the generic missing-profilesFile text (review 2026-10-21 Finding 3) — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exits 0 with the new listError-precedence unit test passing
+- [x] 6.2 Surface the CLI `message` for a non-zero `models list` in the view's error row instead of the generic missing-profilesFile text (review 2026-10-21 Finding 3) — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exits 0 with the new listError-precedence unit test passing
 - [ ] 6.3 Make the electron conflict assertion deterministic by waiting for the conflict retry warning, not the watcher reload (review 2026-10-21 Finding 4) — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit && DISPLAY=:0 npm run test:electron` exits 0 with the in-repo conflict scenario passing
