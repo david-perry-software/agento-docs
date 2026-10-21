@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profile-editor
 last-updated: 2026-10-21
-next-step: "3.2 Add profileEditorHtml.ts renderEditorHtml and tests"
+next-step: "4.1 Add media/profileEditor.js and profileEditor.css"
 initiative: "model-profile-manager"
 artifact-pr: "#63"
 ```
@@ -27,7 +27,7 @@ artifact-pr: "#63"
   - `diffFields` and `validateRename`.
 
   Add `extension/test/unit/profileEditorModel.test.ts` covering every branch, including malformed and unknown messages — verify: `cd extension && npm run test:unit` exits 0 with the new tests passing
-- [ ] 3.2 Add `extension/src/profileEditorHtml.ts` with `makeNonce()` (`crypto.randomBytes`) and `renderEditorHtml({ nonce, cspSource, scriptUri, styleUri, title })`. The CSP is `default-src 'none'; style-src ${cspSource}; script-src 'nonce-${nonce}'; img-src ${cspSource} data:; font-src ${cspSource}`, with one nonce'd script tag, no inline handlers, and no remote URLs. Add `extension/test/unit/profileEditorHtml.test.ts` asserting each property — verify: `cd extension && npm run test:unit` exits 0 with the new tests passing
+- [x] 3.2 Add `extension/src/profileEditorHtml.ts` with `makeNonce()` (`crypto.randomBytes`) and `renderEditorHtml({ nonce, cspSource, scriptUri, styleUri, title })`. The CSP is `default-src 'none'; style-src ${cspSource}; script-src 'nonce-${nonce}'; img-src ${cspSource} data:; font-src ${cspSource}`, with one nonce'd script tag, no inline handlers, and no remote URLs. Add `extension/test/unit/profileEditorHtml.test.ts` asserting each property — verify: `cd extension && npm run test:unit` exits 0 with the new tests passing
 
 ## Phase 4: Webview, panel host, and commands
 
