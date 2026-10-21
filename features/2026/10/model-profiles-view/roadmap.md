@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profiles-view
 last-updated: 2026-10-21
-next-step: "3.3 Add profile file and agent-file watchers"
+next-step: "4.1 Isolate electron scenarios with temp config home and plugin clone"
 initiative: "model-profile-manager"
 artifact-pr: "#62"
 ```
@@ -44,7 +44,7 @@ artifact-pr: "#62"
   - `openFile` and `init`.
 
   A `conflict` result shows the retry message and reloads — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exits 0
-- [ ] 3.3 Add the profile watchers. Use absolute `RelativePattern`s on `dirname(profilesFile.path)`/`model-profiles.json` and `<pluginRoot>`/`.github/agents/*.agent.md`, rebuilt whenever either path changes, feeding a dedicated debounced (about 500 ms) model-profiles reload that never runs `dashboard`. Also reload when the view becomes visible and on window focus. Dispose of the watchers with the extension — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exits 0
+- [x] 3.3 Add the profile watchers. Use absolute `RelativePattern`s on `dirname(profilesFile.path)`/`model-profiles.json` and `<pluginRoot>`/`.github/agents/*.agent.md`, rebuilt whenever either path changes, feeding a dedicated debounced (about 500 ms) model-profiles reload that never runs `dashboard`. Also reload when the view becomes visible and on window focus. Dispose of the watchers with the extension — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exits 0
 
 ## Phase 4: Electron coverage
 
