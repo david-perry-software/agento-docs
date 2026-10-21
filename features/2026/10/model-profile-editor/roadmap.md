@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profile-editor
 last-updated: 2026-10-21
-next-step: "1.2 Add body to models show and document pinnable/body"
+next-step: "2.1 Add input to CliRunOptions and echo-stdin fixture"
 initiative: "model-profile-manager"
 artifact-pr: "#63"
 ```
@@ -10,7 +10,7 @@ artifact-pr: "#63"
 ## Phase 1: CLI read fields
 
 - [x] 1.1 In `scripts/model-profiles.mjs`, export `isPinnablePrompt(prompt, agentNames)` with the exact rule `resolveTargets` applies (a prompt is pinnable unless its `agent:` is a custom agent known by `name:`), and make `resolveTargets` call it. In `scripts/agento.mjs` `models list`, add top-level `pinnable: { agents: [<the six AGENT_ALIASES keys>], prompts: [<sorted pinnable command names>] }` from `state.layout`, reported even with no profiles file. Add `scripts/model-profiles.test.mjs` cases for `isPinnablePrompt` (absent `agent:`, `agent: "agent"`, a known custom agent, an unknown agent name) and `scripts/agento.test.mjs` cases asserting that `pinnable.prompts` equals the set of prompts that `models update --dry-run` accepts as `prompts.<command>` without the custom-agent error, and that existing `list` fields are unchanged — verify: `node --test scripts/model-profiles.test.mjs scripts/agento.test.mjs` exits 0 with the new cases passing
-- [ ] 1.2 Add `body` (the stored profile object as written, `{}` for an empty profile) to `models show <name>`, with a `scripts/agento.test.mjs` case that round-trips `update` stdin → `show` `body`. Document `pinnable` and `body` in `docs/model-profiles.md` `## Editing profiles`, then run `cd extension && npm run copy-cli` — verify: `node --test scripts/agento.test.mjs tests/extension-bundle.test.mjs` exits 0
+- [x] 1.2 Add `body` (the stored profile object as written, `{}` for an empty profile) to `models show <name>`, with a `scripts/agento.test.mjs` case that round-trips `update` stdin → `show` `body`. Document `pinnable` and `body` in `docs/model-profiles.md` `## Editing profiles`, then run `cd extension && npm run copy-cli` — verify: `node --test scripts/agento.test.mjs tests/extension-bundle.test.mjs` exits 0
 
 ## Phase 2: CLI client stdin and arg helpers
 
