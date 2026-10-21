@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profile-editor
 last-updated: 2026-10-21
-next-step: "3.1 Add profileEditorModel.ts and its unit tests"
+next-step: "3.2 Add profileEditorHtml.ts renderEditorHtml and tests"
 initiative: "model-profile-manager"
 artifact-pr: "#63"
 ```
@@ -19,7 +19,7 @@ artifact-pr: "#63"
 
 ## Phase 3: Pure editor model and HTML
 
-- [ ] 3.1 Add `extension/src/profileEditorModel.ts` (no `vscode` import), per plan.md `## Approach` item 3:
+- [x] 3.1 Add `extension/src/profileEditorModel.ts` (no `vscode` import), per plan.md `## Approach` item 3:
   - `profileToForm` and `formToProfile` (one-item list ↔ string, empty fields omitted, stable key order, unknown keys preserved with a notice);
   - `modelChoices` (vendor-grouped, `<name> (<vendor>)`, sorted, de-duplicated);
   - `suggestAlias` and `aliasStatus`;
