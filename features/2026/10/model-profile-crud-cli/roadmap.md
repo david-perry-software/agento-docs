@@ -2,14 +2,14 @@
 status: in-progress
 branch: feature/model-profile-crud-cli
 last-updated: 2026-10-21
-next-step: "1.1 Add serializeProfiles, profilesHash, and aliasErrors to scripts/model-profiles.mjs with unit tests"
+next-step: "1.2 Add createProfile, replaceProfile, renameProfile, deleteProfile, setAlias, and removeAlias with tests"
 initiative: "model-profile-manager"
 artifact-pr: "#61"
 ```
 
 ## Phase 1: Pure helpers
 
-- [ ] 1.1 In `scripts/model-profiles.mjs`, add `serializeProfiles(data)` (2-space JSON plus a trailing newline, key order kept), `profilesHash(text)` (sha256 hex via `node:crypto`), and `aliasErrors(picker, id)` (the existing `copilotModels` value rules applied to both). Add tests to `scripts/model-profiles.test.mjs` for: round-trip stability, a known hash vector, and alias errors (empty, placeholder `<…>`, control character, valid) — verify: `node --test scripts/model-profiles.test.mjs` exits 0 with the new tests passing
+- [x] 1.1 In `scripts/model-profiles.mjs`, add `serializeProfiles(data)` (2-space JSON plus a trailing newline, key order kept), `profilesHash(text)` (sha256 hex via `node:crypto`), and `aliasErrors(picker, id)` (the existing `copilotModels` value rules applied to both). Add tests to `scripts/model-profiles.test.mjs` for: round-trip stability, a known hash vector, and alias errors (empty, placeholder `<…>`, control character, valid) — verify: `node --test scripts/model-profiles.test.mjs` exits 0 with the new tests passing
 - [ ] 1.2 Add `createProfile(data, name, { from, description })`, `replaceProfile`, `renameProfile`, `deleteProfile`, `setAlias`, and `removeAlias` per plan.md `## Approach` item 1. All are pure, never mutate their input, preserve order, and do in-place replace and rename. Add tests to `scripts/model-profiles.test.mjs` for each, including:
   - position kept on replace and rename;
   - a `--from` copy is deep, so mutating the copy leaves the source unchanged;
