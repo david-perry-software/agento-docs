@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profiles-view
 last-updated: 2026-10-21
-next-step: "2.2 Extend modelProfiles.ts arg builders and result summaries"
+next-step: "3.1 Add modelProfilesProvider and package.json view contributions"
 initiative: "model-profile-manager"
 artifact-pr: "#62"
 ```
@@ -21,7 +21,7 @@ artifact-pr: "#62"
   - `validateProfileName` and `suggestCopyName`.
 
   Add `extension/test/unit/modelProfilesTree.test.ts` covering every state and branch — verify: `cd extension && npm run test:unit` exits 0 with the new tests passing
-- [ ] 2.2 In `extension/src/modelProfiles.ts`, add arg builders for `create` (`--from`, `--description`), `rename`, `delete` (`--force` when applied), and `init`. Every write appends `--expect <hash>` when a hash is known. Extend `summarizeModelsResult` with messages for `exists`, `not-found`, `active`, `conflict`, and `invalid`, and expose `dirty` files and a `conflict` flag separately. Extend `extension/test/unit/modelProfiles.test.ts`, keeping the existing quick-pick cases green — verify: `cd extension && npm run test:unit` exits 0
+- [x] 2.2 In `extension/src/modelProfiles.ts`, add arg builders for `create` (`--from`, `--description`), `rename`, `delete` (`--force` when applied), and `init`. Every write appends `--expect <hash>` when a hash is known. Extend `summarizeModelsResult` with messages for `exists`, `not-found`, `active`, `conflict`, and `invalid`, and expose `dirty` files and a `conflict` flag separately. Extend `extension/test/unit/modelProfiles.test.ts`, keeping the existing quick-pick cases green — verify: `cd extension && npm run test:unit` exits 0
 
 ## Phase 3: View, commands, and watchers
 
