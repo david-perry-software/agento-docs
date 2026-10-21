@@ -1,5 +1,5 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/model-profile-crud-cli
 last-updated: 2026-10-21
 next-step: "all steps complete"
