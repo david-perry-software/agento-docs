@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profile-crud-cli
 last-updated: 2026-10-21
-next-step: "4.2 Run the extension regression check"
+next-step: "all steps complete"
 initiative: "model-profile-manager"
 artifact-pr: "#61"
 ```
@@ -92,4 +92,4 @@ artifact-pr: "#61"
   - `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` (install the static v0.10.0 binary to `/tmp` if `shellcheck` is missing, as in plan.md `## Research`).
 
   Record pass counts on this line — 604/604 tests pass, 5 guard smoke replays exit 0, shellcheck 0 findings — verify: every command exits 0, the test count is ≥ 566 plus the new tests, and shellcheck reports no findings (matches the baseline)
-- [ ] 4.2 Run the extension regression check: `cd extension && npm ci && npm run build && npm run typecheck && npm run test:unit && npm run test:electron`, and record unit pass and electron scenario counts on this line — verify: every command exits 0, and `git status --porcelain --untracked-files=all` is empty in both halves after committing
+- [x] 4.2 Run the extension regression check: `cd extension && npm ci && npm run build && npm run typecheck && npm run test:unit && npm run test:electron`, and record unit pass and electron scenario counts on this line — 167 unit tests pass, 4 electron scenarios pass (in-repo, companion, workspace, no-markdown) — verify: every command exits 0, and `git status --porcelain --untracked-files=all` is empty in both halves after committing
