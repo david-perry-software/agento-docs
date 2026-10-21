@@ -2,7 +2,7 @@
 status: in-review
 branch: feature/model-profile-crud-cli
 last-updated: 2026-10-21
-next-step: "all steps complete"
+next-step: "2.8 preserve top-level key order and an existing empty copilotModels on every write (review round 1)"
 initiative: "model-profile-manager"
 artifact-pr: "#61"
 ```
@@ -77,6 +77,7 @@ artifact-pr: "#61"
   7. `models delete b`
 
   Record each status on this line — smoke statuses: 1 ok, 2 ok, 3 dry-run ok + expect ok, 4 ok, 5 ok, 6 ok, 7 ok — verify: every smoke call exits 0 with the expected `status`, `git status --porcelain --untracked-files=all` is empty apart from the intended `scripts/`/`extension/cli/` edits, and `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exits 0
+- [ ] 2.8 (added 2026-10-21) Preserve the file's top-level key order and an existing empty `copilotModels: {}` on every write (review round 1, finding F1). In `scripts/agento.mjs` the `create`/`update`/`rename`/`delete` verbs (lines 4854–4904) build `next` as `{ profiles, copilotModels? }`, so after `models init` (the template is `copilotModels` first) the first CRUD write flips the top-level order to `profiles`, `copilotModels` and drops an empty map, while `reformatted` stays `false` — contradicting plan.md Q4 ("key order kept"), Approach item 1, acceptance item 5, and `docs/model-profiles.md:98`. Build `next` from the parsed file's own key order (e.g. spread `JSON.parse(loaded.raw)` or iterate its `Object.keys`) and keep an existing `copilotModels` key even when empty; `alias set`/`alias remove` and a brand-new file keep `profiles` first. Add tests in `scripts/agento.test.mjs`: `init` then `create` leaves top-level keys `["copilotModels","profiles"]`; a file with `copilotModels: {}` keeps the key after `create`; a `profiles`-first file stays `profiles`-first. Optionally drop the dead `IMPLEMENTED_MODEL_VERBS` scaffold (F3). Then run `cd extension && npm run copy-cli` — verify: `node --test scripts/agento.test.mjs tests/extension-bundle.test.mjs` exits 0 and a manual `AGENTO_CONFIG_HOME=$(mktemp -d)` replay of `models init` → `models create x` keeps `copilotModels` as the first top-level key
 
 ## Phase 3: Command, docs, and release
 
