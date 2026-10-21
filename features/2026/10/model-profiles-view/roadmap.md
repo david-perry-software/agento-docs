@@ -4,6 +4,7 @@ branch: feature/model-profiles-view
 last-updated: 2026-10-21
 next-step: "1.1 Add warnings and targets to models list entries"
 initiative: "model-profile-manager"
+artifact-pr: "#62"
 ```
 
 ## Phase 1: CLI list fields
