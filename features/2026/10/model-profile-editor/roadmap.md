@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/model-profile-editor
 last-updated: 2026-10-21
 next-step: "1.1 Export isPinnablePrompt and add pinnable to models list"
