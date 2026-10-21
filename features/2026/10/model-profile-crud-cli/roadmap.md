@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profile-crud-cli
 last-updated: 2026-10-21
-next-step: "2.2 Add --from/--description/--expect options and the per-verb models spec"
+next-step: "2.3 Implement writeProfiles and models create"
 initiative: "model-profile-manager"
 artifact-pr: "#61"
 ```
@@ -27,7 +27,7 @@ artifact-pr: "#61"
   - `list` reports `copilotModels`.
 
   Then run copy-cli — verify: `node --test scripts/agento.test.mjs tests/extension-bundle.test.mjs` exits 0 and every pre-existing `models` test still passes
-- [ ] 2.2 Add the global options `--from <name>`, `--description <text>`, and `--expect <hash>` (64 lowercase hex) to the argument parser. Replace the `models` arity table with a per-verb spec (positional count, accepted options, writes): `list`, `pins`, `show`, `apply`, `adopt`, `clear`, `init`, `create`, `update`, `rename`, `delete`, `alias set`, `alias remove`. Verbs not yet implemented return a usage error until their step lands. Give `runWith` in `scripts/agento.test.mjs` an optional `input` (spawnSync `input`). Extend the models usage test (around line 3155): an option a verb does not accept, wrong arity for each new verb, a malformed `--expect`, `--from` with no value, and `alias` with an unknown sub-verb each exit 1. Then run copy-cli — verify: `node --test scripts/agento.test.mjs tests/extension-bundle.test.mjs` exits 0
+- [x] 2.2 Add the global options `--from <name>`, `--description <text>`, and `--expect <hash>` (64 lowercase hex) to the argument parser. Replace the `models` arity table with a per-verb spec (positional count, accepted options, writes): `list`, `pins`, `show`, `apply`, `adopt`, `clear`, `init`, `create`, `update`, `rename`, `delete`, `alias set`, `alias remove`. Verbs not yet implemented return a usage error until their step lands. Give `runWith` in `scripts/agento.test.mjs` an optional `input` (spawnSync `input`). Extend the models usage test (around line 3155): an option a verb does not accept, wrong arity for each new verb, a malformed `--expect`, `--from` with no value, and `alias` with an unknown sub-verb each exit 1. Then run copy-cli — verify: `node --test scripts/agento.test.mjs tests/extension-bundle.test.mjs` exits 0
 - [ ] 2.3 Implement `writeProfiles(loaded, next, { expect })` per plan.md `## Approach` item 2: re-read and hash compare (`conflict`), refuse file-level errors (`invalid`, file untouched), re-parse the serialized result, atomic temp-plus-fsync-plus-rename keeping the mode, temp cleanup on failure, and the `written`/`previousHash`/`reformatted`/`activeBefore`/`active` report. Implement `models create <name> [--from] [--description] [--expect]` on top of it. Tests in `scripts/agento.test.mjs`:
   - create on a missing file → a file with only that profile and no placeholders;
   - create empty, with `--from` (deep copy), and with `--description`;
