@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profile-crud-cli
 last-updated: 2026-10-21
-next-step: "2.5 Implement models rename and delete"
+next-step: "2.6 Implement models alias set and alias remove"
 initiative: "model-profile-manager"
 artifact-pr: "#61"
 ```
@@ -50,7 +50,7 @@ artifact-pr: "#61"
   - apply `a`, then update `a` → `active` turns `custom` and `reapply` is set;
 
   then run copy-cli — verify: `node --test scripts/agento.test.mjs tests/extension-bundle.test.mjs` exits 0
-- [ ] 2.5 Implement `models rename <old> <new>` and `models delete <name> [--force]` (both with `--expect`). Rename keeps the position, and `active` follows by content. Deleting the applied profile without `--force` → `status: active` (exit 3, message names `models clear` and `--force`, file byte-identical); with `--force` it deletes and `active` becomes `custom`. Tests:
+- [x] 2.5 Implement `models rename <old> <new>` and `models delete <name> [--force]` (both with `--expect`). Rename keeps the position, and `active` follows by content. Deleting the applied profile without `--force` → `status: active` (exit 3, message names `models clear` and `--force`, file byte-identical); with `--force` it deletes and `active` becomes `custom`. Tests:
   - `not-found` and `exists` for rename;
   - `not-found` for delete;
   - apply `a`, rename `a b` → `active: "b"`;
