@@ -4,6 +4,7 @@ branch: feature/model-profile-editor
 last-updated: 2026-10-21
 next-step: "1.1 Export isPinnablePrompt and add pinnable to models list"
 initiative: "model-profile-manager"
+artifact-pr: "#63"
 ```
 
 ## Phase 1: CLI read fields
