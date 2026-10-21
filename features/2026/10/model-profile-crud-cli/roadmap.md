@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profile-crud-cli
 last-updated: 2026-10-21
-next-step: "2.6 Implement models alias set and alias remove"
+next-step: "2.7 Update usage comment and messages; smoke the real CLI"
 initiative: "model-profile-manager"
 artifact-pr: "#61"
 ```
@@ -58,7 +58,7 @@ artifact-pr: "#61"
   - deleting a non-applied profile succeeds;
 
   then run copy-cli — verify: `node --test scripts/agento.test.mjs tests/extension-bundle.test.mjs` exits 0
-- [ ] 2.6 Implement `models alias set <picker> <id>` and `models alias remove <picker>` (both with `--expect`): `aliasErrors` → `invalid`, unknown picker on remove → `not-found`, and the result reports `copilotModels`. Tests:
+- [x] 2.6 Implement `models alias set <picker> <id>` and `models alias remove <picker>` (both with `--expect`): `aliasErrors` → `invalid`, unknown picker on remove → `not-found`, and the result reports `copilotModels`. Tests:
   - set on a file without `copilotModels`;
   - update an existing alias in place;
   - remove;
