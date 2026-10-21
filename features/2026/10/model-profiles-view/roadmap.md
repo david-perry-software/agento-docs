@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/model-profiles-view
 last-updated: 2026-10-21
-next-step: "5.3 Full lint and test gate"
+next-step: ""
 initiative: "model-profile-manager"
 artifact-pr: "#62"
 ```
