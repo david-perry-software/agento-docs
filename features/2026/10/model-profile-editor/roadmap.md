@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profile-editor
 last-updated: 2026-10-21
-next-step: "6.2 Render harness and save screenshot evidence"
+next-step: "6.3 Confirm the VSIX ships the webview assets"
 initiative: "model-profile-manager"
 artifact-pr: "#63"
 ```
@@ -81,7 +81,7 @@ artifact-pr: "#63"
 ## Phase 6: Visual evidence and packaging
 
 - [x] 6.1 Add `extension/test/webview/profileEditorHarness.html`. It loads `../../media/profileEditor.js` and `.css` with a stubbed `acquireVsCodeApi` and stub theme variables, and posts a fixture `state` covering an error, a warning, a fallback list, a command override, an alias suggestion, and (with `?conflict=1`) the conflict banner. It is not packaged (`test/**` is in `.vscodeignore`) — verify: `cd extension && npm run package` succeeds and `unzip -l agento-*.vsix` does not list `test/webview`
-- [ ] 6.2 Serve `extension/` with `python3 -m http.server 3177 --bind 127.0.0.1`, render `test/webview/profileEditorHarness.html` and `?conflict=1` in a headless browser, and save `evidence/step-6-2-editor-form.png` and `evidence/step-6-2-editor-conflict.png` in this slug directory (companion half), linked from this line. Stop the server afterwards — verify: local:3177, both screenshots show the grouped model choices, a fallback list, a command override, inline errors and warnings, the alias suggestion, and the conflict banner with only Reload; the browser console shows no CSP violations
+- [x] 6.2 Serve `extension/` with `python3 -m http.server 3177 --bind 127.0.0.1`, render `test/webview/profileEditorHarness.html` and `?conflict=1` in a headless browser, and save `evidence/step-6-2-editor-form.png` and `evidence/step-6-2-editor-conflict.png` in this slug directory (companion half), linked from this line. Stop the server afterwards — verify: local:3177, both screenshots show the grouped model choices, a fallback list, a command override, inline errors and warnings, the alias suggestion, and the conflict banner with only Reload; the browser console shows no CSP violations — evidence: ![editor form](evidence/step-6-2-editor-form.png) ![conflict](evidence/step-6-2-editor-conflict.png)
 - [ ] 6.3 Confirm that the VSIX ships the webview assets — verify: `cd extension && npm run package` succeeds, `unzip -l agento-*.vsix` lists `extension/media/profileEditor.js` and `extension/media/profileEditor.css`, `npm run test:vsix` exits 0, and the built `.vsix` is removed afterwards so the tree stays clean
 
 ## Phase 7: Docs, release, and gate
