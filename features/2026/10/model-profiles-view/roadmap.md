@@ -71,10 +71,10 @@ artifact-pr: "#62"
 
   Write only canonical `/agento <name>` command spellings — verify: `node --test tests/customizations.test.mjs` exits 0
 - [x] 5.2 Bump the version to `0.10.0` in `.claude-plugin/plugin.json`, `package.json`, `extension/package.json`, and `extension/package-lock.json` (both version fields, via `npm version 0.10.0 --no-git-tag-version` in `extension/`), and add a `## 0.10.0 (unreleased)` **Added** entry for the Model Profiles view and the new `models list` fields at the top of `CHANGELOG.md` — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exits 0 and `git diff origin/main -- extension/package.json` shows only the version and the view/command/menu contributions
-- [ ] 5.3 Full gate (§5), each run with its status captured:
+- [x] 5.3 Full gate (§5), each run with its status captured:
   - `/tmp/shellcheck-v0.10.0/shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` (download v0.10.0 if absent);
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`;
   - the five guard smoke replays from AGENTS.md;
   - `cd extension && npm ci && npm run build && npm run typecheck && npm run test:unit && xvfb-run -a npm run test:electron`.
 
-  Record the counts in this step's line — verify: shellcheck exits 0 with no findings, at least 607 root tests plus the new ones pass, every guard replay passes, at least 167 unit tests plus the new ones pass, all four electron scenarios pass, and `git status --porcelain --untracked-files=all` is empty in both halves
+  Record the counts in this step's line — verify: shellcheck exits 0 with no findings, at least 607 root tests plus the new ones pass, every guard replay passes, at least 167 unit tests plus the new ones pass, all four electron scenarios pass, and `git status --porcelain --untracked-files=all` is empty in both halves. Recorded 2026-10-21: shellcheck 0 findings; 609/609 root tests; 5/5 guard replays; 182/182 unit tests; 4/4 electron scenarios; both halves clean.
