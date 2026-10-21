@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/model-profile-crud-cli
 last-updated: 2026-10-21
-next-step: "re-run the full gate and set status: in-review"
+next-step: "review round 2 — all steps ticked"
 initiative: "model-profile-manager"
 artifact-pr: "#61"
 ```
