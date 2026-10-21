@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profiles-view
 last-updated: 2026-10-21
-next-step: "3.2 Extract runModelsSelection and implement view commands"
+next-step: "3.3 Add profile file and agent-file watchers"
 initiative: "model-profile-manager"
 artifact-pr: "#62"
 ```
@@ -34,7 +34,7 @@ artifact-pr: "#62"
   - `commandPalette` hiding for the row-only commands.
 
   Register the view in `extension.ts`, add `modelProfiles` to `ExtensionApi`, and reload it with `models list --plugin-root <root>` on every `scheduler.onDidRefresh` behind a latest-wins guard — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exits 0
-- [ ] 3.2 Extract `runModelsSelection(selection)` from `agento.selectModelProfile`. On `dirty`, it shows an error listing the files, with the Open Output and Show in Source Control actions. On success, it reloads the view and calls `scheduler.refreshNow("model profile")`. Implement these commands against it and the Phase 2 helpers, each prompt routed through a `setModelProfilePrompts` hook on `ExtensionApi`:
+- [x] 3.2 Extract `runModelsSelection(selection)` from `agento.selectModelProfile`. On `dirty`, it shows an error listing the files, with the Open Output and Show in Source Control actions. On success, it reloads the view and calls `scheduler.refreshNow("model profile")`. Implement these commands against it and the Phase 2 helpers, each prompt routed through a `setModelProfilePrompts` hook on `ExtensionApi`:
   - `agento.modelProfiles.apply` and `clear`;
   - `new` (name input, then Empty / Copy from…);
   - `duplicate`;
