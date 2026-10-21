@@ -2,14 +2,14 @@
 status: in-progress
 branch: feature/model-profiles-view
 last-updated: 2026-10-21
-next-step: "1.1 Add warnings and targets to models list entries"
+next-step: "1.2 Run copy-cli and document the two new list fields"
 initiative: "model-profile-manager"
 artifact-pr: "#62"
 ```
 
 ## Phase 1: CLI list fields
 
-- [ ] 1.1 In `scripts/agento.mjs` `models list`, add `warnings` (from `tierWarnings` over the resolved targets) and `targets` (`[{ file, value }]` from `state.resolved`, or `[]` when the profile has errors) to each `profiles[]` entry, leaving existing fields unchanged. Add `scripts/agento.test.mjs` cases asserting that both fields equal `models show <name>` for a valid profile, that an invalid profile has `targets: []` and its errors, and that the entry keys keep their existing fields — verify: `node --test scripts/agento.test.mjs` exits 0 with the new cases passing
+- [x] 1.1 In `scripts/agento.mjs` `models list`, add `warnings` (from `tierWarnings` over the resolved targets) and `targets` (`[{ file, value }]` from `state.resolved`, or `[]` when the profile has errors) to each `profiles[]` entry, leaving existing fields unchanged. Add `scripts/agento.test.mjs` cases asserting that both fields equal `models show <name>` for a valid profile, that an invalid profile has `targets: []` and its errors, and that the entry keys keep their existing fields — verify: `node --test scripts/agento.test.mjs` exits 0 with the new cases passing
 - [ ] 1.2 Run `cd extension && npm run copy-cli` and document the two new `list` fields in `docs/model-profiles.md` — verify: `node --test tests/extension-bundle.test.mjs` exits 0
 
 ## Phase 2: Pure model and helpers
