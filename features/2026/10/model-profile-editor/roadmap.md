@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profile-editor
 last-updated: 2026-10-21
-next-step: "2.2 Add updateProfileArgs/aliasSetArgs and summarizeModelsResult cases"
+next-step: "3.1 Add profileEditorModel.ts and its unit tests"
 initiative: "model-profile-manager"
 artifact-pr: "#63"
 ```
@@ -15,7 +15,7 @@ artifact-pr: "#63"
 ## Phase 2: CLI client stdin and arg helpers
 
 - [x] 2.1 In `extension/src/cliClient.ts`, add `input?: string` to `CliRunOptions`. `run` writes it to the child's stdin and ends the stream, and closes stdin immediately when `input` is unset. Extend `extension/test/unit/cliClient.test.ts` with a fixture script that echoes stdin, asserting delivery, and a no-input case that returns promptly — verify: `cd extension && npm run test:unit` exits 0 with the new tests passing
-- [ ] 2.2 In `extension/src/modelProfiles.ts`, add `updateProfileArgs(name, { dryRun, expect })` and `aliasSetArgs(picker, id, expect)`, and extend `summarizeModelsResult` for the `update` (including `reapply`), `rename`, and `alias` results. Extend `extension/test/unit/modelProfiles.test.ts` — verify: `cd extension && npm run test:unit` exits 0
+- [x] 2.2 In `extension/src/modelProfiles.ts`, add `updateProfileArgs(name, { dryRun, expect })` and `aliasSetArgs(picker, id, expect)`, and extend `summarizeModelsResult` for the `update` (including `reapply`), `rename`, and `alias` results. Extend `extension/test/unit/modelProfiles.test.ts` — verify: `cd extension && npm run test:unit` exits 0
 
 ## Phase 3: Pure editor model and HTML
 
