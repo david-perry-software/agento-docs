@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profile-crud-cli
 last-updated: 2026-10-21
-next-step: "3.2 Add Editing profiles docs and update README command row"
+next-step: "3.3 Bump version to 0.9.0 and add CHANGELOG entry"
 initiative: "model-profile-manager"
 artifact-pr: "#61"
 ```
@@ -81,7 +81,7 @@ artifact-pr: "#61"
 ## Phase 3: Command, docs, and release
 
 - [x] 3.1 Update `.github/prompts/models.prompt.md` and copy it byte for byte to `skills/agento/commands/models.md`. Cover `description`, `argument-hint` (every verb), step 1 parsing, and step 3 reporting for `create`/`update`/`rename`/`delete`/`alias`. `update` is driven through `show` (hash) → `update --dry-run` (heredoc stdin) → `update --expect <hash>`. Step 4 covers the findings `exists`/`active`/`conflict`/`invalid`, and the `next:` rules cover `reapply` → `/agento models apply <name>` and other writes → `/agento models`. Never hand-edit the file, and keep `Needs: terminal` — verify: `cmp .github/prompts/models.prompt.md skills/agento/commands/models.md` exits 0 and `node --test tests/customizations.test.mjs` exits 0
-- [ ] 3.2 Add `## Editing profiles` to `docs/model-profiles.md` after "The profiles file". Cover each verb, `profilesFile.hash`/`--expect`/`conflict`, atomic writes and `reformatted`, the active-profile rules (rename follows; delete needs `--force`; update sets `reapply`; clone-scoped), and the exit-3 statuses, and mention `create` next to `init` in "The profiles file". Update the `README.md` command-table row for `/agento models` — verify: `grep -n "## Editing profiles" docs/model-profiles.md` and `grep -n "models.*create" README.md` each print a line, and `node --test tests/customizations.test.mjs` exits 0
+- [x] 3.2 Add `## Editing profiles` to `docs/model-profiles.md` after "The profiles file". Cover each verb, `profilesFile.hash`/`--expect`/`conflict`, atomic writes and `reformatted`, the active-profile rules (rename follows; delete needs `--force`; update sets `reapply`; clone-scoped), and the exit-3 statuses, and mention `create` next to `init` in "The profiles file". Update the `README.md` command-table row for `/agento models` — verify: `grep -n "## Editing profiles" docs/model-profiles.md` and `grep -n "models.*create" README.md` each print a line, and `node --test tests/customizations.test.mjs` exits 0
 - [ ] 3.3 Bump the version to 0.9.0 in `package.json` and `.claude-plugin/plugin.json`, and run `cd extension && npm version 0.9.0 --no-git-tag-version` (updates `extension/package.json` and `extension/package-lock.json`). Add `## 0.9.0 (unreleased)` at the top of `CHANGELOG.md` with an **Added** entry for the CRUD verbs, `--expect`, `profilesFile.hash`, and `copilotModels` on `list` — verify: `grep -n '"version": "0.9.0"' package.json .claude-plugin/plugin.json extension/package.json` prints three lines, `sed -n 1,5p CHANGELOG.md` shows the unreleased heading, and `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exits 0
 
 ## Phase 4: Final gate
