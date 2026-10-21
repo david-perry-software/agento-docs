@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profiles-view
 last-updated: 2026-10-21
-next-step: "5.2 Bump version to 0.10.0 and add changelog entry"
+next-step: "5.3 Full lint and test gate"
 initiative: "model-profile-manager"
 artifact-pr: "#62"
 ```
@@ -70,7 +70,7 @@ artifact-pr: "#62"
   - `docs/model-profiles.md`: a pointer to the view from `## Editing profiles` and `## Applying and clearing`.
 
   Write only canonical `/agento <name>` command spellings — verify: `node --test tests/customizations.test.mjs` exits 0
-- [ ] 5.2 Bump the version to `0.10.0` in `.claude-plugin/plugin.json`, `package.json`, `extension/package.json`, and `extension/package-lock.json` (both version fields, via `npm version 0.10.0 --no-git-tag-version` in `extension/`), and add a `## 0.10.0 (unreleased)` **Added** entry for the Model Profiles view and the new `models list` fields at the top of `CHANGELOG.md` — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exits 0 and `git diff origin/main -- extension/package.json` shows only the version and the view/command/menu contributions
+- [x] 5.2 Bump the version to `0.10.0` in `.claude-plugin/plugin.json`, `package.json`, `extension/package.json`, and `extension/package-lock.json` (both version fields, via `npm version 0.10.0 --no-git-tag-version` in `extension/`), and add a `## 0.10.0 (unreleased)` **Added** entry for the Model Profiles view and the new `models list` fields at the top of `CHANGELOG.md` — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exits 0 and `git diff origin/main -- extension/package.json` shows only the version and the view/command/menu contributions
 - [ ] 5.3 Full gate (§5), each run with its status captured:
   - `/tmp/shellcheck-v0.10.0/shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` (download v0.10.0 if absent);
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`;
