@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profile-editor
 last-updated: 2026-10-21
-next-step: "4.2 Add profileEditorPanel.ts ProfileEditorPanels"
+next-step: "4.3 Wire commands and ExtensionApi profileEditor"
 initiative: "model-profile-manager"
 artifact-pr: "#63"
 ```
@@ -40,7 +40,7 @@ artifact-pr: "#63"
   - posts only schema-conforming messages.
 
   Verify: `cd extension && npm run build && npm run typecheck` exits 0, and `node --check media/profileEditor.js` exits 0
-- [ ] 4.2 Add `extension/src/profileEditorPanel.ts` (`ProfileEditorPanels`), per plan.md `## Approach` item 5:
+- [x] 4.2 Add `extension/src/profileEditorPanel.ts` (`ProfileEditorPanels`), per plan.md `## Approach` item 5:
   - one panel per profile, revealed if already open, with `enableScripts`, `localResourceRoots` set to `media/`, and a `● ` dirty title prefix;
   - load from `models show` and `models list` plus a replaceable `ModelSource` (default `vscode.lm.selectChatModels()`);
   - `validate` runs `update --dry-run` with stdin;
