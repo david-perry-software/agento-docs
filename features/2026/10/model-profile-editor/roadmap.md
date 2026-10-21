@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profile-editor
 last-updated: 2026-10-21
-next-step: "4.1 Add media/profileEditor.js and profileEditor.css"
+next-step: "4.2 Add profileEditorPanel.ts ProfileEditorPanels"
 initiative: "model-profile-manager"
 artifact-pr: "#63"
 ```
@@ -31,7 +31,7 @@ artifact-pr: "#63"
 
 ## Phase 4: Webview, panel host, and commands
 
-- [ ] 4.1 Add `extension/media/profileEditor.js` (`// @ts-check`, plain browser JS) and `extension/media/profileEditor.css` (VS Code theme variables), per plan.md `## Approach` item 4. The script:
+- [x] 4.1 Add `extension/media/profileEditor.js` (`// @ts-check`, plain browser JS) and `extension/media/profileEditor.css` (VS Code theme variables), per plan.md `## Approach` item 4. The script:
   - renders the form from `state`;
   - shows name, description, default, the six agent fields, and the "Command overrides" section with **Add override** over the unused `pinnable.prompts`;
   - gives each value a `<datalist>`-backed input with fallback-list add, remove, and reorder controls;
