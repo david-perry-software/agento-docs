@@ -2,14 +2,14 @@
 status: in-progress
 branch: feature/role-active-profiles
 last-updated: 2026-10-22
-next-step: "1.1 Add rolesFile, parseRoles, serializeRoles, ROLE_BUCKETS, and roleBucket to scripts/model-profiles.mjs with tests"
+next-step: "2.1 Add loadRoles(), writeRoles(), --role option, and list roles fields to scripts/agento.mjs with tests"
 initiative: "model-profile-manager"
 artifact-pr: "#64"
 ```
 
 ## Phase 1: Pure role helpers
 
-- [ ] 1.1 In `scripts/model-profiles.mjs`, add the following, per plan.md `## Approach` item 1:
+- [x] 1.1 In `scripts/model-profiles.mjs`, add the following, per plan.md `## Approach` item 1:
   - `rolesFile(env, home)`: `model-roles.json` in the directory `profilesFile` resolves.
   - `parseRoles(text)`: returns `{ secondary, errors }`. The only allowed key is `secondary`, holding a `[a-z0-9-]+` name or `null`. Non-JSON, a non-object, an unknown key, or a bad value is an error.
   - `serializeRoles(data)`: 2-space JSON plus a trailing newline.
