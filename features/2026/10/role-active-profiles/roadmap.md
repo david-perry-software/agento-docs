@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/role-active-profiles
 last-updated: 2026-10-22
-next-step: "completion: status in-review and hand off to the Reviewer"
+next-step: "review"
 initiative: "model-profile-manager"
 artifact-pr: "#64"
 ```
