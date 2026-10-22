@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/model-profile-editor
-last-updated: 2026-10-21
-next-step: "hand off to Reviewer (request-changes addressed)"
+last-updated: 2026-10-22
+next-step: ""
 initiative: "model-profile-manager"
 artifact-pr: "#63"
 ```
@@ -111,3 +111,7 @@ artifact-pr: "#63"
 - (review.md Follow-ups) Add a DOM-level unit test (jsdom, or the harness driven by the electron runner) that executes `media/profileEditor.js` against each host message type, including `keepDraft`, `conflict`, and `deleted`.
 - (review.md Follow-ups) Consider having `save()` adopt `profilesFile.hash` from the `update` result directly, so the panel does not depend on a `load()` round-trip to learn its own write's hash. (round-2 review, Finding 1) This also closes the residual window where a `change { dirty: true }` arriving during the post-save `load()` cancels it via `loadToken`, leaving the stale hash and a false conflict on the next Save.
 - (round-2 review.md Finding 2) `media/profileEditor.js` `receiveState` resets `errors`/`warnings` on the `keepDraft` refresh too, so Add alias blanks the inline validation of an unchanged draft until the next keystroke; call `scheduleValidate()` (or keep the feedback) on that branch.
+
+## Follow-ups (accepted at ship)
+
+- changelog-unstamped: CHANGELOG.md "## 0.11.0 (unreleased)" will be stamped with today's UTC date in the product — accepted 2026-10-22
