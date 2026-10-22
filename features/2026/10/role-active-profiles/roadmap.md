@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/role-active-profiles
 last-updated: 2026-10-22
-next-step: "review round 3 after the 4.3 version bump (ship audit gap changelog-heading-without-version)"
+next-step: ""
 initiative: "model-profile-manager"
 artifact-pr: "#64"
 ```
@@ -127,3 +127,7 @@ artifact-pr: "#64"
   Recorded (re-run 2026-10-22 after 2.7/2.8): shellcheck v0.10.0 exit 0, no findings; full suite 641/641 pass, exit 0; `tests/extension-bundle.test.mjs` exit 0 — verify: shellcheck exits 0 with no findings (baseline: exit 0, none), the suite exits 0 with every test passing (baseline: 612/612), and `node --test tests/extension-bundle.test.mjs` exits 0
 - [x] 4.2 (unticked 2026-10-22 by review: re-run after 2.7 lands) Integrate `origin/main` into the product branch (sync `merged: false` — `origin/main` already an ancestor, so the full suite 641/641 from 4.1 holds) and the companion `origin/main` into the companion branch, by merge. Re-run the full suite if the merge brought changes, then push both halves — verify: `git status --porcelain --untracked-files=all` prints nothing in either half, both report `ahead: 0` in `node <agento-root>/scripts/agento.mjs session`, and the full suite exits 0
 - [x] 4.3 (added 2026-10-22) Bump `"version"` to `0.12.0` to match the `## 0.12.0 (unreleased)` CHANGELOG heading (the `/agento ship` audit gap `changelog-heading-without-version`), in the same files the previous member's bump touched (`dcbe9ee`): `package.json`, `.claude-plugin/plugin.json`, `extension/package.json`, and `extension/package-lock.json`. `npm version 0.12.0 --no-git-tag-version` reformatted all of `extension/package.json`, so that file was restored and only its version line was edited. The lockfile keeps npm's two version-line changes. Recorded: `git diff --stat` 4 files, 5 lines changed (+5/−5); `node --test tests/customizations.test.mjs tests/publish-replay.test.mjs tests/extension-bundle.test.mjs` 63/63 pass, exit 0 — verify: `grep -n '"version": "0.12.0"' package.json .claude-plugin/plugin.json extension/package.json extension/package-lock.json` matches 5 lines, and those tests exit 0
+
+## Follow-ups (accepted at ship)
+
+- changelog-unstamped: CHANGELOG.md "## 0.12.0 (unreleased)" will be stamped with today's UTC date in the product — accepted 2026-10-22
