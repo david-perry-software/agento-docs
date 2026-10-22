@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profile-editor
 last-updated: 2026-10-21
-next-step: "7.2 Bump version to 0.11.0 and CHANGELOG entry"
+next-step: "7.3 Full gate (§5), each run with its status captured"
 initiative: "model-profile-manager"
 artifact-pr: "#63"
 ```
@@ -92,7 +92,7 @@ artifact-pr: "#63"
   - `extension/README.md` `## Model Profiles`: the editor and the *Agento: Edit Model Profile* entry in the Commands list.
 
   Write only canonical `/agento <name>` command spellings — verify: `node --test tests/customizations.test.mjs` exits 0
-- [ ] 7.2 Bump the version to `0.11.0` in `.claude-plugin/plugin.json`, `package.json`, `extension/package.json`, and `extension/package-lock.json` (both fields, via `npm version 0.11.0 --no-git-tag-version` in `extension/`), and add a `## 0.11.0 (unreleased)` **Added** entry for the model profile editor and the `pinnable`/`body` CLI fields at the top of `CHANGELOG.md` — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exits 0
+- [x] 7.2 Bump the version to `0.11.0` in `.claude-plugin/plugin.json`, `package.json`, `extension/package.json`, and `extension/package-lock.json` (both fields, via `npm version 0.11.0 --no-git-tag-version` in `extension/`), and add a `## 0.11.0 (unreleased)` **Added** entry for the model profile editor and the `pinnable`/`body` CLI fields at the top of `CHANGELOG.md` — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exits 0
 - [ ] 7.3 Full gate (§5), each run with its status captured:
   - `/tmp/shellcheck-v0.10.0/shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` (download v0.10.0 if absent);
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`;
