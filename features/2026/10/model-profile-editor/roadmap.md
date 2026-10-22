@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/model-profile-editor
 last-updated: 2026-10-21
-next-step: "5.2 electron coverage of the real dirty-then-save flow and alias refresh (review request-changes)"
+next-step: "hand off to Reviewer (request-changes addressed)"
 initiative: "model-profile-manager"
 artifact-pr: "#63"
 ```
@@ -103,3 +103,10 @@ artifact-pr: "#63"
   - `cd extension && npm ci && npm run build && npm run typecheck && npm run test:unit && npm run test:electron`.
 
   Counts (2026-10-21): shellcheck exit 0 / 0 findings; root tests 612/612 pass; guard replays 5/5 exit 0; extension unit 201/201 pass; electron 4/4 scenarios pass; both halves clean — verify: shellcheck exits 0 with no findings, at least 609 root tests plus the new ones pass, every guard replay passes, at least 183 unit tests plus the new ones pass, all four electron scenarios pass, and `git status --porcelain --untracked-files=all` is empty in both halves
+
+## Follow-ups
+
+- (review.md Finding 3) `validateRename` is implemented and unit-tested but never called by `save()`; a bad new name reaches the CLI, whose usage error is shown verbatim instead of the friendly message. Wire `validateRename` into `save()` before `renameProfileArgs` (it needs the existing profile names from `models list`).
+- (review.md Finding 4) Dead webview/host contract code: `media/profileEditor.js` `setClean()` is never called and its `saved` message branch handles a message the host never posts. Remove or repurpose them.
+- (review.md Follow-ups) Add a DOM-level unit test (jsdom, or the harness driven by the electron runner) that executes `media/profileEditor.js` against each host message type, including `keepDraft`, `conflict`, and `deleted`.
+- (review.md Follow-ups) Consider having `save()` adopt `profilesFile.hash` from the `update` result directly, so the panel does not depend on a `load()` round-trip to learn its own write's hash.
