@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/chat-model-preselect
 last-updated: 2026-10-22
-next-step: "2.2 Add the models resolve verb and factor the secondary-profile lookup in scripts/agento.mjs"
+next-step: "2.3 Document the models resolve verb and refresh extension/cli"
 initiative: "model-profile-manager"
 artifact-pr: "#66"
 ```
@@ -37,7 +37,7 @@ artifact-pr: "#66"
 ## Phase 2: CLI `models resolve`
 
 - [x] 2.1 Add `splitQualified(value)` → `{ name, vendor }` to `scripts/model-profiles.mjs`, built on `vendorOf`, with tests in `scripts/model-profiles.test.mjs`. Cover a qualified value, an unqualified value (`vendor: null`), a name containing parentheses before the suffix, and non-strings (`null`). — verify: `node --test scripts/model-profiles.test.mjs` exits 0 with the new cases passing
-- [ ] 2.2 In `scripts/agento.mjs`, factor the secondary-profile lookup out of `models pins` into one helper that returns `{ profile, source, warnings, resolved }`. Add the `models resolve <command> [--role primary|secondary]` verb per plan.md `## Approach` item 2.
+- [x] 2.2 In `scripts/agento.mjs`, factor the secondary-profile lookup out of `models pins` into one helper that returns `{ profile, source, warnings, resolved }`. Add the `models resolve <command> [--role primary|secondary]` verb per plan.md `## Approach` item 2.
   - Values come from the role profile's prompt target, or from the file's current `model:` value.
   - The output is `{ command, agent, role, roleSource, windowRole, profile, source, model, qualified, name, vendor, copilotModel, warnings }` plus `modelsReport`.
   - An unknown command returns `not-found` with exit 3. It writes nothing.
