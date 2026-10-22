@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/role-active-profiles
 last-updated: 2026-10-22
 next-step: "1.1 Add rolesFile, parseRoles, serializeRoles, ROLE_BUCKETS, and roleBucket to scripts/model-profiles.mjs with tests"
