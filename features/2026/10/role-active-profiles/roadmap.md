@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/role-active-profiles
 last-updated: 2026-10-22
-next-step: "2.2 Implement models use <name|none> --role <primary|secondary> with the shared apply/adopt/clear tail"
+next-step: "2.3 Implement role-resolved models pins [--role] with currentWindowRole()"
 initiative: "model-profile-manager"
 artifact-pr: "#64"
 ```
@@ -35,7 +35,7 @@ artifact-pr: "#64"
   - `--role` on a verb that does not accept it exits 1.
 
   Then run copy-cli — verify: `node --test scripts/agento.test.mjs tests/extension-bundle.test.mjs` exits 0 and every pre-existing `models` test still passes
-- [ ] 2.2 Implement `models use <name|none> --role <primary|secondary> [--expect]` per plan.md `## Approach` item 5. Factor the apply/adopt/clear tail (`scripts/agento.mjs` from `// apply | adopt | clear`, around line 4954) into a function that `apply`, `adopt`, `clear`, and `use --role primary` share. Reserve `none` in `create` and `rename`. Tests:
+- [x] 2.2 Implement `models use <name|none> --role <primary|secondary> [--expect]` per plan.md `## Approach` item 5. Factor the apply/adopt/clear tail (`scripts/agento.mjs` from `// apply | adopt | clear`, around line 4954) into a function that `apply`, `adopt`, `clear`, and `use --role primary` share. Reserve `none` in `create` and `rename`. Tests:
   - `use a --role secondary` writes `{ "secondary": "a" }` and reports `secondaryBefore`/`roles`/`written`;
   - `use none --role secondary` writes `null`;
   - `use missing --role secondary` → `not-found` (exit 3), and `use bad --role secondary` with an invalid profile → `invalid` (exit 3), both with no roles file written;
