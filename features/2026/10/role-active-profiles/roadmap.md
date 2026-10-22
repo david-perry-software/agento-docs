@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/role-active-profiles
 last-updated: 2026-10-22
-next-step: "2.6 Update usage strings and smoke the real CLI"
+next-step: "3.1 Update models command docs and mirror to models.prompt.md"
 initiative: "model-profile-manager"
 artifact-pr: "#64"
 ```
@@ -74,7 +74,7 @@ artifact-pr: "#64"
   - the existing doctor check-list test (around `scripts/agento.test.mjs:1442`) is unchanged and passes.
 
   Then run copy-cli — verify: `node --test scripts/agento.test.mjs tests/extension-bundle.test.mjs` exits 0
-- [ ] 2.6 Update the header usage comment (`scripts/agento.mjs:32`) and the `models` usage messages to list `use <name|none> --role primary|secondary` and `pins [--role …]`, then run copy-cli. Smoke the real CLI in this build worktree against a throwaway config home, without touching the clone's pins. Run `AGENTO_CONFIG_HOME=$(mktemp -d)`, then in order:
+- [x] 2.6 Update the header usage comment (`scripts/agento.mjs:32`) and the `models` usage messages to list `use <name|none> --role primary|secondary` and `pins [--role …]`, then run copy-cli. Smoke the real CLI in this build worktree against a throwaway config home, without touching the clone's pins. Run `AGENTO_CONFIG_HOME=$(mktemp -d)`, then in order:
   1. `models create a --description primary-ish`
   2. `models create b`, then `models update b` with stdin `{"agents":{"builder":"Claude Opus 5.5 (copilot)","reviewer":["GPT-5 (copilot)","Claude Opus 5.5 (copilot)"]}}`
   3. `models alias set "Claude Opus 5.5 (copilot)" claude-opus-5.5`
@@ -86,7 +86,7 @@ artifact-pr: "#64"
   9. `models use none --role secondary`
   10. `models pins` (expect `source: file-pins`)
 
-  Record each status on this line — smoke statuses: (fill in) — verify: every call returns the expected `status`/fields, `git status --porcelain --untracked-files=all` shows only the intended `scripts/` and `extension/cli/` edits, and `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exits 0
+  Record each status on this line — smoke statuses: 1 ok; 2 create b ok + update b ok; 3 ok; 4 ok (roles.secondary=b); 5 roles={primary:custom,secondary:b}; 6 windowRole=build, role=secondary, source=role-profile, builder.copilotModel=claude-opus-5.5, reviewer.subagentModel="GPT-5 (copilot)"; 7 role=primary, roleSource=flag, source=file-pins; 8 assigned (exit 3); 9 ok (roles.secondary=null); 10 role=secondary, source=file-pins — verify: every call returns the expected `status`/fields, `git status --porcelain --untracked-files=all` shows only the intended `scripts/` and `extension/cli/` edits, and `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exits 0
 
 ## Phase 3: Instructions and docs
 
