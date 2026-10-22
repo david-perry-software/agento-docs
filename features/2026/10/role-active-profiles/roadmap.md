@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/role-active-profiles
 last-updated: 2026-10-22
-next-step: "2.3 Implement role-resolved models pins [--role] with currentWindowRole()"
+next-step: "2.4 Keep roles consistent on rename and delete"
 initiative: "model-profile-manager"
 artifact-pr: "#64"
 ```
@@ -47,7 +47,7 @@ artifact-pr: "#64"
   - `create none` and `rename a none` exit 1.
 
   Then run copy-cli — verify: `node --test scripts/agento.test.mjs tests/extension-bundle.test.mjs` exits 0
-- [ ] 2.3 Implement role-resolved `models pins [--role]` per plan.md `## Approach` item 6. Add `currentWindowRole()`, which calls `deriveRole` with the `sessionContext` inputs, never calls `gh`, and returns `unmanaged` on any failure. Build pins from the secondary profile's resolved agent targets when it applies; otherwise use `modelsPins`. Add `role`, `roleSource`, `windowRole`, `profile`, and `source`, and keep `pins`/`warnings` shaped as today. Tests in `scripts/agento.test.mjs`, using a fixture with a primary checkout plus a managed `plan-<id>` worktree on `feature/x` (role `build`) and a `freehand-<id>` worktree:
+- [x] 2.3 Implement role-resolved `models pins [--role]` per plan.md `## Approach` item 6. Add `currentWindowRole()`, which calls `deriveRole` with the `sessionContext` inputs, never calls `gh`, and returns `unmanaged` on any failure. Build pins from the secondary profile's resolved agent targets when it applies; otherwise use `modelsPins`. Add `role`, `roleSource`, `windowRole`, `profile`, and `source`, and keep `pins`/`warnings` shaped as today. Tests in `scripts/agento.test.mjs`, using a fixture with a primary checkout plus a managed `plan-<id>` worktree on `feature/x` (role `build`) and a `freehand-<id>` worktree:
   - in the build worktree with secondary `b` → `windowRole: "build"`, `role: "secondary"`, `roleSource: "window"`, `source: "role-profile"`, `profile: "b"`, and builder/reviewer `subagentModel` and `copilotModel` from `b` (alias mapped via `copilotModels`, a list taking its first entry);
   - the freehand worktree → also `secondary`;
   - the primary checkout → `role: "primary"`, `source: "file-pins"`;
