@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/role-profile-sidebar
 last-updated: 2026-10-22
-next-step: "2.1 Retitle and register the role commands in package.json"
+next-step: "2.2 Register role commands and make apply/clear/select role-aware"
 initiative: "model-profile-manager"
 artifact-pr: "#65"
 ```
@@ -15,7 +15,7 @@ artifact-pr: "#65"
 
 ## Phase 2: View commands and watchers
 
-- [ ] 2.1 In `extension/package.json`, retitle `agento.modelProfiles.apply` to "Use Here" (inline on rows without `.here`) and `agento.modelProfiles.clear` to "Turn Off for This Window's Role". Add `usePrimary`, `useSecondary`, `offPrimary`, `offSecondary`, and `pickForRole` with icons, the `0_roles` context group `when` clauses on the contextValue tokens, the role rows' inline turn-off on `agento.modelRole.*.on`, and `commandPalette` hiding for every row-only command (plan.md `## Approach` item 6) — verify: `cd extension && npm run build && npm run typecheck` exits 0 and `node -e` over `package.json` lists every new command in `commands`, `view/item/context`, and `commandPalette`
+- [x] 2.1 In `extension/package.json`, retitle `agento.modelProfiles.apply` to "Use Here" (inline on rows without `.here`) and `agento.modelProfiles.clear` to "Turn Off for This Window's Role". Add `usePrimary`, `useSecondary`, `offPrimary`, `offSecondary`, and `pickForRole` with icons, the `0_roles` context group `when` clauses on the contextValue tokens, the role rows' inline turn-off on `agento.modelRole.*.on`, and `commandPalette` hiding for every row-only command (plan.md `## Approach` item 6) — verify: `cd extension && npm run build && npm run typecheck` exits 0 and `node -e` over `package.json` lists every new command in `commands`, `view/item/context`, and `commandPalette`
 - [ ] 2.2 In `extension/src/extension.ts`, derive `windowRole` from `sessionDoctor.current` and rebuild the model-profiles model on every session update. Register the five new commands and make `apply`, `clear`, and `selectModelProfile` role-aware through `runModelsSelection`, passing `rolesFile.hash` on secondary writes. Add `confirmPrimaryChange` to `ModelProfilePrompts` (with its modal default) and call it when `needsPrimaryConfirm` is true. Make Delete confirm with the role names and pass `--force` when assigned — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exits 0
 - [ ] 2.3 Extend `rebuildModelProfileWatchers` to watch `model-roles.json` beside `model-profiles.json`, keyed on `rolesFile.path` too (plan.md `## Approach` item 8) — verify: `cd extension && npm run build && npm run typecheck` exits 0; the watcher refresh itself is asserted in 4.1
 - [ ] 2.4 Replace the editor host's `apply` with `useHere`, wired to `use` for `windowRole`, and relabel the footer button in `extension/media/profileEditor.js` to "Save & Use Here" with the new tooltip, keeping the `saveAndApply` message type. Update any editor unit or harness test that names the label — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exits 0
