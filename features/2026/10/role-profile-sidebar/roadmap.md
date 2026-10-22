@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/role-profile-sidebar
 last-updated: 2026-10-22
-next-step: "5.3 Run the full gate and record the counts"
+next-step: ""
 initiative: "model-profile-manager"
 artifact-pr: "#65"
 ```
