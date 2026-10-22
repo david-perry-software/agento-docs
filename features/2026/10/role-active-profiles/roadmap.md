@@ -2,7 +2,7 @@
 status: in-review
 branch: feature/role-active-profiles
 last-updated: 2026-10-22
-next-step: "review"
+next-step: "2.7 fix the invalid-roles-file remediation (review 2026-10-22 request-changes)"
 initiative: "model-profile-manager"
 artifact-pr: "#64"
 ```
@@ -87,6 +87,11 @@ artifact-pr: "#64"
   10. `models pins` (expect `source: file-pins`)
 
   Record each status on this line — smoke statuses: 1 ok; 2 create b ok + update b ok; 3 ok; 4 ok (roles.secondary=b); 5 roles={primary:custom,secondary:b}; 6 windowRole=build, role=secondary, source=role-profile, builder.copilotModel=claude-opus-5.5, reviewer.subagentModel="GPT-5 (copilot)"; 7 role=primary, roleSource=flag, source=file-pins; 8 assigned (exit 3); 9 ok (roles.secondary=null); 10 role=secondary, source=file-pins — verify: every call returns the expected `status`/fields, `git status --porcelain --untracked-files=all` shows only the intended `scripts/` and `extension/cli/` edits, and `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exits 0
+- [ ] 2.7 (added 2026-10-22) Make the invalid-roles-file remediation work (review.md finding F1). Today `models pins` (`scripts/agento.mjs`, the `roleWarnings` push for `loadedRoles.errors.length`) and doctor's `model-profile` fallback both tell the user to run `models use none --role secondary` when `model-roles.json` is invalid, but `writeRoles` step 2 refuses a current file with errors (`status: "invalid"`, exit 3, file untouched), so the advertised fix is a dead end. Pick one and apply it consistently in `pins`, doctor, `docs/model-profiles.md`, and the tests:
+  - (a) let `models use none --role secondary` (and `use <name> --role secondary`) overwrite an invalid roles file — it is CLI-owned and the write is a full-file replacement, so skip the `invalid` refusal when the *current* file has errors but `--expect` is absent or matches; or
+  - (b) keep the refusal and change the `pins` warning and the doctor fallback for the invalid-file case to name the working remediation only (fix or delete `<rolesFile.path>`), reserving `models use none --role secondary` for the dangling and invalid-profile cases.
+
+  Also make `rename`/`delete` consistent when their follow-up `writeRoles` fails (F2): the emitted object currently carries `status: "ok"` from the profiles write while the exit code is 3; report a distinct status (for example `status: "roles-failed"` with `rolesWrite`) or exit 0 with the `rolesWrite` detail. Tests: `models use none --role secondary` on an invalid roles file behaves per the chosen option; the `pins` invalid-file warning and the doctor invalid-file fallback name a command or action that succeeds; the `rename`/`delete` follow-up-failure status and exit code agree. Then run copy-cli — verify: `node --test scripts/agento.test.mjs tests/extension-bundle.test.mjs` exits 0, and `AGENTO_CONFIG_HOME=$(mktemp -d)` with `{"secondary":"a","extra":1}` in `model-roles.json`: following the `models pins` warning's advice verbatim resolves the warning
 
 ## Phase 3: Instructions and docs
 
@@ -111,9 +116,9 @@ artifact-pr: "#64"
 
 ## Phase 4: Final verification
 
-- [x] 4.1 Run the lint gate and the full suite against the recorded baseline:
+- [ ] 4.1 (unticked 2026-10-22 by review: re-run after 2.7 lands) Run the lint gate and the full suite against the recorded baseline:
   - `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh`, using the v0.10.0 release binary from plan.md `## Research` if `shellcheck` is not installed;
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`.
 
   Recorded: shellcheck exit 0, no findings; full suite 638/638 pass, exit 0; extension-bundle exit 0 — verify: shellcheck exits 0 with no findings (baseline: exit 0, none), the suite exits 0 with every test passing (baseline: 612/612), and `node --test tests/extension-bundle.test.mjs` exits 0
-- [x] 4.2 Integrate `origin/main` into the product branch (no merge changes came in; full suite 638/638 from 4.1 holds) and the companion `origin/main` into the companion branch, by merge. Re-run the full suite if the merge brought changes, then push both halves — verify: `git status --porcelain --untracked-files=all` prints nothing in either half, both report `ahead: 0` in `node <agento-root>/scripts/agento.mjs session`, and the full suite exits 0
+- [ ] 4.2 (unticked 2026-10-22 by review: re-run after 2.7 lands) Integrate `origin/main` into the product branch (no merge changes came in; full suite 638/638 from 4.1 holds) and the companion `origin/main` into the companion branch, by merge. Re-run the full suite if the merge brought changes, then push both halves — verify: `git status --porcelain --untracked-files=all` prints nothing in either half, both report `ahead: 0` in `node <agento-root>/scripts/agento.mjs session`, and the full suite exits 0
