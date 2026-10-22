@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/chat-model-preselect
 last-updated: 2026-10-22
-next-step: "2.3 Document the models resolve verb and refresh extension/cli"
+next-step: "1.2 (manual) Run the model probe M1–M5 in Copilot and Local harnesses"
 initiative: "model-profile-manager"
 artifact-pr: "#66"
 ```
@@ -54,7 +54,7 @@ artifact-pr: "#66"
   - no file changed (`git status --porcelain` empty in the temp clone).
 
   — verify: `node --test scripts/agento.test.mjs scripts/model-profiles.test.mjs` exits 0 and every existing `models pins` test still passes
-- [ ] 2.3 Document the verb:
+- [x] 2.3 Document the verb:
   - the usage comment at `scripts/agento.mjs` L32 (`read: list | pins [--role …] | resolve <command> [--role …] | show <name>`);
   - `.github/prompts/models.prompt.md` and its byte-identical mirror `skills/agento/commands/models.md` (`resolve` as a read verb: report `qualified` and `source`);
   - the `README.md` command table row.
