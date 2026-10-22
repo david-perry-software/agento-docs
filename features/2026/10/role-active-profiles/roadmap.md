@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/role-active-profiles
 last-updated: 2026-10-22
-next-step: "3.3 Update user docs (model-profiles.md, README.md, CHANGELOG.md)"
+next-step: "4.1 Run the lint gate and the full suite against the recorded baseline"
 initiative: "model-profile-manager"
 artifact-pr: "#64"
 ```
@@ -99,7 +99,7 @@ artifact-pr: "#64"
 
   Keep `Needs: terminal` — verify: `diff -q skills/agento/commands/models.md .github/prompts/models.prompt.md` is silent and `node --test tests/customizations.test.mjs` exits 0
 - [x] 3.2 Add one sentence to `skills/agento/SKILL.md` (step 5, Subagent mode) and one to `.github/agents/delivery-autopilot.agent.md` (Preflight step 2). Each says that `models pins` resolves the current window role's profile (the secondary profile in plan, build, and freehand windows; the clone's file pins otherwise), so the call stays as written, without `--role` — verify: `grep -n "window role" skills/agento/SKILL.md .github/agents/delivery-autopilot.agent.md` finds both, and `node --test tests/customizations.test.mjs` exits 0
-- [ ] 3.3 Update the user docs per plan.md `## Approach` item 10:
+- [x] 3.3 Update the user docs per plan.md `## Approach` item 10:
   - **`docs/model-profiles.md`:**
     - add a "Window roles" section covering the buckets, `models use`, `model-roles.json` and its location, `pins` resolution and `--role`, off behavior, rename/delete/`--force`, the reserved `none`, and doctor;
     - replace the "Limits" bullet "One profile is active per clone…" with the role model;
