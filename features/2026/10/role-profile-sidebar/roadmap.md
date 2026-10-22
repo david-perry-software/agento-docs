@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/role-profile-sidebar
 last-updated: 2026-10-22
-next-step: "3.1 Add the banner models line"
+next-step: "4.1 Extend the electron Model Profiles scenario"
 initiative: "model-profile-manager"
 artifact-pr: "#65"
 ```
@@ -22,7 +22,7 @@ artifact-pr: "#65"
 
 ## Phase 3: Window banner
 
-- [ ] 3.1 Add the pure `modelsBannerLine(model)` and the optional `models` field to `createWindowBannerModel`. Render it in `renderWindowBannerHtml` as an escaped `<span class="models">` with one tooltip line, leaving the CSP, `enableScripts: false`, and the single command URI unchanged. Call `applySessionIndicators` on model-profile updates as well as session updates (plan.md `## Approach` item 9). Extend `extension/test/unit/windowBanner.test.ts` for every documented line, `null` when not ready, HTML escaping of a hostile name, and the unchanged CSP — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exits 0
+- [x] 3.1 Add the pure `modelsBannerLine(model)` and the optional `models` field to `createWindowBannerModel`. Render it in `renderWindowBannerHtml` as an escaped `<span class="models">` with one tooltip line, leaving the CSP, `enableScripts: false`, and the single command URI unchanged. Call `applySessionIndicators` on model-profile updates as well as session updates (plan.md `## Approach` item 9). Extend `extension/test/unit/windowBanner.test.ts` for every documented line, `null` when not ready, HTML escaping of a hostile name, and the unchanged CSP — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exits 0
 
 ## Phase 4: Electron coverage
 
