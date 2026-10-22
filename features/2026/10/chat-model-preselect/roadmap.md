@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/chat-model-preselect
 last-updated: 2026-10-22
 next-step: "1.1 Add the model-variant probe to tests/harness-probe/dispatch-probe"
