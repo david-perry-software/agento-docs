@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/role-active-profiles
 last-updated: 2026-10-22
-next-step: "2.4 Keep roles consistent on rename and delete"
+next-step: "2.5 Extend doctor model-profile check to report both roles and warn on dangling/invalid"
 initiative: "model-profile-manager"
 artifact-pr: "#64"
 ```
@@ -58,7 +58,7 @@ artifact-pr: "#64"
   - outside any git repository (cwd = tmp dir) → `windowRole: "unmanaged"`, `role: "primary"`.
 
   Then run copy-cli — verify: `node --test scripts/agento.test.mjs scripts/session-state.test.mjs tests/extension-bundle.test.mjs` exits 0
-- [ ] 2.4 Keep roles consistent on rename and delete per plan.md `## Approach` item 7. Tests:
+- [x] 2.4 Keep roles consistent on rename and delete per plan.md `## Approach` item 7. Tests:
   - with secondary `a`, `rename a b` → the profiles file has `b`, the roles file has `secondary: "b"`, and the result reports `secondaryBefore: "a"`;
   - renaming a non-assigned profile leaves the roles file byte-identical;
   - with secondary `a`, `delete a` → `status: "assigned"` (exit 3), and both files are byte-identical;
