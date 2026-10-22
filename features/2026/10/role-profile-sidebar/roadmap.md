@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/role-profile-sidebar
 last-updated: 2026-10-22
-next-step: "4.1 Extend the electron Model Profiles scenario"
+next-step: "4.2 Cover the secondary-window command path"
 initiative: "model-profile-manager"
 artifact-pr: "#65"
 ```
@@ -26,7 +26,7 @@ artifact-pr: "#65"
 
 ## Phase 4: Electron coverage
 
-- [ ] 4.1 Extend `assertModelProfilesView` in `extension/test/electron/suite.ts` (temp plugin clone and temp `AGENTO_CONFIG_HOME`). It must cover, in order:
+- [x] 4.1 Extend `assertModelProfilesView` in `extension/test/electron/suite.ts` (temp plugin clone and temp `AGENTO_CONFIG_HOME`). It must cover, in order:
   - the two role rows appear first, and the primary window's inline Use Here still applies (the existing apply/clear assertions stay);
   - `useSecondary` on `review` writes `model-roles.json` naming it, and the row shows the `secondary` label;
   - `offSecondary` reads `off`;
