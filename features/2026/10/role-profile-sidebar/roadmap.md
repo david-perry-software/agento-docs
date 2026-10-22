@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/role-profile-sidebar
 last-updated: 2026-10-22
-next-step: "5.2 Bump the version to 0.13.0 and add the changelog entry"
+next-step: "5.3 Run the full gate and record the counts"
 initiative: "model-profile-manager"
 artifact-pr: "#65"
 ```
@@ -41,7 +41,7 @@ artifact-pr: "#65"
 ## Phase 5: Docs, release, and final gate
 
 - [x] 5.1 Update `docs/extension.md` "Model profiles", `extension/README.md` "Model Profiles", and `docs/model-profiles.md` "Window roles" per plan.md `## Approach` item 10. Replace the `applied ·` wording with the role labels, and document Use Here, the role menu, the role rows, Turn Off, the primary confirm, the banner line, and the roles watcher — verify: `node --test tests/*.test.mjs` exits 0 and `grep -n "applied ·" docs/extension.md extension/README.md` prints nothing
-- [ ] 5.2 Bump the version to `0.13.0` in `.claude-plugin/plugin.json`, `package.json`, `extension/package.json`, and `extension/package-lock.json` (via `npm version 0.13.0 --no-git-tag-version` in `extension/`). Add a `## 0.13.0 (unreleased)` entry to `CHANGELOG.md` describing the role-aware sidebar and banner — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exits 0 and `grep -c '"version": "0.13.0"' extension/package.json` prints 1
+- [x] 5.2 Bump the version to `0.13.0` in `.claude-plugin/plugin.json`, `package.json`, `extension/package.json`, and `extension/package-lock.json` (via `npm version 0.13.0 --no-git-tag-version` in `extension/`). Add a `## 0.13.0 (unreleased)` entry to `CHANGELOG.md` describing the role-aware sidebar and banner — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exits 0 and `grep -c '"version": "0.13.0"' extension/package.json` prints 1
 - [ ] 5.3 Run the full gate and record the counts in this line:
   - `/tmp/shellcheck-v0.10.0/shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` (or the same release binary);
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`;
