@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/role-profile-sidebar
 last-updated: 2026-10-22
 next-step: ""
@@ -49,3 +49,7 @@ artifact-pr: "#65"
   - `cd extension && npm ci && npm run build && npm run typecheck && npm run test:unit && DISPLAY=:0 npm run test:electron && npm run package`.
 
   verify: shellcheck exits 0 with no findings, at least 641 root tests plus any new ones pass, every guard replay passes, at least 201 unit tests plus the new ones pass, every electron scenario passes, the VSIX packages, and `git status --porcelain --untracked-files=all` is empty in both halves
+
+## Follow-ups (accepted at ship)
+
+- changelog-unstamped: CHANGELOG.md "## 0.13.0 (unreleased)" will be stamped with today's UTC date in the product — accepted 2026-10-22
