@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/model-profile-editor
 last-updated: 2026-10-21
-next-step: "7.3 Full gate (§5), each run with its status captured"
+next-step: ""
 initiative: "model-profile-manager"
 artifact-pr: "#63"
 ```
@@ -93,10 +93,10 @@ artifact-pr: "#63"
 
   Write only canonical `/agento <name>` command spellings — verify: `node --test tests/customizations.test.mjs` exits 0
 - [x] 7.2 Bump the version to `0.11.0` in `.claude-plugin/plugin.json`, `package.json`, `extension/package.json`, and `extension/package-lock.json` (both fields, via `npm version 0.11.0 --no-git-tag-version` in `extension/`), and add a `## 0.11.0 (unreleased)` **Added** entry for the model profile editor and the `pinnable`/`body` CLI fields at the top of `CHANGELOG.md` — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exits 0
-- [ ] 7.3 Full gate (§5), each run with its status captured:
+- [x] 7.3 Full gate (§5), each run with its status captured:
   - `/tmp/shellcheck-v0.10.0/shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` (download v0.10.0 if absent);
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`;
   - the five guard smoke replays from AGENTS.md;
   - `cd extension && npm ci && npm run build && npm run typecheck && npm run test:unit && npm run test:electron`.
 
-  Record the counts in this step's line — verify: shellcheck exits 0 with no findings, at least 609 root tests plus the new ones pass, every guard replay passes, at least 183 unit tests plus the new ones pass, all four electron scenarios pass, and `git status --porcelain --untracked-files=all` is empty in both halves
+  Counts (2026-10-21): shellcheck exit 0 / 0 findings; root tests 612/612 pass; guard replays 5/5 exit 0; extension unit 201/201 pass; electron 4/4 scenarios pass; both halves clean — verify: shellcheck exits 0 with no findings, at least 609 root tests plus the new ones pass, every guard replay passes, at least 183 unit tests plus the new ones pass, all four electron scenarios pass, and `git status --porcelain --untracked-files=all` is empty in both halves
