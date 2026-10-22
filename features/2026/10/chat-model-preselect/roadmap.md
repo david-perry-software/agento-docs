@@ -1,5 +1,5 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/chat-model-preselect
 last-updated: 2026-10-22
 next-step: "1.2 (manual) Run the model probe M1–M5 in Copilot and Local harnesses"
