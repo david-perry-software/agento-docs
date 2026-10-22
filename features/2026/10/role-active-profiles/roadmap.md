@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/role-active-profiles
 last-updated: 2026-10-22
-next-step: "3.1 Update models command docs and mirror to models.prompt.md"
+next-step: "3.2 Add window-role sentence to SKILL.md and delivery-autopilot.agent.md"
 initiative: "model-profile-manager"
 artifact-pr: "#64"
 ```
@@ -90,7 +90,7 @@ artifact-pr: "#64"
 
 ## Phase 3: Instructions and docs
 
-- [ ] 3.1 Update `skills/agento/commands/models.md`, then copy it byte-for-byte to `.github/prompts/models.prompt.md` (per plan.md `## Approach` item 9):
+- [x] 3.1 Update `skills/agento/commands/models.md`, then copy it byte-for-byte to `.github/prompts/models.prompt.md` (per plan.md `## Approach` item 9):
   - argument shapes for `use <name|none> --role primary|secondary` and `pins [--role …]`;
   - report `roles` for `list`, `role`/`roleSource`/`windowRole`/`profile`/`source` for `pins`, and `secondaryBefore`/`roles` for `use`, `rename`, and `delete`;
   - the `assigned` finding;
