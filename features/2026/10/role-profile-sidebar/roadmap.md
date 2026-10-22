@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/role-profile-sidebar
 last-updated: 2026-10-22
-next-step: "1.2 Add the two pinned role rows and role-aware profile rows"
+next-step: "1.3 Make modelProfiles.ts role-aware"
 initiative: "model-profile-manager"
 artifact-pr: "#65"
 ```
@@ -10,7 +10,7 @@ artifact-pr: "#65"
 ## Phase 1: Pure role model
 
 - [x] 1.1 In `extension/src/modelProfilesTree.ts`, add `ProfileRole`, `windowProfileRole(sessionRole)`, the `windowRole` input of `createModelProfilesModel`, and `model.roles`, parsed from `roles`, `rolesFile`, and `rolesErrors`. `secondaryState` is `on`, `off`, `dangling` (the name is not in `profiles[]`), or `invalid` (`rolesErrors` non-empty). Add `effectiveProfile(model)`, per plan.md `## Approach` items 1–2. Extend `extension/test/unit/modelProfilesTree.test.ts` for every role mapping and every `secondaryState`, including `primary: "custom"` and `null` — verify: `cd extension && npm run typecheck && npm run test:unit` exits 0 with the new cases passing
-- [ ] 1.2 Add the two pinned `{ kind: "role" }` rows to `modelProfilesChildren` and their `modelProfilesItemSpec`, per plan.md `## Approach` item 3: label, assignment description with `· this window`, icon, contextValue `agento.modelRole.<role>.<on|off>`, tooltip, and the `pickForRole` click command spec. Change `profileItemSpec` to role labels, `.here` `pass-filled`, the `.primary`/`.secondary`/`.here`/`.invalid` contextValue tokens, and the Roles tooltip section (item 4). Update the existing `applied` expectations and add cases for each token combination, a dangling role, and an invalid roles file — verify: `cd extension && npm run test:unit` exits 0
+- [x] 1.2 Add the two pinned `{ kind: "role" }` rows to `modelProfilesChildren` and their `modelProfilesItemSpec`, per plan.md `## Approach` item 3: label, assignment description with `· this window`, icon, contextValue `agento.modelRole.<role>.<on|off>`, tooltip, and the `pickForRole` click command spec. Change `profileItemSpec` to role labels, `.here` `pass-filled`, the `.primary`/`.secondary`/`.here`/`.invalid` contextValue tokens, and the Roles tooltip section (item 4). Update the existing `applied` expectations and add cases for each token combination, a dangling role, and an invalid roles file — verify: `cd extension && npm run test:unit` exits 0
 - [ ] 1.3 In `extension/src/modelProfiles.ts`, replace `ModelsSelection` with the `use`/`off` × role union. Make `selectionToArgs` role-aware: primary keeps the exact `apply`/`clear` args; secondary runs `use <name|none> --role secondary` with `--expect <rolesHash>`. Make `toQuickPickItems(listJson, windowRole)` role-aware with the "Turn off" item. Add `use`-verb messages and the `assigned` fallback to `summarizeModelsResult`, and pass `force` to `deleteProfileArgs` for applied or secondary-assigned profiles (item 5). Add a pure `needsPrimaryConfirm(targetRole, windowRole)`. Extend `extension/test/unit/modelProfiles.test.ts` — verify: `cd extension && npm run typecheck && npm run test:unit` exits 0
 
 ## Phase 2: View commands and watchers
