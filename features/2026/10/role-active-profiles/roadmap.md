@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/role-active-profiles
 last-updated: 2026-10-22
-next-step: "2.8 doctor detail reports secondary invalid for an invalid roles file (F3)"
+next-step: "4.1 re-run lint gate and full suite after 2.7/2.8"
 initiative: "model-profile-manager"
 artifact-pr: "#64"
 ```
@@ -95,7 +95,7 @@ artifact-pr: "#64"
 
   Also make `rename`/`delete` consistent when their follow-up `writeRoles` fails (F2): the emitted object currently carries `status: "ok"` from the profiles write while the exit code is 3; report a distinct status (for example `status: "roles-failed"` with `rolesWrite`) or exit 0 with the `rolesWrite` detail. Tests: `models use none --role secondary` on an invalid roles file behaves per the chosen option; the `pins` invalid-file warning and the doctor invalid-file fallback name a command or action that succeeds; the `rename`/`delete` follow-up-failure status and exit code agree. Then run copy-cli — verify: `node --test scripts/agento.test.mjs tests/extension-bundle.test.mjs` exits 0, and `AGENTO_CONFIG_HOME=$(mktemp -d)` with `{"secondary":"a","extra":1}` in `model-roles.json`: following the `models pins` warning's advice verbatim resolves the warning. Smoke statuses (build worktree, throwaway `AGENTO_CONFIG_HOME`, `{"secondary":"a","extra":1}`): pins → warning "run models use none --role secondary"; `use none --role secondary` → ok, written true, rolesErrors []; pins re-run → warnings [] (resolved).
 
-- [ ] 2.8 (added 2026-10-22) Doctor's `model-profile` detail reports the secondary role as `invalid` (not a profile name) when the roles file has errors (review.md finding F3), so the detail agrees with `pins`, which ignores the role in that state. Update `scripts/agento.mjs` `rolesDetail` and the `docs/model-profiles.md` Window roles wording, then run copy-cli — verify: `node --test scripts/agento.test.mjs tests/extension-bundle.test.mjs` exits 0
+- [x] 2.8 (added 2026-10-22) Doctor's `model-profile` detail reports the secondary role as `invalid` (not a profile name) when the roles file has errors (review.md finding F3), so the detail agrees with `pins`, which ignores the role in that state. Update `scripts/agento.mjs` `rolesDetail` and the `docs/model-profiles.md` Window roles wording, then run copy-cli — verify: `node --test scripts/agento.test.mjs tests/extension-bundle.test.mjs` exits 0
 
 ## Phase 3: Instructions and docs
 
