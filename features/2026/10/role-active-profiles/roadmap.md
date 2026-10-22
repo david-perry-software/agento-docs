@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/role-active-profiles
 last-updated: 2026-10-22
-next-step: "2.5 Extend doctor model-profile check to report both roles and warn on dangling/invalid"
+next-step: "2.6 Update usage strings and smoke the real CLI"
 initiative: "model-profile-manager"
 artifact-pr: "#64"
 ```
@@ -67,7 +67,7 @@ artifact-pr: "#64"
   - deleting a non-assigned profile leaves the roles file untouched.
 
   Then run copy-cli — verify: `node --test scripts/agento.test.mjs tests/extension-bundle.test.mjs` exits 0
-- [ ] 2.5 Extend doctor's `model-profile` check per plan.md `## Approach` item 8. The `detail` names `primary: <active|none>; secondary: <name|off>`. A dangling secondary, a secondary profile with errors, and an invalid roles file each → `warn` with a fallback naming `models use none --role secondary` or `models use <name> --role secondary`. Tests:
+- [x] 2.5 Extend doctor's `model-profile` check per plan.md `## Approach` item 8. The `detail` names `primary: <active|none>; secondary: <name|off>`. A dangling secondary, a secondary profile with errors, and an invalid roles file each → `warn` with a fallback naming `models use none --role secondary` or `models use <name> --role secondary`. Tests:
   - healthy with secondary set → `ok`, and the detail names both;
   - dangling → `warn`;
   - invalid roles file → `warn`;
