@@ -79,7 +79,7 @@ artifact-pr: "#63"
   10. *Agento: Edit Model Profile* opens through the stubbed quick pick.
 
   Verify: `cd extension && npm run test:electron` (under `xvfb-run -a` where installed, else on the desktop `DISPLAY`) exits 0 with all four scenarios passing and the in-repo log naming the profile-editor checks, and `git status --porcelain --untracked-files=all` is empty afterwards
-- [ ] 5.2 (added 2026-10-21) Cover the real dirty-then-save flow in `extension/test/electron/suite.ts` `assertModelProfileEditor`: before the saves in checks 4–6 post `change { form, dirty: true }` (as the webview does), then assert that the message posted after each successful save is `state` whose `hash` equals `models show` `profilesFile.hash`, and that a following edit + save succeeds without `conflict`; also assert `addAlias` leaves the panel usable (the posted refresh carries everything `receiveState` renders) — verify: `cd extension && npm run test:electron` exits 0 with the in-repo scenario passing, and the new assertions fail against the pre-4.4/4.5 code
+- [x] 5.2 (added 2026-10-21) Cover the real dirty-then-save flow in `extension/test/electron/suite.ts` `assertModelProfileEditor`: before the saves in checks 4–6 post `change { form, dirty: true }` (as the webview does), then assert that the message posted after each successful save is `state` whose `hash` equals `models show` `profilesFile.hash`, and that a following edit + save succeeds without `conflict`; also assert `addAlias` leaves the panel usable (the posted refresh carries everything `receiveState` renders) — verify: `cd extension && npm run test:electron` exits 0 with the in-repo scenario passing, and the new assertions fail against the pre-4.4/4.5 code
 
 ## Phase 6: Visual evidence and packaging
 
