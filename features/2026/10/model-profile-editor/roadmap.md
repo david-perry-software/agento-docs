@@ -1,5 +1,5 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/model-profile-editor
 last-updated: 2026-10-21
 next-step: ""
