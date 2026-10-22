@@ -2,14 +2,14 @@
 status: in-progress
 branch: feature/chat-model-preselect
 last-updated: 2026-10-22
-next-step: "1.1 Add the model-variant probe to tests/harness-probe/dispatch-probe"
+next-step: "2.1 Add splitQualified(value) to scripts/model-profiles.mjs"
 initiative: "model-profile-manager"
 artifact-pr: "#66"
 ```
 
 ## Phase 1: Probe
 
-- [ ] 1.1 Add the model probe to `tests/harness-probe/dispatch-probe/` per plan.md `## Approach` item 1.
+- [x] 1.1 Add the model probe to `tests/harness-probe/dispatch-probe/` per plan.md `## Approach` item 1.
   - Add a pure `model-variants.js` that exports `buildModelVariants(file, target)` for M1–M5, where `target` is `{ id, vendor, family }`.
   - Add a second command, *Agento Probe: Dispatch with model* (`agentoDispatchProbe.runModelVariant`), in `extension.js` and `package.json`. It logs the `vscode.lm.selectChatModels()` list (`id`, `name`, `vendor`, `family`, `version`) and every `/chat.*model/i` command id to the "Agento Dispatch Probe" channel, asks for a target model, then runs the chosen variant. M5 runs the first discovered model-change command, then V1, and logs `n/a` when there is none.
   - Extend `tests/harness-probe/dispatch-probe.test.mjs`:
