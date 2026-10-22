@@ -4,6 +4,7 @@ branch: feature/role-profile-sidebar
 last-updated: 2026-10-22
 next-step: "1.1 Add windowProfileRole and role parsing to modelProfilesTree.ts"
 initiative: "model-profile-manager"
+artifact-pr: "#65"
 ```
 
 ## Phase 1: Pure role model
