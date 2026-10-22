@@ -120,9 +120,9 @@ artifact-pr: "#64"
 
 ## Phase 4: Final verification
 
-- [ ] 4.1 (unticked 2026-10-22 by review: re-run after 2.7 lands) Run the lint gate and the full suite against the recorded baseline:
+- [x] 4.1 (unticked 2026-10-22 by review: re-run after 2.7 lands) Run the lint gate and the full suite against the recorded baseline:
   - `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh`, using the v0.10.0 release binary from plan.md `## Research` if `shellcheck` is not installed;
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`.
 
-  Recorded: shellcheck exit 0, no findings; full suite 638/638 pass, exit 0; extension-bundle exit 0 — verify: shellcheck exits 0 with no findings (baseline: exit 0, none), the suite exits 0 with every test passing (baseline: 612/612), and `node --test tests/extension-bundle.test.mjs` exits 0
+  Recorded (re-run 2026-10-22 after 2.7/2.8): shellcheck v0.10.0 exit 0, no findings; full suite 641/641 pass, exit 0; `tests/extension-bundle.test.mjs` exit 0 — verify: shellcheck exits 0 with no findings (baseline: exit 0, none), the suite exits 0 with every test passing (baseline: 612/612), and `node --test tests/extension-bundle.test.mjs` exits 0
 - [ ] 4.2 (unticked 2026-10-22 by review: re-run after 2.7 lands) Integrate `origin/main` into the product branch (no merge changes came in; full suite 638/638 from 4.1 holds) and the companion `origin/main` into the companion branch, by merge. Re-run the full suite if the merge brought changes, then push both halves — verify: `git status --porcelain --untracked-files=all` prints nothing in either half, both report `ahead: 0` in `node <agento-root>/scripts/agento.mjs session`, and the full suite exits 0
