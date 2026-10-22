@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/role-profile-sidebar
 last-updated: 2026-10-22
-next-step: "4.2 Cover the secondary-window command path"
+next-step: "5.1 Update the model-profiles docs"
 initiative: "model-profile-manager"
 artifact-pr: "#65"
 ```
@@ -36,7 +36,7 @@ artifact-pr: "#65"
   - `api.windowBanner.html` contains `Models:`.
 
   verify: `cd extension && DISPLAY=:0 npm run test:electron` exits 0 and the scenario log names the role checks
-- [ ] 4.2 Cover the secondary-window path: in the existing stubbed-client scenario that drives the session role to `build` (or in a unit test of the command wiring, if the stub cannot answer `models` calls), assert that Use Here issues `models use <name> --role secondary` and that `usePrimary` calls `confirmPrimaryChange` and writes nothing when it is declined — verify: `cd extension && npm run test:unit && DISPLAY=:0 npm run test:electron` exits 0
+- [x] 4.2 Cover the secondary-window path: in the existing stubbed-client scenario that drives the session role to `build` (or in a unit test of the command wiring, if the stub cannot answer `models` calls), assert that Use Here issues `models use <name> --role secondary` and that `usePrimary` calls `confirmPrimaryChange` and writes nothing when it is declined — verify: `cd extension && npm run test:unit && DISPLAY=:0 npm run test:electron` exits 0
 
 ## Phase 5: Docs, release, and final gate
 
