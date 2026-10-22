@@ -2,7 +2,7 @@
 status: in-review
 branch: feature/model-profile-editor
 last-updated: 2026-10-21
-next-step: ""
+next-step: "4.4 fix the post-save refresh when the draft is dirty (review request-changes)"
 initiative: "model-profile-manager"
 artifact-pr: "#63"
 ```
@@ -61,6 +61,8 @@ artifact-pr: "#63"
   - panels are disposed of with the extension.
 
   Verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exits 0, and `git diff origin/main -- extension/package.json` shows only the new command and its palette entry
+- [ ] 4.4 (added 2026-10-21) Fix the post-save refresh in `extension/src/profileEditorPanel.ts` `save()`: when the webview has reported a dirty draft (`change { dirty: true }`, which `media/profileEditor.js` posts on every keystroke), the `load(currentName)` after a successful `update` returns early on `state.dirty` (line 160), so the panel never re-posts `state`, keeps the stale hash and the `●` marker, and the next Save answers a spurious `conflict` (review.md, Finding 1). Clear `state.dirty` / bump `loadToken` (or adopt `updateJson.profilesFile.hash`) before the reload so the panel posts the new state and hash — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exits 0, and the sequence `change dirty:true → save → change dirty:true → save` through `profileEditor.handleMessage` writes both saves with the posted `state.hash` equal to `models show` `profilesFile.hash` and no `conflict`
+- [ ] 4.5 (added 2026-10-21) Fix the `addAlias` refresh contract between `extension/src/profileEditorPanel.ts` (line 329 posts `{ type: "state", keepDraft: true, name, copilotModels, hash }`) and `media/profileEditor.js` `receiveState` (line 412 assigns the partial message to `state`, then `renderForm()` reads `state.unknownKeys.length` at line 232 and throws `TypeError`, leaving the form blank — review.md, Finding 2). Either post the full state with `keepDraft`, or merge the partial refresh into the existing `state` in the webview — verify: `node --check media/profileEditor.js` exits 0 and the harness (or a unit-level DOM check) posts the `keepDraft` state after the initial `state` with no uncaught error and the form inputs still rendered
 
 ## Phase 5: Electron coverage
 
@@ -77,6 +79,7 @@ artifact-pr: "#63"
   10. *Agento: Edit Model Profile* opens through the stubbed quick pick.
 
   Verify: `cd extension && npm run test:electron` (under `xvfb-run -a` where installed, else on the desktop `DISPLAY`) exits 0 with all four scenarios passing and the in-repo log naming the profile-editor checks, and `git status --porcelain --untracked-files=all` is empty afterwards
+- [ ] 5.2 (added 2026-10-21) Cover the real dirty-then-save flow in `extension/test/electron/suite.ts` `assertModelProfileEditor`: before the saves in checks 4–6 post `change { form, dirty: true }` (as the webview does), then assert that the message posted after each successful save is `state` whose `hash` equals `models show` `profilesFile.hash`, and that a following edit + save succeeds without `conflict`; also assert `addAlias` leaves the panel usable (the posted refresh carries everything `receiveState` renders) — verify: `cd extension && npm run test:electron` exits 0 with the in-repo scenario passing, and the new assertions fail against the pre-4.4/4.5 code
 
 ## Phase 6: Visual evidence and packaging
 
