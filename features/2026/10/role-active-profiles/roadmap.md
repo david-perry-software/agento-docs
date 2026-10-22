@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/role-active-profiles
 last-updated: 2026-10-22
-next-step: "2.1 Add loadRoles(), writeRoles(), --role option, and list roles fields to scripts/agento.mjs with tests"
+next-step: "2.2 Implement models use <name|none> --role <primary|secondary> with the shared apply/adopt/clear tail"
 initiative: "model-profile-manager"
 artifact-pr: "#64"
 ```
@@ -27,7 +27,7 @@ artifact-pr: "#64"
 
 ## Phase 2: CLI
 
-- [ ] 2.1 In `scripts/agento.mjs`, add `loadRoles()` and `writeRoles(loaded, next, { expect })` per plan.md `## Approach` item 2. The writer re-reads and compares (`conflict`), checks `--expect`, refuses an invalid file and leaves it untouched (`invalid`), and writes atomically (`wx` temp named `.model-roles.json.*.tmp`, fsync, rename, mode kept, temp cleanup). Add `--role <value>` to the global option parser (values `primary`/`secondary`; anything else or a missing value is exit 1). Add `role` to the `models` accepted-option check. Make `models list` report `roles: { primary: <active>, secondary }`, `rolesFile`, and `rolesErrors`. Tests in `scripts/agento.test.mjs`:
+- [x] 2.1 In `scripts/agento.mjs`, add `loadRoles()` and `writeRoles(loaded, next, { expect })` per plan.md `## Approach` item 2. The writer re-reads and compares (`conflict`), checks `--expect`, refuses an invalid file and leaves it untouched (`invalid`), and writes atomically (`wx` temp named `.model-roles.json.*.tmp`, fsync, rename, mode kept, temp cleanup). Add `--role <value>` to the global option parser (values `primary`/`secondary`; anything else or a missing value is exit 1). Add `role` to the `models` accepted-option check. Make `models list` report `roles: { primary: <active>, secondary }`, `rolesFile`, and `rolesErrors`. Tests in `scripts/agento.test.mjs`:
   - `list` without a roles file → `roles.secondary: null` and `rolesFile.exists: false`;
   - `list` after `apply a` → `roles.primary: "a"`;
   - an invalid roles file → `rolesErrors` non-empty while `list` still exits 0;
