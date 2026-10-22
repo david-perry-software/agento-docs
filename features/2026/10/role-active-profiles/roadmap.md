@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/role-active-profiles
 last-updated: 2026-10-22
-next-step: "4.1 re-run lint gate and full suite after 2.7/2.8"
+next-step: "review round 2 after request-changes fixes (2.7, 2.8, 4.1, 4.2)"
 initiative: "model-profile-manager"
 artifact-pr: "#64"
 ```
