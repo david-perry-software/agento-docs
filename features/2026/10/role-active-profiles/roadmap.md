@@ -2,7 +2,7 @@
 status: in-review
 branch: feature/role-active-profiles
 last-updated: 2026-10-22
-next-step: "review round 2 after request-changes fixes (2.7, 2.8, 4.1, 4.2)"
+next-step: "review round 3 after the 4.3 version bump (ship audit gap changelog-heading-without-version)"
 initiative: "model-profile-manager"
 artifact-pr: "#64"
 ```
