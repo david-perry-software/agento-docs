@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/chat-model-preselect
 last-updated: 2026-10-23
-next-step: "4.6 (added 2026-10-23) Fix the stale banner hint on a setting change"
+next-step: "4.5 (manual) Run Developer: Reload Window, hover the Window banner, attach a screenshot of the tooltip"
 initiative: "model-profile-manager"
 artifact-pr: "#66"
 ```
@@ -139,10 +139,10 @@ artifact-pr: "#66"
 
   — verify: the `copilot` screenshot's footer shows the command's resolved `copilotModel` and the `local` screenshot's footer shows the resolved `qualified` (both matching `node scripts/agento.mjs models resolve <command> --role secondary`'s `copilotModel`/`qualified`); the `off` screenshot shows the banner tooltip hint; `models list` reports the original `roles.secondary`
 - [x] 4.6 (added 2026-10-23) Fix the stale banner hint on a setting change. `extension/src/extension.ts` L1069–L1074 subscribed to `onDidChangeConfiguration` only for `agento.pluginRoot` / `chat.pluginLocations`, so changing `agento.chatModelPreselect` left the window banner tooltip stale until an unrelated refresh. Rebuild the banner immediately when `event.affectsConfiguration("agento.chatModelPreselect")` fires; factor the pure section filter `affectsPreselectHint(event)` into `extension/src/windowBanner.ts` with a unit test; extend the electron test so changing the setting via `vscode.workspace.getConfiguration("agento").update(...)` updates the banner tooltip hint (off → local → copilot); add a **Fixed** bullet to the CHANGELOG 0.14.0 entry. — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exits 0, and `cd extension && DISPLAY=:0 npm run test:electron` exits 0 with every scenario passing (verified 2026-10-23: build exit 0; typecheck exit 0; 250/250 unit tests pass — 1 new; all four electron scenarios pass, including the banner hint off→local→copilot assertions)
-- [ ] 4.7 (added 2026-10-23) Rerun the full gate after the 4.6 code change and record the counts on this line. Compare against step 4.4 (Shellcheck zero findings; 657 root tests; 249 unit tests; four electron scenarios; `agento-dashboard-0.14.0.vsix` packages; both halves clean):
+- [x] 4.7 (added 2026-10-23) Rerun the full gate after the 4.6 code change and record the counts on this line. Compare against step 4.4 (Shellcheck zero findings; 657 root tests; 249 unit tests; four electron scenarios; `agento-dashboard-0.14.0.vsix` packages; both halves clean):
   - `/tmp/shellcheck-v0.10.0/shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` (or the same release binary);
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`;
   - every guard replay from AGENTS.md (five);
   - `cd extension && npm ci && npm run build && npm run typecheck && npm run test:unit && DISPLAY=:0 npm run test:electron && npm run package`.
 
-  — verify: Shellcheck exits 0 with no findings; at least 657 root tests plus the new ones pass; every guard replay passes; at least 249 unit tests plus the new ones pass; every electron scenario passes; `agento-dashboard-0.14.0.vsix` packages; `git status --porcelain --untracked-files=all` is empty in both halves
+  — verify: Shellcheck exits 0 with no findings; at least 657 root tests plus the new ones pass; every guard replay passes; at least 249 unit tests plus the new ones pass; every electron scenario passes; `agento-dashboard-0.14.0.vsix` packages; `git status --porcelain --untracked-files=all` is empty in both halves (verified 2026-10-23: Shellcheck exit 0, zero findings; 657/657 root tests pass — same as the 4.4 baseline, no new root tests; all five guard replays exit 0; `npm ci` exit 0; build exit 0; typecheck exit 0; 250/250 unit tests pass — 1 above the 249 baseline; all four electron scenarios pass; `agento-dashboard-0.14.0.vsix` packages (57 files); both halves clean)
