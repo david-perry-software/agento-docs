@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/chat-model-preselect
 last-updated: 2026-10-22
-next-step: "4.5 (manual) Setting-based live check"
+next-step: "4.5 (manual) Run the setting-based live check in Copilot and Local and attach screenshots"
 initiative: "model-profile-manager"
 artifact-pr: "#66"
 ```
@@ -128,5 +128,7 @@ artifact-pr: "#66"
   3. Set `agento.chatModelPreselect` to `off`, and screenshot the banner tooltip showing the hint.
 
   The Builder saves the screenshots as `evidence/step-4-5-<case>.png`, restores the previous secondary assignment and the setting, and copies the Agento output-channel `dispatch:` lines into `evidence/step-4-5-dispatch-log.md`.
+
+  Preparation done 2026-10-22 by the Builder: the extension is built (0.14.0); a secondary profile `preselect-live` (default `Claude Opus 5.5 (copilot)`) was created in the registered clone `/home/david/DP/agento-plugin` and assigned with `models use preselect-live --role secondary` (the previous secondary assignment was `null`/off). `models resolve delivery-status --role secondary` now returns `qualified: Claude Opus 5.5 (copilot)`, `copilotModel: claude-opus-5.5` (source `role-profile`). Restore afterwards: `node /home/david/DP/agento-worktrees/plan-20261022-193704/scripts/agento.mjs models use none --role secondary --plugin-root /home/david/DP/agento-plugin` then `node /home/david/DP/agento-worktrees/plan-20261022-193704/scripts/agento.mjs models delete preselect-live --force --plugin-root /home/david/DP/agento-plugin`.
 
   — verify: the `copilot` screenshot's footer shows the command's resolved `copilotModel` and the `local` screenshot's footer shows the resolved `qualified` (both matching `node scripts/agento.mjs models resolve <command> --role secondary`'s `copilotModel`/`qualified`); the `off` screenshot shows the banner tooltip hint; `models list` reports the original `roles.secondary`
