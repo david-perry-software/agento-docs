@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/mission-control-canvas
 last-updated: 2026-10-23
-next-step: "3.1 Implement server.mjs with dispatch safety"
+next-step: "3.2 Implement watch.mjs debounced fs.watch"
 artifact-pr: "#67"
 ```
 
@@ -29,7 +29,7 @@ artifact-pr: "#67"
 
 ## Phase 3: Server, dispatch, and watching
 
-- [ ] 3.1 Implement `server.mjs` on `127.0.0.1:0` with `GET /`, `GET /state`, `GET /events` (SSE `state`/`focus`/`note`), `POST /refresh`, and `POST /dispatch`. Dispatch requires Host `127.0.0.1:<port>`, a same Origin, and `Content-Type: application/json`, and the command must exactly match the live `allowed` union. OPTIONS is refused. Each accepted dispatch calls `send({prompt})` exactly once. Static files are served only from `public/`, with no path traversal. Tests cover every rejection path, a successful dispatch, SSE delivery, and the traversal guard — verify: `node --test canvas/agento-mission-control/server.test.mjs` exits 0
+- [x] 3.1 Implement `server.mjs` on `127.0.0.1:0` with `GET /`, `GET /state`, `GET /events` (SSE `state`/`focus`/`note`), `POST /refresh`, and `POST /dispatch`. Dispatch requires Host `127.0.0.1:<port>`, a same Origin, and `Content-Type: application/json`, and the command must exactly match the live `allowed` union. OPTIONS is refused. Each accepted dispatch calls `send({prompt})` exactly once. Static files are served only from `public/`, with no path traversal. Tests cover every rejection path, a successful dispatch, SSE delivery, and the traversal guard — verify: `node --test canvas/agento-mission-control/server.test.mjs` exits 0
 - [ ] 3.2 Implement `watch.mjs`. It runs a debounced (500 ms) `fs.watch` over the artifact roots (features, issues, initiatives), the product and companion `.git/refs` and `worktrees` directories, and coalesces triggers into a single in-flight refresh. `--pr` refreshes happen only on open, on a manual refresh, and on a 5-minute interval. `stop()` releases every watcher and timer. Tests use temp dirs and an injected clock — verify: `node --test canvas/agento-mission-control/watch.test.mjs` exits 0
 
 ## Phase 4: UI panels (vanilla JS + SVG, no dependencies)
