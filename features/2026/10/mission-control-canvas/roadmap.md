@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/mission-control-canvas
 last-updated: 2026-10-23
-next-step: "6.3 Regenerate the extension CLI copy"
+next-step: "7.1 Add the /agento mission-control command"
 artifact-pr: "#67"
 ```
 
@@ -50,7 +50,7 @@ artifact-pr: "#67"
 
 - [x] 6.1 Extend `harness install|status|uninstall` and add the informational doctor check `canvas` for the link `<extensionsDir>/agento-mission-control` → `<clone>/canvas/agento-mission-control`. `extensionsDir` = `AGENTO_COPILOT_EXTENSIONS_DIR`, else `$COPILOT_HOME/extensions`, else `~/.copilot/extensions`. Reuse `linkState`/`linkType`. Install is idempotent, `--force` covers the canvas link, a real directory is never deleted, uninstall removes the link only when `installed`, and a linked worktree still gets the `worktree` refusal. The JSON gains `canvas: {link, expected, state, target, changed}`, and doctor reports `ok` when installed, otherwise `warn` with the install fallback. Add `AGENTO_COPILOT_EXTENSIONS_DIR` to the test `baseEnv` and add tests for each state and verb — verify: `node --test scripts/agento.test.mjs` exits 0
 - [ ] 6.2 Only if step 1.3 chose a stamped copy: implement copy mode. `install` copies `canvas/agento-mission-control` and writes `.agento-stamp.json` `{format, version, clone, sha256}`. The states are `installed | stale | foreign | not-a-link`. `install` refreshes a stale copy, `uninstall` removes only a stamped copy, and `cli.mjs` reads `clone` from the stamp. Add tests for each. Otherwise mark this step obsolete with the spike reason — verify: `node --test scripts/agento.test.mjs canvas/agento-mission-control/cli.test.mjs` exits 0, or the step is marked obsolete
-- [ ] 6.3 Regenerate the extension's CLI copy — verify: `cd extension && npm run copy-cli` exits 0 and `node --test 'tests/**/*.test.mjs' 'scripts/**/*.test.mjs'` (which includes the byte-copy check) exits 0
+- [x] 6.3 Regenerate the extension's CLI copy — verify: `cd extension && npm run copy-cli` exits 0 and `node --test 'tests/**/*.test.mjs' 'scripts/**/*.test.mjs'` (which includes the byte-copy check) exits 0
 
 ## Phase 7: The `/agento mission-control` command and the sidebar action
 
