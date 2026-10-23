@@ -73,6 +73,22 @@ Inherited from the initiative (breakdown `## Decisions`) and `role-active-profil
 - Changing VS Code or the Copilot harness itself is out of scope. Only the
   extension-dispatch workaround is in scope (follow-up (a)).
 
+- **Q6 (added 2026-10-22): How should preselection ship?** A: `6a` — the user
+  answered verbatim `6a`, which is the recommended option (the Autopilot asked Q6
+  as a numbered question in chat on 2026-10-22 ~20:04, answered 20:05, because the
+  phase 1 probe showed the extension cannot detect which harness a dispatch lands
+  in — see the harness-detection finding in
+  `evidence/step-1-2-model-matrix.md`). The option text, verbatim:
+  "a. (recommended) Opt-in setting. `agento.chatModelPreselect` is `off` by
+  default, or `local` / `copilot`. You set it to the harness you dispatch into.
+  `local` sends `{ vendor, id }` and `copilot` sends `{ id: <Copilot id> }`, the
+  two selectors the probe proved. When it's `off` (or for a harness you don't set),
+  the banner tooltip and a log line name the model to pick by hand. A wrong setting
+  has the side effects above, and the docs say so. Reason: it's the only option
+  that actually automates the Copilot workaround, and nothing changes unless you
+  turn it on."
+  Other options offered: b. Hint only; c. Always on for Local.
+
 ## Research
 
 Skills consulted: none — no matching domain. The repository has no `.agents/skills/`
@@ -324,6 +340,24 @@ so no file overlaps another delivery.
      `extension/package.json`, and `extension/package-lock.json`, and add a `##
      0.14.0 (unreleased)` CHANGELOG entry.
 
+**(added 2026-10-22)** Q6 replaces the per-harness selector rule in items 3–6 with
+an opt-in setting `agento.chatModelPreselect` (`off` default | `local` | `copilot`),
+because the phase 1 probe showed the extension cannot detect which harness a
+dispatch lands in (`evidence/step-1-2-model-matrix.md` "Harness-detection
+finding"). The setting is contributed in `extension/package.json`
+`contributes.configuration` and read with
+`vscode.workspace.getConfiguration("agento")`. `local` sends `{ vendor, id }` from
+an exact `vscode.lm` vendor+name match (unique-unqualified and no-match rules from
+`selectorFor` unchanged; the `copilotModels` fallback is not used for `local`);
+`copilot` sends `{ id: <copilotModel> }` with no `vscode.lm` lookup (a null
+`copilotModel` is a reason naming `agento.mjs models alias set <picker> <id>`);
+`off` sends no selector, logs `dispatch: model for <command>: <qualified> (Copilot
+id <copilotModel|none>) — preselection off; set it in the model picker`, and the
+banner tooltip names the setting and `agento.mjs models resolve <command>`. The Q3
+behavior is unchanged: no selector → log `dispatch: no model for <command>:
+<reason>` and dispatch; a `chat.open` throw with a selector → log and retry once
+without it.
+
 Affected files:
 
 - `scripts/agento.mjs`
@@ -371,6 +405,17 @@ Affected files:
   every `scripts/` change, plus the existing byte-equality tests.
 - **Concurrent deliveries:** none open on 2026-10-22. Integrate `origin/main` by
   merge before every push regardless.
+- **Mismatched-setting and remembered-model side effects (added 2026-10-22).** A
+  `local` setting in a Copilot session falls back to Auto and the agent-host
+  session persists a pending remembered model for later Copilot chats (probe M1);
+  a `copilot` setting in a Local session makes the request fail in chat with "The
+  selected model 'agent-host-copilotcli:<id>' is not available" and `chat.open`
+  does not throw (probe M3), so the throw-based retry cannot catch it. A successful
+  preselection is itself remembered by VS Code for later new chats of that session
+  type (`persistSelection=true`). Mitigation: the setting defaults to `off` (no
+  selector — a banner hint and a `dispatch: model for …` log line name the model to
+  pick by hand), the docs state each value's side effects, and the banner hint names
+  the setting so a mismatched value is discoverable.
 
 No `(manual, post-ship)` exception is planned. Both harnesses run locally on this
 machine.
