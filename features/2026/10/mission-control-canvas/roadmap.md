@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/mission-control-canvas
 last-updated: 2026-10-23
 next-step: "1.1 Create the spike canvas and the dev link"
@@ -7,6 +7,12 @@ artifact-pr: "#67"
 ```
 
 # Roadmap: mission-control-canvas
+
+> Reordering (2026-10-23): per the Autopilot ordering directive, automated steps that
+> do not depend on the manual spike (1.2 → 1.3) run before 1.2. Run order: 1.1, 2.1–2.4,
+> 3.1–3.2, 6.1, 6.3, 7.1–7.2, 8.1–8.2, then 1.2 (manual). Steps 1.3, 4.1–4.7, 5.1, 6.2,
+> and 9.1–9.2 stay after 1.2: they need the spike answers (theme strategy, dispatch
+> label, install mode) or live canvas verification.
 
 ## Phase 1: Spike — de-risk the canvas runtime
 
