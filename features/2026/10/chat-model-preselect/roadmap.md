@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/chat-model-preselect
 last-updated: 2026-10-22
-next-step: "4.4 Run the full gate"
+next-step: "4.5 (manual) Setting-based live check"
 initiative: "model-profile-manager"
 artifact-pr: "#66"
 ```
@@ -115,13 +115,13 @@ artifact-pr: "#66"
 
   — verify: for every harness 1.3 marked as honoring the selector, the screenshot shows the secondary profile's resolved model for the command (matching `node scripts/agento.mjs models resolve <command> --role secondary`'s `qualified`); for every ignoring harness, the tooltip hint is visible; `models list` reports the original `roles.secondary`~ (obsolete: the per-harness live check is undecidable — the extension cannot detect which harness a dispatch lands in; replaced by the setting-based live check in step 4.5)
 - [x] 4.3 Bump the version to `0.14.0` in `.claude-plugin/plugin.json`, `package.json`, `extension/package.json`, and `extension/package-lock.json` (via `npm version 0.14.0 --no-git-tag-version` in `extension/`). Add a `## 0.14.0 (unreleased)` entry to `CHANGELOG.md` covering `models resolve`, dispatch model preselection per the `agento.chatModelPreselect` setting, the fallback log line, and the hint. — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exits 0, and `grep -c '"version": "0.14.0"' extension/package.json` prints 1 (verified 2026-10-22: 657/657 tests pass; grep prints 1)
-- [ ] 4.4 Run the full gate and record the counts on this line. Compare against plan.md `## Research`: Shellcheck exit 0 with zero findings; 641 root tests; 215 unit tests.
+- [x] 4.4 Run the full gate and record the counts on this line. Compare against plan.md `## Research`: Shellcheck exit 0 with zero findings; 641 root tests; 215 unit tests.
   - `/tmp/shellcheck-v0.10.0/shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` (or the same release binary);
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`;
   - every guard replay from AGENTS.md (five);
   - `cd extension && npm ci && npm run build && npm run typecheck && npm run test:unit && DISPLAY=:0 npm run test:electron && npm run package`.
 
-  verify: Shellcheck exits 0 with no findings; at least 641 root tests plus the new ones pass; every guard replay passes; at least 215 unit tests plus the new ones pass; every electron scenario passes; `agento-dashboard-0.14.0.vsix` packages; `git status --porcelain --untracked-files=all` is empty in both halves
+  verify: Shellcheck exits 0 with no findings; at least 641 root tests plus the new ones pass; every guard replay passes; at least 215 unit tests plus the new ones pass; every electron scenario passes; `agento-dashboard-0.14.0.vsix` packages; `git status --porcelain --untracked-files=all` is empty in both halves (verified 2026-10-22: Shellcheck exit 0, zero findings; 657/657 root tests pass — 16 above the 641 baseline; all five guard replays exit 0; 249/249 unit tests pass — 34 above the 215 baseline; all four electron scenarios pass; `agento-dashboard-0.14.0.vsix` packages (57 files); both halves clean)
 - [ ] 4.5 (added 2026-10-22) (manual) The Builder first builds the extension and assigns a secondary profile whose `default` (or the command's agent) differs from the primary pins (`node scripts/agento.mjs models use <name> --role secondary`, recording the previous assignment to restore afterwards). It then launches `code --new-window --extensionDevelopmentPath=<worktree>/extension <a managed build or plan worktree of /home/david/DP/agento>` itself. In that window:
   1. Set `agento.chatModelPreselect` to `copilot`, open a **new** chat with Session Target **Copilot**, click **Delivery Status** (or another dashboard action named by the Builder), and note the model picker and reply footer;
   2. Set `agento.chatModelPreselect` to `local`, open a **new** chat with Session Target **Local**, click the same action, and note the picker and footer;
