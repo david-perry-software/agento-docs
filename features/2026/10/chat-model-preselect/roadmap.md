@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/chat-model-preselect
 last-updated: 2026-10-23
-next-step: "4.5 (manual) Run Developer: Reload Window, hover the Window banner, attach a screenshot of the tooltip"
+next-step: "4.5 (manual) Run Developer: Reload Window in the Extension Development Host, hover the Window banner, attach a screenshot of the tooltip"
 initiative: "model-profile-manager"
 artifact-pr: "#66"
 ```
