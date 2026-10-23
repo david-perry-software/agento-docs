@@ -158,6 +158,15 @@ so no project skill covers the domain.
 - *Ports.* `agento.mjs ports mission-control-canvas` → `WEB_PORT 3103`,
   `API_PORT 4103`.
 
+**Dev link (step 1.1, 2026-10-23).** The spike canvas lives at
+`canvas/agento-mission-control/` in this worktree and is reachable to the local
+Copilot harness through the user-scope dev link
+`~/.copilot/extensions/agento-mission-control` →
+`/home/david/DP/agento-worktrees/plan-20261023-204459/canvas/agento-mission-control`
+(a directory symlink; `COPILOT_HOME` is `/home/david/.copilot`, so the link sits in
+the user-scope discovery directory). It is removed in step 9.2; after release the
+user runs `agento.mjs harness install` on the registered clone instead.
+
 **Lint baseline (policy §5), run 2026-10-23 at `97b2889` (origin/main):**
 
 - `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` → exit 127
