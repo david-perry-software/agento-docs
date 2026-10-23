@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/mission-control-canvas
 last-updated: 2026-10-23
-next-step: "8.1 Document Mission Control"
+next-step: "8.2 Bump the version to 0.15.0 and add the CHANGELOG entry"
 artifact-pr: "#67"
 ```
 
@@ -59,7 +59,7 @@ artifact-pr: "#67"
 
 ## Phase 8: Docs and release notes
 
-- [ ] 8.1 Document Mission Control. In `docs/extension.md`, add a Mission Control section (panels, dispatch rules, title action). In `docs/commands.md`, add `/agento mission-control`. In `docs/install.md` and `docs/copilot-harness.md`, cover the canvas link, `COPILOT_HOME`, `chat.canvases.enabled`, the local Copilot-harness requirement, and re-running `harness install` on the registered clone. In AGENTS.md, add `canvas/` to the layout. In README, add the command and a short feature blurb — verify: `grep -l "mission-control" docs/extension.md docs/commands.md docs/install.md docs/copilot-harness.md AGENTS.md README.md` lists all six files and `node --test tests/customizations.test.mjs` exits 0
+- [x] 8.1 Document Mission Control. In `docs/extension.md`, add a Mission Control section (panels, dispatch rules, title action). In `docs/commands.md`, add `/agento mission-control`. In `docs/install.md` and `docs/copilot-harness.md`, cover the canvas link, `COPILOT_HOME`, `chat.canvases.enabled`, the local Copilot-harness requirement, and re-running `harness install` on the registered clone. In AGENTS.md, add `canvas/` to the layout. In README, add the command and a short feature blurb — verify: `grep -l "mission-control" docs/extension.md docs/commands.md docs/install.md docs/copilot-harness.md AGENTS.md README.md` lists all six files and `node --test tests/customizations.test.mjs` exits 0
 - [ ] 8.2 Bump the version to 0.15.0 in `package.json`, `.claude-plugin/plugin.json`, `extension/package.json`, and `extension/package-lock.json`, and add a CHANGELOG `## 0.15.0` **Added** entry for the canvas, its command, the harness canvas link, and the doctor `canvas` check — verify: `grep -c '"version": "0.15.0"'` matches in the three manifests, `grep -n "## 0.15.0" CHANGELOG.md` matches, and `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` exits 0
 
 ## Phase 9: Live verification and final gate
