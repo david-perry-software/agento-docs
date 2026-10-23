@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/mission-control-canvas
 last-updated: 2026-10-23
-next-step: "1.2 (manual) Enable chat.canvases.enabled and run the spike"
+next-step: "1.2 (manual) Enable chat.canvases.enabled, reload, run the spike in a local Copilot-harness session, and attach evidence/step-1-2-spike-canvas.png with the three answers"
 artifact-pr: "#67"
 ```
 
