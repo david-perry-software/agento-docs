@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/mission-control-canvas
 last-updated: 2026-10-23
-next-step: "2.4 Implement cli.mjs dashboard runner"
+next-step: "3.1 Implement server.mjs with dispatch safety"
 artifact-pr: "#67"
 ```
 
@@ -25,7 +25,7 @@ artifact-pr: "#67"
 - [x] 2.1 Record a sanitized dashboard fixture `canvas/agento-mission-control/fixtures/dashboard.json` from `node scripts/agento.mjs dashboard`, with home paths replaced by `/home/user` and trimmed to fewer than 40 deliveries. It must keep at least one delivery per lane, one paused delivery, one with `elsewhere[]`, one initiative with two waves and a `blockedBy` member, and the metrics events. Add a fixture-shape test `fixtures.test.mjs`, and add `'canvas/**/*.test.mjs'` to the test command in `package.json`, `.github/workflows/ci.yml`, and AGENTS.md — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` exits 0, and `grep -c "canvas/\*\*/\*.test.mjs"` is ≥ 1 in each of the three files
 - [x] 2.2 Implement `snapshot.mjs`: `normalize(dashboard)` returns the lanes, cards, initiative waves/nodes/edges/next, timeline bands with median markers, worktree groups (product and companion, current window marked), and the `allowed` union. `diff(prev, next)` emits status-changed, step-ticked, pr-opened, verdict-recorded, worktree-created/removed, and member-unblocked events. Test it against the fixture and mutated copies — verify: `node --test canvas/agento-mission-control/snapshot.test.mjs` exits 0
 - [x] 2.3 Implement `store.mjs`: the path is `$COPILOT_HOME` (when non-empty) or `~/.copilot`, then `/extension-data/agento-mission-control/<repo-key>.json`. Writes are atomic (unique tmp file plus rename) with `{format: "agento-mission-control", version: 1}`, and shape validation runs on every read. Corrupt or unknown-version files are reported and never overwritten, and the feed history is capped. Tests use a temp `COPILOT_HOME` — verify: `node --test canvas/agento-mission-control/store.test.mjs` exits 0
-- [ ] 2.4 Implement `cli.mjs`. It resolves the clone from `fs.realpathSync(fileURLToPath(import.meta.url))`, then runs `scripts/agento.mjs dashboard [--pr]` with `execFile` in the session working directory with a 30 s timeout and parses the JSON. Concurrent calls coalesce. Spawn errors, timeouts, non-zero exits, and bad JSON map to typed errors. Tests use an injected stub script — verify: `node --test canvas/agento-mission-control/cli.test.mjs` exits 0
+- [x] 2.4 Implement `cli.mjs`. It resolves the clone from `fs.realpathSync(fileURLToPath(import.meta.url))`, then runs `scripts/agento.mjs dashboard [--pr]` with `execFile` in the session working directory with a 30 s timeout and parses the JSON. Concurrent calls coalesce. Spawn errors, timeouts, non-zero exits, and bad JSON map to typed errors. Tests use an injected stub script — verify: `node --test canvas/agento-mission-control/cli.test.mjs` exits 0
 
 ## Phase 3: Server, dispatch, and watching
 
