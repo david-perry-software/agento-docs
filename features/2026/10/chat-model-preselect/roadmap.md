@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/chat-model-preselect
 last-updated: 2026-10-22
-next-step: "4.1 Update the docs"
+next-step: "4.3 Bump the version to 0.14.0"
 initiative: "model-profile-manager"
 artifact-pr: "#66"
 ```
@@ -98,13 +98,13 @@ artifact-pr: "#66"
 
 ## Phase 4: Docs, live check, release, and final gate
 
-- [ ] 4.1 Update the docs per plan.md `## Approach` item 7 and the Q6 decision:
+- [x] 4.1 Update the docs per plan.md `## Approach` item 7 and the Q6 decision:
   - `docs/model-profiles.md`: `resolve` in "Applying and clearing"; "Window roles"; the last paragraph of "Subagents and handoffs" replaced with the shipped behavior (the `agento.chatModelPreselect` setting, which selector each value sends, and the mismatched-setting side effects); "Limits";
   - `docs/extension.md` "Command routing": the `{ query, mode, attachFiles, modelSelector }` contract, the `--role` source, the retry, and the `dispatch: no model for` log line; "Settings": `agento.chatModelPreselect` and which selector each value sends;
   - `docs/copilot-harness.md` "Dispatch": a "Model preselection (chat-model-preselect)" paragraph naming `off`/`local`/`copilot` and the mismatched-setting side effects, linking the matrix;
   - `extension/README.md`.
 
-  — verify: `node --test tests/*.test.mjs` exits 0, and `grep -n "later \`chat-model-preselect\`" docs/model-profiles.md` prints nothing
+  — verify: `node --test tests/*.test.mjs` exits 0, and `grep -n "later \`chat-model-preselect\`" docs/model-profiles.md` prints nothing (verified 2026-10-22: 144/144 tests pass; grep prints nothing)
 - [x] 4.2 ~(manual) The Builder first builds the extension and assigns a secondary profile whose `default` (or the command's agent) differs from the primary pins (`node scripts/agento.mjs models use <name> --role secondary`, recording the previous assignment to restore afterwards). It then launches `code --new-window --extensionDevelopmentPath=<worktree>/extension <a managed build or plan worktree of /home/david/DP/agento>` itself. In that window:
   1. Open a **new** chat with Session Target **Copilot**.
   2. Click **Delivery Status** (or another dashboard action named by the Builder) in the Agento sidebar.
@@ -114,14 +114,6 @@ artifact-pr: "#66"
   Screenshot each result. For a harness 1.3 marked `ignored`, also screenshot the banner tooltip showing the hint. The Builder saves the screenshots as `evidence/step-4-2-<harness>.png`, restores the previous secondary assignment, and copies the Agento output-channel `dispatch:` lines into `evidence/step-4-2-dispatch-log.md`.
 
   — verify: for every harness 1.3 marked as honoring the selector, the screenshot shows the secondary profile's resolved model for the command (matching `node scripts/agento.mjs models resolve <command> --role secondary`'s `qualified`); for every ignoring harness, the tooltip hint is visible; `models list` reports the original `roles.secondary`~ (obsolete: the per-harness live check is undecidable — the extension cannot detect which harness a dispatch lands in; replaced by the setting-based live check in step 4.5)
-- [ ] 4.5 (added 2026-10-22) (manual) The Builder first builds the extension and assigns a secondary profile whose `default` (or the command's agent) differs from the primary pins (`node scripts/agento.mjs models use <name> --role secondary`, recording the previous assignment to restore afterwards). It then launches `code --new-window --extensionDevelopmentPath=<worktree>/extension <a managed build or plan worktree of /home/david/DP/agento>` itself. In that window:
-  1. Set `agento.chatModelPreselect` to `copilot`, open a **new** chat with Session Target **Copilot**, click **Delivery Status** (or another dashboard action named by the Builder), and note the model picker and reply footer;
-  2. Set `agento.chatModelPreselect` to `local`, open a **new** chat with Session Target **Local**, click the same action, and note the picker and footer;
-  3. Set `agento.chatModelPreselect` to `off`, and screenshot the banner tooltip showing the hint.
-
-  The Builder saves the screenshots as `evidence/step-4-5-<case>.png`, restores the previous secondary assignment and the setting, and copies the Agento output-channel `dispatch:` lines into `evidence/step-4-5-dispatch-log.md`.
-
-  — verify: the `copilot` screenshot's footer shows the command's resolved `copilotModel` and the `local` screenshot's footer shows the resolved `qualified` (both matching `node scripts/agento.mjs models resolve <command> --role secondary`'s `copilotModel`/`qualified`); the `off` screenshot shows the banner tooltip hint; `models list` reports the original `roles.secondary`
 - [ ] 4.3 Bump the version to `0.14.0` in `.claude-plugin/plugin.json`, `package.json`, `extension/package.json`, and `extension/package-lock.json` (via `npm version 0.14.0 --no-git-tag-version` in `extension/`). Add a `## 0.14.0 (unreleased)` entry to `CHANGELOG.md` covering `models resolve`, dispatch model preselection per the `agento.chatModelPreselect` setting, the fallback log line, and the hint. — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exits 0, and `grep -c '"version": "0.14.0"' extension/package.json` prints 1
 - [ ] 4.4 Run the full gate and record the counts on this line. Compare against plan.md `## Research`: Shellcheck exit 0 with zero findings; 641 root tests; 215 unit tests.
   - `/tmp/shellcheck-v0.10.0/shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` (or the same release binary);
@@ -130,3 +122,11 @@ artifact-pr: "#66"
   - `cd extension && npm ci && npm run build && npm run typecheck && npm run test:unit && DISPLAY=:0 npm run test:electron && npm run package`.
 
   verify: Shellcheck exits 0 with no findings; at least 641 root tests plus the new ones pass; every guard replay passes; at least 215 unit tests plus the new ones pass; every electron scenario passes; `agento-dashboard-0.14.0.vsix` packages; `git status --porcelain --untracked-files=all` is empty in both halves
+- [ ] 4.5 (added 2026-10-22) (manual) The Builder first builds the extension and assigns a secondary profile whose `default` (or the command's agent) differs from the primary pins (`node scripts/agento.mjs models use <name> --role secondary`, recording the previous assignment to restore afterwards). It then launches `code --new-window --extensionDevelopmentPath=<worktree>/extension <a managed build or plan worktree of /home/david/DP/agento>` itself. In that window:
+  1. Set `agento.chatModelPreselect` to `copilot`, open a **new** chat with Session Target **Copilot**, click **Delivery Status** (or another dashboard action named by the Builder), and note the model picker and reply footer;
+  2. Set `agento.chatModelPreselect` to `local`, open a **new** chat with Session Target **Local**, click the same action, and note the picker and footer;
+  3. Set `agento.chatModelPreselect` to `off`, and screenshot the banner tooltip showing the hint.
+
+  The Builder saves the screenshots as `evidence/step-4-5-<case>.png`, restores the previous secondary assignment and the setting, and copies the Agento output-channel `dispatch:` lines into `evidence/step-4-5-dispatch-log.md`.
+
+  — verify: the `copilot` screenshot's footer shows the command's resolved `copilotModel` and the `local` screenshot's footer shows the resolved `qualified` (both matching `node scripts/agento.mjs models resolve <command> --role secondary`'s `copilotModel`/`qualified`); the `off` screenshot shows the banner tooltip hint; `models list` reports the original `roles.secondary`
