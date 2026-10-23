@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/chat-model-preselect
 last-updated: 2026-10-23
-next-step: "hand off to the Reviewer"
+next-step: ""
 initiative: "model-profile-manager"
 artifact-pr: "#66"
 ```
@@ -146,3 +146,7 @@ artifact-pr: "#66"
   - `cd extension && npm ci && npm run build && npm run typecheck && npm run test:unit && DISPLAY=:0 npm run test:electron && npm run package`.
 
   — verify: Shellcheck exits 0 with no findings; at least 657 root tests plus the new ones pass; every guard replay passes; at least 249 unit tests plus the new ones pass; every electron scenario passes; `agento-dashboard-0.14.0.vsix` packages; `git status --porcelain --untracked-files=all` is empty in both halves (verified 2026-10-23: Shellcheck exit 0, zero findings; 657/657 root tests pass — same as the 4.4 baseline, no new root tests; all five guard replays exit 0; `npm ci` exit 0; build exit 0; typecheck exit 0; 250/250 unit tests pass — 1 above the 249 baseline; all four electron scenarios pass; `agento-dashboard-0.14.0.vsix` packages (57 files); both halves clean)
+
+## Follow-ups (accepted at ship)
+
+- changelog-unstamped: CHANGELOG.md "## 0.14.0 (unreleased)" will be stamped with today's UTC date in the product — accepted 2026-10-23
