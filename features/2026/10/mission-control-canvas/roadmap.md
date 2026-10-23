@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/mission-control-canvas
 last-updated: 2026-10-23
-next-step: "7.2 Add the extension command agento.openMissionControl"
+next-step: "8.1 Document Mission Control"
 artifact-pr: "#67"
 ```
 
@@ -55,7 +55,7 @@ artifact-pr: "#67"
 ## Phase 7: The `/agento mission-control` command and the sidebar action
 
 - [x] 7.1 Add `/agento mission-control`: `"mission-control": ANY` in `WINDOW_ROLES`, `terminal` in `COMMAND_NEEDS`, `.github/prompts/mission-control.prompt.md`, and the `skills/agento/commands/mission-control.md` mirror. The command declares `Needs: terminal`, opens with a preflight, and has the window check `any`. With `open_canvas` available it opens `agento-mission-control` with `instanceId: "mission-control"`. Otherwise it runs `agento.mjs harness status` and explains `chat.canvases.enabled`, the local Copilot-harness session, and the canvas link. Its §9 lines name `next:` `/agento delivery-status`. Add the command to every enumerated list (README, `docs/commands.md`, and the extension command lists) — verify: `node --test tests/customizations.test.mjs scripts/session-state.test.mjs scripts/agento.test.mjs` exits 0 and `node scripts/agento.mjs preflight mission-control` returns `status: ok`
-- [ ] 7.2 Add the extension command `agento.openMissionControl` ("Open Mission Control", `$(dashboard)`): a `view/title` entry on `agento.deliveries` that dispatches `/agento mission-control` through `commandDispatcher`, plus routing and command-list updates and unit tests (registration, menu contribution, dispatched query) and an electron check that the command is registered — verify: `cd extension && npm run typecheck && npm run test:unit && npm run test:electron` exits 0
+- [x] 7.2 Add the extension command `agento.openMissionControl` ("Open Mission Control", `$(dashboard)`): a `view/title` entry on `agento.deliveries` that dispatches `/agento mission-control` through `commandDispatcher`, plus routing and command-list updates and unit tests (registration, menu contribution, dispatched query) and an electron check that the command is registered — verify: `cd extension && npm run typecheck && npm run test:unit && npm run test:electron` exits 0
 
 ## Phase 8: Docs and release notes
 
