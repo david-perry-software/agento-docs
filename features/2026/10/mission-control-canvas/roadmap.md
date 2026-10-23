@@ -3,6 +3,7 @@ status: planned
 branch: feature/mission-control-canvas
 last-updated: 2026-10-23
 next-step: "1.1 Create the spike canvas and the dev link"
+artifact-pr: "#67"
 ```
 
 # Roadmap: mission-control-canvas
