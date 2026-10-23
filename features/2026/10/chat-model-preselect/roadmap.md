@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/chat-model-preselect
 last-updated: 2026-10-22
-next-step: "4.3 Bump the version to 0.14.0"
+next-step: "4.4 Run the full gate"
 initiative: "model-profile-manager"
 artifact-pr: "#66"
 ```
@@ -114,7 +114,7 @@ artifact-pr: "#66"
   Screenshot each result. For a harness 1.3 marked `ignored`, also screenshot the banner tooltip showing the hint. The Builder saves the screenshots as `evidence/step-4-2-<harness>.png`, restores the previous secondary assignment, and copies the Agento output-channel `dispatch:` lines into `evidence/step-4-2-dispatch-log.md`.
 
   — verify: for every harness 1.3 marked as honoring the selector, the screenshot shows the secondary profile's resolved model for the command (matching `node scripts/agento.mjs models resolve <command> --role secondary`'s `qualified`); for every ignoring harness, the tooltip hint is visible; `models list` reports the original `roles.secondary`~ (obsolete: the per-harness live check is undecidable — the extension cannot detect which harness a dispatch lands in; replaced by the setting-based live check in step 4.5)
-- [ ] 4.3 Bump the version to `0.14.0` in `.claude-plugin/plugin.json`, `package.json`, `extension/package.json`, and `extension/package-lock.json` (via `npm version 0.14.0 --no-git-tag-version` in `extension/`). Add a `## 0.14.0 (unreleased)` entry to `CHANGELOG.md` covering `models resolve`, dispatch model preselection per the `agento.chatModelPreselect` setting, the fallback log line, and the hint. — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exits 0, and `grep -c '"version": "0.14.0"' extension/package.json` prints 1
+- [x] 4.3 Bump the version to `0.14.0` in `.claude-plugin/plugin.json`, `package.json`, `extension/package.json`, and `extension/package-lock.json` (via `npm version 0.14.0 --no-git-tag-version` in `extension/`). Add a `## 0.14.0 (unreleased)` entry to `CHANGELOG.md` covering `models resolve`, dispatch model preselection per the `agento.chatModelPreselect` setting, the fallback log line, and the hint. — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'` exits 0, and `grep -c '"version": "0.14.0"' extension/package.json` prints 1 (verified 2026-10-22: 657/657 tests pass; grep prints 1)
 - [ ] 4.4 Run the full gate and record the counts on this line. Compare against plan.md `## Research`: Shellcheck exit 0 with zero findings; 641 root tests; 215 unit tests.
   - `/tmp/shellcheck-v0.10.0/shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` (or the same release binary);
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`;
