@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/chat-model-preselect
 last-updated: 2026-10-23
-next-step: "completion: final sync, confirm gate evidence, set in-review"
+next-step: "hand off to the Reviewer"
 initiative: "model-profile-manager"
 artifact-pr: "#66"
 ```
