@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: feature/chat-model-preselect
-last-updated: 2026-10-22
-next-step: "4.5 (manual) Run the setting-based live check in Copilot and Local and attach screenshots"
+last-updated: 2026-10-23
+next-step: "4.6 (added 2026-10-23) Fix the stale banner hint on a setting change"
 initiative: "model-profile-manager"
 artifact-pr: "#66"
 ```
@@ -131,4 +131,18 @@ artifact-pr: "#66"
 
   Preparation done 2026-10-22 by the Builder: the extension is built (0.14.0); a secondary profile `preselect-live` (default `Claude Opus 5.5 (copilot)`) was created in the registered clone `/home/david/DP/agento-plugin` and assigned with `models use preselect-live --role secondary` (the previous secondary assignment was `null`/off). `models resolve delivery-status --role secondary` now returns `qualified: Claude Opus 5.5 (copilot)`, `copilotModel: claude-opus-5.5` (source `role-profile`). Restore afterwards: `node /home/david/DP/agento-worktrees/plan-20261022-193704/scripts/agento.mjs models use none --role secondary --plugin-root /home/david/DP/agento-plugin` then `node /home/david/DP/agento-worktrees/plan-20261022-193704/scripts/agento.mjs models delete preselect-live --force --plugin-root /home/david/DP/agento-plugin`.
 
+  Recorded 2026-10-23 by the Builder (not ticked — the Off case is outstanding):
+  - **Copilot case — PASS.** Setting `copilot`, new Copilot chat, Show Actions → `/agento delivery-status`: model picker and reply footer show **Claude Opus 5.5** (footer "9:22 AM · Claude Opus 5.5 · 38.4 credits"); renderer.log `2026-10-23 09:21:47.801 event=set-model sessionKey="agent-host-copilotcli" model="agent-host-copilotcli:claude-opus-5.5"` → `09:21:47.818 event=explicit-selection-applied` ([screenshot](evidence/step-4-5-copilot.png)).
+  - **Local case — PASS.** Setting `local`, new Local chat, same action: picker and footer show **Claude Opus 5.5** (footer "9:28 AM · Claude Opus 5.5 · 40.4 credits"); renderer.log `09:23:54.599` and `09:27:23.516 event=set-model sessionKey="local" model="copilot/claude-opus-5.5"` → applied ([screenshot](evidence/step-4-5-local.png)).
+  - The Agento output channel has three `cli: models resolve delivery-status --role secondary --plugin-root /home/david/DP/agento-plugin -> exit 0` dispatches and no `dispatch: no model` line — a selector was sent each time ([dispatch log](evidence/step-4-5-dispatch-log.md)).
+  - **Off case — outstanding.** A phone photo of the banner tooltip under the then-current `local` value shows the correct `local` hint ([photo](evidence/step-4-5-local-tooltip.jpg)); the `off` tooltip screenshot is still needed.
+
   — verify: the `copilot` screenshot's footer shows the command's resolved `copilotModel` and the `local` screenshot's footer shows the resolved `qualified` (both matching `node scripts/agento.mjs models resolve <command> --role secondary`'s `copilotModel`/`qualified`); the `off` screenshot shows the banner tooltip hint; `models list` reports the original `roles.secondary`
+- [x] 4.6 (added 2026-10-23) Fix the stale banner hint on a setting change. `extension/src/extension.ts` L1069–L1074 subscribed to `onDidChangeConfiguration` only for `agento.pluginRoot` / `chat.pluginLocations`, so changing `agento.chatModelPreselect` left the window banner tooltip stale until an unrelated refresh. Rebuild the banner immediately when `event.affectsConfiguration("agento.chatModelPreselect")` fires; factor the pure section filter `affectsPreselectHint(event)` into `extension/src/windowBanner.ts` with a unit test; extend the electron test so changing the setting via `vscode.workspace.getConfiguration("agento").update(...)` updates the banner tooltip hint (off → local → copilot); add a **Fixed** bullet to the CHANGELOG 0.14.0 entry. — verify: `cd extension && npm run build && npm run typecheck && npm run test:unit` exits 0, and `cd extension && DISPLAY=:0 npm run test:electron` exits 0 with every scenario passing (verified 2026-10-23: build exit 0; typecheck exit 0; 250/250 unit tests pass — 1 new; all four electron scenarios pass, including the banner hint off→local→copilot assertions)
+- [ ] 4.7 (added 2026-10-23) Rerun the full gate after the 4.6 code change and record the counts on this line. Compare against step 4.4 (Shellcheck zero findings; 657 root tests; 249 unit tests; four electron scenarios; `agento-dashboard-0.14.0.vsix` packages; both halves clean):
+  - `/tmp/shellcheck-v0.10.0/shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` (or the same release binary);
+  - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'`;
+  - every guard replay from AGENTS.md (five);
+  - `cd extension && npm ci && npm run build && npm run typecheck && npm run test:unit && DISPLAY=:0 npm run test:electron && npm run package`.
+
+  — verify: Shellcheck exits 0 with no findings; at least 657 root tests plus the new ones pass; every guard replay passes; at least 249 unit tests plus the new ones pass; every electron scenario passes; `agento-dashboard-0.14.0.vsix` packages; `git status --porcelain --untracked-files=all` is empty in both halves
