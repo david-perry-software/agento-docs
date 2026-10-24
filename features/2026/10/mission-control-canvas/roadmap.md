@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: in-progress
 branch: feature/mission-control-canvas
 last-updated: 2026-10-24
-next-step: "Builder fix (review round 1, request-changes): /agento build-feature mission-control-canvas — steps 10.1–10.3, then /agento review-feature mission-control-canvas"
+next-step: "10.1 (added 2026-10-24) Add the server.mjs error boundary — review round 1 fixes"
 artifact-pr: "#67"
 ```
 
