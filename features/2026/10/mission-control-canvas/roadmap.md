@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/mission-control-canvas
 last-updated: 2026-10-24
-next-step: "Completion: sync, then set status: in-review and hand off to the Reviewer"
+next-step: "Reviewer: /agento review-feature mission-control-canvas"
 artifact-pr: "#67"
 ```
 
