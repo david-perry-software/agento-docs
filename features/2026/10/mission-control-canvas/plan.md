@@ -197,8 +197,34 @@ user runs `agento.mjs harness install` on the registered clone instead.
   were absent. Fix: pass `remoteSession: "off"` to `joinSession` (the extension
   process has its sensitive env stripped, so remote-export setup during resume fails).
   Step 5.1's wiring must keep the same `remoteSession: "off"` in `joinSession`.
-- (iii) `session.send` submit-vs-fill and theme variables: **still pending** — the
-  spike must be re-run in a brand-new agent-host session after the fix.
+- (iii) `session.send` submit-vs-fill and theme variables: **resolved 2026-10-24** —
+  see the "Spike results" block below.
+
+**Spike results (2026-10-24, step 1.3; evidence `evidence/step-1-2-spike-canvas.png`):**
+
+- (a) Canvas listed / single load: **yes — 1 entry**. `list_canvas_capabilities`
+  returned canvasId `agento-mission-control`, extensionId
+  `user:agento-mission-control`, displayName "Agento Mission Control", one action
+  `ping`. `open_canvas` (instanceId `spike`, input `{}`) returned title
+  "Mission Control (spike)", status "spike probe", url `http://127.0.0.1:38437/`.
+  `invoke_canvas_action ping` returned `{"ok": true, "canvas": "agento-mission-control"}`.
+  The plugin host's staged copy (`~/.config/Code/agentPlugins/file-home-david-DP-agento-plugin/`,
+  latest `1a16a70f607`) has **no `canvas/` directory**, and the single
+  `list_canvas_capabilities` entry confirms the root-level `canvas/` placement is
+  **not double-loaded**.
+- (b) Prompt dispatch: **submitted** (not only filled into the input) — clicking
+  "Send test prompt" ran `/agento delivery-status` as a full chat turn the agent
+  answered; the chat input stayed empty.
+- (c) Theme variables: **not received** — both `--vscode-editor-background` and
+  `--vscode-foreground` computed to `""` in the canvas page.
+- (d) Manifest: **no `copilot-extension.json` needed** — the create-canvas skill only
+  needs `extension.mjs`, and discovery through the user-scope link worked without one.
+
+Resulting choices: install mode **link** (symlinked dir is followed, so the stamped
+copy of Decision 2 is not needed — step 6.2 is obsolete); dispatch button label
+**"Run"** (`session.send` submits); theme strategy **the canvas's own theme**
+(light/dark via `prefers-color-scheme`), not VS Code variables; and **no
+`copilot-extension.json` manifest**.
 
 ## Approach
 
