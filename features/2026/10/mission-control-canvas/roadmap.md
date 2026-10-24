@@ -9,14 +9,15 @@ artifact-pr: "#67"
 # Roadmap: mission-control-canvas
 
 > Reordering (2026-10-23): per the Autopilot ordering directive, automated steps that
-> do not depend on the manual spike (1.2 → 1.3) run before 1.2. Run order: 1.1, 2.1–2.4,
-> 3.1–3.2, 6.1, 6.3, 7.1–7.2, 8.1–8.2, then 1.2 (manual). Steps 1.3, 4.1–4.7, 5.1, 6.2,
+> do not depend on the manual spike (1.2 → 1.3) run before 1.2. Run order: 1.1, 1.4, 2.1–2.4,
+> 3.1–3.2, 6.1, 6.3, 7.1–7.2, 8.1–8.2, 1.4, then 1.2 (manual). Steps 1.3, 4.1–4.7, 5.1, 6.2,
 > and 9.1–9.2 stay after 1.2: they need the spike answers (theme strategy, dispatch
 > label, install mode) or live canvas verification.
 
 ## Phase 1: Spike — de-risk the canvas runtime
 
 - [x] 1.1 Create a spike canvas `canvas/agento-mission-control/extension.mjs`. It uses `createCanvas` with id `agento-mission-control` and one `ping` action. Its `open` serves a probe page on `127.0.0.1:0` that shows the computed `--vscode-editor-background` and `--vscode-foreground` values and has a "Send test prompt" button that calls `session.send({ prompt: "/agento delivery-status" })`. Then create the dev link `~/.copilot/extensions/agento-mission-control` → this worktree's `canvas/agento-mission-control` and record it in plan.md `## Research` — verify: `node --check canvas/agento-mission-control/extension.mjs` exits 0 and `readlink -f ~/.copilot/extensions/agento-mission-control` prints this worktree's canvas path
+- [x] 1.4 (added 2026-10-23) Fix the spike's startup failure: pass `remoteSession: "off"` to `joinSession` (and wrap the join in a try/catch that writes the failure to stderr — never stdout — so the host log names it) — verify: `node --check canvas/agento-mission-control/extension.mjs` exits 0 and a grep shows `remoteSession: "off"`
 - [ ] 1.2 (manual) In VS Code user settings, enable `chat.canvases.enabled` and reload the window. Open a new local Copilot-harness chat session in this worktree window. Ask it to run `list_canvas_capabilities`, `open_canvas agento-mission-control` (instanceId `spike`, input `{}`), and `invoke_canvas_action ping`. Click "Send test prompt". Save a screenshot of the canvas beside the chat as `evidence/step-1-2-spike-canvas.png`, and report: canvas listed (yes/no, how many entries), prompt submitted or only filled into the input, theme variables non-empty (yes/no) — verify: the screenshot is linked on this line and the three answers are recorded
 - [ ] 1.3 Inspect the plugin host's staged copy (`~/.config/Code/agentPlugins/*/`) for a `canvas/` directory and cross-check the entry count from 1.2. Record a "Spike results" block in plan.md `## Research` with an answer for each of the four open risks and the resulting choices: install mode (link, or stamped copy per Decision 2), dispatch button label ("Run" or "Send to chat"), theme strategy (VS Code variables or own theme), and whether a `copilot-extension.json` manifest is needed — verify: `grep -n "Spike results" plan.md` matches and the block has four answer lines
 

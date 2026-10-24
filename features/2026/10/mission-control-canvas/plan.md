@@ -183,6 +183,23 @@ user runs `agento.mjs harness install` on the registered clone instead.
   verified through the PR's CI `Shellcheck` job via `scripts/wait-for-checks.sh pr
   <n>`.
 
+**Spike findings so far (2026-10-23, the step 1.2 attempt):**
+
+- (i) User-scope discovery follows the symlinked dir: **yes**. The Copilot host
+  discovered the spike through `~/.copilot/extensions/agento-mission-control` → this
+  worktree's `canvas/agento-mission-control`, with one
+  `=== launch … module=/home/david/.copilot/extensions/agento-mission-control/extension.mjs ===`
+  per session (extensions launch once per session). No stamped copy is needed so far.
+- (ii) Startup failed on remote session setup. The host log showed
+  `[extension-bootstrap] Failed to load extension: Error: Request session.resume
+  failed … Failed to set up remote session.` → `exit code=1
+  disposition=startup-failure`, so the canvas never registered and the canvas tools
+  were absent. Fix: pass `remoteSession: "off"` to `joinSession` (the extension
+  process has its sensitive env stripped, so remote-export setup during resume fails).
+  Step 5.1's wiring must keep the same `remoteSession: "off"` in `joinSession`.
+- (iii) `session.send` submit-vs-fill and theme variables: **still pending** — the
+  spike must be re-run in a brand-new agent-host session after the fix.
+
 ## Approach
 
 **Layout.** The canvas sits at the repository root in `canvas/agento-mission-control/`,
