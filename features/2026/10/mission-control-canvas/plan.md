@@ -183,6 +183,24 @@ user runs `agento.mjs harness install` on the registered clone instead.
   verified through the PR's CI `Shellcheck` job via `scripts/wait-for-checks.sh pr
   <n>`.
 
+**Final lint comparison (policy §5), run 2026-10-24 on this branch (`47ed100`):**
+
+- `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'`
+  → exit 0, **729/729 pass** (baseline was 657/657; the 72 added tests are the canvas
+  suites plus the harness-canvas cases from steps 2.1 and 6.1).
+- The five guard replays from AGENTS.md (plain, companion, Copilot format, Copilot
+  format + companion, Copilot fixtures) → all exit 0.
+- `cd extension && npm run build && npm run typecheck && npm run test:unit && npm
+  run test:electron` → all exit 0; `typecheck` (`tsc --noEmit`) 0 findings; unit
+  250/250 pass; both electron scenarios pass.
+- `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` → still exit 127
+  locally (`shellcheck: command not found`; not installed and no sudo), unchanged
+  from the baseline. The authority is the PR's CI `Shellcheck` step, which ran inside
+  the green `test` job on PR #130 (`scripts/wait-for-checks.sh pr 130` →
+  `RESULT: success`, pass=1 fail=0 pending=0) — **0 findings vs. the baseline of 0**.
+- No new shell scripts, no ESLint configuration, and no new findings vs. the recorded
+  baseline. The full gate applied (no scoped gate).
+
 **Spike findings so far (2026-10-23, the step 1.2 attempt):**
 
 - (i) User-scope discovery follows the symlinked dir: **yes**. The Copilot host
