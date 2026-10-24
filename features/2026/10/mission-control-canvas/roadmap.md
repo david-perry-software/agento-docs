@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/mission-control-canvas
 last-updated: 2026-10-24
-next-step: "5.1"
+next-step: "6.2"
 artifact-pr: "#67"
 ```
 
@@ -45,7 +45,7 @@ artifact-pr: "#67"
 
 ## Phase 5: Canvas wiring
 
-- [ ] 5.1 Implement `canvas.mjs`, which exports `defineMissionControl({ createCanvas, CanvasError, deps })`. It provides the one-sentence description, the `refresh`, `get_snapshot`, `focus`, and `post_note` actions with their JSON schemas, an idempotent `open(ctx)` per `instanceId` (server, watcher, and store kept per instance and reused on reopen; returns `{title, status, url}`), and an `onClose` that stops the server and watcher. It throws `CanvasError` for `not-found`, `invalid-note`, `storage`, and `cli` failures. Replace the spike `extension.mjs` with wiring only: SDK import, `joinSession`, `session.log`, and no stdout. Tests use a fake `createCanvas` and `CanvasError` — verify: `node --test canvas/agento-mission-control/canvas.test.mjs` exits 0 and `for f in canvas/agento-mission-control/*.mjs canvas/agento-mission-control/public/*.js canvas/agento-mission-control/public/panels/*.js; do node --check "$f" || exit 1; done` exits 0
+- [x] 5.1 Implement `canvas.mjs`, which exports `defineMissionControl({ createCanvas, CanvasError, deps })`. It provides the one-sentence description, the `refresh`, `get_snapshot`, `focus`, and `post_note` actions with their JSON schemas, an idempotent `open(ctx)` per `instanceId` (server, watcher, and store kept per instance and reused on reopen; returns `{title, status, url}`), and an `onClose` that stops the server and watcher. It throws `CanvasError` for `not-found`, `invalid-note`, `storage`, and `cli` failures. Replace the spike `extension.mjs` with wiring only: SDK import, `joinSession`, `session.log`, and no stdout. Tests use a fake `createCanvas` and `CanvasError` — verify: `node --test canvas/agento-mission-control/canvas.test.mjs` exits 0 and `for f in canvas/agento-mission-control/*.mjs canvas/agento-mission-control/public/*.js canvas/agento-mission-control/public/panels/*.js; do node --check "$f" || exit 1; done` exits 0
 
 ## Phase 6: Harness install
 
