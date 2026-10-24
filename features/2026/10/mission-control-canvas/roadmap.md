@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/mission-control-canvas
 last-updated: 2026-10-24
-next-step: "9.1"
+next-step: "9.1 (manual) Run /agento mission-control in a local Copilot-harness session and attach evidence/step-9-1-live-canvas.png with the five checks"
 artifact-pr: "#67"
 ```
 
