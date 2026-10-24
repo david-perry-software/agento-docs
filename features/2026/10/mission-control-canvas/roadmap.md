@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/mission-control-canvas
 last-updated: 2026-10-24
-next-step: "4.6"
+next-step: "4.7"
 artifact-pr: "#67"
 ```
 
@@ -40,7 +40,7 @@ artifact-pr: "#67"
 - [x] 4.3 Build the initiative wave graph panel (`panels/graph.js`): an SVG DAG with one column per wave, edges from `requires` and `recommendedAfter`, glowing `blockedBy` edges, and a pulsing `next` member. Ready members get a "Plan" button only when `/agento new-feature` is in `allowed` — verify: local:3103; the fixture initiative shows two wave columns, a blocked edge, and the next member highlighted; screenshot [evidence/step-4-3-graph.png](evidence/step-4-3-graph.png)
 - [x] 4.4 Build the timeline/Gantt panel (`panels/timeline.js`): one row per delivery with plan/build/review/paused bands from the metrics events, a "now" line for running phases, and median-cycle markers — verify: local:3103; bands render for the fixture deliveries and the now-line appears on an in-progress one; screenshot [evidence/step-4-4-timeline.png](evidence/step-4-4-timeline.png)
 - [x] 4.5 Build the worktree and window map panel (`panels/worktrees.js`): product and companion worktrees grouped by role in role colors, each linked to the delivery it owns, with "This window" highlighted — verify: local:3103; groups match the fixture's `session.worktrees[]` and the current window is highlighted; screenshot [evidence/step-4-5-worktrees.png](evidence/step-4-5-worktrees.png)
-- [ ] 4.6 Build the live activity feed panel (`panels/feed.js`) and focus handling. It shows the persisted feed plus SSE `note` events, and SSE `focus` scrolls to and highlights a node. `dev.mjs` gains `POST /_dev/note` and `POST /_dev/focus` to simulate the agent actions — verify: local:3103; a posted note appears escaped (a `<script>` payload renders as text) and a focus request highlights the target card; screenshot `evidence/step-4-6-feed.png`
+- [x] 4.6 Build the live activity feed panel (`panels/feed.js`) and focus handling. It shows the persisted feed plus SSE `note` events, and SSE `focus` scrolls to and highlights a node. `dev.mjs` gains `POST /_dev/note` and `POST /_dev/focus` to simulate the agent actions — verify: local:3103; a posted note appears escaped (a `<script>` payload renders as text) and a focus request highlights the target card; screenshot [evidence/step-4-6-feed.png](evidence/step-4-6-feed.png)
 - [ ] 4.7 Check accessibility and theming across all panels: keyboard-only navigation reaches every button with visible focus, and the dark scheme, light scheme, and reduced motion all apply via browser emulation — verify: local:3103; screenshots `evidence/step-4-7-light.png` and `evidence/step-4-7-dark.png`, plus a recorded check that animations are off under `prefers-reduced-motion: reduce`
 
 ## Phase 5: Canvas wiring
