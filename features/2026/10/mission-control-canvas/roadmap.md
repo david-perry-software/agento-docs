@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/mission-control-canvas
 last-updated: 2026-10-24
-next-step: "4.1"
+next-step: "4.2"
 artifact-pr: "#67"
 ```
 
@@ -35,7 +35,7 @@ artifact-pr: "#67"
 
 ## Phase 4: UI panels (vanilla JS + SVG, no dependencies)
 
-- [ ] 4.1 Build the page shell. `public/index.html` has landmarks, a region per panel, and an `aria-live` status. `public/styles.css` has the spike's theme strategy, light and dark themes, visible focus, and `prefers-reduced-motion`. `public/app.js` loads `/state`, listens on `EventSource /events`, escapes every value, and posts dispatches as JSON. `public/roles.js` holds the role colors, with a `roles.test.mjs` asserting parity with the `agento.role.*` defaults in `extension/package.json`. `dev.mjs` serves the fixture with a stub session that prints dispatched prompts — verify: `node --test canvas/agento-mission-control/roles.test.mjs` exits 0, and with `node canvas/agento-mission-control/dev.mjs --port 3103` running, `curl -s http://127.0.0.1:3103/state` returns JSON with four lanes (local:3103)
+- [x] 4.1 Build the page shell. `public/index.html` has landmarks, a region per panel, and an `aria-live` status. `public/styles.css` has the spike's theme strategy, light and dark themes, visible focus, and `prefers-reduced-motion`. `public/app.js` loads `/state`, listens on `EventSource /events`, escapes every value, and posts dispatches as JSON. `public/roles.js` holds the role colors, with a `roles.test.mjs` asserting parity with the `agento.role.*` defaults in `extension/package.json`. `dev.mjs` serves the fixture with a stub session that prints dispatched prompts — verify: `node --test canvas/agento-mission-control/roles.test.mjs` exits 0, and with `node canvas/agento-mission-control/dev.mjs --port 3103` running, `curl -s http://127.0.0.1:3103/state` returns JSON with four lanes (local:3103)
 - [ ] 4.2 Build the delivery kanban panel (`panels/board.js`): Planned / Building / In Review / Shipped lanes, and cards with an animated step-progress ring, type badge, PR and companion PR chips, review verdict, the owning worktree in its role color, and a post-ship pending count. `allowed` buttons are enabled with the spike's label. `elsewhere` buttons are disabled with "runs in <window> window" — verify: local:3103 in the integrated browser; clicking an allowed button makes `dev.mjs` print exactly that command, an elsewhere button is disabled; screenshot `evidence/step-4-2-board.png`
 - [ ] 4.3 Build the initiative wave graph panel (`panels/graph.js`): an SVG DAG with one column per wave, edges from `requires` and `recommendedAfter`, glowing `blockedBy` edges, and a pulsing `next` member. Ready members get a "Plan" button only when `/agento new-feature` is in `allowed` — verify: local:3103; the fixture initiative shows two wave columns, a blocked edge, and the next member highlighted; screenshot `evidence/step-4-3-graph.png`
 - [ ] 4.4 Build the timeline/Gantt panel (`panels/timeline.js`): one row per delivery with plan/build/review/paused bands from the metrics events, a "now" line for running phases, and median-cycle markers — verify: local:3103; bands render for the fixture deliveries and the now-line appears on an in-progress one; screenshot `evidence/step-4-4-timeline.png`
