@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/mission-control-canvas
 last-updated: 2026-10-24
-next-step: "Re-run the full gate, integrate origin/main, and return to in-review — review round 1 fixes complete"
+next-step: "Builder fix (review round 2): /agento review-feature mission-control-canvas"
 artifact-pr: "#67"
 ```
 
