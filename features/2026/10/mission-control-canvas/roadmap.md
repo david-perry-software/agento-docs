@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/mission-control-canvas
 last-updated: 2026-10-24
-next-step: "Verdict: approve (review round 2) — /agento ship mission-control-canvas from the primary window"
+next-step: ""
 artifact-pr: "#67"
 ```
 
