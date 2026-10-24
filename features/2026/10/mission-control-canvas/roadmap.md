@@ -2,7 +2,7 @@
 status: in-review
 branch: feature/mission-control-canvas
 last-updated: 2026-10-24
-next-step: "Builder fix (review round 2): /agento review-feature mission-control-canvas"
+next-step: "Verdict: approve (review round 2) — /agento ship mission-control-canvas from the primary window"
 artifact-pr: "#67"
 ```
 
