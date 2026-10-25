@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/ship-merge-refusal-loop
 last-updated: 2026-10-25
-next-step: "6.3 (added 2026-10-25)"
+next-step: ""
 github-issue: "#132"
 artifact-pr: "#68"
 ```
@@ -87,8 +87,8 @@ artifact-pr: "#68"
   - verify: `node --test --test-name-pattern='reopenRoadmap|#132 ship-merge-refusal-loop' scripts/agento.test.mjs` exits 0, and the `node -e` probe `reopenRoadmap(reopenRoadmap(done, { date, codes: ["pr-conflicting"] }), { date, codes: ["checks-failed"] })` contains `Fix the failing required check`.
 - [x] 6.2 (added 2026-10-25) In `scripts/agento.mjs` `blockedMerge`, stop guessing when `ghRequiredContexts` returns `known: false` (review.md Finding 2): the final `merge-blocked` message says the required status checks could not be read from the ruleset/protection endpoints and quotes gh's refusal (first stderr line) when one exists; the `known: true` wordings are unchanged.
   - verify: `node --test --test-name-pattern='#132 ship-merge-refusal-loop' scripts/agento.test.mjs` exits 0, and `grep -n 'could not be read' scripts/agento.mjs` shows the new wording inside `blockedMerge`.
-- [ ] 6.3 (added 2026-10-25) Regenerate `extension/cli` (`cd extension && npm run copy-cli`), re-run the full gate, integrate `origin/main` into both halves with `agento.mjs sync issue ship-merge-refusal-loop`, push, and keep `status: in-review` for the re-review.
-  - verify: `cmp scripts/agento.mjs extension/cli/agento.mjs` and `cmp scripts/delivery-roadmap-resolver.mjs extension/cli/delivery-roadmap-resolver.mjs` exit 0; `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` exits 0 with `# fail 0`; `cd extension && npm run test:unit` exits 0; `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` exits 0; `git status --porcelain --untracked-files=all` is empty in both halves. Record the counts on this line.
+- [x] 6.3 (added 2026-10-25) Regenerate `extension/cli` (`cd extension && npm run copy-cli`), re-run the full gate, integrate `origin/main` into both halves with `agento.mjs sync issue ship-merge-refusal-loop`, push, and keep `status: in-review` for the re-review.
+  - verify: `cmp scripts/agento.mjs extension/cli/agento.mjs` and `cmp scripts/delivery-roadmap-resolver.mjs extension/cli/delivery-roadmap-resolver.mjs` exit 0; `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` exits 0 with `# fail 0`; `cd extension && npm run test:unit` exits 0; `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` exits 0; `git status --porcelain --untracked-files=all` is empty in both halves. Record the counts on this line. — 2026-10-25: cmp 0; node tests # 816 / pass 816 / fail 0; extension test:unit 251/251; shellcheck (0.10.0) exit 0; both halves clean at handoff.
 
 ## Follow-ups
 
