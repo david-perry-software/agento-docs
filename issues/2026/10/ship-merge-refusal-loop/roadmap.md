@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/ship-merge-refusal-loop
 last-updated: 2026-10-25
-next-step: "3.2 confirm build-window derivation needs no session-state change"
+next-step: "3.3 rewrite ship's rejection receipt data for rejections carrying rejectTo"
 github-issue: "#132"
 artifact-pr: "#68"
 ```
@@ -49,7 +49,7 @@ artifact-pr: "#68"
   - Point `next-step` at the first new step. Keep the accepted-at-ship removal and keep the function idempotent.
   - Update the existing `reopenRoadmap` unit tests in `scripts/agento.test.mjs` (around L7070-L7090) to the new output.
   - verify: `node --test --test-name-pattern='reopenRoadmap|#132 ship-merge-refusal-loop' scripts/agento.test.mjs` passes 1.1(b) and 1.1(c) on the roadmap assertions.
-- [ ] 3.2 Confirm the build-window derivation needs no `session-state.mjs` change: `in-progress` gives lifecycle `building`, and `next` derives `build-<type>` even with a stale `Verdict: approve` in review.md. If it does need a change, make the minimal one in `scripts/session-state.mjs` and add a focused case in `scripts/session-state.test.mjs`.
+- [x] 3.2 Confirm the build-window derivation needs no `session-state.mjs` change: `in-progress` gives lifecycle `building`, and `next` derives `build-<type>` even with a stale `Verdict: approve` in review.md. If it does need a change, make the minimal one in `scripts/session-state.mjs` and add a focused case in `scripts/session-state.test.mjs`. — 2026-10-25: confirmed no change needed; `in-progress` → `building` → `build-<type>` already holds, and 1.1(b)'s `next`/`allowed` assertions pass.
   - verify: `node --test scripts/session-state.test.mjs` exits 0, and 1.1(b)'s `next` and `allowed` assertions pass.
 - [ ] 3.3 Rewrite ship's rejection receipt data for rejections carrying `rejectTo` (the reopens and `integration-conflict`).
   - Set `allowed` to `deriveAllowed({ role: "primary", lifecycle: <post-reopen lifecycle>, delivery })`.
