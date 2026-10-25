@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/ship-merge-refusal-loop
 last-updated: 2026-10-25
-next-step: "5.2 live read-only classification of soshiki #541 into evidence"
+next-step: "5.3 integrate origin/main, write plan.md Resolution, and set status in-review"
 github-issue: "#132"
 artifact-pr: "#68"
 ```
@@ -76,7 +76,7 @@ artifact-pr: "#68"
 
 - [x] 5.1 Run the full gate.
   - verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` exits 0 with `# fail 0` (baseline 808/808 plus the new tests). `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` exits 0, using the ShellCheck release binary when it is not on PATH. Record both on this line. — 2026-10-25: tests # 815 / pass 815 / fail 0 (baseline 808 + 7 new); shellcheck (ShellCheck 0.10.0) exit 0, no findings.
-- [ ] 5.2 Do a live read-only check against the real case. Feed `gh api repos/david-perry-software/soshiki/rules/branches/main` (plus the classic protection, which is 404) and the `statusCheckRollup` of david-perry-software/soshiki#541's head into the `scripts/merge-state.mjs` helpers through `node -e`. Never run `gh pr merge`. Save the output as `evidence/step-5-2-soshiki-541-classification.txt`.
+- [x] 5.2 Do a live read-only check against the real case. Feed `gh api repos/david-perry-software/soshiki/rules/branches/main` (plus the classic protection, which is 404) and the `statusCheckRollup` of david-perry-software/soshiki#541's head into the `scripts/merge-state.mjs` helpers through `node -e`. Never run `gh pr merge`. Save the output as `evidence/step-5-2-soshiki-541-classification.txt`. — 2026-10-25: [evidence](evidence/step-5-2-soshiki-541-classification.txt) shows `classification: blocked` with `absent: ["Vercel"]`.
   - verify: the file shows `blocked` with `Vercel` missing, or records the PR's then-current state if it has since changed.
 - [ ] 5.3 Integrate `origin/main` in both halves with `agento.mjs sync issue ship-merge-refusal-loop`, write plan.md `## Resolution` (root cause, what changed, proof the #132 tests pass), and set `status: in-review`.
   - verify: `sync` reports no `integration-conflict`, `git status --porcelain --untracked-files=all` is empty in both halves, and `gh pr view --json mergeStateStatus` is not `DIRTY`.
