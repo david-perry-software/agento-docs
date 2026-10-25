@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/ship-merge-refusal-loop
 last-updated: 2026-10-25
-next-step: "4.2 update delivery-policy §9 and concurrent-delivery mergeStateStatus lines"
+next-step: "4.3 update docs/commands.md ship section and CHANGELOG.md"
 github-issue: "#132"
 artifact-pr: "#68"
 ```
@@ -63,7 +63,7 @@ artifact-pr: "#68"
   - Add a `status: "blocked"` / `reason: "merge-blocked"` mapping: quote `message`, say nothing was reopened, re-trigger the named check, and re-send `/agento ship <slug>`.
   - Bring the `checks-failed` text in line.
   - verify: `node --test tests/customizations.test.mjs` exits 0.
-- [ ] 4.2 Update the policy files.
+- [x] 4.2 Update the policy files.
   - In `.github/instructions/delivery-policy.instructions.md` §9, the ship idempotency row reads: a conflict or failing required check reopens to `in-progress` with a Builder step, and a policy-blocked merge is `merge-blocked` and does not reopen.
   - In `.github/instructions/concurrent-delivery.instructions.md`, the `mergeStateStatus` line reads: `BLOCKED` is never a conflict (ship waits for missing required checks, then reports `merge-blocked`), and `DIRTY` goes to the Builder via `/agento continue`.
   - verify: `node --test tests/customizations.test.mjs` exits 0, and `grep -n 'in-review' .github/instructions/delivery-policy.instructions.md` shows no ship-reopen wording left.
