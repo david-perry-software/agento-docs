@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/ship-merge-refusal-loop
 last-updated: 2026-10-25
-next-step: "2.3 handle the BLOCKED / blocked-refusal merge state in ship checks and merge-code"
+next-step: "3.1 change reopenRoadmap to hand reopened work back to the Builder"
 github-issue: "#132"
 artifact-pr: "#68"
 ```
@@ -32,7 +32,7 @@ artifact-pr: "#68"
   - verify: `node --test scripts/merge-state.test.mjs` exits 0.
 - [x] 2.2 In `scripts/agento.mjs`, add a `ghRequiredContexts(cwd, nwo, branch)` wrapper over `gh api repos/<nwo>/rules/branches/<branch>` and `gh api repos/<nwo>/branches/<branch>/protection/required_status_checks`. Any error yields `{ known: false }`, never a failure. Extend `shipStub` in `scripts/agento.test.mjs` to serve both paths, including a 404 for classic protection.
   - verify: `node --test --test-name-pattern='ghRequiredContexts|requiredContexts' scripts/agento.test.mjs scripts/merge-state.test.mjs` exits 0.
-- [ ] 2.3 In ship's `checks` and `merge-code` phases (`scripts/agento.mjs` around L3361-L3392), handle the merge state as follows:
+- [x] 2.3 In ship's `checks` and `merge-code` phases (`scripts/agento.mjs` around L3361-L3392), handle the merge state as follows:
   - After `waitChecks` returns 0, re-read the PR. When it is `BLOCKED`, or a `gh pr merge` refusal classifies as `blocked`:
     - If required contexts are missing or pending within 10 minutes of the head commit's `committedDate`, call `pending("checks", …)` naming them.
     - Otherwise finish with `status: "blocked"` and `reason: "merge-blocked"`. The `message` names each missing or failing context, or the base branch policy when none is missing. `next` is `/agento ship <slug>`. Do not reopen.
