@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/ship-merge-refusal-loop
 last-updated: 2026-10-25
-next-step: "3.3 rewrite ship's rejection receipt data for rejections carrying rejectTo"
+next-step: "4.1 update ship.prompt.md and its skills/agento/commands/ship.md mirror"
 github-issue: "#132"
 artifact-pr: "#68"
 ```
@@ -51,7 +51,7 @@ artifact-pr: "#68"
   - verify: `node --test --test-name-pattern='reopenRoadmap|#132 ship-merge-refusal-loop' scripts/agento.test.mjs` passes 1.1(b) and 1.1(c) on the roadmap assertions.
 - [x] 3.2 Confirm the build-window derivation needs no `session-state.mjs` change: `in-progress` gives lifecycle `building`, and `next` derives `build-<type>` even with a stale `Verdict: approve` in review.md. If it does need a change, make the minimal one in `scripts/session-state.mjs` and add a focused case in `scripts/session-state.test.mjs`. — 2026-10-25: confirmed no change needed; `in-progress` → `building` → `build-<type>` already holds, and 1.1(b)'s `next`/`allowed` assertions pass.
   - verify: `node --test scripts/session-state.test.mjs` exits 0, and 1.1(b)'s `next` and `allowed` assertions pass.
-- [ ] 3.3 Rewrite ship's rejection receipt data for rejections carrying `rejectTo` (the reopens and `integration-conflict`).
+- [x] 3.3 Rewrite ship's rejection receipt data for rejections carrying `rejectTo` (the reopens and `integration-conflict`).
   - Set `allowed` to `deriveAllowed({ role: "primary", lifecycle: <post-reopen lifecycle>, delivery })`.
   - Set `elsewhere` to `[{ command: rejectTo.command, window: rejectTo.window, reason }]`.
   - verify: 1.1(b)'s `allowed` and `elsewhere` assertions pass. `node --test --test-name-pattern='#132 ship-merge-refusal-loop' scripts/agento.test.mjs` exits 0.
