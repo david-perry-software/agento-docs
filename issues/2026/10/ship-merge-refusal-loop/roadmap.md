@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/ship-merge-refusal-loop
 last-updated: 2026-10-25
-next-step: "3.1 change reopenRoadmap to hand reopened work back to the Builder"
+next-step: "3.2 confirm build-window derivation needs no session-state change"
 github-issue: "#132"
 artifact-pr: "#68"
 ```
@@ -43,7 +43,7 @@ artifact-pr: "#68"
 
 ## Phase 3: Route reopened work to the Builder
 
-- [ ] 3.1 Change `reopenRoadmap` in `scripts/delivery-roadmap-resolver.mjs` so a reopen hands the work back to the Builder.
+- [x] 3.1 Change `reopenRoadmap` in `scripts/delivery-roadmap-resolver.mjs` so a reopen hands the work back to the Builder.
   - Set `status: in-progress` and `last-updated`.
   - Append, or reuse when already present, `## Phase N: Ship reopen (<date>)` with one `(added <date>)` step per code: `pr-conflicting` (sync and hotspot recipes), `companion-pr-conflicting` (companion half), and `checks-failed` (fix `<name>`). Each step carries a `verify:`.
   - Point `next-step` at the first new step. Keep the accepted-at-ship removal and keep the function idempotent.
