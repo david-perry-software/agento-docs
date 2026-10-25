@@ -1,0 +1,13 @@
+# 2026-10-25T15:51:06Z throwaway copy of agento@bea012b with evidence/repro.test.mjs appended to scripts/agento.test.mjs
+$ node --test --test-name-pattern='REPRO ship-merge-refusal-loop' scripts/agento.test.mjs
+# REPRO BLOCKED: {"exit":3,"status":"rejected","reason":"audit-gaps","hard":["pr-conflicting"],"rejectTo":{"command":"/agento build-feature widget","window":"build"},"allowed":["/agento continue","/agento start-session","/agento start-freehand","/agento new-feature","/agento new-issue","/agento new-initiative","/agento delivery-status","/agento next-feature"],"reopened":true,"roadmapStatus":"in-review","nextStep":"\\"ship reopened (pr-conflicting): resolve in the build window, then re-review\\"","prDraft":false}
+# REPRO LOOP: {"shipHard":["pr-conflicting"],"shipRejectTo":{"command":"/agento build-feature widget","window":"build"},"shipAllowed":["/agento continue","/agento start-session","/agento start-freehand","/agento new-feature","/agento new-issue","/agento new-initiative","/agento delivery-status","/agento next-feature"],"buildWindowLifecycle":"approved","buildWindowAllowed":["/agento continue","/agento delivery-status","/agento next-feature"],"buildWindowElsewhere":["/agento ship widget"],"continueDerives":"/agento review-feature widget","continueReason":"Verdict: approve predates the last code commit: re-review before shipping"}
+# Subtest: REPRO ship-merge-refusal-loop: a BLOCKED merge refusal is reported as a conflict
+not ok 1 - REPRO ship-merge-refusal-loop: a BLOCKED merge refusal is reported as a conflict
+  error: 'BLOCKED refusal misreported as pr-conflicting'
+# Subtest: REPRO ship-merge-refusal-loop: build window derivation after the reopen
+not ok 2 - REPRO ship-merge-refusal-loop: build window derivation after the reopen
+  error: |-
+# tests 2
+# pass 0
+# fail 2

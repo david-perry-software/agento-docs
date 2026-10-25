@@ -1,0 +1,33 @@
+# github.com/cli/cli v2.45.0 (installed: gh version 2.45.0 (2025-07-18 Ubuntu 2.45.0-1ubuntu0.3)) pkg/cmd/pr/merge/merge.go
+		// a pull request can always be added to the merge queue
+		return nil
+	}
+
+	reason := blockedReason(m.pr.MergeStateStatus, m.opts.UseAdmin)
+
+	if reason == "" || m.autoMerge || m.merged {
+		return nil
+	}
+
+	_ = m.warnf("%s Pull request #%d is not mergeable: %s.\n", m.cs.FailureIcon(), m.pr.Number, reason)
+	_ = m.warnf("To have the pull request merged after all the requirements have been met, add the `--auto` flag.\n")
+	if remote := remoteForMergeConflictResolution(m.baseRepo, m.pr, m.opts); remote != nil {
+
+// blockedReason translates various MergeStateStatus GraphQL values into human-readable reason
+func blockedReason(status string, useAdmin bool) string {
+	switch status {
+	case MergeStateStatusBlocked:
+		if useAdmin {
+			return ""
+		}
+		return "the base branch policy prohibits the merge"
+	case MergeStateStatusBehind:
+		if useAdmin {
+			return ""
+		}
+		return "the head branch is not up to date with the base branch"
+	case MergeStateStatusDirty:
+		return "the merge commit cannot be cleanly created"
+	default:
+		return ""
+	}

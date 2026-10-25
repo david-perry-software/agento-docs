@@ -1,0 +1,377 @@
+{
+  "status": "ok",
+  "role": "build",
+  "hosted": false,
+  "worktree": {
+    "path": "/home/david/DP/soshiki-worktrees/plan-20261024-200421",
+    "branch": "feature/dashboard-usage-performance",
+    "detached": false,
+    "isPrimary": false,
+    "isManaged": true,
+    "dirPrefix": "plan",
+    "id": "20261024-200421"
+  },
+  "worktrees": [
+    {
+      "path": "/home/david/DP/soshiki",
+      "branch": "main",
+      "detached": false,
+      "role": "primary",
+      "dirPrefix": null,
+      "id": null,
+      "isPrimary": true,
+      "isManaged": false,
+      "repo": "product"
+    },
+    {
+      "path": "/home/david/DP/soshiki-worktrees/plan-20261002-175623",
+      "branch": null,
+      "detached": true,
+      "role": "plan",
+      "dirPrefix": "plan",
+      "id": "20261002-175623",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "product"
+    },
+    {
+      "path": "/home/david/DP/soshiki-worktrees/plan-20261002-203631",
+      "branch": null,
+      "detached": true,
+      "role": "plan",
+      "dirPrefix": "plan",
+      "id": "20261002-203631",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "product"
+    },
+    {
+      "path": "/home/david/DP/soshiki-worktrees/plan-20261002-214011",
+      "branch": null,
+      "detached": true,
+      "role": "plan",
+      "dirPrefix": "plan",
+      "id": "20261002-214011",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "product"
+    },
+    {
+      "path": "/home/david/DP/soshiki-worktrees/plan-20261006-152649",
+      "branch": "feature/api-service-splits",
+      "detached": false,
+      "role": "build",
+      "dirPrefix": "plan",
+      "id": "20261006-152649",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "product"
+    },
+    {
+      "path": "/home/david/DP/soshiki-worktrees/plan-20261007-023539",
+      "branch": "feature/async-resource-typed-deps",
+      "detached": false,
+      "role": "build",
+      "dirPrefix": "plan",
+      "id": "20261007-023539",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "product"
+    },
+    {
+      "path": "/home/david/DP/soshiki-worktrees/plan-20261007-045955",
+      "branch": null,
+      "detached": true,
+      "role": "plan",
+      "dirPrefix": "plan",
+      "id": "20261007-045955",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "product"
+    },
+    {
+      "path": "/home/david/DP/soshiki-worktrees/plan-20261007-231547",
+      "branch": null,
+      "detached": true,
+      "role": "plan",
+      "dirPrefix": "plan",
+      "id": "20261007-231547",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "product"
+    },
+    {
+      "path": "/home/david/DP/soshiki-worktrees/plan-20261010-162042",
+      "branch": null,
+      "detached": true,
+      "role": "plan",
+      "dirPrefix": "plan",
+      "id": "20261010-162042",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "product"
+    },
+    {
+      "path": "/home/david/DP/soshiki-worktrees/plan-20261012-050232",
+      "branch": null,
+      "detached": true,
+      "role": "plan",
+      "dirPrefix": "plan",
+      "id": "20261012-050232",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "product"
+    },
+    {
+      "path": "/home/david/DP/soshiki-worktrees/plan-20261017-031244",
+      "branch": null,
+      "detached": true,
+      "role": "plan",
+      "dirPrefix": "plan",
+      "id": "20261017-031244",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "product"
+    },
+    {
+      "path": "/home/david/DP/soshiki-worktrees/plan-20261021-045402",
+      "branch": "feature/dashboard-live-overview",
+      "detached": false,
+      "role": "build",
+      "dirPrefix": "plan",
+      "id": "20261021-045402",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "product"
+    },
+    {
+      "path": "/home/david/DP/soshiki-worktrees/plan-20261024-200421",
+      "branch": "feature/dashboard-usage-performance",
+      "detached": false,
+      "role": "build",
+      "dirPrefix": "plan",
+      "id": "20261024-200421",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "product"
+    },
+    {
+      "path": "/home/david/DP/soshiki-worktrees/plan-dashboard-usage-performance",
+      "branch": null,
+      "detached": true,
+      "role": "plan",
+      "dirPrefix": "plan",
+      "id": "dashboard-usage-performance",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "product"
+    },
+    {
+      "path": "/home/david/DP/soshiki-docs",
+      "branch": "main",
+      "detached": false,
+      "role": "unmanaged",
+      "dirPrefix": null,
+      "id": null,
+      "isPrimary": false,
+      "isManaged": false,
+      "repo": "companion"
+    },
+    {
+      "path": "/home/david/DP/soshiki-docs-worktrees/plan-20261002-175623",
+      "branch": null,
+      "detached": true,
+      "role": "plan",
+      "dirPrefix": "plan",
+      "id": "20261002-175623",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "companion"
+    },
+    {
+      "path": "/home/david/DP/soshiki-docs-worktrees/plan-20261002-203631",
+      "branch": null,
+      "detached": true,
+      "role": "plan",
+      "dirPrefix": "plan",
+      "id": "20261002-203631",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "companion"
+    },
+    {
+      "path": "/home/david/DP/soshiki-docs-worktrees/plan-20261002-214011",
+      "branch": null,
+      "detached": true,
+      "role": "plan",
+      "dirPrefix": "plan",
+      "id": "20261002-214011",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "companion"
+    },
+    {
+      "path": "/home/david/DP/soshiki-docs-worktrees/plan-20261006-152649",
+      "branch": "feature/api-service-splits",
+      "detached": false,
+      "role": "build",
+      "dirPrefix": "plan",
+      "id": "20261006-152649",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "companion"
+    },
+    {
+      "path": "/home/david/DP/soshiki-docs-worktrees/plan-20261007-023539",
+      "branch": "feature/async-resource-typed-deps",
+      "detached": false,
+      "role": "build",
+      "dirPrefix": "plan",
+      "id": "20261007-023539",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "companion"
+    },
+    {
+      "path": "/home/david/DP/soshiki-docs-worktrees/plan-20261007-045955",
+      "branch": null,
+      "detached": true,
+      "role": "plan",
+      "dirPrefix": "plan",
+      "id": "20261007-045955",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "companion"
+    },
+    {
+      "path": "/home/david/DP/soshiki-docs-worktrees/plan-20261007-231547",
+      "branch": null,
+      "detached": true,
+      "role": "plan",
+      "dirPrefix": "plan",
+      "id": "20261007-231547",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "companion"
+    },
+    {
+      "path": "/home/david/DP/soshiki-docs-worktrees/plan-20261010-162042",
+      "branch": null,
+      "detached": true,
+      "role": "plan",
+      "dirPrefix": "plan",
+      "id": "20261010-162042",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "companion"
+    },
+    {
+      "path": "/home/david/DP/soshiki-docs-worktrees/plan-20261012-050232",
+      "branch": null,
+      "detached": true,
+      "role": "plan",
+      "dirPrefix": "plan",
+      "id": "20261012-050232",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "companion"
+    },
+    {
+      "path": "/home/david/DP/soshiki-docs-worktrees/plan-20261017-031244",
+      "branch": null,
+      "detached": true,
+      "role": "plan",
+      "dirPrefix": "plan",
+      "id": "20261017-031244",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "companion"
+    },
+    {
+      "path": "/home/david/DP/soshiki-docs-worktrees/plan-20261021-045402",
+      "branch": "feature/dashboard-live-overview",
+      "detached": false,
+      "role": "build",
+      "dirPrefix": "plan",
+      "id": "20261021-045402",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "companion"
+    },
+    {
+      "path": "/home/david/DP/soshiki-docs-worktrees/plan-20261024-200421",
+      "branch": "feature/dashboard-usage-performance",
+      "detached": false,
+      "role": "build",
+      "dirPrefix": "plan",
+      "id": "20261024-200421",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "companion"
+    },
+    {
+      "path": "/home/david/DP/soshiki-docs-worktrees/plan-dashboard-usage-performance",
+      "branch": null,
+      "detached": true,
+      "role": "plan",
+      "dirPrefix": "plan",
+      "id": "dashboard-usage-performance",
+      "isPrimary": false,
+      "isManaged": true,
+      "repo": "companion"
+    }
+  ],
+  "companion": {
+    "path": "/home/david/DP/soshiki-docs-worktrees/plan-20261024-200421",
+    "branch": "feature/dashboard-usage-performance",
+    "detached": false,
+    "dirty": false,
+    "ahead": 0,
+    "behind": 0,
+    "registered": true
+  },
+  "workspace": {
+    "path": "/home/david/DP/soshiki-worktrees/plan-20261024-200421.code-workspace",
+    "exists": true,
+    "current": true
+  },
+  "delivery": {
+    "type": "feature",
+    "slug": "dashboard-usage-performance",
+    "branch": "feature/dashboard-usage-performance",
+    "dir": "features/2026/10/dashboard-usage-performance",
+    "roadmap": "features/2026/10/dashboard-usage-performance/roadmap.md",
+    "plan": "features/2026/10/dashboard-usage-performance/plan.md",
+    "review": "features/2026/10/dashboard-usage-performance/review.md",
+    "reviewVerdict": "approve",
+    "status": "in-review",
+    "lastUpdated": "2026-10-25",
+    "nextStep": "ship reopened (pr-conflicting): resolve in the build window, then re-review",
+    "githubIssue": null,
+    "artifactPr": "#63",
+    "initiative": "live-user-dashboard",
+    "steps": {
+      "ticked": 17,
+      "total": 17
+    },
+    "postShipPending": 0
+  },
+  "pr": null,
+  "companionPr": null,
+  "lifecycle": "approved",
+  "allowed": [
+    "/agento continue",
+    "/agento delivery-status",
+    "/agento next-feature"
+  ],
+  "elsewhere": [
+    {
+      "command": "/agento ship dashboard-usage-performance",
+      "window": "primary",
+      "reason": "ship from the primary window — audits this worktree first, tears it down after the merge"
+    }
+  ],
+  "warnings": [],
+  "root": "/home/david/DP/soshiki-worktrees/plan-20261024-200421",
+  "configSource": "/home/david/DP/soshiki-worktrees/plan-20261024-200421/.github/agento.json"
+}

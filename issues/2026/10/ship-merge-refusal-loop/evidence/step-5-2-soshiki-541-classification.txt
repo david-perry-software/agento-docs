@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-10-25T16:53:06.242Z",
+  "repo": "david-perry-software/soshiki",
+  "pr": 541,
+  "headRefOid": "98ff4e5a37f2851b24c59f0fe315e6933700d2d9",
+  "mergeable": "MERGEABLE",
+  "mergeStateStatus": "BLOCKED",
+  "requiredContexts": [
+    "Vercel",
+    "Modularity report"
+  ],
+  "classicProtection": "404 (Branch not protected)",
+  "missing": {
+    "absent": [
+      "Vercel"
+    ],
+    "pending": [],
+    "failed": []
+  },
+  "classification": "blocked",
+  "note": "Vercel is a required context that never reported on the head commit"
+}
