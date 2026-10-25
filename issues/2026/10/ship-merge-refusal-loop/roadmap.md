@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/ship-merge-refusal-loop
 last-updated: 2026-10-25
-next-step: "4.1 update ship.prompt.md and its skills/agento/commands/ship.md mirror"
+next-step: "4.2 update delivery-policy §9 and concurrent-delivery mergeStateStatus lines"
 github-issue: "#132"
 artifact-pr: "#68"
 ```
@@ -58,7 +58,7 @@ artifact-pr: "#68"
 
 ## Phase 4: Prompts, policy, and docs
 
-- [ ] 4.1 Update `.github/prompts/ship.prompt.md`, then copy it byte for byte to `skills/agento/commands/ship.md`.
+- [x] 4.1 Update `.github/prompts/ship.prompt.md`, then copy it byte for byte to `skills/agento/commands/ship.md`.
   - `audit-gaps` at `resumedAt: checks` now says the roadmap is reopened to `in-progress` with an added Ship-reopen step, and to run `/agento continue` or `/agento build-<type> <slug>` in the build window, followed by `/agento ap <slug>`.
   - Add a `status: "blocked"` / `reason: "merge-blocked"` mapping: quote `message`, say nothing was reopened, re-trigger the named check, and re-send `/agento ship <slug>`.
   - Bring the `checks-failed` text in line.
