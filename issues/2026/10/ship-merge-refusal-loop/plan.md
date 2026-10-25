@@ -392,3 +392,51 @@ Affected files:
       by the missing required context `Vercel`, or records its then-current state.
       It runs the new helpers against `gh api`/`gh pr view` output, never
       `gh pr merge`, and is saved under `evidence/`.
+
+## Resolution
+
+**Root cause.** `/agento ship` classified every `gh pr merge` refusal as a conflict:
+a PR GitHub reports as `BLOCKED` because a required status check never reported
+(e.g. soshiki#541's missing `Vercel` status) was reported as `pr-conflicting` and
+reopened the roadmap. Separately, whenever ship *did* reopen the roadmap it set
+`status: in-review`, so the build window — whose lifecycle was `approved` — routed
+`/agento continue` back to review or ship instead of to the Builder. The loop: ship
+says "fix in the build window", the build window says "approval is current, ship
+again", and ship refuses again.
+
+**What changed.**
+
+- `scripts/merge-state.mjs` (new, pure, no I/O): `classifyMergeRefusal` (gh's reason
+  text first, `mergeStateStatus` fallback), `requiredContexts` (ruleset + classic
+  protection union; a 404 or empty result counts as none), and `missingRequired`
+  (absent / pending / failed). Covered by `scripts/merge-state.test.mjs`.
+- `scripts/agento.mjs`: a `ghRequiredContexts(cwd, nwo, branch)` wrapper (any error
+  → `{ known: false }`, never a failure); ship's `checks`/`merge-code` phases now
+  re-read the PR, and a `BLOCKED` PR — or a refusal classified `blocked` — waits
+  within a 10-minute grace for the missing required checks (`pending` naming them),
+  then stops `blocked` / `merge-blocked` without reopening the roadmap or touching
+  review.md. A `behind` refusal integrates and returns `pending`; a `conflict`
+  refusal keeps the reopen; `other` keeps `gh-error`.
+- `scripts/delivery-roadmap-resolver.mjs`: `reopenRoadmap` now reopens to
+  `status: in-progress` and appends a `## Phase N: Ship reopen (<date>)` section with
+  one `(added <date>)` step per code, pointed at by `next-step`, idempotently.
+  `in-progress` gives lifecycle `building`, so the build window routes to the
+  Builder with no `session-state.mjs` change (confirmed, step 3.2).
+- Ship's rejection receipt for a reopen or `integration-conflict` now derives
+  `allowed` from the primary row for the post-rejection lifecycle and sets
+  `elsewhere` to the exact `rejectTo` command/window.
+- Prompts, policy, and docs: `ship.prompt.md` and its byte mirror
+  `skills/agento/commands/ship.md`, delivery-policy §9, concurrent-delivery,
+  `docs/commands.md`, `CHANGELOG.md`, and the regenerated `extension/cli/` (now
+  including `merge-state.mjs`).
+
+**Proof.** The three exposing tests in `scripts/agento.test.mjs` named
+`(#132 ship-merge-refusal-loop)` fail at the planning base and pass now:
+`node --test --test-name-pattern='#132 ship-merge-refusal-loop'
+scripts/agento.test.mjs` exits 0 (3/3). The full gate is green:
+`node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'
+'canvas/**/*.test.mjs'` → 815/815 (`# fail 0`),
+`shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` → exit 0, and
+`cd extension && npm run test:unit` → 251/251. A live read-only check of
+david-perry-software/soshiki#541 classifies it `blocked` with `Vercel` absent
+(`evidence/step-5-2-soshiki-541-classification.txt`).
