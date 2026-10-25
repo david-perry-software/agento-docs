@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/ship-merge-refusal-loop
 last-updated: 2026-10-25
-next-step: "6.2 (added 2026-10-25)"
+next-step: "6.3 (added 2026-10-25)"
 github-issue: "#132"
 artifact-pr: "#68"
 ```
@@ -85,7 +85,7 @@ artifact-pr: "#68"
 
 - [x] 6.1 (added 2026-10-25) In `scripts/delivery-roadmap-resolver.mjs` `reopenRoadmap`, make the reuse branch honour "one `(added <date>)` step per code" (review.md Finding 1): when a `## Phase N: Ship reopen (<date>)` section already exists, append a step — continuing that section's `N.M` numbering — for each code that has no *unticked* step in the section (so a reopen after the earlier step was ticked still adds work), keep existing steps untouched (no duplicates), and point `next-step` at the first unticked step of the section using that step's own `(added <date>)` date (Finding 4). Replace the vacuous `assert.equal(reopenRoadmap(plain, X), reopenRoadmap(plain, X))` in the `reopenRoadmap` unit test with assertions that (a) a second reopen with a different code adds exactly that code's step and no duplicate of the existing one, and (b) a reopen after `completeRoadmap` on a roadmap whose Ship-reopen step is ticked yields exactly one unticked step named by `next-step`.
   - verify: `node --test --test-name-pattern='reopenRoadmap|#132 ship-merge-refusal-loop' scripts/agento.test.mjs` exits 0, and the `node -e` probe `reopenRoadmap(reopenRoadmap(done, { date, codes: ["pr-conflicting"] }), { date, codes: ["checks-failed"] })` contains `Fix the failing required check`.
-- [ ] 6.2 (added 2026-10-25) In `scripts/agento.mjs` `blockedMerge`, stop guessing when `ghRequiredContexts` returns `known: false` (review.md Finding 2): the final `merge-blocked` message says the required status checks could not be read from the ruleset/protection endpoints and quotes gh's refusal (first stderr line) when one exists; the `known: true` wordings are unchanged.
+- [x] 6.2 (added 2026-10-25) In `scripts/agento.mjs` `blockedMerge`, stop guessing when `ghRequiredContexts` returns `known: false` (review.md Finding 2): the final `merge-blocked` message says the required status checks could not be read from the ruleset/protection endpoints and quotes gh's refusal (first stderr line) when one exists; the `known: true` wordings are unchanged.
   - verify: `node --test --test-name-pattern='#132 ship-merge-refusal-loop' scripts/agento.test.mjs` exits 0, and `grep -n 'could not be read' scripts/agento.mjs` shows the new wording inside `blockedMerge`.
 - [ ] 6.3 (added 2026-10-25) Regenerate `extension/cli` (`cd extension && npm run copy-cli`), re-run the full gate, integrate `origin/main` into both halves with `agento.mjs sync issue ship-merge-refusal-loop`, push, and keep `status: in-review` for the re-review.
   - verify: `cmp scripts/agento.mjs extension/cli/agento.mjs` and `cmp scripts/delivery-roadmap-resolver.mjs extension/cli/delivery-roadmap-resolver.mjs` exit 0; `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` exits 0 with `# fail 0`; `cd extension && npm run test:unit` exits 0; `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` exits 0; `git status --porcelain --untracked-files=all` is empty in both halves. Record the counts on this line.
