@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/ship-merge-refusal-loop
 last-updated: 2026-10-25
-next-step: "2.2 add ghRequiredContexts wrapper and extend shipStub to serve rules and protection"
+next-step: "2.3 handle the BLOCKED / blocked-refusal merge state in ship checks and merge-code"
 github-issue: "#132"
 artifact-pr: "#68"
 ```
@@ -30,7 +30,7 @@ artifact-pr: "#68"
   - `missingRequired(required, rollup)` returns absent and pending contexts separately from failed ones.
   - The test table uses gh v2.45.0's BLOCKED, BEHIND, DIRTY, draft, and unknown wordings from [evidence/gh-2.45.0-merge-refusal-wording.txt](evidence/gh-2.45.0-merge-refusal-wording.txt), ruleset-only, classic-only, both, and 404 rules responses, and absent, pending, failed, and complete contexts.
   - verify: `node --test scripts/merge-state.test.mjs` exits 0.
-- [ ] 2.2 In `scripts/agento.mjs`, add a `ghRequiredContexts(cwd, nwo, branch)` wrapper over `gh api repos/<nwo>/rules/branches/<branch>` and `gh api repos/<nwo>/branches/<branch>/protection/required_status_checks`. Any error yields `{ known: false }`, never a failure. Extend `shipStub` in `scripts/agento.test.mjs` to serve both paths, including a 404 for classic protection.
+- [x] 2.2 In `scripts/agento.mjs`, add a `ghRequiredContexts(cwd, nwo, branch)` wrapper over `gh api repos/<nwo>/rules/branches/<branch>` and `gh api repos/<nwo>/branches/<branch>/protection/required_status_checks`. Any error yields `{ known: false }`, never a failure. Extend `shipStub` in `scripts/agento.test.mjs` to serve both paths, including a 404 for classic protection.
   - verify: `node --test --test-name-pattern='ghRequiredContexts|requiredContexts' scripts/agento.test.mjs scripts/merge-state.test.mjs` exits 0.
 - [ ] 2.3 In ship's `checks` and `merge-code` phases (`scripts/agento.mjs` around L3361-L3392), handle the merge state as follows:
   - After `waitChecks` returns 0, re-read the PR. When it is `BLOCKED`, or a `gh pr merge` refusal classifies as `blocked`:
