@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: complete
 branch: issue/ship-merge-refusal-loop
 last-updated: 2026-10-25
 next-step: ""
