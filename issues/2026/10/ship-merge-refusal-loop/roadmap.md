@@ -4,6 +4,7 @@ branch: issue/ship-merge-refusal-loop
 last-updated: 2026-10-25
 next-step: "1.1 add the #132 exposing regression tests and confirm they fail"
 github-issue: "#132"
+artifact-pr: "#68"
 ```
 
 ## Phase 1: Expose the defect
