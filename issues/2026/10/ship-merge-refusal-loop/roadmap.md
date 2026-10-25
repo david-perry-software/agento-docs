@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/ship-merge-refusal-loop
 last-updated: 2026-10-25
-next-step: "4.4 regenerate the extension CLI copy and run extension unit tests"
+next-step: "5.1 run the full gate (tests + shellcheck)"
 github-issue: "#132"
 artifact-pr: "#68"
 ```
@@ -69,7 +69,7 @@ artifact-pr: "#68"
   - verify: `node --test tests/customizations.test.mjs` exits 0, and `grep -n 'in-review' .github/instructions/delivery-policy.instructions.md` shows no ship-reopen wording left.
 - [x] 4.3 Update the ship section of `docs/commands.md` (L189 and L217-L228: reopen status, the new step, `merge-blocked`) and add a `CHANGELOG.md` entry under the repository's current unreleased heading convention.
   - verify: `grep -n 'merge-blocked' docs/commands.md CHANGELOG.md` shows both, and `grep -n 'reopen.*in-review' docs/commands.md` prints nothing.
-- [ ] 4.4 Regenerate the extension's CLI copy with `cd extension && npm run copy-cli`.
+- [x] 4.4 Regenerate the extension's CLI copy with `cd extension && npm run copy-cli`.
   - verify: `diff -rq scripts extension/cli` reports only files copy-cli intentionally skips, `extension/cli/merge-state.mjs` exists, and `cd extension && npm run test:unit` exits 0. Run `npm ci` first only if dependencies are missing.
 
 ## Phase 5: Verify the whole
