@@ -1,0 +1,19 @@
+# captured 2026-10-25T15:50:22Z in /home/david/DP/soshiki-worktrees/plan-20261024-200421 (build window of dashboard-usage-performance)
+$ git rev-parse --short HEAD; git rev-parse --short origin/main
+98ff4e5a
+162619e9
+$ git merge-base --is-ancestor origin/main HEAD; echo $?
+0
+$ git rev-list --count HEAD..origin/main
+0
+$ git merge-tree --write-tree --name-only HEAD origin/main; echo $?
+a78524f988b3063ec8de2c68ffc5fa18a2e05a58
+0
+$ gh api repos/david-perry-software/soshiki/commits/98ff4e5a…/status --jq '{state,total_count}'
+{"state":"pending","total_count":0}
+$ gh api 'repos/david-perry-software/soshiki/deployments?sha=98ff4e5a…' --jq length
+0
+$ gh pr view 63 -R david-perry-software/soshiki-docs --json mergeable,mergeStateStatus
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE"}
+$ gh api …/issues/541/timeline — last ready_for_review
+{"created_at":"2026-10-25T15:04:03Z","event":"ready_for_review"}

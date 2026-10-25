@@ -1,0 +1,35 @@
+{
+  "status": "ok",
+  "role": "build",
+  "lifecycle": "approved",
+  "slug": "dashboard-usage-performance",
+  "type": "feature",
+  "artifactPr": "#63",
+  "layout": "checkout",
+  "artifactsRoot": "/home/david/DP/soshiki-docs",
+  "next": {
+    "command": "review-feature",
+    "args": [
+      "dashboard-usage-performance"
+    ],
+    "invocation": "/agento review-feature dashboard-usage-performance",
+    "window": "here",
+    "then": null,
+    "reason": "Verdict: approve predates the last code commit: re-review before shipping",
+    "target": null
+  },
+  "candidates": [],
+  "reviewFresh": false,
+  "dispatch": {
+    "prompt": "/home/david/.config/Code/agentPlugins/file-home-david-DP-agento-plugin/1a173994d66/skills/agento/commands/review-feature.md",
+    "agent": "/home/david/.config/Code/agentPlugins/file-home-david-DP-agento-plugin/1a173994d66/.github/agents/delivery-reviewer.agent.md"
+  },
+  "warnings": [
+    "feature/api-service-splits: origin/feature/api-service-splits is absent, so review freshness and roadmap state reflect the local branch as of the last fetch",
+    "feature/async-resource-typed-deps: origin/feature/async-resource-typed-deps is absent, so review freshness and roadmap state reflect the local branch as of the last fetch",
+    "feature/dashboard-live-overview: origin/feature/dashboard-live-overview is absent, so review freshness and roadmap state reflect the local branch as of the last fetch"
+  ],
+  "reason": "Verdict: approve predates the last code commit: re-review before shipping",
+  "root": "/home/david/DP/soshiki-worktrees/plan-20261024-200421",
+  "configSource": "/home/david/DP/soshiki-worktrees/plan-20261024-200421/.github/agento.json"
+}
