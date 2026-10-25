@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: in-progress
 branch: issue/ship-merge-refusal-loop
 last-updated: 2026-10-25
 next-step: "6.1 (added 2026-10-25)"
@@ -93,3 +93,4 @@ artifact-pr: "#68"
 ## Follow-ups
 
 - `deriveLifecycle` labels a `complete` roadmap with an OPEN code PR as `shipped` (seen after `merge-blocked`). Consider a distinct "merging" lifecycle so window rows read correctly (extension and canvas impact).
+- `integrate()` hardcodes lifecycle `"in-review"` for the `integration-conflict` receipt's `allowed` row (review.md Finding 3); `elsewhere` routing is already correct. If that receipt is ever shown verbatim, derive the lifecycle from the roadmap on disk instead of a constant.
