@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/ship-merge-refusal-loop
 last-updated: 2026-10-25
-next-step: "4.3 update docs/commands.md ship section and CHANGELOG.md"
+next-step: "4.4 regenerate the extension CLI copy and run extension unit tests"
 github-issue: "#132"
 artifact-pr: "#68"
 ```
@@ -67,7 +67,7 @@ artifact-pr: "#68"
   - In `.github/instructions/delivery-policy.instructions.md` §9, the ship idempotency row reads: a conflict or failing required check reopens to `in-progress` with a Builder step, and a policy-blocked merge is `merge-blocked` and does not reopen.
   - In `.github/instructions/concurrent-delivery.instructions.md`, the `mergeStateStatus` line reads: `BLOCKED` is never a conflict (ship waits for missing required checks, then reports `merge-blocked`), and `DIRTY` goes to the Builder via `/agento continue`.
   - verify: `node --test tests/customizations.test.mjs` exits 0, and `grep -n 'in-review' .github/instructions/delivery-policy.instructions.md` shows no ship-reopen wording left.
-- [ ] 4.3 Update the ship section of `docs/commands.md` (L189 and L217-L228: reopen status, the new step, `merge-blocked`) and add a `CHANGELOG.md` entry under the repository's current unreleased heading convention.
+- [x] 4.3 Update the ship section of `docs/commands.md` (L189 and L217-L228: reopen status, the new step, `merge-blocked`) and add a `CHANGELOG.md` entry under the repository's current unreleased heading convention.
   - verify: `grep -n 'merge-blocked' docs/commands.md CHANGELOG.md` shows both, and `grep -n 'reopen.*in-review' docs/commands.md` prints nothing.
 - [ ] 4.4 Regenerate the extension's CLI copy with `cd extension && npm run copy-cli`.
   - verify: `diff -rq scripts extension/cli` reports only files copy-cli intentionally skips, `extension/cli/merge-state.mjs` exists, and `cd extension && npm run test:unit` exits 0. Run `npm ci` first only if dependencies are missing.
