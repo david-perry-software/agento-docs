@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/ship-merge-refusal-loop
 last-updated: 2026-10-25
-next-step: "2.1 create scripts/merge-state.mjs and cover it in scripts/merge-state.test.mjs"
+next-step: "2.2 add ghRequiredContexts wrapper and extend shipStub to serve rules and protection"
 github-issue: "#132"
 artifact-pr: "#68"
 ```
@@ -24,7 +24,7 @@ artifact-pr: "#68"
 
 ## Phase 2: Classify merge refusals
 
-- [ ] 2.1 Create `scripts/merge-state.mjs`, a pure module with no I/O, exporting three functions, and cover them in a new `scripts/merge-state.test.mjs`.
+- [x] 2.1 Create `scripts/merge-state.mjs`, a pure module with no I/O, exporting three functions, and cover them in a new `scripts/merge-state.test.mjs`.
   - `classifyMergeRefusal(stderr, mergeStateStatus)` returns `conflict`, `behind`, `blocked`, or `other`. It matches gh's reason text first and falls back to `mergeStateStatus`.
   - `requiredContexts(rulesJson, protectionJson)` returns the union of ruleset and classic required contexts. A 404 or an empty result counts as none.
   - `missingRequired(required, rollup)` returns absent and pending contexts separately from failed ones.
