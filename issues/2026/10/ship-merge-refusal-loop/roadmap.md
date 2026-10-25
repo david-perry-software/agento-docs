@@ -2,14 +2,14 @@
 status: in-progress
 branch: issue/ship-merge-refusal-loop
 last-updated: 2026-10-25
-next-step: "1.1 add the #132 exposing regression tests and confirm they fail"
+next-step: "2.1 create scripts/merge-state.mjs and cover it in scripts/merge-state.test.mjs"
 github-issue: "#132"
 artifact-pr: "#68"
 ```
 
 ## Phase 1: Expose the defect
 
-- [ ] 1.1 In `scripts/agento.test.mjs` add tests whose names end in `(#132 ship-merge-refusal-loop)`, modelled on [evidence/repro.test.mjs](evidence/repro.test.mjs).
+- [x] 1.1 In `scripts/agento.test.mjs` add tests whose names end in `(#132 ship-merge-refusal-loop)`, modelled on [evidence/repro.test.mjs](evidence/repro.test.mjs).
   - (a) **BLOCKED refusal.** Fixture: `shippable(fixture, "widget")` and `shipStub` with a PR that is `mergeable: "MERGEABLE"`, `mergeStateStatus: "BLOCKED"`, `rollups: PASSING`, and `refuseMerge: "X Pull request #15 is not mergeable: the base branch policy prohibits the merge."`.
     - Stub `gh api …/rules/branches/main` to require the contexts `Unit tests` and `Vercel`.
     - Assert the confirm send is not `pr-conflicting` and has no `roadmap-reopened`.
@@ -20,7 +20,7 @@ artifact-pr: "#68"
     - Assert `agento.mjs next` in the owner build window derives `/agento build-feature widget`, and `session` `allowed` contains it and `/agento ap widget`.
     - Assert ship's JSON `allowed` excludes `/agento new-feature` and `elsewhere` contains `{ command: "/agento build-feature widget", window: "build" }`.
   - (c) **`checks-failed`** reopens to `in-progress` with the fix-the-check step.
-  - verify: `node --test --test-name-pattern='#132 ship-merge-refusal-loop' scripts/agento.test.mjs > /tmp/smrl-1-1.txt 2>&1; echo "exit=$?"` prints `exit=1`, and every `not ok` line in `/tmp/smrl-1-1.txt` names a #132 test. Record the `# tests` / `# pass` / `# fail` counts on this line.
+  - verify: `node --test --test-name-pattern='#132 ship-merge-refusal-loop' scripts/agento.test.mjs > /tmp/smrl-1-1.txt 2>&1; echo "exit=$?"` prints `exit=1`, and every `not ok` line in `/tmp/smrl-1-1.txt` names a #132 test. Record the `# tests` / `# pass` / `# fail` counts on this line. — 2026-10-25: exit=1, # tests 3, # pass 0, # fail 3 (all three `not ok` lines name a #132 test).
 
 ## Phase 2: Classify merge refusals
 
