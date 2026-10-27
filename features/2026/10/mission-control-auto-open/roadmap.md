@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/mission-control-auto-open
 last-updated: 2026-10-27
-next-step: "6.4 Re-run the full gate"
+next-step: "5.1 blocked: live canvas check needs a top-level local Copilot-harness session with canvas tools (after Phase 6 fixes)"
 artifact-pr: "#69"
 ```
 
@@ -115,7 +115,7 @@ artifact-pr: "#69"
   extension/cli (`cd extension && npm run copy-cli && npm run test:unit`) — verify:
   those pass and `node --test tests/extension-bundle.test.mjs` passes
 
-- [ ] 6.4 Re-run the full gate: `node --test 'scripts/**/*.test.mjs'
+- [x] 6.4 Re-run the full gate: `node --test 'scripts/**/*.test.mjs'
   'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` (0 fail), the five AGENTS.md
   replay-guard smoke runs exit 0, ShellCheck 0.10.0 on `scripts/hooks/*.sh
   scripts/wait-for-checks.sh` exits 0 (fetch it: `mkdir -p /tmp/sc && curl -fsSL
