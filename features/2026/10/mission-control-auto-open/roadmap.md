@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/mission-control-auto-open
 last-updated: 2026-10-26
-next-step: "3.3 Add tests/customizations.test.mjs assertions"
+next-step: "4.1 Document the setting, canvas field/subcommand, and auto-open behavior"
 artifact-pr: "#69"
 ```
 
@@ -53,7 +53,7 @@ artifact-pr: "#69"
   Autopilot does §11 step 6 once per run; its Builder/Reviewer subagents skip it) —
   verify: `node --test tests/customizations.test.mjs` passes
 
-- [ ] 3.3 Add `tests/customizations.test.mjs` assertions: §11 contains the Mission
+- [x] 3.3 Add `tests/customizations.test.mjs` assertions: §11 contains the Mission
   Control step naming `refresh`, `open_canvas`, `post_note`, and
   `instanceId: "mission-control"`; the router's Subagent mode names
   `agento.mjs canvas` — verify: `node --test tests/customizations.test.mjs` passes,
