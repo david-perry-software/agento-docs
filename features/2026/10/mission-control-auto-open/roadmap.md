@@ -2,13 +2,13 @@
 status: in-progress
 branch: feature/mission-control-auto-open
 last-updated: 2026-10-26
-next-step: "1.1 Add missionControl.autoOpen to the config defaults and template"
+next-step: "2.1 Add canvasDocument to scripts/agento.mjs and embed it in preflightDocument"
 artifact-pr: "#69"
 ```
 
 ## Phase 1: Config
 
-- [ ] 1.1 Add `missionControl: { autoOpen: true }` to `defaultConfig()` in
+- [x] 1.1 Add `missionControl: { autoOpen: true }` to `defaultConfig()` in
   `scripts/agento-config.mjs` and `"missionControl": { "autoOpen": null }` to
   `templates/agento.json`; add `scripts/agento-config.test.mjs` cases (default
   `true`, explicit `false` honored, `null` keeps the default, the template still
