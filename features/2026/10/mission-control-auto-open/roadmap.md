@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/mission-control-auto-open
 last-updated: 2026-10-26
-next-step: "3.1 Append step 6 Mission Control to delivery-policy §11"
+next-step: "3.2 Update the router Subagent mode and Autopilot rule"
 artifact-pr: "#69"
 ```
 
@@ -38,7 +38,7 @@ artifact-pr: "#69"
 
 ## Phase 3: Instructions
 
-- [ ] 3.1 Append step 6 **Mission Control** to the §11 procedure in
+- [x] 3.1 Append step 6 **Mission Control** to the §11 procedure in
   `.github/instructions/delivery-policy.instructions.md` (top-level only; gated by
   preflight `canvas.attempt`; `refresh` with `canvas.refresh.pr` → `open_canvas` on
   error; closing `post_note` with the result or rejection receipt line ≤ 500 chars,
