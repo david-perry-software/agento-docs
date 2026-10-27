@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: feature/mission-control-auto-open
 last-updated: 2026-10-27
-next-step: "5.1 blocked: live canvas check needs a top-level local Copilot-harness session with canvas tools (after Phase 7)"
+next-step: ""
 artifact-pr: "#69"
 ```
 
@@ -78,7 +78,7 @@ artifact-pr: "#69"
 
 ## Phase 5: Live check and full gate
 
-- [ ] 5.1 (runs after Phase 7) In a top-level local Copilot-harness session with the canvas closed,
+- [x] 5.1 (runs after Phase 7) In a top-level local Copilot-harness session with the canvas closed,
   follow §11 step 6 for `/agento delivery-status`: `refresh` on `mission-control`
   fails → `open_canvas` opens it; a second command's `refresh` succeeds without
   reopening; the closing `post_note` appears in the feed — verify: `local:<port of the open_canvas url>` —
@@ -86,6 +86,19 @@ artifact-pr: "#69"
   the `open_canvas` result `url` in the browser) showing the note is saved as
   `evidence/step-5-1-canvas-feed.png`; if this session has no canvas tools, pause as
   `5.1 blocked: no canvas tools in this session`
+  - Done 2026-10-27 (top-level local Copilot-harness session): 19:38:13Z
+    `refresh` on `mission-control` failed ("Canvas instance … is not open"), then
+    19:38:16Z `open_canvas` agento-mission-control succeeded (`status: live`);
+    19:45:06Z a second `/agento delivery-status` `refresh {pr:true}` succeeded
+    without reopening and returned the lane counts (planned 0, building 1, …) —
+    this live state read stands in for the planned `get_snapshot` call
+    (`get_snapshot` was not separately invoked). The closing `post_note` entries
+    are in the feed store
+    (`~/.copilot/extension-data/agento-mission-control/c0107b40b85b9cc7.json`)
+    at 20:11:20Z and 20:39:23Z, level `success`, text = the delivery-status §9
+    result line (`slug: null`). Evidence:
+    `evidence/step-5-1-canvas-open.png` (canvas open beside the delivery-status
+    chat) and `evidence/step-5-1-canvas-feed.png` (canvas after the completed run).
 
 - [x] 5.2 Run the full gate and compare with the plan.md baseline — verify: `node
   --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'`
