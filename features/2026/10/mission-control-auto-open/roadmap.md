@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: feature/mission-control-auto-open
-last-updated: 2026-10-26
-next-step: "5.1 blocked: no canvas tools in this subagent session — run the live check from a top-level local Copilot-harness session"
+last-updated: 2026-10-27
+next-step: "6.1 Count a foreign canvas link whose target holds extension.mjs as available"
 artifact-pr: "#69"
 ```
 
@@ -78,7 +78,7 @@ artifact-pr: "#69"
 
 ## Phase 5: Live check and full gate
 
-- [ ] 5.1 In a top-level local Copilot-harness session with the canvas closed,
+- [ ] 5.1 (runs after Phase 6) In a top-level local Copilot-harness session with the canvas closed,
   follow §11 step 6 for `/agento delivery-status`: `refresh` on `mission-control`
   fails → `open_canvas` opens it; a second command's `refresh` succeeds without
   reopening; the closing `post_note` appears in the feed — verify: `local:<port of the open_canvas url>` —
@@ -92,3 +92,33 @@ artifact-pr: "#69"
   (≥ 816 tests, 0 fail); the five AGENTS.md replay-guard smoke runs exit 0;
   `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` (ShellCheck 0.10.0)
   exits 0 with no findings
+
+## Phase 6: Live-test fixes (2026-10-27)
+
+- [ ] 6.1 Count a foreign canvas link whose target holds `extension.mjs` as
+  available in `canvasDocument()` (keep `link` reporting the raw state; `reason`
+  distinguishes, e.g. `canvas installed from <target>`); add
+  `scripts/agento.test.mjs` matrix cases (foreign-valid → attempt true; foreign
+  without `extension.mjs` → attempt false; dangling → false) — verify: `node --test
+  scripts/agento.test.mjs` passes and, on this machine, `node scripts/agento.mjs
+  canvas delivery-status` returns `attempt: true`
+
+- [ ] 6.2 Add the always-on pointer to `.github/instructions/agento-core.instructions.md`
+  (when preflight `canvas.attempt` is true, a top-level session performs §11 step 6:
+  refresh `mission-control` → `open_canvas` on error → closing `post_note`, silently)
+  plus a `tests/customizations.test.mjs` assertion that agento-core names
+  `canvas.attempt` and §11 — verify: `node --test tests/customizations.test.mjs`
+  passes (40-line budget included)
+
+- [ ] 6.3 Update the docs that describe the attempt conditions (`docs/commands.md`
+  and any other place listing them, plus `CHANGELOG.md` entry wording) and regenerate
+  extension/cli (`cd extension && npm run copy-cli && npm run test:unit`) — verify:
+  those pass and `node --test tests/extension-bundle.test.mjs` passes
+
+- [ ] 6.4 Re-run the full gate: `node --test 'scripts/**/*.test.mjs'
+  'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` (0 fail), the five AGENTS.md
+  replay-guard smoke runs exit 0, ShellCheck 0.10.0 on `scripts/hooks/*.sh
+  scripts/wait-for-checks.sh` exits 0 (fetch it: `mkdir -p /tmp/sc && curl -fsSL
+  https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.linux.x86_64.tar.xz
+  | tar -xJ -C /tmp/sc`, binary at `/tmp/sc/shellcheck-v0.10.0/shellcheck`; delete
+  `/tmp/sc` afterwards)

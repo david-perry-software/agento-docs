@@ -264,6 +264,20 @@ Affected files: `scripts/agento-config.mjs`, `scripts/agento.mjs`,
   the Builder's session lacks the canvas tools, step 5.1 pauses as `blocked` per §3
   rather than being skipped.
 
+### Live-test fix addendum (2026-10-27)
+
+The user's live test showed Mission Control did not open. Root cause: the plan's
+`attempt` condition in `canvasDocument()` required `link === "installed"`, but the
+user's normal install is a `foreign` link (to their registered plugin clone), so
+`attempt` was false. Phase 6 fixes that (6.1, a foreign link whose resolved target
+holds `extension.mjs` counts as available), makes §11 step 6 reachable from the
+always-on core (6.2), updates the attempt-condition docs and the CHANGELOG entry
+(6.3), and re-runs the full gate (6.4). The gate is re-run because the fix and the
+new core pointer change the test surface (`scripts/agento.test.mjs` matrix cases and
+`tests/customizations.test.mjs` assertion); the pointer changes because the policy is
+loaded on demand and §11 step 6 must be reachable even when only the always-on core
+is in context.
+
 ## Out of scope
 
 - A `canvas` token in the §10 `Needs:` vocabulary or the `doctor --for` table.
