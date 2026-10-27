@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/mission-control-auto-open
 last-updated: 2026-10-26
-next-step: "4.1 Document the setting, canvas field/subcommand, and auto-open behavior"
+next-step: "4.2 Regenerate the extension CLI copy"
 artifact-pr: "#69"
 ```
 
@@ -62,7 +62,7 @@ artifact-pr: "#69"
 
 ## Phase 4: Docs and extension copy
 
-- [ ] 4.1 Document the setting, the `canvas` field and subcommand, and the
+- [x] 4.1 Document the setting, the `canvas` field and subcommand, and the
   auto-open behavior in `docs/project-profile.md` (json block + key table),
   `README.md` `## Configuration`, `docs/commands.md` (`## Preflight` and the
   subcommand list), `docs/install.md` and `docs/copilot-harness.md` (beside the
