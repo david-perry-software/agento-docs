@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/mission-control-auto-open
 last-updated: 2026-10-27
 next-step: ""
