@@ -2,7 +2,7 @@
 status: paused
 branch: feature/mission-control-auto-open
 last-updated: 2026-10-27
-next-step: "7.3"
+next-step: "7.4"
 artifact-pr: "#69"
 ```
 
@@ -129,6 +129,6 @@ artifact-pr: "#69"
 
 - [x] 7.2 (added 2026-10-27) Reorder `preflightDocument()` output so `canvas` comes directly after `preflightLines` (before `session`), and keep it compact; add a `scripts/agento.test.mjs` assertion that `canvas` is the key right after `preflightLines` and that `JSON.stringify(doc, null, 2)` places the `"attempt"` key within its first 600 characters for a typical document — verify: `node --test scripts/agento.test.mjs` passes and `node scripts/agento.mjs preflight delivery-status > /tmp/pf.json; head -c 600 /tmp/pf.json; rm /tmp/pf.json` shows `"attempt": true`.
 
-- [ ] 7.3 (added 2026-10-27) Document in plan.md (dated addendum under `## Risks`, 2026-10-27 second live test) that the always-on core pointer and the router changes take effect only after merge + plugin-clone update, and that the command-file clause is the branch-testable carrier; update `docs/commands.md` `## Preflight` (field order + the clause) and `CHANGELOG.md` Unreleased wording; regenerate extension/cli (`cd extension && npm run copy-cli && npm run test:unit`) — verify: those pass and `node --test tests/extension-bundle.test.mjs` passes.
+- [x] 7.3 (added 2026-10-27) Document in plan.md (dated addendum under `## Risks`, 2026-10-27 second live test) that the always-on core pointer and the router changes take effect only after merge + plugin-clone update, and that the command-file clause is the branch-testable carrier; update `docs/commands.md` `## Preflight` (field order + the clause) and `CHANGELOG.md` Unreleased wording; regenerate extension/cli (`cd extension && npm run copy-cli && npm run test:unit`) — verify: those pass and `node --test tests/extension-bundle.test.mjs` passes.
 
 - [ ] 7.4 (added 2026-10-27) Full gate: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` (0 fail), the five AGENTS.md replay-guard smoke runs exit 0, ShellCheck 0.10.0 on `scripts/hooks/*.sh scripts/wait-for-checks.sh` exits 0 (fetch: `mkdir -p /tmp/sc && curl -fsSL https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.linux.x86_64.tar.xz | tar -xJ -C /tmp/sc`; binary `/tmp/sc/shellcheck-v0.10.0/shellcheck`; delete `/tmp/sc` after).

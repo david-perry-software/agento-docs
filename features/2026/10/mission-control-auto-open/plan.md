@@ -278,6 +278,25 @@ new core pointer change the test surface (`scripts/agento.test.mjs` matrix cases
 loaded on demand and §11 step 6 must be reachable even when only the always-on core
 is in context.
 
+### Second live test addendum (2026-10-27)
+
+A second live test still did not open the canvas even though `preflight
+delivery-status` returned `canvas.attempt: true` and the session had canvas tools.
+Three causes were found: (1) the always-on `agento-core.instructions.md` is loaded
+from the user's installed plugin snapshot (the `agento-plugin` clone on `main`),
+which shadows this worktree's copy, so the Phase 6.2 always-on pointer only takes
+effect after merge + plugin-clone update; (2) the ~11 KB preflight JSON was offloaded
+by the chat tool and the agent saw only the first ~500 characters — `canvas` was near
+the end, so it was never read; (3) the agent never read policy §11. Command files
+(`skills/agento/commands/<name>.md`) are read live from this worktree on every
+command, so they are the reliable, branch-testable carrier. Phase 7 therefore appends
+the `canvas.attempt` / §11 step 6 clause directly to the shared preflight sentence in
+every command and agent (7.1), reorders the preflight document so `canvas` follows
+`preflightLines` and `"attempt"` lands within the first 600 characters (7.2), and
+documents that the always-on core pointer and the router changes take effect only
+after merge + plugin-clone update while the command-file clause works immediately on
+the branch (7.3), followed by the full gate (7.4).
+
 ## Out of scope
 
 - A `canvas` token in the §10 `Needs:` vocabulary or the `doctor --for` table.
