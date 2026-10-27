@@ -2,7 +2,7 @@
 status: paused
 branch: feature/mission-control-auto-open
 last-updated: 2026-10-27
-next-step: "5.1 blocked: live canvas check needs a top-level local Copilot-harness session with canvas tools (after Phase 6 fixes)"
+next-step: "7.2"
 artifact-pr: "#69"
 ```
 
@@ -78,7 +78,7 @@ artifact-pr: "#69"
 
 ## Phase 5: Live check and full gate
 
-- [ ] 5.1 (runs after Phase 6) In a top-level local Copilot-harness session with the canvas closed,
+- [ ] 5.1 (runs after Phase 7) In a top-level local Copilot-harness session with the canvas closed,
   follow §11 step 6 for `/agento delivery-status`: `refresh` on `mission-control`
   fails → `open_canvas` opens it; a second command's `refresh` succeeds without
   reopening; the closing `post_note` appears in the feed — verify: `local:<port of the open_canvas url>` —
@@ -122,3 +122,13 @@ artifact-pr: "#69"
   https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.linux.x86_64.tar.xz
   | tar -xJ -C /tmp/sc`, binary at `/tmp/sc/shellcheck-v0.10.0/shellcheck`; delete
   `/tmp/sc` afterwards)
+
+## Phase 7: Reliable delivery of the canvas instruction (2026-10-27)
+
+- [x] 7.1 (added 2026-10-27) Append to the shared preflight sentence in every command and agent that has it (the sentence that says to print the preflight `receipt` and then its `preflightLines` verbatim — currently 58 occurrences across `skills/agento/commands/*.md`, `.github/prompts/*.prompt.md`, `.github/agents/*.agent.md`) a short clause: then, when its `canvas.attempt` is `true`, do §11 step 6 (top-level only; silent). Keep each `.github/prompts/<name>.prompt.md` and `skills/agento/commands/<name>.md` mirror in sync per existing tests; `mission-control` keeps the same clause (its own open replaces the step, and its `canvas.attempt` is false anyway). Add a `tests/customizations.test.mjs` assertion that every command/agent carrying the preflight sentence also names `canvas.attempt` and §11 step 6 — verify: `node --test tests/customizations.test.mjs` passes, and removing the clause from one file makes it fail (restore afterwards).
+
+- [ ] 7.2 (added 2026-10-27) Reorder `preflightDocument()` output so `canvas` comes directly after `preflightLines` (before `session`), and keep it compact; add a `scripts/agento.test.mjs` assertion that `canvas` is the key right after `preflightLines` and that `JSON.stringify(doc, null, 2)` places the `"attempt"` key within its first 600 characters for a typical document — verify: `node --test scripts/agento.test.mjs` passes and `node scripts/agento.mjs preflight delivery-status > /tmp/pf.json; head -c 600 /tmp/pf.json; rm /tmp/pf.json` shows `"attempt": true`.
+
+- [ ] 7.3 (added 2026-10-27) Document in plan.md (dated addendum under `## Risks`, 2026-10-27 second live test) that the always-on core pointer and the router changes take effect only after merge + plugin-clone update, and that the command-file clause is the branch-testable carrier; update `docs/commands.md` `## Preflight` (field order + the clause) and `CHANGELOG.md` Unreleased wording; regenerate extension/cli (`cd extension && npm run copy-cli && npm run test:unit`) — verify: those pass and `node --test tests/extension-bundle.test.mjs` passes.
+
+- [ ] 7.4 (added 2026-10-27) Full gate: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` (0 fail), the five AGENTS.md replay-guard smoke runs exit 0, ShellCheck 0.10.0 on `scripts/hooks/*.sh scripts/wait-for-checks.sh` exits 0 (fetch: `mkdir -p /tmp/sc && curl -fsSL https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.linux.x86_64.tar.xz | tar -xJ -C /tmp/sc`; binary `/tmp/sc/shellcheck-v0.10.0/shellcheck`; delete `/tmp/sc` after).
