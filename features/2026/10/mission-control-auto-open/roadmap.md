@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/mission-control-auto-open
 last-updated: 2026-10-27
-next-step: "6.1 Count a foreign canvas link whose target holds extension.mjs as available"
+next-step: "6.2 Add the always-on pointer to agento-core.instructions.md"
 artifact-pr: "#69"
 ```
 
@@ -95,7 +95,7 @@ artifact-pr: "#69"
 
 ## Phase 6: Live-test fixes (2026-10-27)
 
-- [ ] 6.1 Count a foreign canvas link whose target holds `extension.mjs` as
+- [x] 6.1 Count a foreign canvas link whose target holds `extension.mjs` as
   available in `canvasDocument()` (keep `link` reporting the raw state; `reason`
   distinguishes, e.g. `canvas installed from <target>`); add
   `scripts/agento.test.mjs` matrix cases (foreign-valid → attempt true; foreign
