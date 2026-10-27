@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/mission-control-auto-open
 last-updated: 2026-10-26
-next-step: "2.1 Add canvasDocument to scripts/agento.mjs and embed it in preflightDocument"
+next-step: "2.2 Add the read-only agento.mjs canvas <command> subcommand"
 artifact-pr: "#69"
 ```
 
@@ -17,7 +17,7 @@ artifact-pr: "#69"
 
 ## Phase 2: CLI canvas facts
 
-- [ ] 2.1 Add `canvasDocument({ command, session })` to `scripts/agento.mjs` (local
+- [x] 2.1 Add `canvasDocument({ command, session })` to `scripts/agento.mjs` (local
   reads only: `harnessFacts()` + `linkState()`, `vscodeSettingsPath()` +
   `parseJsonc()` for `chat.canvases.enabled`, config `missionControl.autoOpen`,
   `session.hosted`; `attempt`, `reason`, `canvasId`, `instanceId`, `autoOpen`,
