@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/mission-control-auto-open
 last-updated: 2026-10-26
-next-step: "2.2 Add the read-only agento.mjs canvas <command> subcommand"
+next-step: "3.1 Append step 6 Mission Control to delivery-policy §11"
 artifact-pr: "#69"
 ```
 
@@ -26,7 +26,7 @@ artifact-pr: "#69"
   present on accepted and rejected documents, no extra `preflightLines`, `status` and
   `receipt` unchanged) — verify: `node --test scripts/agento.test.mjs` passes
 
-- [ ] 2.2 Add the read-only `agento.mjs canvas <command>` subcommand (same document,
+- [x] 2.2 Add the read-only `agento.mjs canvas <command>` subcommand (same document,
   no doctor/`gh`; exit 0; unknown or missing command → usage error exit 1) with its
   usage header line, plus the attempt-matrix tests using
   `AGENTO_COPILOT_EXTENSIONS_DIR` and `AGENTO_VSCODE_SETTINGS` fixtures (installed +
