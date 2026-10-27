@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/mission-control-auto-open
 last-updated: 2026-10-26
-next-step: "4.2 Regenerate the extension CLI copy"
+next-step: "5.1 (blocked: no canvas tools in this subagent session — run the live check from a top-level local Copilot-harness session)"
 artifact-pr: "#69"
 ```
 
@@ -72,7 +72,7 @@ artifact-pr: "#69"
   docs/commands.md` each match, and `node --test tests/customizations.test.mjs`
   passes
 
-- [ ] 4.2 Regenerate the extension CLI copy — verify: `cd extension && npm run
+- [x] 4.2 Regenerate the extension CLI copy — verify: `cd extension && npm run
   copy-cli && npm run test:unit` passes and `node --test
   tests/extension-bundle.test.mjs` passes
 
