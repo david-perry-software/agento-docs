@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/mission-control-auto-open
 last-updated: 2026-10-26
-next-step: "3.2 Update the router Subagent mode and Autopilot rule"
+next-step: "3.3 Add tests/customizations.test.mjs assertions"
 artifact-pr: "#69"
 ```
 
@@ -46,7 +46,7 @@ artifact-pr: "#69"
   result, or outcome), keeping every `## N.` anchor — verify: `node --test
   tests/customizations.test.mjs` passes
 
-- [ ] 3.2 Update `skills/agento/SKILL.md` step 5 *Subagent* mode to run `node
+- [x] 3.2 Update `skills/agento/SKILL.md` step 5 *Subagent* mode to run `node
   <agento-root>/scripts/agento.mjs canvas <name>` and perform §11 step 6's
   refresh/open before invoking the subagent and its note after relaying; add the
   one-sentence Autopilot rule to `.github/agents/delivery-autopilot.agent.md` (the
