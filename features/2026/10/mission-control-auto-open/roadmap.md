@@ -1,5 +1,5 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/mission-control-auto-open
 last-updated: 2026-10-27
 next-step: "5.1 blocked: live canvas check needs a top-level local Copilot-harness session with canvas tools (after Phase 6 fixes)"
