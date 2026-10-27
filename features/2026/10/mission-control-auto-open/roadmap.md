@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/mission-control-auto-open
 last-updated: 2026-10-26
-next-step: "5.1 (blocked: no canvas tools in this subagent session — run the live check from a top-level local Copilot-harness session)"
+next-step: "5.1 blocked: no canvas tools in this subagent session — run the live check from a top-level local Copilot-harness session"
 artifact-pr: "#69"
 ```
 
@@ -87,7 +87,7 @@ artifact-pr: "#69"
   `evidence/step-5-1-canvas-feed.png`; if this session has no canvas tools, pause as
   `5.1 blocked: no canvas tools in this session`
 
-- [ ] 5.2 Run the full gate and compare with the plan.md baseline — verify: `node
+- [x] 5.2 Run the full gate and compare with the plan.md baseline — verify: `node
   --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'`
   (≥ 816 tests, 0 fail); the five AGENTS.md replay-guard smoke runs exit 0;
   `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` (ShellCheck 0.10.0)
