@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/mission-control-auto-open
 last-updated: 2026-10-27
-next-step: "6.3 Update the attempt-condition docs and regenerate extension/cli"
+next-step: "6.4 Re-run the full gate"
 artifact-pr: "#69"
 ```
 
@@ -110,7 +110,7 @@ artifact-pr: "#69"
   `canvas.attempt` and §11 — verify: `node --test tests/customizations.test.mjs`
   passes (40-line budget included)
 
-- [ ] 6.3 Update the docs that describe the attempt conditions (`docs/commands.md`
+- [x] 6.3 Update the docs that describe the attempt conditions (`docs/commands.md`
   and any other place listing them, plus `CHANGELOG.md` entry wording) and regenerate
   extension/cli (`cd extension && npm run copy-cli && npm run test:unit`) — verify:
   those pass and `node --test tests/extension-bundle.test.mjs` passes
