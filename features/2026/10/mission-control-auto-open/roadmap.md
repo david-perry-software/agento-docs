@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/mission-control-auto-open
 last-updated: 2026-10-27
-next-step: "6.2 Add the always-on pointer to agento-core.instructions.md"
+next-step: "6.3 Update the attempt-condition docs and regenerate extension/cli"
 artifact-pr: "#69"
 ```
 
@@ -103,7 +103,7 @@ artifact-pr: "#69"
   scripts/agento.test.mjs` passes and, on this machine, `node scripts/agento.mjs
   canvas delivery-status` returns `attempt: true`
 
-- [ ] 6.2 Add the always-on pointer to `.github/instructions/agento-core.instructions.md`
+- [x] 6.2 Add the always-on pointer to `.github/instructions/agento-core.instructions.md`
   (when preflight `canvas.attempt` is true, a top-level session performs §11 step 6:
   refresh `mission-control` → `open_canvas` on error → closing `post_note`, silently)
   plus a `tests/customizations.test.mjs` assertion that agento-core names
