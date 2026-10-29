@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/guard-bypass-gaps
 last-updated: 2026-10-29
-next-step: "5.1 Run the full gate"
+next-step: "5.2 Re-check the Follow-ups"
 artifact-pr: "#70"
 ```
 
@@ -74,13 +74,13 @@ Every rule edit is in `scripts/hooks/delivery-guard.mjs` (made with the edit too
 
 ## Phase 5: Verification and hand-off
 
-- [ ] 5.1 Run the full gate and record the results on this line:
+- [x] 5.1 Run the full gate and record the results on this line:
   - full `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` (≥ 816 passing, 0 failing);
   - all five replay commands from AGENTS.md (each exit 0);
   - `git ls-files '*.sh' | xargs pnpm dlx shellcheck` (exit 0, no findings, the same as the baseline);
   - `grep -c -E '^(allow|ask|deny) ' tests/guard-fixtures.txt` (more than 128).
 
-  — verify: every result is recorded and matches the expectation; `git status --porcelain --untracked-files=all` is empty
+  — verify: every result is recorded and matches the expectation; `git status --porcelain --untracked-files=all` is empty. **Gate at `c3f04ab` (2026-10-29): full tests 824/824 pass, 0 fail (≥ 816); all five replays exit 0; shellcheck exit 0, no findings; fixture verdict lines 180 (> 128).**
 - [ ] 5.2 Re-check the three planned Follow-ups below against the final code, and add any new unrelated problem found during the build as another Follow-up with an `(added <date>)` suffix. Do not fix any of them in this delivery — verify: `## Follow-ups` holds at least the three planned lines, each still accurate
 - [ ] 5.3 Merge `origin/main` into the product branch and the companion's `origin/main` into the companion branch, then push product first. Wait on CI with `scripts/wait-for-checks.sh pr <code-pr>`, rerunning while it exits 2. When it passes, set `status: in-review` — verify: `wait-for-checks.sh` exits 0 with Shellcheck, Unit tests, and all four replay steps green; both halves report `dirty: false` and `ahead: 0` in `node scripts/agento.mjs session`
 
