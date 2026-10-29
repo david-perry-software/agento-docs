@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/guard-bypass-gaps
 last-updated: 2026-10-29
-next-step: "3.1 Add the gh api REST write rule"
+next-step: "3.2 Treat -f/-F/--field/--raw-field/--input without a method as POST"
 artifact-pr: "#70"
 ```
 
@@ -21,7 +21,7 @@ Every rule edit is in `scripts/hooks/delivery-guard.mjs` (made with the edit too
 
 ## Phase 3: GitHub API bypasses
 
-- [ ] 3.1 Add the `gh api` REST write rule (`## Approach` item 1). Put it in a new exported helper called right after the `gh pr merge` block and before the "no git word → allow" return. It parses the method (`-X`, `-XVAL`, `--method`, `--method=`, any case; no method means GET) and normalises the endpoint (leading `/`, `https://api.github.com/` prefix, `?query`). Writes to `rulesets/<id>[/…]`, `branches/<b>/protection[/…]`, and `pulls/<n>/merge` deny. POST to the `repos/*/*/rulesets` or `orgs/*/rulesets` collection asks. Each reason names the safe alternative: the GitHub UI for rulesets and protection, `/agento ship <slug>` for merges. Fixtures, including the reported forms verbatim:
+- [x] 3.1 Add the `gh api` REST write rule (`## Approach` item 1). Put it in a new exported helper called right after the `gh pr merge` block and before the "no git word → allow" return. It parses the method (`-X`, `-XVAL`, `--method`, `--method=`, any case; no method means GET) and normalises the endpoint (leading `/`, `https://api.github.com/` prefix, `?query`). Writes to `rulesets/<id>[/…]`, `branches/<b>/protection[/…]`, and `pulls/<n>/merge` deny. POST to the `repos/*/*/rulesets` or `orgs/*/rulesets` collection asks. Each reason names the safe alternative: the GitHub UI for rulesets and protection, `/agento ship <slug>` for merges. Fixtures, including the reported forms verbatim:
   - deny:
     - `gh api -X DELETE repos/o/r/rulesets/1`
     - `gh api -X PUT repos/o/r/pulls/1/merge`
