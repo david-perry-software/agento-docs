@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/guard-bypass-gaps
 last-updated: 2026-10-29
-next-step: "4.1 Update docs/hooks.md rule table and README summary"
+next-step: "4.2 Add the CHANGELOG Fixed entry"
 artifact-pr: "#70"
 ```
 
@@ -64,7 +64,7 @@ Every rule edit is in `scripts/hooks/delivery-guard.mjs` (made with the edit too
 
 ## Phase 4: Documentation
 
-- [ ] 4.1 Update `docs/hooks.md`:
+- [x] 4.1 Update `docs/hooks.md`:
   - Add rule-table rows for: the `gh api` REST write rule (deny; ask on ruleset create), the GraphQL mutations (deny; ask on `createRepositoryRuleset`), `git push --mirror` (deny from any branch), `-c core.hooksPath` and `--config-env=core.hooksPath` (deny), `git config` writes of `core.hooksPath` (ask), and `HUSKY=0` / `HUSKY_SKIP_HOOKS` as a prefix or `export` (deny).
   - Adjust the existing default-branch push row so `--mirror` is no longer listed as conditional.
   - Add one known-limits sentence covering `-F query=@file`, a method placed after a piped `--jq`, `GIT_CONFIG_*` env, and raw `curl`.
