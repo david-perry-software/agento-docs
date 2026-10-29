@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/guard-bypass-gaps
 last-updated: 2026-10-29
-next-step: "4.2 Add the CHANGELOG Fixed entry"
+next-step: "5.1 Run the full gate"
 artifact-pr: "#70"
 ```
 
@@ -70,7 +70,7 @@ Every rule edit is in `scripts/hooks/delivery-guard.mjs` (made with the edit too
   - Add one known-limits sentence covering `-F query=@file`, a method placed after a piped `--jq`, `GIT_CONFIG_*` env, and raw `curl`.
 
   Then extend the README PreToolUse summary's deny and ask lists to match — verify: the diff shows each rule once in each file; `node --test tests/customizations.test.mjs` exit 0
-- [ ] 4.2 Add one `- **Fixed.**` entry at the top of `CHANGELOG.md` `## 0.15.0` naming the closed bypasses and the ask-on-create carve-out for `/agento agento-init` — verify: `git diff origin/main -- CHANGELOG.md` shows only the new entry
+- [x] 4.2 Add one `- **Fixed.**` entry at the top of `CHANGELOG.md` `## 0.15.0` naming the closed bypasses and the ask-on-create carve-out for `/agento agento-init` — verify: `git diff origin/main -- CHANGELOG.md` shows only the new entry
 
 ## Phase 5: Verification and hand-off
 
