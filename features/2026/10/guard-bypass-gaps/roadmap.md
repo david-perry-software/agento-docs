@@ -3,6 +3,7 @@ status: planned
 branch: feature/guard-bypass-gaps
 last-updated: 2026-10-28
 next-step: "1.1 Re-run the baseline on the branch"
+artifact-pr: "#70"
 ```
 
 ## Phase 1: Baseline
