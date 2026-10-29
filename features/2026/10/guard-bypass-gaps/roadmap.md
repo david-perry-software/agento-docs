@@ -1,5 +1,5 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/guard-bypass-gaps
 last-updated: 2026-10-29
 next-step: "review"
