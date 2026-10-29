@@ -2,13 +2,13 @@
 status: in-progress
 branch: feature/guard-bypass-gaps
 last-updated: 2026-10-29
-next-step: "1.1 Re-run the baseline on the branch"
+next-step: "2.1 Deny git push --mirror"
 artifact-pr: "#70"
 ```
 
 ## Phase 1: Baseline
 
-- [ ] 1.1 Re-run the baseline on the branch before any change and record it on this line: `node --test tests/guard.test.mjs` (count), the full `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` (count), the five replay commands from AGENTS.md (exit codes), and `git ls-files '*.sh' | xargs pnpm dlx shellcheck` (exit, findings). Planning baseline at `f6ec226`: guard 38/38, full 816/816, all replays exit 0, shellcheck v0.11.0 exit 0 with no findings. A red result triggers the policy §5 overlap reassessment before continuing — verify: results recorded on this line and `git status --porcelain --untracked-files=all` is empty
+- [x] 1.1 Re-run the baseline on the branch before any change and record it on this line: `node --test tests/guard.test.mjs` (count), the full `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` (count), the five replay commands from AGENTS.md (exit codes), and `git ls-files '*.sh' | xargs pnpm dlx shellcheck` (exit, findings). Planning baseline at `f6ec226`: guard 38/38, full 816/816, all replays exit 0, shellcheck v0.11.0 exit 0 with no findings. A red result triggers the policy §5 overlap reassessment before continuing — verify: results recorded on this line and `git status --porcelain --untracked-files=all` is empty. **Baseline at `30812a8` (2026-10-29): guard 38/38, full 816/816, all five replays exit 0, shellcheck exit 0 with no findings — green, matches planning baseline.**
 
 ## Phase 2: Git-side bypasses
 
