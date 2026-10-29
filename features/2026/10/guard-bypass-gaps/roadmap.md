@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/guard-bypass-gaps
 last-updated: 2026-10-29
-next-step: "3.3 Add the GraphQL mutation rule"
+next-step: "4.1 Update docs/hooks.md rule table and README summary"
 artifact-pr: "#70"
 ```
 
@@ -55,7 +55,7 @@ Every rule edit is in `scripts/hooks/delivery-guard.mjs` (made with the edit too
   - allow control: `gh api -X GET repos/o/r/rulesets -f includes_parents=true`
 
   — verify: `node --test tests/guard.test.mjs` exit 0; Local and Copilot-format replays exit 0
-- [ ] 3.3 Add the GraphQL mutation rule. When any segment calls `gh api graphql`, scan the whole command text for whole-word mutation names. `mergePullRequest`, `updateRepositoryRuleset`, `deleteRepositoryRuleset`, `createBranchProtectionRule`, `updateBranchProtectionRule`, and `deleteBranchProtectionRule` deny; `createRepositoryRuleset` asks. Fixtures:
+- [x] 3.3 Add the GraphQL mutation rule. When any segment calls `gh api graphql`, scan the whole command text for whole-word mutation names. `mergePullRequest`, `updateRepositoryRuleset`, `deleteRepositoryRuleset`, `createBranchProtectionRule`, `updateBranchProtectionRule`, and `deleteBranchProtectionRule` deny; `createRepositoryRuleset` asks. Fixtures:
   - deny, one line each for: `gh api graphql -f query='mutation { mergePullRequest(input: {pullRequestId: "x"}) { clientMutationId } }'`, then the same shape for `deleteRepositoryRuleset`, `updateRepositoryRuleset`, `createBranchProtectionRule`, `updateBranchProtectionRule`, and `deleteBranchProtectionRule`
   - ask: `gh api graphql -f query='mutation { createRepositoryRuleset(input: {}) { clientMutationId } }'`
   - allow: `gh api graphql -f query='query { viewer { login } }'`
