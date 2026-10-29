@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: in-progress
 branch: feature/guard-bypass-gaps
 last-updated: 2026-10-29
-next-step: "3.4"
+next-step: "3.5"
 artifact-pr: "#70"
 ```
 
@@ -61,7 +61,7 @@ Every rule edit is in `scripts/hooks/delivery-guard.mjs` (made with the edit too
   - allow: `gh api graphql -f query='query { viewer { login } }'`
 
   Add a `tests/guard.test.mjs` case with a **multi-line** `mergePullRequest` query (newlines inside the quoted `-f query=`) that still denies — verify: `node --test tests/guard.test.mjs` exit 0; Local and Copilot-format replays exit 0
-- [ ] 3.4 Harden `ghApiMethodAndEndpoint` so every value-taking `gh api` option is skipped as a pair before the endpoint is picked (review F1): `-H`/`--header`, `--hostname`, `-q`/`--jq`, `-t`/`--template`, `-p`/`--preview`, `--cache`, in addition to `-X`/`--method` and the five field flags, plus their `--opt=value` forms; strip a trailing `/` in `normalizeGhEndpoint` (F5). Fixtures: `deny gh api --method PUT -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /repos/o/r/pulls/1/merge` (the GitHub REST docs' sample shape), `deny gh api -H "Accept: application/vnd.github+json" -X DELETE repos/o/r/rulesets/1`, `deny gh api -X DELETE --jq .id repos/o/r/rulesets/1`, `deny gh api -X PUT repos/o/r/pulls/1/merge/`; controls `allow gh api -H "Accept: application/vnd.github+json" repos/o/r/rulesets`, `allow gh api --jq .name repos/o/r/rulesets/1`. Add a `tests/guard.test.mjs` case — verify: `node --test tests/guard.test.mjs` exit 0; Local and Copilot-format replays exit 0 (added 2026-10-29)
+- [x] 3.4 Harden `ghApiMethodAndEndpoint` so every value-taking `gh api` option is skipped as a pair before the endpoint is picked (review F1): `-H`/`--header`, `--hostname`, `-q`/`--jq`, `-t`/`--template`, `-p`/`--preview`, `--cache`, in addition to `-X`/`--method` and the five field flags, plus their `--opt=value` forms; strip a trailing `/` in `normalizeGhEndpoint` (F5); restrict `hookSkipExport` to the segment's command word so `echo export HUSKY=0` allows (F4). Fixtures: `deny gh api --method PUT -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /repos/o/r/pulls/1/merge` (the GitHub REST docs' sample shape), `deny gh api -H "Accept: application/vnd.github+json" -X DELETE repos/o/r/rulesets/1`, `deny gh api -X DELETE --jq .id repos/o/r/rulesets/1`, `deny gh api -X PUT repos/o/r/pulls/1/merge/`; controls `allow gh api -H "Accept: application/vnd.github+json" repos/o/r/rulesets`, `allow gh api --jq .name repos/o/r/rulesets/1`, `allow echo export HUSKY=0` (F4). Add a `tests/guard.test.mjs` case — verify: `node --test tests/guard.test.mjs` exit 0; Local and Copilot-format replays exit 0 (added 2026-10-29)
 - [ ] 3.5 Detect GraphQL by the normalised endpoint (`graphql` after stripping the host and leading `/`, regardless of options before it) instead of the positional `toks[i+2] === "graphql"` (review F3), and make `ghApiVerdict` fall through to the REST scan when the GraphQL verdict is `null` instead of returning it (review F2). Fixtures: `deny gh api -X POST graphql -f query='mutation { mergePullRequest(input: {}) { clientMutationId } }'`, `deny gh api /graphql -f query='mutation { mergePullRequest(input: {}) { clientMutationId } }'`, `deny gh api -H 'X: y' graphql -f query='mutation { deleteRepositoryRuleset(input: {}) { clientMutationId } }'`, and the chain `deny gh api graphql -f query='query { viewer { login } }' && gh api -X DELETE repos/o/r/rulesets/1`; control `allow gh api -X POST graphql -f query='query { viewer { login } }'`. Then rerun the step 5.1 gate and update its recorded line — verify: `node --test tests/guard.test.mjs` exit 0; all five replays exit 0; full tests ≥ 824 pass, 0 fail; shellcheck exit 0, no findings (added 2026-10-29)
 
 ## Phase 4: Documentation
