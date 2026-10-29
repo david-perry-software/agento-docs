@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/guard-bypass-gaps
 last-updated: 2026-10-29
-next-step: "3.2 Treat -f/-F/--field/--raw-field/--input without a method as POST"
+next-step: "3.3 Add the GraphQL mutation rule"
 artifact-pr: "#70"
 ```
 
@@ -44,7 +44,7 @@ Every rule edit is in `scripts/hooks/delivery-guard.mjs` (made with the edit too
     - `gh api user`
 
   Add unit tests for the three reasons — verify: `node --test tests/guard.test.mjs` exit 0; Local and Copilot-format replays exit 0
-- [ ] 3.2 Treat `-f`/`-F`/`--field`/`--raw-field`/`--input` without a method as POST, while an explicit `-X GET` stays a read (Decision 2). Fixtures:
+- [x] 3.2 Treat `-f`/`-F`/`--field`/`--raw-field`/`--input` without a method as POST, while an explicit `-X GET` stays a read (Decision 2). Fixtures:
   - deny:
     - `gh api repos/o/r/rulesets/1 -f enforcement=disabled`
     - `gh api repos/o/r/pulls/1/merge -F merge_method=merge`
