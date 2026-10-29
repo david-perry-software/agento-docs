@@ -2,7 +2,7 @@
 status: in-review
 branch: feature/guard-bypass-gaps
 last-updated: 2026-10-29
-next-step: ""
+next-step: "3.4"
 artifact-pr: "#70"
 ```
 
@@ -61,6 +61,8 @@ Every rule edit is in `scripts/hooks/delivery-guard.mjs` (made with the edit too
   - allow: `gh api graphql -f query='query { viewer { login } }'`
 
   Add a `tests/guard.test.mjs` case with a **multi-line** `mergePullRequest` query (newlines inside the quoted `-f query=`) that still denies — verify: `node --test tests/guard.test.mjs` exit 0; Local and Copilot-format replays exit 0
+- [ ] 3.4 Harden `ghApiMethodAndEndpoint` so every value-taking `gh api` option is skipped as a pair before the endpoint is picked (review F1): `-H`/`--header`, `--hostname`, `-q`/`--jq`, `-t`/`--template`, `-p`/`--preview`, `--cache`, in addition to `-X`/`--method` and the five field flags, plus their `--opt=value` forms; strip a trailing `/` in `normalizeGhEndpoint` (F5). Fixtures: `deny gh api --method PUT -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /repos/o/r/pulls/1/merge` (the GitHub REST docs' sample shape), `deny gh api -H "Accept: application/vnd.github+json" -X DELETE repos/o/r/rulesets/1`, `deny gh api -X DELETE --jq .id repos/o/r/rulesets/1`, `deny gh api -X PUT repos/o/r/pulls/1/merge/`; controls `allow gh api -H "Accept: application/vnd.github+json" repos/o/r/rulesets`, `allow gh api --jq .name repos/o/r/rulesets/1`. Add a `tests/guard.test.mjs` case — verify: `node --test tests/guard.test.mjs` exit 0; Local and Copilot-format replays exit 0 (added 2026-10-29)
+- [ ] 3.5 Detect GraphQL by the normalised endpoint (`graphql` after stripping the host and leading `/`, regardless of options before it) instead of the positional `toks[i+2] === "graphql"` (review F3), and make `ghApiVerdict` fall through to the REST scan when the GraphQL verdict is `null` instead of returning it (review F2). Fixtures: `deny gh api -X POST graphql -f query='mutation { mergePullRequest(input: {}) { clientMutationId } }'`, `deny gh api /graphql -f query='mutation { mergePullRequest(input: {}) { clientMutationId } }'`, `deny gh api -H 'X: y' graphql -f query='mutation { deleteRepositoryRuleset(input: {}) { clientMutationId } }'`, and the chain `deny gh api graphql -f query='query { viewer { login } }' && gh api -X DELETE repos/o/r/rulesets/1`; control `allow gh api -X POST graphql -f query='query { viewer { login } }'`. Then rerun the step 5.1 gate and update its recorded line — verify: `node --test tests/guard.test.mjs` exit 0; all five replays exit 0; full tests ≥ 824 pass, 0 fail; shellcheck exit 0, no findings (added 2026-10-29)
 
 ## Phase 4: Documentation
 
@@ -90,3 +92,4 @@ Every rule edit is in `scripts/hooks/delivery-guard.mjs` (made with the edit too
 - Brace-group command word: `{ shellcheck scripts/hooks/*.sh …; } 2>&1 | tail` is denied because `{` is the command word and is not in `READ_ONLY`. Treat `{`/`(` grouping as transparent. Observed while planning on 2026-10-28.
 - `gh pr merge --auto` and GraphQL `enablePullRequestAutoMerge` arm a merge outside the `/agento ship` gate. Policy says ship never uses `--auto`, but the guard allows it (Decision 7).
 - Quoted-command-text false positive: the git policy (now including the new `git push --mirror` deny) matches `git <subcommand>` sequences inside quoted strings, so `printf '%s\n' "git push --mirror"` is denied as a mirror push even though the command word is `printf`. The guard reads shell text literally rather than after quote removal. (added 2026-10-29)
+- Backslash-newline continuations split segments: `SEGMENT_SPLIT` includes `\n`, so a docs-style multi-line `gh api \` … `--method PUT \` … `/repos/o/r/pulls/1/merge` is allowed, and so are `git push \`⏎`--force origin feature/x` and `gh pr merge 1 \`⏎`--admin`. Pre-existing and guard-wide; joining `\\\n` before segmenting would close it for every rule. Observed during review on 2026-10-29. (added 2026-10-29)
