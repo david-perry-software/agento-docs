@@ -1,7 +1,7 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/guard-bypass-gaps
-last-updated: 2026-10-28
+last-updated: 2026-10-29
 next-step: "1.1 Re-run the baseline on the branch"
 artifact-pr: "#70"
 ```
