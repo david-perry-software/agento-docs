@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/guard-bypass-gaps
 last-updated: 2026-10-29
-next-step: "5.2 Re-check the Follow-ups"
+next-step: "5.3 Merge origin/main, wait on CI, set in-review"
 artifact-pr: "#70"
 ```
 
@@ -81,7 +81,7 @@ Every rule edit is in `scripts/hooks/delivery-guard.mjs` (made with the edit too
   - `grep -c -E '^(allow|ask|deny) ' tests/guard-fixtures.txt` (more than 128).
 
   — verify: every result is recorded and matches the expectation; `git status --porcelain --untracked-files=all` is empty. **Gate at `c3f04ab` (2026-10-29): full tests 824/824 pass, 0 fail (≥ 816); all five replays exit 0; shellcheck exit 0, no findings; fixture verdict lines 180 (> 128).**
-- [ ] 5.2 Re-check the three planned Follow-ups below against the final code, and add any new unrelated problem found during the build as another Follow-up with an `(added <date>)` suffix. Do not fix any of them in this delivery — verify: `## Follow-ups` holds at least the three planned lines, each still accurate
+- [x] 5.2 Re-check the three planned Follow-ups below against the final code, and add any new unrelated problem found during the build as another Follow-up with an `(added <date>)` suffix. Do not fix any of them in this delivery — verify: `## Follow-ups` holds at least the three planned lines, each still accurate
 - [ ] 5.3 Merge `origin/main` into the product branch and the companion's `origin/main` into the companion branch, then push product first. Wait on CI with `scripts/wait-for-checks.sh pr <code-pr>`, rerunning while it exits 2. When it passes, set `status: in-review` — verify: `wait-for-checks.sh` exits 0 with Shellcheck, Unit tests, and all four replay steps green; both halves report `dirty: false` and `ahead: 0` in `node scripts/agento.mjs session`
 
 ## Follow-ups
@@ -89,3 +89,4 @@ Every rule edit is in `scripts/hooks/delivery-guard.mjs` (made with the edit too
 - Quote-aware segment splitting: `SEGMENT_SPLIT` splits on `|` inside quotes, so `grep -n -E '…|deny|ask' scripts/hooks/delivery-guard.sh` is denied as a hook-file shell write. The fragment `ask' scripts/hooks/…` becomes its own segment with a non-read-only command word. This also lets a `-X` placed after a piped `--jq` escape the `gh api` rule. Observed while planning on 2026-10-28.
 - Brace-group command word: `{ shellcheck scripts/hooks/*.sh …; } 2>&1 | tail` is denied because `{` is the command word and is not in `READ_ONLY`. Treat `{`/`(` grouping as transparent. Observed while planning on 2026-10-28.
 - `gh pr merge --auto` and GraphQL `enablePullRequestAutoMerge` arm a merge outside the `/agento ship` gate. Policy says ship never uses `--auto`, but the guard allows it (Decision 7).
+- Quoted-command-text false positive: the git policy (now including the new `git push --mirror` deny) matches `git <subcommand>` sequences inside quoted strings, so `printf '%s\n' "git push --mirror"` is denied as a mirror push even though the command word is `printf`. The guard reads shell text literally rather than after quote removal. (added 2026-10-29)
