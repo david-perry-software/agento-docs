@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/lean-command-context
 last-updated: 2026-10-30
-next-step: "2.3 Replace the loads-the-policy-explicitly test with the declared-sections test"
+next-step: "3.1 Move §9/§10/§11 reference detail into docs/architecture.md verbatim"
 artifact-pr: "#71"
 ```
 
@@ -14,7 +14,7 @@ artifact-pr: "#71"
 
 - [x] 2.1 Replace the `Policy: read … once` line in all six `.github/agents/*.agent.md` files and the built-in-agent prompts with `Policy: §… — load once with \`node <agento-root>/scripts/agento.mjs policy …\` before the first step.`, and add the line to every remaining prompt. The set is {1, 9, 10, 11, 12} ∪ every §N the file cites, ∪ its agent's cited sections for agent-dispatched commands. Copy each prompt to its `skills/agento/commands/<name>.md` mirror byte-for-byte — verify: `cmp` of every prompt/mirror pair succeeds and `grep -rn "Policy: read" .github skills` prints nothing
 - [x] 2.2 Edit `.github/instructions/agento-core.instructions.md` in place (still ≤ 40 lines): load the sections the command's (or, with no command, the agent's) `Policy:` line declares with the command it names, and load any other cited §N on demand with `agento.mjs policy N`. Edit `skills/agento/SKILL.md` step 5: inline, inline-as-agent, and subagent modes run the dispatched command's `Policy:` line (the subagent receives it in the command body) — verify: `wc -l` of the core ≤ 40 and `grep -n "Read it once" .github/instructions/agento-core.instructions.md` prints nothing
-- [ ] 2.3 Replace the "loads the policy explicitly" test in `tests/customizations.test.mjs` with one asserting: exactly one `Policy:` line per agent, prompt, and mirror; the `§` list equals the `policy` arguments; the set equals the baseline ∪ cited (∪ agent-cited); and every declared §N exists in `policy --list` — verify: `node --test tests/customizations.test.mjs` passes, and a deliberately removed citation in a scratch copy makes the new test fail (reverted)
+- [x] 2.3 Replace the "loads the policy explicitly" test in `tests/customizations.test.mjs` with one asserting: exactly one `Policy:` line per agent, prompt, and mirror; the `§` list equals the `policy` arguments; the set equals the baseline ∪ cited (∪ agent-cited); and every declared §N exists in `policy --list` — verify: `node --test tests/customizations.test.mjs` passes, and a deliberately removed citation in a scratch copy makes the new test fail (reverted)
 
 ## Phase 3: Shrink §9, §10, §11 to the CLI-trusting clauses
 
