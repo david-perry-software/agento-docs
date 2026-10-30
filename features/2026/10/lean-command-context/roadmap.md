@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/lean-command-context
 last-updated: 2026-10-30
-next-step: "5.2 Trim builder, reviewer, autopilot, and mechanic agents"
+next-step: "6.1 Add the per-command context-budget test"
 artifact-pr: "#71"
 ```
 
@@ -32,7 +32,7 @@ artifact-pr: "#71"
 ## Phase 5: Trim restated rules from the agents
 
 - [x] 5.1 Trim `.github/agents/delivery-planner.agent.md` and `.github/agents/initiative-architect.agent.md`: replace passages restating preflight record fields, window/isolation mechanics, or `plan-publish` internals with "run X, print its `receipt`/`actions[]`, stop on `rejected`/`failed`", naming the owner. The commit message lists each removed passage → owner (CLI function, policy §, or command body) — verify: `wc -c` of both files is lower than at `3ec4e5e` and `node --test tests/customizations.test.mjs` passes
-- [ ] 5.2 Trim `.github/agents/delivery-builder.agent.md`, `.github/agents/delivery-reviewer.agent.md`, `.github/agents/delivery-autopilot.agent.md`, and `.github/agents/copilot-mechanic.agent.md` the same way. The Mechanic's body points at the `docs/architecture.md` authoring contract (Declaration contract, `Policy:` line contract, vocabulary) for creating or editing commands. The commit message lists removals → owner — verify: `wc -c` of each file is lower than at `3ec4e5e`, the total agent bytes are lower, and `node --test tests/customizations.test.mjs` passes
+- [x] 5.2 Trim `.github/agents/delivery-builder.agent.md`, `.github/agents/delivery-reviewer.agent.md`, `.github/agents/delivery-autopilot.agent.md`, and `.github/agents/copilot-mechanic.agent.md` the same way. The Mechanic's body points at the `docs/architecture.md` authoring contract (Declaration contract, `Policy:` line contract, vocabulary) for creating or editing commands. The commit message lists removals → owner — verify: `wc -c` of each file is lower than at `3ec4e5e`, the total agent bytes are lower, and `node --test tests/customizations.test.mjs` passes
 
 ## Phase 6: Context-budget test
 
