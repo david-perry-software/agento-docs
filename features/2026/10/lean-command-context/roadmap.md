@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/lean-command-context
 last-updated: 2026-10-30
-next-step: "6.1 Add the per-command context-budget test"
+next-step: "6.2 Append the before/after context-budget table to plan.md Research"
 artifact-pr: "#71"
 ```
 
@@ -36,7 +36,7 @@ artifact-pr: "#71"
 
 ## Phase 6: Context-budget test
 
-- [ ] 6.1 Add a `tests/customizations.test.mjs` test that computes, for each of the 26 commands, the bytes of its declared policy sections (from `policy --list`), plus its agent file when `agent:` names one of the six agents, plus the command body. Assert every command ≤ 40,000 and the mean ≤ 24,000, and print the per-command table on failure — verify: `node --test tests/customizations.test.mjs` passes
+- [x] 6.1 Add a `tests/customizations.test.mjs` test that computes, for each of the 26 commands, the bytes of its declared policy sections (from `policy --list`), plus its agent file when `agent:` names one of the six agents, plus the command body. Assert every command ≤ 40,000 and the mean ≤ 24,000, and print the per-command table on failure — verify: `node --test tests/customizations.test.mjs` passes
 - [ ] 6.2 Append the before/after per-command table (baseline from plan.md `## Research`; after from the 6.1 computation) to plan.md `## Research` as a "Build addendum (<date>)" paragraph — verify: the table lists all 26 commands with before, after, and delta, and its mean/max match the 6.1 test's numbers
 
 ## Phase 7: Docs, changelog, extension copy
