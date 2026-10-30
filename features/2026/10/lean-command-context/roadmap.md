@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/lean-command-context
 last-updated: 2026-10-30
 next-step: "1.1 Add agento.mjs policy <N>… section printer with --list"
