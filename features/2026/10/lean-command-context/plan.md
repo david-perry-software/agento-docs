@@ -155,6 +155,38 @@ always-on core and the ai-skills instructions are constant and excluded):
 | doctor | 2,696 | 0 | 33,062 |
 | **mean / max** | | | **40,224 / 50,827** |
 
+**Build addendum (2026-10-30).** Per-command loaded bytes (declared policy sections + agent file when `agent:` names one of the six agents + command body), before at `3ec4e5e` and after this build:
+
+| Command | Before | After | Delta |
+| --- | ---: | ---: | ---: |
+| new-issue | 50,827 | 33,291 | -17,536 |
+| agento-init | 50,374 | 28,798 | -21,576 |
+| new-feature | 49,744 | 32,174 | -17,570 |
+| build-issue | 45,004 | 32,210 | -12,794 |
+| build-feature | 44,722 | 31,928 | -12,794 |
+| new-initiative | 44,499 | 25,494 | -19,005 |
+| extend-copilot | 43,092 | 21,313 | -21,779 |
+| fix-copilot | 42,833 | 21,054 | -21,779 |
+| ap | 42,404 | 26,220 | -16,184 |
+| review-issue | 42,102 | 28,951 | -13,151 |
+| ship | 41,788 | 22,751 | -19,037 |
+| review-feature | 41,721 | 28,570 | -13,151 |
+| models | 40,324 | 18,553 | -21,771 |
+| continue | 38,370 | 16,433 | -21,937 |
+| start-freehand | 38,060 | 16,109 | -21,951 |
+| close-session | 37,387 | 15,780 | -21,607 |
+| triage-followups | 37,026 | 15,053 | -21,973 |
+| start-session | 36,492 | 14,848 | -21,644 |
+| finish-freehand | 36,305 | 14,305 | -22,000 |
+| commit-current-changes | 36,254 | 14,252 | -22,002 |
+| quick-fix | 36,056 | 14,091 | -21,965 |
+| delivery-status | 34,774 | 12,836 | -21,938 |
+| next-feature | 34,723 | 12,793 | -21,930 |
+| install-skills | 34,489 | 12,737 | -21,752 |
+| mission-control | 33,389 | 11,391 | -21,998 |
+| doctor | 33,062 | 11,114 | -21,948 |
+| **mean / max** | **40,224 / 50,827** | **20,502 / 33,291** | |
+
 ## Approach
 
 ### 1. `agento.mjs policy <N>…`: a section printer (`scripts/agento.mjs`)
