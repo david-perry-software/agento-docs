@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/lean-command-context
 last-updated: 2026-10-30
-next-step: "4.1 Inventory the consumers of the brief preflight output's dropped fields"
+next-step: "4.2 Implement brief-by-default preflightDocument() with --full"
 artifact-pr: "#71"
 ```
 
@@ -25,7 +25,7 @@ artifact-pr: "#71"
 
 ## Phase 4: Slim preflight output
 
-- [ ] 4.1 Inventory the consumers. Grep `.github/agents`, `.github/prompts`, `skills/agento/commands`, `skills/agento/SKILL.md`, and `scripts/agento.test.mjs` for every field the brief output drops (`worktrees`, `session.allowed`, `session.elsewhere`, `config`, `root`, `configSource`, full `doctor.checks`). Switch each consumer to `preflight … --full` or `agento.mjs session`, or keep the field in the brief output. Record the inventory in the step's commit message — verify: the inventory lists every grep hit with its resolution
+- [x] 4.1 Inventory the consumers. Grep `.github/agents`, `.github/prompts`, `skills/agento/commands`, `skills/agento/SKILL.md`, and `scripts/agento.test.mjs` for every field the brief output drops (`worktrees`, `session.allowed`, `session.elsewhere`, `config`, `root`, `configSource`, full `doctor.checks`). Switch each consumer to `preflight … --full` or `agento.mjs session`, or keep the field in the brief output. Record the inventory in the step's commit message — verify: the inventory lists every grep hit with its resolution
 - [ ] 4.2 Implement brief-by-default in `preflightDocument()` (`scripts/agento.mjs:4595`), with `--full` parsed in `preflightArgs()` (`:4551`). Brief carries: `status`, `command`, `opId`, `subject`, `receipt`, and `preflightLines`; `window` (`role`, `required`, `match`, `reason`, `allowed`, `elsewhere`, plus `primary` when `role: unmanaged`); `session` (`role`, `hosted`, `worktree`, `companion`, `workspace`, `delivery`, `pr`, `companionPr`, `lifecycle`, `warnings`); `doctor` `{ status, for, failing }`; and `resolve` when non-null. `--full` is today's document unchanged. Tests in `scripts/agento.test.mjs`: brief field set; `--full` deep-equals the pre-change document shape; a plan-window fixture with ≥ 3 registered worktrees keeps brief output ≤ 2,500 bytes; the unmanaged rejection carries `window.primary`. Existing preflight tests that read dropped fields pass `--full` — verify: `node --test scripts/agento.test.mjs` passes
 - [ ] 4.3 Add a customizations test: every `` `session.X` ``, `` `window.X` ``, or `` `doctor.X` `` field a prompt, agent, or mirror names exists in the brief document from a fixture repository, unless that file invokes `preflight … --full`. Then run `node scripts/agento.mjs preflight new-feature | wc -c` in this plan worktree — verify: `node --test tests/customizations.test.mjs` passes and the manual brief output is ≤ 2,500 bytes (record the number)
 
