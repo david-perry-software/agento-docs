@@ -1,5 +1,5 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/lean-command-context
 last-updated: 2026-10-30
 next-step: ""
