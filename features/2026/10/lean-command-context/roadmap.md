@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/lean-command-context
 last-updated: 2026-10-30
-next-step: "3.2 Add a Duplicate submission: line to every command body and change §9 idempotency row citations"
+next-step: "3.3 Rewrite policy §9/§10/§11 to keep only the model-performed rules"
 artifact-pr: "#71"
 ```
 
@@ -19,7 +19,7 @@ artifact-pr: "#71"
 ## Phase 3: Shrink §9, §10, §11 to the CLI-trusting clauses
 
 - [x] 3.1 Move the reference detail into `docs/architecture.md` (new subsections under the existing receipts/preflight/window paragraph at `:55-85`): the §9 op-id grammar, the receipt variants, and the full idempotency table; the §10 capability vocabulary, hard/soft classification, Declaration contract, "When doctor runs", and the new `Policy:` line contract; the §11 record field catalogue and numbered procedure. Copy the text verbatim at this step and change no policy text yet — verify: each moved block is found verbatim in `docs/architecture.md` by a `grep -F` of its first sentence
-- [ ] 3.2 Add a one-line `Duplicate submission:` sentence to every command body that does not already state its row (prompt + mirror), worded from its idempotency-table row. Change every "§9 idempotency row" citation to "this command's duplicate-submission line". Add a customizations test: each of the 26 commands carries exactly one `Duplicate submission:` line, and the docs table has a row naming it — verify: `node --test tests/customizations.test.mjs` passes and `grep -rn "idempotency row" .github skills` prints nothing
+- [x] 3.2 Add a one-line `Duplicate submission:` sentence to every command body that does not already state its row (prompt + mirror), worded from its idempotency-table row. Change every "§9 idempotency row" citation to "this command's duplicate-submission line". Add a customizations test: each of the 26 commands carries exactly one `Duplicate submission:` line, and the docs table has a row naming it — verify: `node --test tests/customizations.test.mjs` passes and `grep -rn "idempotency row" .github skills` prints nothing
 - [ ] 3.3 Rewrite policy §9, §10, and §11 to keep only the model-performed rules in plan Approach 3. §9: print `receipt`/`preflightLines` verbatim; stop on `rejected` with alternatives as §12 blocks; the duplicate receipt form; the `Result:` spellings including paused and session break; the op-id comes from the CLI. §10: trust preflight's doctor verdict, the standard fallbacks, and **Recommended choice.** §11: `window.match: false` → receipt plus blocks, write nothing; on a match the record replaces git inspection; worktree-mutating commands use `preflight --full` or `agento.mjs session` for `worktrees[]`; branch conditions. Update `Fallback:` pointer lines to "Standard fallbacks: delivery-policy §10." in every agent, prompt, and mirror. Repoint the tests that pinned moved text (vocabulary, Declaration contract, canaries) to `docs/architecture.md` — verify: `node --test tests/customizations.test.mjs scripts/agento.test.mjs` passes and `node scripts/agento.mjs policy --list` shows §9 + §10 + §11 ≤ 5,000 bytes combined
 - [ ] 3.4 Recompute every `Policy:` line against the new citations (the 2.3 test enforces it) and re-copy the mirrors — verify: `node --test tests/customizations.test.mjs` passes
 
