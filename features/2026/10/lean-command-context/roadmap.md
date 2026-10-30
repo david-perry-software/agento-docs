@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/lean-command-context
 last-updated: 2026-10-30
-next-step: "7.2 Copy scripts/ to extension/cli/ and run extension unit tests"
+next-step: "8.1 Run the full gate"
 artifact-pr: "#71"
 ```
 
@@ -42,7 +42,7 @@ artifact-pr: "#71"
 ## Phase 7: Docs, changelog, extension copy
 
 - [x] 7.1 Update `docs/architecture.md` (the per-section load paragraph at `:55-85`), `docs/commands.md`, and `README.md` for `agento.mjs policy`, the `Policy:` line, and `preflight --full`. Add a `CHANGELOG.md` entry under the next version heading in the existing style — verify: `grep -n "agento.mjs policy" docs/architecture.md docs/commands.md README.md CHANGELOG.md` finds each file and `node --test tests/customizations.test.mjs` passes
-- [ ] 7.2 Run `cd extension && npm run copy-cli`, then `cd extension && npm run test:unit` — verify: `node --test tests/extension-bundle.test.mjs` passes and `cmp scripts/agento.mjs extension/cli/agento.mjs` succeeds
+- [x] 7.2 Run `cd extension && npm run copy-cli`, then `cd extension && npm run test:unit` — verify: `node --test tests/extension-bundle.test.mjs` passes and `cmp scripts/agento.mjs extension/cli/agento.mjs` succeeds
 
 ## Phase 8: Full gate
 
