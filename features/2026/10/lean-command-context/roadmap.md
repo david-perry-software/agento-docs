@@ -2,13 +2,13 @@
 status: in-progress
 branch: feature/lean-command-context
 last-updated: 2026-10-30
-next-step: "1.1 Add agento.mjs policy <N>… section printer with --list"
+next-step: "2.1 Replace the Policy: read … once line with Policy: §… in all six agents, prompts, and mirrors"
 artifact-pr: "#71"
 ```
 
 ## Phase 1: Policy section printer
 
-- [ ] 1.1 Add `policy <N> [<N>…]` and `policy --list` to `scripts/agento.mjs` (dispatch case, usage line, a `policySections(root)` parser of `## N.` headings in `<agento-root>/.github/instructions/delivery-policy.instructions.md`). It prints the requested sections as raw Markdown in ascending order, deduplicated, after one header line. `--list` prints JSON `{ sections: [{ n, title, bytes }] }`. Unknown, malformed, or missing sections exit 1 with usage. Add a `// --- policy` block to `scripts/agento.test.mjs` covering 1+9 output equality with the file slices, dedupe and order, `13`, `x`, no args, and `--list` (12 entries whose bytes sum to the body size) — verify: `node --test scripts/agento.test.mjs` passes and `node scripts/agento.mjs policy 1 9` prints exactly the two sections
+- [x] 1.1 Add `policy <N> [<N>…]` and `policy --list` to `scripts/agento.mjs` (dispatch case, usage line, a `policySections(root)` parser of `## N.` headings in `<agento-root>/.github/instructions/delivery-policy.instructions.md`). It prints the requested sections as raw Markdown in ascending order, deduplicated, after one header line. `--list` prints JSON `{ sections: [{ n, title, bytes }] }`. Unknown, malformed, or missing sections exit 1 with usage. Add a `// --- policy` block to `scripts/agento.test.mjs` covering 1+9 output equality with the file slices, dedupe and order, `13`, `x`, no args, and `--list` (12 entries whose bytes sum to the body size) — verify: `node --test scripts/agento.test.mjs` passes and `node scripts/agento.mjs policy 1 9` prints exactly the two sections
 
 ## Phase 2: Declared policy sections
 
