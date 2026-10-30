@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/lean-command-context
 last-updated: 2026-10-30
-next-step: "8.1 Run the full gate"
+next-step: ""
 artifact-pr: "#71"
 ```
 
@@ -46,4 +46,4 @@ artifact-pr: "#71"
 
 ## Phase 8: Full gate
 
-- [ ] 8.1 Run the full gate in the product checkout: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'`, all five guard smokes from AGENTS.md, `cd extension && npm run build && npm run test:unit`, and `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` if `command -v shellcheck` succeeds (else record "unavailable; no shell file changed"). Compare with the plan.md baseline of 827/827 — verify: every command exits 0, the test count is ≥ 827 with 0 failures, and the comparison is recorded in plan.md `## Research`
+- [x] 8.1 Run the full gate in the product checkout: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'`, all five guard smokes from AGENTS.md, `cd extension && npm run build && npm run test:unit`, and `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` if `command -v shellcheck` succeeds (else record "unavailable; no shell file changed"). Compare with the plan.md baseline of 827/827 — verify: every command exits 0, the test count is ≥ 827 with 0 failures, and the comparison is recorded in plan.md `## Research`

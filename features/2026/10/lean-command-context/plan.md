@@ -187,6 +187,16 @@ always-on core and the ai-skills instructions are constant and excluded):
 | doctor | 33,062 | 11,114 | -21,948 |
 | **mean / max** | **40,224 / 50,827** | **20,502 / 33,291** | |
 
+**Full gate (2026-10-30).** Re-run against the 827/827 baseline:
+
+- `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'`:
+  exit 0, 838 tests, 838 pass, 0 fail (baseline 827; ≥ 827 with 0 failures).
+- Five guard smokes (AGENTS.md): all exit 0 (default, companion, Copilot format,
+  Copilot+companion, Copilot fixtures).
+- `cd extension && npm run build && npm run test:unit`: exit 0, 251 pass.
+- `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh`: unavailable (no shell
+  file changed in this delivery).
+
 ## Approach
 
 ### 1. `agento.mjs policy <N>…`: a section printer (`scripts/agento.mjs`)
