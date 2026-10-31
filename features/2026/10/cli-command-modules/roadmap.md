@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "3.5 Move config, resolve, find, and ports to scripts/commands/resolve.mjs"
+next-step: "3.6 Move status, initiative, metrics, and dashboard to scripts/commands/status.mjs"
 artifact-pr: "#72"
 ```
 
@@ -184,10 +184,24 @@ Every step in this phase follows the same recipe:
   838 pass / 0 fail / 838 total (~455 s); the models-filter install/remove
   tests pass; `models list`/`models pins` parity diff empty;
   `evidence/parity.sh` exit 0 (21 invocations byte-identical).
-- [ ] 3.5 Move `config`, `resolve`, `find`, and `ports` to
+- [x] 3.5 Move `config`, `resolve`, `find`, and `ports` to
   `scripts/commands/resolve.mjs`. `resolveDocument`/`configDocument` go to `lib/`
   if preflight or next use them — verify: the full test command exits 0, ≥ 838
   tests; the parity diff is empty
+
+  Results (2026-10-31): `scripts/commands/resolve.mjs` exports the `config`,
+  `resolve`, `find`, and `ports` handlers. `scripts/lib/resolve.mjs` holds
+  `requireType`/`requireSlug` (shared arg validators) and the
+  `configDocument`/`resolveDocument` builders, which `preflight` also uses;
+  `scripts/lib/layout.mjs` holds the shared layout/discovery cluster
+  (`checkoutLayout`, `layoutFor`, `deliveryBranch`, `resolveWithLayout`,
+  `withLayout`, `decideWithLayout`) that `resolve`, `preflight`,
+  `close-decision`, `ship-preflight`, and `paths`/`session` share.
+  `COMMAND_MODULES` gains `config`/`resolve`/`find`/`ports` → `resolve`; the
+  four `case` bodies are deleted. `npm run copy-cli` now ships `lib/layout.mjs`,
+  `lib/resolve.mjs`, and `commands/resolve.mjs`. Full test command exit 0 —
+  838 pass / 0 fail / 838 total (~377 s); `evidence/parity.sh` exit 0 (21
+  invocations byte-identical).
 - [ ] 3.6 Move `status`, `initiative`, `metrics`, and `dashboard` to
   `scripts/commands/status.mjs`. The document builders (`statusDocument`,
   `initiative*Document`, `metricsDocument`, `doctorDocument`) go to
