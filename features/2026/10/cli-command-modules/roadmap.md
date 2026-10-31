@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "4.4 Run the full test command three times (parallel-file collision check)"
+next-step: "5.1 Add tests/cli-layout.test.mjs per plan.md Approach rule 8"
 artifact-pr: "#72"
 ```
 
@@ -434,11 +434,15 @@ Every step in this phase follows the same recipe:
   command exit 0 — 838 pass / 0 fail / 838 total (~4 min). The sorted TAP test
   names (838) match the base half exactly and are appended as the final half of
   `evidence/test-names.txt`.
-- [ ] 4.4 Run the full test command three times in a row to check for
+- [x] 4.4 Run the full test command three times in a row to check for
   parallel-file fixture collisions. Fix any collision only in
   `scripts/test-helpers/agento-fixtures.mjs` (unique temp roots or env), never in
   test bodies or the documented command — verify: three consecutive runs exit 0
   with 0 failures and identical totals, recorded on this line
+
+  Results (2026-10-31): three consecutive full test runs, each exit 0 —
+  838 pass / 0 fail / 838 total (identical). No parallel-file fixture collisions;
+  no fix needed.
 
 ## Phase 5: Layout guard and documentation
 
