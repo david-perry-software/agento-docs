@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "5.2 Update AGENTS.md, docs/architecture.md, copilot-mechanic.agent.md"
+next-step: "6.1 Run the complete gate on the integrated branch"
 artifact-pr: "#72"
 ```
 
@@ -465,7 +465,7 @@ Every step in this phase follows the same recipe:
   Temporarily inserting `node scripts/agento.mjs zz-fake` into the usage header
   made the bidirectional table test fail (1 fail), and reverting restored 5/5
   (the temporary change was not committed).
-- [ ] 5.2 Update the docs per plan.md Approach rule 10:
+- [x] 5.2 Update the docs per plan.md Approach rule 10:
   - AGENTS.md "Layout" `scripts/` bullet (dispatcher, `lib/`, `commands/`,
     `test-helpers/`, and the `extension/cli/` copy covering the subdirectories)
   - the `docs/architecture.md` "Scripts" paragraph
@@ -475,6 +475,16 @@ Every step in this phase follows the same recipe:
 
   — verify: `node --test tests/customizations.test.mjs` passes; the changed
   paragraphs name the three paths
+
+  Results (2026-10-31): AGENTS.md's `scripts/` bullet now describes the thin
+  dispatcher, `lib/`, `commands/` (+ `*.test.mjs`), and
+  `test-helpers/agento-fixtures.mjs`, and the `extension/` bullet notes the CLI
+  copy covers `lib/` and `commands/` while excluding tests and `test-helpers/`.
+  `docs/architecture.md`'s Scripts paragraph names the dispatcher, `lib/`,
+  `commands/`, and `test-helpers/`. `copilot-mechanic.agent.md`'s edit scope now
+  names `scripts/lib/` and `scripts/commands/`, and a new bullet explains
+  locating a subcommand via `COMMAND_MODULES`. `node --test
+  tests/customizations.test.mjs` passes 60/60.
 
 ## Phase 6: Final verification
 
