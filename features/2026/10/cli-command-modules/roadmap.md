@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "3.2 Move migrate to scripts/commands/migrate.mjs"
+next-step: "3.3 Move harness to scripts/commands/harness.mjs"
 artifact-pr: "#72"
 ```
 
@@ -124,10 +124,23 @@ Every step in this phase follows the same recipe:
   scripts/agento.mjs release` exits 1 with the same usage message;
   extension-bundle test passes; `evidence/parity.sh` exit 0 (21 invocations
   byte-identical).
-- [ ] 3.2 Move `migrate` to `scripts/commands/migrate.mjs` (`ROOT_KEYS`,
+- [x] 3.2 Move `migrate` to `scripts/commands/migrate.mjs` (`ROOT_KEYS`,
   `listFiles`, `recordsUnder`, `productName`, `writeCompanionName`,
   `appendMigrationNote`, `recordsDiff`, unless shared) — verify: the full test
   command exits 0, ≥ 838 tests; the extension-bundle test passes
+
+  Results (2026-10-31): `scripts/commands/migrate.mjs` holds the `migrate` handler
+  and its migrate-only helpers (`ROOT_KEYS`, `listFiles`, `describeRoots`,
+  `recordsUnder`, `productName`, `writeCompanionName`, `appendMigrationNote`,
+  `recordsDiff`). The shared record machinery (`header`, `walkFiles`,
+  `walkRoadmaps`, `walkBreakdowns`, `describeContent`, `describe`,
+  `describeFromRef`, `recordBases`, `allRoadmaps`, `holdsArtifacts`,
+  `slugList`, `parseBreakdown`) moved to `scripts/lib/records.mjs`.
+  `COMMAND_MODULES` gains `migrate`; the `case "migrate"` body is deleted.
+  `npm run copy-cli` now ships `lib/records.mjs` and `commands/migrate.mjs`.
+  Full test command exit 0 — 838 pass / 0 fail / 838 total (~382 s);
+  extension-bundle test passes; `evidence/parity.sh` exit 0 (21 invocations
+  byte-identical).
 - [ ] 3.3 Move `harness` to `scripts/commands/harness.mjs`. Keep `harnessFacts`
   and the Copilot-dir helpers in `lib/` if doctor uses them — verify: the full test
   command exits 0, ≥ 838 tests; the `node scripts/agento.mjs harness status`
