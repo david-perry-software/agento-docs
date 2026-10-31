@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "3.12 Move next to scripts/commands/next.mjs"
+next-step: "3.13 Delete the now-empty legacy switch"
 artifact-pr: "#72"
 ```
 
@@ -338,8 +338,16 @@ Every step in this phase follows the same recipe:
   total (~375 s); the ship tests that drive `wait-for-checks.sh` pass (which
   proves `WAIT_FOR_CHECKS` resolves in `lib/ship.mjs`); `evidence/parity.sh`
   exit 0 (21 invocations byte-identical).
-- [ ] 3.12 Move `next` to `scripts/commands/next.mjs` — verify: the full test
+- [x] 3.12 Move `next` to `scripts/commands/next.mjs` — verify: the full test
   command exits 0, ≥ 838 tests; the `next` parity diff is empty
+
+  Results (2026-10-31): `scripts/commands/next.mjs` exports the `next` handler
+  plus its helpers (`reviewFreshness`, `dispatchFor`). `COMMAND_MODULES` gains
+  `next` → `next`; the `case "next"` body is deleted, leaving the legacy switch
+  with only its `default` case (removed next step). `npm run copy-cli` ships
+  `commands/next.mjs`. Full test command exit 0 — 838 pass / 0 fail / 838 total
+  (~383 s); `next` parity diff empty; `evidence/parity.sh` exit 0 (21
+  invocations byte-identical).
 - [ ] 3.13 Delete the now-empty legacy `switch` and any orphaned helpers left in
   `scripts/agento.mjs`, keeping the shebang and the unchanged usage header. Fall
   through to `usage(command ? \`unknown command ${command}\` : "missing command")`
