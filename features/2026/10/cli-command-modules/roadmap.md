@@ -3,6 +3,7 @@ status: planned
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
 next-step: "1.1 Record the baselines and write the output-parity harness"
+artifact-pr: "#72"
 ```
 
 ## Phase 1: Baseline
