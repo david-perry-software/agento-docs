@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "4.2 Move release, migrate, harness, models, resolve, status, doctor test blocks"
+next-step: "4.3 Move paths, session, publish, ship, next test blocks and delete agento.test.mjs"
 artifact-pr: "#72"
 ```
 
@@ -389,11 +389,30 @@ Every step in this phase follows the same recipe:
   import dropped. `npm run copy-cli` exit 0 with no `extension/cli` change, and
   `extension/cli` contains no `test-helpers`. Full test command exit 0 —
   838 pass / 0 fail / 838 total (~359 s), unchanged from Phase 3.
-- [ ] 4.2 Move the `test(...)` blocks for release, migrate, harness, models,
+- [x] 4.2 Move the `test(...)` blocks for release, migrate, harness, models,
   resolve, status, and doctor byte-for-byte into
   `scripts/commands/<module>.test.mjs`, importing from the fixtures module —
   verify: the full test command exits 0 with an unchanged total; no moved block
   differs except in imports (`git diff --stat -M` plus a spot check)
+
+  Results (2026-10-31): `scripts/commands/{release,migrate,harness,models,resolve,status,doctor}.test.mjs`
+  now hold those families' tests byte-for-byte (171 test bodies; a scripted diff
+  against the original confirms every body appears verbatim). The shared
+  fixtures module (`scripts/test-helpers/agento-fixtures.mjs`) gained the
+  cross-family helpers the split requires: `makeFlipRepo`, `makePairRepo`,
+  `strip`, `okStubs`, `byId`, `harnessFixture`, `makeWorktreeRepo`, `prStub`,
+  `modelsFixture`, `commonDirOf`, `legacyPins`, `publishBranch`, `roadmapFor`,
+  `worktreeCount`, `cloneState`, `landBranch`, `shipStub`, `shipRun`,
+  `refState`, `inRepoDelivery`, `pairDelivery`, `DONE_STEPS`, `shipReady`,
+  `writeFile`, `both`, `codes`, `shippable`, `PASSING`, `stepsOf`, `commitAt`,
+  `T1`, `gitLoggingPath`, `worktreeListCalls`, `makeDashboardRepo`,
+  `stableMetrics`, `assertDashboardMatches`, `MERGE`, `PARENT`, `LATER`,
+  `RUNS`, `releaseRun`, `mergeCommitAt`, `workflowFile`, `releaseGh`,
+  `releaseRoutes` (57 exports total). `scripts/agento.test.mjs` retains only
+  the Phase-4.3 content (paths, session, publish, ship, next, integration),
+  importing the moved helpers from the fixtures module. `npm run copy-cli`
+  exit 0 with no `extension/cli` change. Full test command exit 0 —
+  838 pass / 0 fail / 838 total (~257 s), unchanged from Phase 3.
 - [ ] 4.3 Move the remaining blocks: paths, session, publish, ship, and next go to
   their `scripts/commands/<module>.test.mjs`, and cross-command scenarios go to
   `scripts/commands/integration.test.mjs`. Delete the then-empty
