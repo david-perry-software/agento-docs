@@ -1,3 +1,30 @@
+# Output-parity harness result (plan.md Approach rule 9)
+
+# Invocation list (read-only, all run from the product worktree with --root):
+config
+find cli-command-modules
+status
+status feature
+session
+paths feature cli-command-modules
+ports x
+doctor
+doctor --for ship
+policy --list
+policy 9
+preflight new-feature
+next
+initiative
+metrics
+models list
+models pins
+harness status
+release
+unknown-cmd
+<no command>
+
+# Base commit (product): ad9e8f3
+# Branch commit (product): feade3978f9fc2e64299ba65e9903d6030a8fa79
+
+# Diff: empty
 PARITY OK: all 21 invocations byte-identical (stdout, stderr, exit code)
-base commit: ad9e8f3
-branch cli:  /home/david/DP/agento-worktrees/plan-20261031-055136/scripts/agento.mjs

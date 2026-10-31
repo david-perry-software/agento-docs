@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "6.1 Run the complete gate on the integrated branch"
+next-step: ""
 artifact-pr: "#72"
 ```
 
@@ -488,7 +488,7 @@ Every step in this phase follows the same recipe:
 
 ## Phase 6: Final verification
 
-- [ ] 6.1 Run the complete gate on the integrated branch (after `agento.mjs sync`):
+- [x] 6.1 Run the complete gate on the integrated branch (after `agento.mjs sync`):
   - the full test command, three times: exit 0, 0 fail, ≥ 838 tests
   - `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh`: exit 0, no
     findings (the same as the baseline)
@@ -499,3 +499,16 @@ Every step in this phase follows the same recipe:
 
   — verify: every command above exits 0 with the stated counts, recorded on this
   line, and `git status --porcelain --untracked-files=all` is empty in both halves
+
+  Results (2026-10-31, after `agento.mjs sync` reported up-to-date): full test
+  command three times — each exit 0, 843 pass / 0 fail / 843 total (838 baseline
+  + 5 new `tests/cli-layout.test.mjs` checks), no fixture collisions.
+  `shellcheck` (ShellCheck v0.10.0 binary) exit 0, no findings. All five
+  guard-smoke replays exit 0. Extension gate: `npm run build` exit 0,
+  `npm run test:unit` exit 0 (251 pass / 0 fail), `npm run test:electron` exit 0
+  (all scenarios passed), `npm run package` exit 0 (VSIX assertion passed: 15
+  required entries, license bytes preserved, exclusions clean).
+  `evidence/parity.sh` exit 0 — all 21 invocations byte-identical, empty diff,
+  refreshed in `evidence/output-parity.txt` (invocation list, base `ad9e8f3`,
+  branch `feade39`). Both halves clean: `git status --porcelain
+  --untracked-files=all` empty in the product worktree and the companion half.
