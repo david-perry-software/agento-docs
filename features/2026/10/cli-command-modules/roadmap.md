@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "3.11 Move ship, ship-preflight, and close-decision to scripts/commands/ship.mjs"
+next-step: "3.12 Move next to scripts/commands/next.mjs"
 artifact-pr: "#72"
 ```
 
@@ -313,12 +313,31 @@ Every step in this phase follows the same recipe:
   `lib/delivery-run.mjs`, `lib/ship.mjs`, and `commands/publish.mjs`. Full test
   command exit 0 — 838 pass / 0 fail / 838 total (~357 s); `evidence/parity.sh`
   exit 0 (21 invocations byte-identical).
-- [ ] 3.11 Move `ship`, `ship-preflight`, and `close-decision` to
+- [x] 3.11 Move `ship`, `ship-preflight`, and `close-decision` to
   `scripts/commands/ship.mjs` (`SHIP_EXIT`, `SHIP_PR_FIELDS`, `waitForChecks`,
   `shipArgs`, `shipPrLookup`, `ship`, `stampChangelog`, `confirmTokenFor`, the
   roadmap-step parsers) — verify: the full test command exits 0, ≥ 838 tests; the
   ship tests that drive `wait-for-checks.sh` pass, which proves `WAIT_FOR_CHECKS`
   resolves
+
+  Results (2026-10-31): `scripts/commands/ship.mjs` exports the `ship`,
+  `ship-preflight`, and `close-decision` handlers plus the ship run
+  (`shipArgs`, `ship`, `ownerTreeOf`, `companionTreeOf`). The ship/publish-pr
+  shared helpers (`SHIP_PR_FIELDS`, `waitForChecks`, `shipPrLookup`,
+  `prSummary`, `isConflicting`, `utcDate`, `stampChangelog`, `confirmTokenFor`,
+  `roadmapPathOnRef`, `parseRoadmapSteps`) live in `lib/ship.mjs` (they were
+  extracted in step 3.10 because publish-pr shares them); `SHIP_EXIT` lives in
+  `lib/delivery-run.mjs`. `COMMAND_MODULES` gains `close-decision`/
+  `ship-preflight`/`ship` → `ship`; the three `case` bodies are deleted, so the
+  legacy switch now holds only `next`. `scripts/agento.mjs` imports were pruned
+  to the dispatcher + `next` set. One layout-driven guard update:
+  `tests/customizations.test.mjs` #88 now reads `scripts/commands/ship.mjs`
+  (the CLI's clean command moved there) instead of `scripts/agento.mjs`; its
+  "no git clean by hand" scan is unchanged. `npm run copy-cli` ships
+  `commands/ship.mjs`. Full test command exit 0 — 838 pass / 0 fail / 838
+  total (~375 s); the ship tests that drive `wait-for-checks.sh` pass (which
+  proves `WAIT_FOR_CHECKS` resolves in `lib/ship.mjs`); `evidence/parity.sh`
+  exit 0 (21 invocations byte-identical).
 - [ ] 3.12 Move `next` to `scripts/commands/next.mjs` — verify: the full test
   command exits 0, ≥ 838 tests; the `next` parity diff is empty
 - [ ] 3.13 Delete the now-empty legacy `switch` and any orphaned helpers left in
