@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "3.9 Move session, start-session, and close-session to scripts/commands/session.mjs"
+next-step: "3.10 Move sync, step-commit, plan-publish, review-publish, and publish-pr to scripts/commands/publish.mjs"
 artifact-pr: "#72"
 ```
 
@@ -269,10 +269,24 @@ Every step in this phase follows the same recipe:
   `npm run copy-cli` ships `lib/paths.mjs` and `commands/paths.mjs`. Full test
   command exit 0 — 838 pass / 0 fail / 838 total (~451 s); `evidence/parity.sh`
   exit 0 (21 invocations byte-identical).
-- [ ] 3.9 Move `session`, `start-session`, and `close-session` to
+- [x] 3.9 Move `session`, `start-session`, and `close-session` to
   `scripts/commands/session.mjs`. `sessionRecord`/`sessionContext`,
   `removeSessionPair`, and `branchVerdict` go to `lib/` if ship or next use them
   — verify: the full test command exits 0, ≥ 838 tests; the parity diff is empty
+
+  Results (2026-10-31): `scripts/commands/session.mjs` exports the `session`,
+  `start-session`, and `close-session` handlers plus their family-only helpers
+  (`SESSION_ID`, `startSessionArgs`, `takenPlanIds`, `startSession`,
+  `closeSessionArgs`, `logLines`, `unpushedCommits`, `closeSession`).
+  `scripts/lib/session.mjs` gains the close/ship-teardown helpers
+  (`companionGaps`, `companionGapMessage`, `treeState`, `branchVerdict`,
+  `removeSessionPair`) since close-session and the ship teardown share them;
+  `scripts/lib/git.mjs` gains `isAncestor` and `reauthFor`; `scripts/lib/paths.mjs`
+  gains `registeredAt`. `COMMAND_MODULES` gains `session`/`start-session`/
+  `close-session` → `session`; the three `case` bodies are deleted.
+  `npm run copy-cli` ships `commands/session.mjs`. Full test command exit 0 —
+  838 pass / 0 fail / 838 total (~448 s); `evidence/parity.sh` exit 0 (21
+  invocations byte-identical).
 - [ ] 3.10 Move `sync`, `step-commit`, `plan-publish`, `review-publish`, and
   `publish-pr` to `scripts/commands/publish.mjs`. The delivery-run helpers
   (`buildWindow`, `deliveryRun`, `integrateHalves`, `pushHalves`, and others) go
