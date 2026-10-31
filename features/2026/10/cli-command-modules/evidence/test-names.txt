@@ -1,0 +1,841 @@
+# Base half: sorted TAP test names from `node --test --test-reporter=tap 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` at product ad9e8f3 (838 tests, 2026-10-31)
+# === base half ===
+/agento agento-init scaffolds the concurrency pointer into the companion
+AGENTO_PROBE_ASK_TOPLEVEL asks at the top level
+AGENTO_PROBE_DENY_NESTED denies inside hookSpecificOutput only
+AGENTO_PROBE_DENY_TOPLEVEL denies at the top level only
+AGENTO_PROBE_EXIT2 exits 2 (fail-closed check)
+Copilot tool names map to the same verdicts as their Local equivalents
+GET /artifacts reports a missing delivery's message
+GET /artifacts serves only slugs on the board, with the type from state and no file paths
+GET /events streams an initial state and broadcast events
+GET /state returns the state set on the server
+GET /windows asks only about handoff target checkouts and keys the answer by checkout
+M1 has modelSelector { vendor, id }
+M1–M4 carry V1's query, attachFiles, and the canonical /agento delivery-status
+M2 has modelSelector { vendor, family }
+M3 has modelSelector { id }
+M4 has mode '📋 Agento Planner'
+M5 carries V1's payload and a null model-change command until the host fills it
+OPTIONS is refused
+POST /dispatch calls send exactly once and returns 204
+POST /handoff applies the dispatch request checks and refuses commands that are not handoff targets
+POST /handoff passes the server-derived checkout and the command to handoff()
+POST /handoff reports a CLI refusal as 502 with its reason
+POST /refresh invokes the refresh callback
+REST PATCH examples render real blank-line newlines (\#62 pr-cross-linking-deprecation)
+SessionStart emits nested and top-level context tokens
+V1 equals today's chat.open payload shape {query, mode: 'agent', attachFiles}
+V5 carries no attachFiles
+V6 is the only variant with a submit follow-up
+\#121 dispatch-router-only: plugin manifest registers no commands; no root commands/ directory; the router skill reaches every skills/agento/commands/*.md
+\#60 autopilot-in-review-handoff: in-review transitions continue to reviewer while /agento ap stays available
+a .github/agento.json overrides only the keys it sets
+a Copilot SessionStart fixture payload yields the Agento CLI line
+a command is delivery-specific when an argument names a delivery or initiative
+a delivery without a worktree runs from the primary window only
+a failed background refresh is logged and the instance keeps working
+a freehand window can run no delivery's commands
+a freehand window enables its finish/commit commands plus the window-wide reads
+a freehand window names its session id; a primary window with no delivery omits it
+a link label wrapped across lines still links
+a malformed percent path is answered 400 and the server stays alive
+a managed worktree resolves the companion beside the primary checkout, not beside itself
+a merge log ignores non-matching subjects and keeps a branch's first merge
+a missing in-review: review is null, build is open while not complete and closed by complete
+a pause and its end: the interval up to the next status of another value
+a post-ship tick after the merge: latency from merged.at to the last tick
+a primary window with nothing in flight enables the whole create catalog
+a quoted status value, other dirs, and deleted files parse as expected
+a reopened delivery: the cycle ends at the final complete run and review never ends before it starts
+a roadmap created directly in-progress: phases.planned is null and cycle.start is the first event
+a roadmap with the default branch prefix mismatches when the config renames the prefix
+a root-level agento.json is accepted as a fallback location
+a row without a timeline band falls back to lastUpdated and no PR
+a secondary-window elsewhere entry names the delivery's own worktree window
+a throwing handler is answered 500 and the server stays alive
+a throwing onChange is reported and later refreshes still run
+active guidance qualifies Agento slash commands with the plugin name
+aggregate medians: odd and even sample counts, open intervals excluded, null without a sample
+aliasErrors accepts a valid picker and id
+aliasErrors rejects an empty picker or id
+aliasErrors rejects placeholders and control characters
+allows ordinary commands and read-only git
+allows pushes to work branches
+allows worktree removal with no occupants
+already-closed build sessions with the branch still on origin are not treated as a false hard-block
+an elsewhere window-wide command is listed disabled with the CLI's window and reason
+an in-flight refresh coalesces later triggers into one follow-up
+an open pause is measured to now
+announces the Agento CLI path
+another worktree's delivery is greyed out naming that worktree's window
+artifacts falls back to the delivery branch, then reports missing
+artifacts prefers the delivery's own managed worktree over the checkout's older copy
+artifacts reads plan, roadmap, and review from the artifacts checkout
+artifactsRoot walks the companion checkout and ignores roadmaps under rootDir
+ask-questions clarification always offers a §10 recommended choice (\#90 planner-ask-questions-tool)
+asks before committing on a feature branch without a roadmap update
+asks before edits to protected hook files via edit tools
+asks before edits to the plugin hook wiring via edit tools
+asks before persistent core.hooksPath writes
+asks before removing a worktree whose pair is open as a .code-workspace window
+auth failures exit 3 without retrying
+auto-sent handoffs form no cycle
+block quotes and rules
+branch-aware resolution: from an in-repo primary, a branch whose config names the companion resolves its roadmap there with layout: branch
+branchTriggered: branches-ignore and tag-only filters
+brief preflight output stays ≤ 2,500 bytes in a plan window with ≥ 3 registered worktrees
+build and review handoffs offer the /agento ap alternative
+build: feature-* and issue-* worktrees, including from a subdirectory
+build: promoted plan-* worktree on a feature branch (branch prefix wins over dir prefix)
+canvas role backgrounds equal the extension dark defaults
+canvas role foregrounds equal the extension foreground default
+cards carry the panel fields and land in the right lanes
+cards keep only their delivery-specific commands
+classifyFetchFailure separates authentication failures from other fetch failures
+classifyMergeRefusal matches gh v2.45.0's reason text and falls back to mergeStateStatus
+classifyRun maps run status and conclusion to four states
+classifyWorktrees: companion entries follow the product entries with repo: companion and the product half's role
+classifyWorktrees: one record per registered entry, primary first, stray sibling unmanaged
+cloneRoot prefers the stamp clone in stamped-copy mode
+cloneRoot resolves the repo root two levels up
+close-decision and ship-preflight report the companion half and refuse a dirty or unpushed one
+close-session build close (companion pair): removes both halves and the workspace file, retaining branches on origin; once landed, deletes the merged branch in each clone
+close-session build close (in-repo): dirty and unpushed halves reject; a clean pushed half is removed with its branch retained while on origin
+close-session build close (in-repo): remote-roadmap-only is already-closed and still deletes a merged local branch, retaining unmerged or stale-main ones with the reason
+close-session build close passes every close-decision error through as rejected and rejects a primary on the branch with the fix
+close-session closes a promoted plan-<id> worktree as the build it became
+close-session freehand close (companion pair): removes both halves and the workspace file, deletes the merged branch in each clone, and rejects an unpushed companion half
+close-session freehand close (in-repo): requires changes/<slug>, rejects unpushed commits with finish-freehand, offers a resume for unmerged work, deletes a merged branch
+close-session is idempotent: a re-send is nothing-to-close or already-closed, a half removed earlier is skipped, a merged branch left behind is still deleted
+close-session is one agento.mjs close-session call with no hand-run fallback procedure
+close-session occupant gate: a live process inside a half blocks with the guard's wording and changes nothing; --ignore-occupants proceeds with a warning
+close-session occupant gate: code --status naming the half as a Folder, Workspace, or Window (… (Workspace)) blocks; --dry-run reports the full decision and changes nothing
+close-session plan close (companion pair): removes the companion half, the product half, and the workspace file; an unpushed companion half rejects
+close-session plan close (in-repo): removes a pushed detached session, reports nothing-to-close for an unknown id, rejects unpushed commits
+close-session rejects from a non-primary window with the session record's alternatives, removing nothing
+close-session validates its arguments and is listed in the usage header
+close-session warns and continues when origin is unreachable, and fails with a re-login command on an authentication failure before any write
+closeBuildSessionDecision detects a managed worktree from the configured worktree dir
+closeBuildSessionDecision ignores lookalike paths outside worktrees.dir and the current branch
+closeBuildSessionDecision reports primary-owns-branch when the primary checkout sits on the delivery branch
+collect refuses on a planted /home/x and writes nothing
+collect refuses on a planted ghp_ token and writes nothing
+collect sanitizes logs into fixtures and empties the log dir
+command mirrors use suffix-less command names and hook wiring points at existing executable files
+commandName reads the command after /agento
+commit-current-changes, quick-fix, and finish-freehand publish through one agento.mjs publish-pr call with no hand-run fallback
+committed agents, prompts, and command mirrors carry no model: line
+committed fixtures contain no deny patterns
+companion clone itself and the companion worktrees dir are unmanaged; in-repo mode ignores the companion
+companion half without a registered product half derives the product path, detached
+companion half: a feature-* pair on the same branch yields build with the product path
+companion half: a half-promoted plan-* pair takes role and branch from the product half
+companion half: a plan-* pair (both detached) resolves to the product half's record
+companion pair: a detached companion half is reported as (branch detached)
+companion pair: from the product half, Artifacts: names the companion half and its branch and roadmaps are read from it
+companion pair: the nudge reads the half's HEAD, not the clone's
+companion pair: the primary names the clone, not a half, even when halves exist
+companion pair: without a companion half the product half still names the clone
+companion: a chained plan commit in the companion half is a companion commit, not a product one
+companion: a commit run in the companion on a delivery branch keeps today's nudge rule
+companion: a detached companion HEAD is reported as (branch detached)
+companion: a managed worktree resolves the companion relative to the primary checkout
+companion: a missing companion directory still names the path and reports no work
+companion: a worktree whose branch sets artifacts.repo consults the companion for the roadmap nudge
+companion: a worktree whose branch sets artifacts.repo denies pushing the companion's default branch when the primary has none
+companion: a worktree whose branch sets artifacts.repo resolves the companion while the primary has none
+companion: allows pushes to companion work branches
+companion: denies a commit while the companion sits on the product's default branch
+companion: denies a default-branch refspec push reached through cd
+companion: denies pushing the companion's default branch using the product config
+companion: exactly one Artifacts: line, directly after Session:
+companion: lists roadmaps from the companion checkout and ignores the product's own roots
+companion: no Artifacts: line when artifacts.repo is unset
+companion: roadmap nudge on a product commit inspects the companion working tree, index, and HEAD
+companion: the nudge on a product-half commit inspects the paired companion half
+companionWarning: only an on-disk half the companion clone does not register warns, naming the product clone when it lists it (\#86 companion-half-registration)
+concurrent identical calls coalesce into one invocation
+config resolves the template's null worktrees.dir to an absolute sibling path
+config with artifacts.repo.name reports the sibling companion as artifactsRoot
+conflicting local or remote roadmaps stay hard-blocked with precise messages
+copilotHome honors COPILOT_HOME and falls back to ~/.copilot
+copy-cli is the only extension script that writes the CLI bundle
+corrupt files are reported and never overwritten
+createProfile appends last, copies deeply, and honors description
+custom artifact roots and branch prefixes resolve through config
+dashboard --plugin-root reaches the doctor section's model-profile check like doctor --plugin-root
+dashboard --pr runs PR lookups concurrently, never more than four gh processes at once
+dashboard runs no gh pr view without --pr; with --pr one gh --version and one pr view per distinct (clone, branch)
+dashboard sections deep-equal session, doctor, status, initiative, and metrics in in-repo and companion fixtures
+dashboard turns a throwing section into { status: error, message } and keeps the others and exit 0
+debug logging stays off without the marker or env
+decision reasons survive colons intact
+default filters sort newest shipped first
+defaultCodeStatus: code missing is empty text; a nonzero exit keeps its stdout
+defaultConfig embeds the repository basename in the worktree dir
+defaults derive the worktree dir from the repository directory name
+defaults to a 60 s budget
+defineMissionControl returns a canvas with the four actions and schemas
+deleteProfile removes the named profile
+denies a main commit reached through a tilde-prefixed cd
+denies a multi-line gh api graphql merge mutation
+denies destructive shell changes targeting hook files
+denies force-push
+denies gh api REST writes to rulesets, branch protection, and merge
+denies gh api graphql mutations and asks on ruleset creation
+denies git push --mirror from any branch
+denies hook-skipping environment assignments and exports
+denies inline core.hooksPath overrides
+denies open-ended watchers
+denies pushes to the default branch
+deriveAllowed: build worktree rows send ship (then close) to the primary window
+deriveAllowed: one row per role × lifecycle, concrete commands, no placeholders
+deriveAllowed: plan worktree offers the planners; freehand and unmanaged are fixed
+deriveAllowed: primary window rows
+deriveAllowed: unknown role or lifecycle yields empty lists
+deriveDelivery honours custom branch prefixes
+deriveDelivery: branch prefix decides type/slug and merges the matching roadmap
+deriveDelivery: detached feature-/issue- directories fall back to the directory name
+deriveDelivery: no roadmap yet yields null roadmap fields; non-delivery branches yield null
+deriveLifecycle: PR state only warns and never changes the lifecycle
+deriveLifecycle: a merged code PR with an open companion PR warns companion-pr-open without changing the lifecycle
+deriveLifecycle: every lifecycle value from its roadmap/review inputs
+deriveNext: build window with an active delivery, every lifecycle × reviewFresh cell
+deriveNext: build/plan window given another slug is blocked; build without a roadmap is blocked
+deriveNext: detached plan window drives the Planner from ready initiative members
+deriveNext: every command it ever emitted exists as a prompt and is never ap
+deriveNext: freehand and unmanaged windows are unsupported for every lifecycle
+deriveNext: plan window with an active delivery, every lifecycle × reviewFresh cell
+deriveNext: primary window blocked when the primary itself owns the branch or is on one
+deriveNext: primary window with no slug — none, one initiative member, ambiguous; with a slug — missing
+deriveNext: primary window, one delivery candidate, every lifecycle × owner × reviewFresh cell
+describeWindow names the role and worktree folder
+detached, hosted, unmanaged, and unknown windows
+detectActive counts handoff pins and renderFileModel matches readModel
+detectActive: null when unpinned, the matching profile, else custom
+detects graphql by normalised endpoint and falls through to the REST scan
+diff emits member-unblocked when a blockedBy member clears
+diff emits pr-opened and verdict-recorded
+diff emits status-changed and step-ticked
+diff emits worktree-created and worktree-removed
+diff of identical snapshots is empty
+different --pr requests do not coalesce with each other
+differsBeyondModel ignores both the top-level and handoff model: lines
+differsBeyondModel ignores only the model: line
+dispatch rejects a command outside the live allowed union
+dispatch rejects a foreign or missing Origin
+dispatch rejects a non-JSON content type and a malformed body
+dispatch rejects a wrong Host
+doctor --for models needs only the terminal checks
+doctor --for runs only the command's declared checks and reports its needs
+doctor artifact-repo passes a valid companion, fails a missing or broken one naming /agento agento-init, and warns on stale in-repo roots
+doctor artifact-repo warns when the companion worktrees dir exists but is not writable
+doctor canvas check is ok when installed, warn per state, ok without a canvas, and never runs in preflight
+doctor fails with exit 3 and the install or reauth fallback when gh is missing or unauthenticated
+doctor fails without an origin remote and warns when origin is unreachable
+doctor harness check is ok without a router and when installed, fails per state, and never runs in preflight
+doctor hook-wiring: ok without wiring, unregistered, false, or unreadable settings; warn when the clone is registered
+doctor model-profile names both roles and warns on a dangling or invalid secondary
+doctor model-profile reports secondary invalid when the roles file has errors
+doctor model-profile warns for agent pins without a Copilot alias
+doctor model-profile warns on an applied profile with unqualified pins and is ok when every pin is qualified
+doctor model-profile warns on legacy skip-worktree pins, an unhealthy or stale filter, and unrecorded files
+doctor model-profile warns when autopilot is BYOK and delegates to a Copilot model
+doctor model-profile: ok without a clone, none, or a matching profile; warn on custom pins or an invalid file
+doctor reports eleven checks and includes session-workspace, model-profile, hook-wiring, harness, and canvas
+doctor session-workspace is ok for non-pairs, warn for stale/missing, and ok after workspace --write
+doctor warns (exit 0) when code is missing and reports its fallback; no Python check remains
+emit flushes output larger than the pipe buffer before exiting
+emits exactly one Session: line with role=primary on a plain repo, right after Agento CLI:
+emits valid JSON when next-step contains quotes, backslashes, and tabs
+empty worktree list still classifies by directory
+errorsFor keeps file-level errors and the named profile's own errors
+evaluateShipPreflight reports owner from the worktree list and null without one
+every agent has a unique name, description, and tool list
+every agent opens with one agento.mjs preflight call and no hand-run session, doctor --for, resolve, or rev-parse
+every agent or tool-restricted prompt that needs ask-questions lists vscode/askQuestions (\#90 planner-ask-questions-tool)
+every agent tools: entry is a GitHub primary alias or an explicit VS Code-only tool
+every agent, prompt, and mirror declares its policy sections on one Policy: line
+every agento.role.* color has a matching canvas role (foreground excluded)
+every captured local and Copilot PreToolUse payload runs through the guard with allow
+every command and agent cites the §12 command presentation rule
+every command and agent declares Needs: and Fallback: from the §10 vocabulary
+every command and agent declares its window check (§11)
+every command and agent opens and closes with the §9 receipt
+every command carries exactly one Duplicate submission: line matching its idempotency-table row
+every command opens with one agento.mjs preflight <name> call and no hand-run session, doctor --for, resolve, or rev-parse
+every command's agent: is absent, agent, or an existing agent name
+every command's declared context stays within the budget (≤ 40,000 each, mean ≤ 24,000)
+every delivery card field the panels read is present
+every instruction file has a description and applyTo
+every model variant id is unique
+every mutation helper leaves a deep-frozen input untouched
+every probe agent reports model, tools, ask-user, browser, and subagent model support
+every prompt dispatches to a real agent and has no name override
+every relative link in docs/copilot-harness.md resolves
+every session.X/window.X/doctor.X field a prompt, agent, or mirror names exists in the brief preflight document
+every slash command is documented in README.md and docs/commands.md
+every variant id is unique
+every variant query is the canonical /agento delivery-status (V8 keeps its trailing space)
+every window kind has a role color
+extension CLI bundle contains exactly the source modules
+extension carries the repository license byte for byte
+extension manifest preserves packaging invariants
+feed history and notes are capped
+fenced code keeps its text verbatim and escaped
+findLocalRoadmaps filters to the requested type and slug, not any arbitrary matching file
+findOccupants: Workspace (<name>) and Window (… <name> (Workspace)) forms both match
+findOccupants: a live child process inside the target appears, then disappears after it exits
+findOccupants: a non-Linux platform skips the process scan; a throwing codeStatus is no match
+findOccupants: at most three PIDs, then 'and N more processes'
+findOccupants: code --status Folder line names the target's basename
+findOccupants: details order is PIDs, more, folder, workspace
+findOccupants: no occupants is an empty details list
+findOccupants: processes whose cwd is the target or under it, sanitised names, sibling prefixes ignored
+findOwner: managed owner, primary owner, and none
+fixture home paths are sanitized
+fixture is trimmed to fewer than 40 deliveries
+fixture keeps at least one delivery per kanban lane
+fixture keeps one delivery with elsewhere[] entries
+fixture keeps one initiative with two waves and a blockedBy member
+fixture keeps one paused delivery
+fixture keeps the metrics events and an aggregate
+fixture parses as the dashboard shape
+focus throws not-found for an unknown id and broadcasts a known one
+freehand: freehand-* worktree regardless of branch
+frontmatterField reads quoted and plain scalars from the leading block only
+full lifecycle: planned → in-progress → in-review → complete with exact seconds
+ghRequiredContexts stub endpoints: the ruleset and classic protection are served, an absent classic protection is 404
+globToRegExp: * stops at /, ** crosses it, **/ matches zero directories
+globToRegExp: ? matches one non-slash character, classes pass through, ! negates
+greyed card commands carry the checkout whose window runs them; runnable and same-window ones carry none
+greyed header actions outside the primary window hand off to the primary checkout
+guidance never sequences close-session before ship (ship-audit-first)
+guidance never writes a command with a .prompt or .md suffix (agento-init.prompt defect)
+halfState: registration clone and origin of a freshly added half (\#86 companion-half-registration)
+handoff queues the command for the target window and focuses or opens it with code
+handoff rejects unknown checkouts and non-canonical commands, and unqueues when code is missing
+handoffTargets maps exactly the greyed commands that have a target window
+harden gh api endpoint parsing: value options before the endpoint
+harness install creates an idempotent link, replaces foreign/dangling with --force, and refuses a real directory
+harness install leaves the canvas link absent when the clone has no canvas
+harness install links the canvas alongside the router and reports it
+harness install refuses a linked worktree naming the primary clone and reports missing without a router skill
+harness install refuses a real canvas directory and replaces foreign/dangling canvas with --force
+harness status reports absent, installed, foreign, dangling, and not-a-link
+harness uninstall removes only an installed link; absent is a no-op; foreign and real directories are refused
+harness uninstall removes the canvas link only when installed
+harness usage errors and the pure linkType helper
+header actions enable exactly this window's window-wide allowed commands
+headings shift under the page title and get unique, prefixed ids
+honours a custom default branch and feature prefix from .github/agento.json
+honours custom artifact roots from .github/agento.json
+hook-file writes are judged by the command word, reads pass
+hosted: CODESPACES=true derives build from a delivery branch, ignoring the path
+hosted: GITHUB_ACTIONS=true on the default branch derives primary; worktrees.dir is ignored
+hosted: env absent, empty, or with other values leaves results unchanged (hosted: false)
+in the owning build window the card's commands run; ship stays greyed with its window
+initiative derives state, readiness, waves, and next; only complete roadmaps satisfy Requires
+initiative flags merged-but-not-complete members without unblocking dependents
+initiative header is carried by status items and the usage lists the subcommand
+initiative list mode counts progress for every breakdown
+initiative options are distinct and sorted
+initiative picks next by explicit wave, then computed level, then listed order
+initiative rejects dependency cycles
+initiative rejects duplicate feature blocks
+initiative rejects member roadmaps whose initiative header is missing or mismatched
+initiative rejects unknown slugs in Requires and Recommended after
+initiative reports a missing breakdown with exit 3
+initiative walks the same managed halves as status: a member planned only on its unmerged branch is in flight, not ready
+initiatives expose waves, nodes, edges, and the blockedBy member
+inline strong, em, del, code, and escapes
+invalid shape is reported and refused
+isCanonicalAgentoCommand matches the extension's rule
+isDefaultFilters and formatDuration
+isPinnablePrompt: absent agent, built-in agent, known custom agent, unknown agent name
+issue \#79 autopilot-subagent-model-pins: models apply pins handoffs[].model to the target agent's model; clear removes it
+key and file name match the extension's FilePendingDispatchStore
+laneFor maps every roadmap status to a lane
+layout rule: a worktree whose own branch sets artifacts.repo is companion mode anchored on the primary, while the unset primary stays in-repo
+links: http(s) open safely, artifact links switch tabs, anchors jump, unsafe schemes are dropped
+list item continuation lines join the item
+lists resumable roadmaps and skips planned/complete ones
+load reports absent, then save/load round-trips with the format marker
+loadHookConfig: defaults, nulls keep defaults, nested artifacts.repo
+loadHookConfig: invalid JSON falls through to agento.json, then to the defaults
+logger records a token-free diagnostic entry (cwd, node, PLUGIN_ROOT values)
+logger records env-var names, never token values
+logger writes one file per call recording source, event, argv, cwd, and stdin
+malformed stdin exits 0 with no output
+malformed toolArgs and non-object tool_input allow without error
+matchesFilter: the last matching pattern wins
+metrics derives phases, rounds, pauses, the merge, and post-ship latency from fixed-date history in both layouts
+metrics never invokes gh and reads history only through git log in the artifacts and product clones
+migrate --apply into a registered companion half resolves the name from the clone
+migrate --apply moves the tree byte-identically, writes the config from the template, and notes the README once
+migrate --apply preserves an existing config's other keys
+migrate rejects a non-sibling destination and a non-checkout, writing nothing
+migrate: a destination conflict exits 3 naming the file and writes nothing
+migrate: the dry run lists both roots' files and the records and writes nothing
+missingRequired separates absent and pending contexts from failed ones, and passes are complete
+model filter CLI applies recorded pins and passes unrecorded paths through
+model filter CLI exits nonzero with one stderr line on invalid state
+model filter CLI passes everything through without a state file
+model filter keeps CRLF endings on inserted pins
+model filter passes files without frontmatter through
+model filter passes mismatched (hand-edited) pins through clean
+model filter round-trips: CRLF file
+model filter round-trips: CRLF handoffs
+model filter round-trips: handoff pins
+model filter round-trips: top-level list pin
+model filter round-trips: top-level string pin
+models --role usage errors: bad value, missing value, and verbs that do not accept it
+models adopt records a legacy custom pin set as filter state with byte-identical files
+models alias picker is one argument with spaces and parentheses
+models alias set creates, updates, and remove deletes a copilotModels entry
+models alias set rejects an invalid id or picker
+models apply ignores handoff model: lines in dirty detection and still refuses other edits
+models apply migrates legacy skip-worktree pins onto the filter with identical pins
+models apply on a non-git plugin root rewrites without flags
+models apply pins agents, prompts, and mirrors through the git filter; clear restores HEAD
+models apply refuses a linked-worktree plugin root; clear still runs there
+models apply refuses targets edited beyond their model line
+models apply rejects the shipped template's placeholders and unknown profiles
+models apply reports resolution errors for prompts on custom agents
+models clear removes the filter config, attribute block, state dir, and legacy bits; a linked worktree's clear leaves the shared filter
+models create --from an invalid profile is invalid
+models create empty, from a deep copy, and with --description
+models create exists and --from not-found exit 3
+models create honors --expect with conflict and success
+models create keeps a profiles-first file profiles-first
+models create keeps an existing empty copilotModels key
+models create leaves no temp files and keeps the mode
+models create none and rename to none are usage errors
+models create on a hand-formatted file reports reformatted
+models create preserves the template's top-level key order after init
+models create refuses an unparseable file without touching it
+models create works alongside the template's placeholder mixed profile
+models create writes only the new profile to a missing file
+models delete --force removes the applied profile and active becomes custom
+models delete of a non-applied profile succeeds
+models delete of a non-assigned profile leaves the roles file untouched
+models delete refuses the assigned secondary profile and --force turns the role off
+models delete rejects not-found and the applied profile without --force
+models delete reports active first when a profile is both applied and secondary
+models init copies the template once; show reports placeholders and unknown profiles
+models list entries carry warnings and targets matching models show
+models list entries for an invalid profile have empty targets and its errors
+models list pinnable equals the prompts update --dry-run accepts as prompts.<command>
+models list reports a prompt added after apply in filter.unrecorded until the next apply
+models list reports roles: the derived active profile and the roles file
+models list reports rolesErrors for an invalid roles file but still exits 0
+models list without a profiles file reports nothing applied
+models pins falls back to file pins when the secondary role is off
+models pins outside any repository reports windowRole unmanaged and role primary
+models pins picks up a new alias as copilotModel
+models pins reads each agent's current pin and rejects an argument
+models pins reports copilotModel for mapped, unmapped, and unpinned agents
+models pins resolves the window role in managed worktrees and the primary
+models pins warns and falls back to file pins for a dangling or invalid secondary
+models rename and delete --force repair an invalid roles file
+models rename keeps position and active follows by content
+models rename moves the secondary assignment and reports secondaryBefore
+models rename of a non-assigned profile leaves the roles file byte-identical
+models rename rejects not-found and exists
+models reports profilesFile.hash and list reports copilotModels
+models resolve --role secondary resolves prompts.<name> and the default fallback
+models resolve derives copilotModel from copilotModels
+models resolve falls back to file pins when the secondary role is off
+models resolve reports not-found with known and exit 3 for an unknown command
+models resolve reports null model fields for an unpinned command
+models resolve returns file pins for a built-in and a custom-agent command
+models resolve warns and falls back to file pins for a dangling or invalid secondary
+models resolve writes nothing
+models show reports the stored body and update round-trips through it
+models show resolves agents, inherited prompts, and mirrors
+models show, apply, and pins warn for agent pins without a Copilot alias
+models show, apply, and pins warn once about model values without a (vendor) suffix; apply still exits 0
+models show, apply, and pins warn when autopilot is BYOK and delegates to a Copilot model
+models update --dry-run validates without writing
+models update --expect conflicts after an out-of-band write
+models update of the applied profile reports reapply and active custom
+models update rejects non-JSON and array input without touching the file
+models update replaces the profile in place from stdin
+models usage errors: bad verb, arguments, profile name, and plugin root
+models usage errors: new verb arity, malformed options, and alias sub-verbs
+models usage errors: options a verb does not accept
+models use --role primary changes the same files as apply and clear
+models use --role primary from a linked worktree reports worktree
+models use --role secondary honors --expect
+models use --role secondary leaves no temp files and keeps the mode
+models use --role secondary rejects a missing or invalid profile without writing
+models use --role secondary replaces an invalid roles file
+models use --role secondary writes and clears the roles file
+models use usage errors: missing --role and --expect with --role primary
+models: the usage header lists the subcommand and keeps the full Options paragraph
+nested lists, ordered starts, and task items
+next from the primary: one in-progress roadmap → start-session --resume with then; two → ambiguous
+next in a build worktree: in-progress → build-feature here with dispatch paths; wrong slug → blocked
+next-feature prints one command per fenced block
+next: complete with a managed owner resumes ship at teardown; without one there is nothing to continue
+next: freehand worktrees are unsupported; the primary on a delivery branch and an unplanned build branch are blocked
+next: ready initiative members drive start-session from the primary and new-feature from a plan window
+next: review freshness decides between ship, re-review, and the fix handoff
+next: the usage header lists the subcommand
+nextSessionId formats UTC time and suffixes collisions
+no history: every derived field is nullable and warned about
+normalize computes the allowed union, deduplicated
+normalize produces the four kanban lanes
+null values in .github/agento.json keep the default branch protected
+null values in agento.json keep the defaults
+oldest and name sorts
+only an export command word triggers the hook-skip export deny
+only the Builder agent references agento.mjs step-commit and agento.mjs sync
+only the Planner files reference agento.mjs plan-publish
+only the Reviewer files reference agento.mjs review-publish
+only the core and ai-skills are always-on
+only the five flows' prompts, their mirrors, and the Architect reference agento.mjs publish-pr
+only the ship prompt and its mirror reference agento.mjs ship
+only worktree-mutating commands inspect `git worktree list --porcelain`
+open is idempotent per instanceId and onClose stops server and watcher
+open maps a CLI runner failure to a cli CanvasError
+open maps a corrupt store to a storage CanvasError
+open wires artifacts with a per-delivery cache that a refresh clears
+open wires windows (cached) and handoff (clears the cache) to the CLI in the session cwd
+openWindows keeps only running windows and windowFor picks the window holding a checkout
+opt-in debug log records the payload and decision when enabled via env
+pairFor: the companion half of a managed product worktree, registered or not
+paragraphs join soft breaks and keep hard breaks
+parseConfigText merges a JSON text over the defaults for the given root: nulls keep defaults, nested repo is set
+parseJsonc accepts comments and trailing commas but keeps // inside strings
+parseModelValue reads string, list, and null top-level pins
+parseProfiles accepts and returns a top-level copilotModels map
+parseProfiles accepts the documented schema
+parseProfiles rejects DEL and closing placeholders too
+parseProfiles rejects malformed copilotModels and still rejects unknown top-level keys
+parseProfiles rejects malformed files and top-level shapes
+parseProfiles reports each schema error with its path
+parseRoles accepts { secondary: name }, { secondary: null }, and an empty object
+parseRoles rejects unknown keys and bad secondary values
+parseWorkflowTriggers flags forms it cannot read as unparsed
+parseWorkflowTriggers reads Soshiki's on: block
+parseWorkflowTriggers reads scalar, flow-list, and block-list forms
+parseWorktreeList handles branch, detached, and trailing blank lines
+paths and config from a managed worktree report the primary's worktrees.dir (in-repo)
+paths and ports derive from config and are stable
+paths in companion mode adds the companion half and the workspace file; in-repo mode reports null
+paths is branch-aware: from an in-repo primary a delivery branch that flips to the companion reports the pair; a plain branch stays in-repo
+paths places artifactRoot under the companion checkout when artifacts.repo is set
+paths, workspace, and config from a managed worktree report the primary's worktrees.dir (companion mode)
+pickExactRun: a newer same-SHA workflow_dispatch run does not shadow the push run
+plan-publish (companion): the plan commit in the half, one empty product commit, both draft PRs, the cross-link, and artifact-pr:; a re-send creates nothing; an edit is a revise commit
+plan-publish (in-repo): one docs(delivery) commit, the push, and a draft PR whose issue body starts with Fixes \#<n>
+plan-publish is listed in the usage header and validates its arguments
+plan-publish rejections write nothing: wrong window, detached or default-branch half, outside-slug changes, missing plan.md
+plan: managed plan-* worktree that is detached
+plugin layout is Claude format so VS Code expands ${CLAUDE_PLUGIN_ROOT} (\#36 plugin-hooks-layout)
+plugin mode emits the context when the session repo has no workspace-mode wiring
+plugin mode stays silent when the session repo carries Agento's workspace-mode wiring
+policy --list returns all 12 sections whose bytes sum to the body size
+policy prints the requested sections as raw Markdown, ascending and deduplicated
+policy rejects unknown, malformed, missing, and empty section arguments
+policy section references (§N) point at sections that exist
+post_note persists across a real close and a fresh open
+post_note rejects empty and oversized text and persists a valid note
+pr false does not schedule an interval
+pr interval fires periodic --pr refreshes
+pr: a failing check exits 1 and names it
+pr: all checks passing exits 0
+pr: an unchanged pending snapshot prints one poll line plus RESULT
+pr: pending then passing exits 0 after polling
+pr: pending until the deadline exits 2
+pr: zero checks succeeds once the no-checks grace period elapses
+pr: zero checks with a CLEAN merge state succeeds immediately
+preflight defaults to the brief document; --full keeps the pre-change shape
+preflight rejects a window mismatch with the §9 receipt and the record's alternatives (exit 3)
+preflight returns the named sections, the op-id, and an accepted receipt in one call
+preflight turns doctor warn into preflight lines (exit 0) and a hard fail into the capability receipt (exit 3)
+preflight usage errors exit 1
+primary on main resolves a roadmap only on the origin feature branch
+primary: cwd at or below the first worktree entry
+primaryCheckout reads the product primary from the worktree map
+probe agents carry the four pin variants (picker, BYOK, list, unpinned)
+profilesFile: AGENTO_CONFIG_HOME, then XDG_CONFIG_HOME/agento, then ~/.config/agento
+profilesHash is the sha256 hex of the UTF-8 bytes
+prompts and agents never direct users to gh pr edit --body
+publish-pr --branch resumes an interrupted publish at delete-branch and sync
+publish-pr --dir publishes a companion clone branch through the companion repository
+publish-pr --merge stops blocked on a failing check with nothing merged
+publish-pr --merge switches a pinned primary to the default branch and fast-forwards it over a pinned prompt change
+publish-pr --merge: pending (exit 2) names the identical re-send, which merges with --merge only, deletes the remote branch, and syncs the default; --branch resumes after the merge
+publish-pr in a linked worktree merges but leaves the worktree on its branch with the close-session handoff
+publish-pr is listed in the usage header and validates its arguments
+publish-pr merges origin/<default> into a BEHIND branch (a merge commit, pushed) and keeps waiting; a conflict aborts with its files
+publish-pr refuses the default branch, a detached HEAD, every delivery prefix, an unknown repo, dirt, an empty branch, and a body file inside the checkout, writing nothing
+publish-pr reports gh and push authentication failures with a reauth command
+publish-pr without --merge pushes and opens one non-draft PR; a re-send reuses it
+pushTriggered applies Soshiki's branch and paths-ignore filters
+pushTriggered: paths need one match, negation re-excludes, unparsed and missing push
+pushes are judged by refspec destination, the default branch as a whole token
+raw HTML is escaped, never passed through
+records are keyed by repoKey and do not collide
+relative links inside agents, prompts, instructions, and skills resolve
+release --wait gives up within its budget on an always-pending run, exit 2
+release --wait never loops on dispatch-required
+release --wait polls until a pending run succeeds
+release: a cancelled run with a passing descendant push run is superseded-success, exit 0
+release: a dispatch-only workflow is dispatch-required, exit 2
+release: a docs-only merge against paths-ignore is not-triggered, exit 0
+release: a failed exact run is failed, exit 4
+release: an exact in-progress run is pending, exit 2
+release: an exact successful push run is success, exit 0, in two API calls
+release: gh missing, HTTP 401, and an unknown SHA exit 3
+release: no run long after the merge is no-run, exit 4; within grace it is pending
+release: unset checks.releaseWorkflow is not-configured, exit 0, with no gh call
+release: usage errors exit 1 and the usage lists the subcommand
+releaseVerdict reads lazy facts only on the path it takes
+releaseVerdict: a cancelled exact run plus a later non-descendant is failed
+releaseVerdict: a cancelled exact run plus a passing descendant is superseded-success
+releaseVerdict: a cancelled exact run plus a pending descendant is pending
+releaseVerdict: a docs-only merge against paths-ignore is not-triggered
+releaseVerdict: a later workflow_dispatch run is never superseded proof
+releaseVerdict: an exact failed run is failed
+releaseVerdict: an exact pending run is pending
+releaseVerdict: an exact successful run is success
+releaseVerdict: descendants are checked oldest first and earlier runs are ignored
+releaseVerdict: no push trigger for the default branch is dispatch-required
+releaseVerdict: no run within grace is pending, after grace is no-run
+removeAlias removes one and leaves an empty copilotModels in place
+renameProfile swaps the key in place, keeping order
+renderModel serializes strings and lists as JSON-quoted YAML
+renders the real roadmap fixture without throwing and with every task box
+reopenRoadmap reopens to in-progress with a Ship reopen phase named by next-step, and removes only the accepted-at-ship follow-ups
+replaceProfile replaces in place, keeping its position
+replay new-feature (companion): the Planner's hand-run publish vs one plan-publish call reach the same state in fewer calls
+replay quick-fix: the hand-run push → PR → wait → merge → sync vs one publish-pr --merge call reach the same state in fewer calls
+replay review-feature (companion): the Reviewer's hand-run publish vs one review-publish call reach the same state in fewer calls
+repoKeyFor is stable and distinguishes repos
+reports role=build with the delivery and lifecycle from a managed worktree
+reports the branch and no work on an empty repo
+requiredContexts unions the ruleset and classic protection contexts; a 404 or empty result counts as none
+resolution failures exit 3 with precise statuses
+resolve falls back to the origin branch when the checkout has no roadmap
+resolve, find, ship-preflight, and close-decision fall back to the companion's origin branch
+resolveArtifacts: a managed worktree resolves against the primary checkout
+resolveArtifacts: in-repo, companion by name, companion by dir
+resolveArtifacts: the worktree's own config wins when the primary sets no artifacts.repo
+resolveArtifactsRoot derives ../<name> from the primary checkout when only name is set
+resolveArtifactsRoot derives name from the resolved dir when only dir is set
+resolveArtifactsRoot keeps the in-repo layout when artifacts.repo is unset
+resolveArtifactsRoot resolves against primaryRoot, not the worktree that runs the command
+resolveArtifactsRoot takes both fields as given, resolving dir against the primary checkout
+resolveNextTarget: here and null → null; primary → primary path; secondary → the managed product worktree on the branch or null
+resolveTargets handoffs: first entry of a list, null when unpinned or unknown
+resolveTargets: agent aliases, default, and missing → null
+resolveTargets: custom-agent prompts inherit, built-in prompts use prompts.<name> ?? default
+resolveTargets: prompts.<name> on a custom-agent prompt and unknown prompt keys are errors
+review-publish (companion): one review commit in the half, only the companion default merged, one verdict comment; a re-review edits that same comment
+review-publish (in-repo): the review commit is pushed without merging main, and another user's marked comment is left alone
+review-publish is listed in the usage header and validates its arguments
+review-publish rejections write nothing: missing review, a missing or duplicated Verdict line, the heading, outside-slug changes, pr-missing, wrong window
+roadmap nudge ignores shell redirections on a commit segment
+roadmap nudge sees -a commits and explicit pathspecs, not just the index
+roleBucket maps every window role to its bucket, defaulting to primary
+roleColor resolves known roles and falls back to unavailable
+rolesFile resolves model-roles.json beside profilesFile under the same env/home
+rows are not capped by the board's collapsed shipped lane
+rows cover every shipped card and only shipped cards
+rows take the merge date, merged PR, and closed cycle from the timeline band
+run: completed success exits 0, failure exits 1
+runArtifacts passes type and slug and resolves a missing delivery's JSON on exit 3
+runDashboard adds --pr only when requested
+runDashboard maps a missing executable to CliError spawn
+runDashboard maps a non-zero exit to CliError exit
+runDashboard maps a timeout to CliError timeout
+runDashboard maps invalid JSON to CliError parse
+runDashboard parses JSON and passes the dashboard argument
+runGit: trimmed stdout, empty on failure
+runHandoff passes checkout and command as two arguments and resolves a refusal's JSON on exit 3
+runWindows passes the checkouts and returns the windows list
+runningNames parses workspace titles and folder lines
+search matches slug, initiative, and PR number; every term must match
+serializeProfiles round-trips and keeps key order with a trailing newline
+serializeRoles round-trips with a trailing newline
+session --pr degrades to pr: null with one warning when gh is missing
+session --pr: companionPr is null with no extra gh call in-repo, and the companion clone's PR in companion mode
+session and next read the delivery roadmap from the registered companion half, not only the clone
+session from a companion half anchors on the product primary and matches the product half
+session from a managed build worktree reports the delivery, lifecycle, and commands
+session from the primary worktree reports role primary and no delivery
+session never invokes gh without --pr and reads its JSON with --pr
+session promotes a plan-* worktree to build once it is on a delivery branch
+session warns and paths reports ok: false when the companion half is registered in the product clone (\#86 companion-half-registration)
+session, next, and doctor from the companion clone describe the product primary (\#92 companion-cwd-window-role)
+session, status --pr, initiative, metrics, and dashboard read each clone's worktree list once from a product cwd
+session: a plan pair promoted on both halves is one delivery from either side
+session: an unrelated repo and an ambiguous companion stay put; a half nobody names is that repo's own managed worktree
+session: hosted workspaces derive the role from the branch and warn once
+session: plan pair (both detached), half-promoted pair, and a product half without a companion half
+sessionWorkspaceDocument can disable auto-approve settings
+sessionWorkspaceDocument returns product then companion folders and default auto-approve settings
+setAlias creates copilotModels when absent and updates in place
+setHandoffModels inserts a nested model: line after each item's last key
+setHandoffModels preserves CRLF and every other byte
+setHandoffModels replaces in place, leaves unknown targets untouched, and removes byte-exactly
+setModel falls back to description:, then the closing ---
+setModel inserts after argument-hint, replaces in place, and removes byte-exactly
+setModel preserves CRLF and collapses block-list or duplicate model keys to one line
+setup installs workspace, symlink, copy, and log dir in a temp HOME
+setup refuses a foreign ~/.copilot/skills/agento
+shellSplit: quoting cases the guard relies on
+shellSplit: unbalanced quotes and a trailing backslash fall back to a whitespace split
+ship --confirm (companion, no owner): the companion clone is switched onto the mirrored branch for the roadmap commit and back; both local branches are deleted after the merge
+ship --confirm (companion, owner): the roadmap commit lands in the companion half, both PRs are readied, code merges first, then the companion, both defaults sync, both halves and the workspace file go
+ship --confirm (in-repo, no owner): the primary is switched onto the branch for the writes and back; a behind PR is integrated by merge; a conflicting integration aborts and rejects
+ship --confirm (in-repo, owner): cleans the listed byproducts, completes the roadmap with follow-ups, stamps the changelog, readies, waits, merges, deletes the branch, syncs, and tears down
+ship --confirm at checks with a conflicting PR reopens the roadmap and rejects (\#107 ship-conflict-gate)
+ship --confirm syncs a primary pinned by models adopt through a delivery that changes a pinned prompt and its mirror
+ship --confirm syncs a primary pinned by models apply through a delivery that changes a pinned prompt and its mirror
+ship --confirm: a merge refused as not mergeable reopens the roadmap on the no-owner path; any other merge failure does not (\#107 ship-conflict-gate)
+ship --confirm: pending checks return exit 2 with the same --confirm command and the re-send continues; a failing check stops before the merge
+ship \#132 ship-merge-refusal-loop: a BLOCKED merge refusal waits for the missing required check, then reports merge-blocked without reopening
+ship \#132 ship-merge-refusal-loop: a DIRTY refusal reopens to in-progress and routes the build window to the Builder
+ship \#132 ship-merge-refusal-loop: checks-failed reopens to in-progress with the fix-the-check step
+ship \#132 ship-merge-refusal-loop: unknown required contexts are reported with gh's refusal, never guessed
+ship audit in companion mode: companion half and companion PR gaps are hard, a behind companion PR is confirm-path
+ship audit on an issue: Fixes \#<n> is appended through the REST PATCH with a real blank line, only when absent
+ship audit rejects a PR GitHub reports as conflicting (\#107 ship-conflict-gate)
+ship audit: a clean in-repo feature is awaiting-confirm with a stable token, and the audit call writes nothing
+ship audit: an open PR whose mergeability GitHub has not computed yet is a warning, not a gap
+ship audit: every hard gap code in the in-repo layout rejects with the right reject-back command and no writes
+ship audit: post-ship steps justified under \#\# Risks, a version bump with and without the (unreleased) heading, and a behind PR are confirm-path or clean
+ship derives the phase from git and GitHub state in the in-repo layout and resumes from every interruption
+ship derives the phase in companion mode and resumes a half-shipped pair at the companion merge, then syncs both defaults
+ship epilogue (companion): the post-ship branch, commit, PR, and merge happen in the companion clone; a pending check is exit 2 and the re-send reuses the open PR
+ship epilogue (in-repo): post-ship/<slug> is created from the default, pending steps are reported with evidencePresent and never ticked by the CLI, and ticked steps with evidence land through a PR
+ship is one agento.mjs ship call with no hand-run fallback procedure
+ship passes resolver errors and a primary on the branch through as rejected; a remote-only roadmap is valid
+ship preflight reports a managed feature worktree on the branch as owner with role build
+ship preflight reports a promoted plan-<id> worktree on the branch as owner with dirPrefix plan
+ship preflight resolves remote fallback before failing a missing local roadmap
+ship preflight without a worktree list reports owner null and stays ok
+ship rejects from a non-primary window with the session record's alternatives, writing nothing
+ship release phase: dispatch-required dispatches exactly once across re-sends, follows the run it created, and advances when it succeeds
+ship release phase: success advances to teardown; pending is exit 2 with the owner intact; failed and no-run stop; gh auth failures name the re-login
+ship reopen (checks-failed) fast-forwards a pinned owner worktree and a pinned primary switched onto the branch
+ship resumes a half-shipped pair at the companion merge, and a failed companion merge reports the exact resumable sentence
+ship sync and done: merged deliveries with a default behind origin are fast-forwarded and reported already-shipped, and re-sends never merge, push, or open a PR again
+ship teardown: a live process inside a half blocks with paused-teardown and the flagged path, changes nothing, and the re-send resumes once it leaves
+ship teardown: code --status naming a half as a Folder or a Workspace window blocks with the first flagged half; a half removed earlier is skipped on the re-send
+ship validates its arguments, is listed in the usage header, and --confirm needs a value
+ship warns and continues when origin is unreachable, and fails with a re-login command on an authentication failure before any write
+ship-preflight --pr: in-repo one gh call with companionPr null; companion mode both PRs and PR gaps; no --pr means no pr key
+ship-preflight reports the owner tree split into tracked and untracked files (\#88 ship-untracked-byproducts)
+shipStub self-test: wait-for-checks.sh reads the scripted rollups (exit 0 / 1 / 2), pr merge lands a real merge commit, forbidden flags are refused
+shipped-within filter uses the merge date against now
+slugify
+snapshot carries the session lifecycle and hosted flag
+splitPorcelain: a rename contributes its new path only and the next entry still parses
+splitPorcelain: a worktree-side rename (` R`) skips its origin token
+splitPorcelain: an origin path starting with R or C never swallows the next entry
+splitPorcelain: empty input yields empty lists
+splitPorcelain: mixed entries are split and each list sorted
+splitPorcelain: tracked-only covers modified, added, and deleted entries
+splitPorcelain: untracked-only lists every file, including inside untracked directories
+splitQualified: qualified, unqualified, inner-parentheses, and non-string values
+start-session and start-freehand write the workspace file through the CLI (\#58 session-auto-approve)
+start-session build mode in companion mode: a mirrored companion branch tracks, an absent one is created --no-track with a push warning, a promoted pair resumes
+start-session build mode: origin-only branch tracks, a local branch is used, a managed owner resumes, missing/complete/mismatched roadmaps reject (in-repo)
+start-session fails the post-add check for a companion half registered in the product clone, writing, opening, and removing nothing (\#86)
+start-session is one agento.mjs start-session call with no hand-run fallback procedure
+start-session opens the target with code --new-window unless --no-open, reopens on resume, and reports openCommand without code
+start-session plan mode creates a detached session at origin/main and resumes it untouched, promoted or not (in-repo)
+start-session plan mode creates and resumes a companion pair and writes or refreshes its workspace file
+start-session rejects a managed window, a primary off the default branch (including one on the delivery branch), and a dirty primary, writing nothing
+start-session validates its arguments and is listed in the usage header
+start-session warns and continues when origin is unreachable, and stops with a re-login command on an authentication failure
+static files are served only from public/ with no traversal
+status --pr looks up PRs for non-complete items only, warns per slug on failure, and never changes lifecycle
+status --pr probes gh --version once and runs pr view once per non-complete item per clone
+status adds lifecycle, owner, workspace, companion, pr/companionPr per item and lifecycles/warnings on top; sort and resumable unchanged
+status lists roadmaps with progress, verdicts, and duplicate slugs
+status reports the installed state
+status walks registered companion halves and managed build worktrees; the branch-matching copy wins, a detached half loses to the clone
+status, initiative, session, and next read the companion and ignore in-repo roots
+status: paused is reserved for the user; the Autopilot resumes session breaks
+step-commit (companion): product commit and push precede the companion tick; missing draft PRs, the cross-link, and artifact-pr: are created once
+step-commit (in-repo): one commit carries the code and the roadmap tick; Fixes-free body for a feature; an existing PR is reused
+step-commit guard equivalence: every rejection leaves both halves unchanged
+step-commit reports a gh authentication failure with the re-login command after pushing
+step-commit stops with reverify (exit 2, nothing pushed) when origin/main merged, and the re-send pushes; a conflicting default aborts with its files
+stop releases watchers and timers
+storePath nests under extension-data/agento-mission-control
+storedWindows reads workspace and folder windows, local files only, de-duplicated
+symlinked paths compare by realpath on both sides
+sync (companion) merges a remote-ahead origin/<branch> into the half
+sync (companion) merges an advanced origin/main into both halves with merge commits and pushes product first; a re-send is a no-op
+sync (in-repo) aborts a conflicting default merge with the conflicted files, a clean tree, and nothing pushed
+sync and step-commit are listed in the usage header and validate their arguments
+sync rejects from the primary, from a plan window, and with a dirty half, writing nothing
+tables with alignment and escaped pipes
+teardown after setup removes the probe's own symlink, copy, and cache
+teardown removes probe-owned entries and leaves foreign entries untouched
+teardown reports a leftover chat.pluginLocations entry without editing settings.json
+the Architect, new-initiative, and triage-followups publish through one agento.mjs publish-pr call (--dir in companion mode) with no hand-run fallback
+the Autopilot pins subagent models via models pins and stops on a tier refusal (\#79)
+the Builder integrates through one agento.mjs sync call and commits through one agento.mjs step-commit call with no hand-run fallback
+the CLI WINDOW_ROLES table agrees with every command's window check line
+the CLI needs table agrees with every prompt's Needs: line
+the Planner publishes through one agento.mjs plan-publish call with no hand-run fallback
+the Reviewer publishes through one agento.mjs review-publish call with no hand-run fallback
+the byproduct cleanup lives in the CLI with --literal-pathspecs; no prompt, agent, or mirror runs git clean by hand (\#88 ship-untracked-byproducts)
+the companion concurrency pointer template matches concurrent-delivery's applyTo and names it by plugin path
+the core states the canonical form and the six redirected forms
+the fixture's build window names its branch, delivery, and worktree
+the moved receipts/preflight/window reference lives in docs/architecture.md
+the policy file is the only place the shared rules are spelled out
+the queue lives beside model-profiles.json under every resolution
+the router dispatch content names every agent exactly once with the decided inline set and mechanics
+the router skill exists with the decided frontmatter
+the shipped templates/agento.json loads without clobbering defaults
+the shrunk §9, §10, §11 stay within the context budget
+timeline carries median markers and per-delivery bands
+timestamped feature roadmaps still resolve exactly by the slug directory
+timestamps serialize as UTC `Z` whatever offset or git version rendered %cI
+toJson: Python json.dumps spelling
+toolArgs and string tool_input JSON objects yield the same verdict as the object form
+tracks a plain switch/checkout to the default branch through a chain
+treats gh api field flags without a method as POST
+two +status: lines in one commit are deduplicated
+two request-changes rounds then approve: re-reviews with an unchanged Verdict line still count
+type, initiative, and none-initiative filters
+under the filter a body edit and a hand-edited model: value show in git status and make apply refuse
+unknown-version files are reported and never overwritten
+unmanaged-window rejections carry window.primary in the brief output
+unmanaged: a sibling worktree outside worktrees.dir and a plain directory
+unmarked PreToolUse exits 0 with no output but still logs
+unqualifiedWarning: a list with one bare entry names only that entry
+unqualifiedWarning: all qualified values give null
+unqualifiedWarning: one bare string is named with its place
+unqualifiedWarning: the same bare value in two places is named once with both
+usage errors exit 1 and never throw
+usage errors exit 3 before touching gh
+vendorOf and byokTierWarning classify the BYOK tier conflict
+vscodeUserDir honors the override and platform defaults
+watch fires one debounced refresh for a burst of changes
+watch skips nonexistent paths and still works for existing ones
+windowFor prefers the window whose first folder is the checkout
+windows reports the running window holding each registered checkout and the target to open
+with pins active, the primary and a linked worktree are clean and their commits carry no model: line
+withinGrace counts 180 s from the merge commit date
+without node on PATH the hook exits 0 and prints nothing
+without node on PATH the hook exits 0 and prints nothing
+workspace command writes the session pair's .code-workspace with the auto-approve settings block (\#58 session-auto-approve)
+workspace mode emits the context when the session repo carries the wiring
+workspaceFolders resolves relative paths against the file
+worktrees are grouped by role with the current window marked
+worktrees.autoApprove can be overridden to false
+writePendingDispatch writes one 0600 record per target and validates input
+writes are atomic and leave no temp files
+# === final half (appended at step 4.3) ===
