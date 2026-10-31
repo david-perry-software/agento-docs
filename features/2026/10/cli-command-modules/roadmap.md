@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "4.1 Move shared fixtures to scripts/test-helpers/agento-fixtures.mjs"
+next-step: "4.2 Move release, migrate, harness, models, resolve, status, doctor test blocks"
 artifact-pr: "#72"
 ```
 
@@ -370,13 +370,25 @@ Every step in this phase follows the same recipe:
 
 ## Phase 4: Split the test file
 
-- [ ] 4.1 Move the shared fixtures (lines ~14–110 of `scripts/agento.test.mjs`:
+- [x] 4.1 Move the shared fixtures (lines ~14–110 of `scripts/agento.test.mjs`:
   `makeRepo`, `cloneWithOrigin`, the roadmap/config writers, `runWith`, `baseEnv`,
   the `cli` path) to `scripts/test-helpers/agento-fixtures.mjs`. That module
   resolves `cli` from its own location as `scripts/agento.mjs`.
   `scripts/agento.test.mjs` imports them — verify: the full test command exits 0
   with the same total as Phase 3; `ls extension/cli` does not contain
   `test-helpers`
+
+  Results (2026-10-31): `scripts/test-helpers/agento-fixtures.mjs` now holds the
+  shared fixtures (`git`, `makeRepo`, `cloneWithOrigin`, `companionOf`,
+  `writeRoadmap`, `writeBreakdown`, `run`, `runWith`, `baseEnv`,
+  `restrictedPath`) and exports `repoRoot`/`cli` too. It resolves `cli` as
+  `scripts/agento.mjs` from its own location (`path.dirname(path.dirname(cli))`
+  yields `repoRoot`), per Approach rule 7. `scripts/agento.test.mjs` now imports
+  those fixtures from `./test-helpers/agento-fixtures.mjs`; the old fixture
+  definitions (lines 14–110) were removed and the now-unused `fileURLToPath`
+  import dropped. `npm run copy-cli` exit 0 with no `extension/cli` change, and
+  `extension/cli` contains no `test-helpers`. Full test command exit 0 —
+  838 pass / 0 fail / 838 total (~359 s), unchanged from Phase 3.
 - [ ] 4.2 Move the `test(...)` blocks for release, migrate, harness, models,
   resolve, status, and doctor byte-for-byte into
   `scripts/commands/<module>.test.mjs`, importing from the fixtures module —
