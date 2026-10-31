@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "3.13 Delete the now-empty legacy switch"
+next-step: "4.1 Move shared fixtures to scripts/test-helpers/agento-fixtures.mjs"
 artifact-pr: "#72"
 ```
 
@@ -348,13 +348,25 @@ Every step in this phase follows the same recipe:
   `commands/next.mjs`. Full test command exit 0 — 838 pass / 0 fail / 838 total
   (~383 s); `next` parity diff empty; `evidence/parity.sh` exit 0 (21
   invocations byte-identical).
-- [ ] 3.13 Delete the now-empty legacy `switch` and any orphaned helpers left in
+- [x] 3.13 Delete the now-empty legacy `switch` and any orphaned helpers left in
   `scripts/agento.mjs`, keeping the shebang and the unchanged usage header. Fall
   through to `usage(command ? \`unknown command ${command}\` : "missing command")`
   for unknown or missing commands — verify: `wc -l scripts/agento.mjs` ≤ 200;
   `grep -c "^\s*case " scripts/agento.mjs` is 0; the full test command exits 0,
   ≥ 838 tests; `evidence/parity.sh` diff is empty (the unknown and missing
   command usage errors included), saved to `evidence/output-parity.txt`
+
+  Results (2026-10-31): `scripts/agento.mjs` is now the thin dispatcher — the
+  unchanged shebang + usage header, one eager
+  `import { command, usage } from "./lib/context.mjs"`, the `COMMAND_MODULES`
+  table, and lazy `import("./commands/<file>.mjs")` dispatch that falls through
+  to `usage(command ? \`unknown command ${command}\` : "missing command")` for
+  unknown/missing commands. `wc -l scripts/agento.mjs` = 88 (≤ 200);
+  `grep -c "^\s*case " scripts/agento.mjs` = 0; every one of the 32 subcommands
+  is dispatched through `COMMAND_MODULES`. `npm run copy-cli` ships the
+  dispatcher. Full test command exit 0 — 838 pass / 0 fail / 838 total (~370 s);
+  `evidence/parity.sh` diff empty (the unknown and missing command usage errors
+  included), saved to `evidence/output-parity.txt`.
 
 ## Phase 4: Split the test file
 

@@ -1,0 +1,3 @@
+PARITY OK: all 21 invocations byte-identical (stdout, stderr, exit code)
+base commit: ad9e8f3
+branch cli:  /home/david/DP/agento-worktrees/plan-20261031-055136/scripts/agento.mjs
