@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "4.3 Move paths, session, publish, ship, next test blocks and delete agento.test.mjs"
+next-step: "4.4 Run the full test command three times (parallel-file collision check)"
 artifact-pr: "#72"
 ```
 
@@ -413,12 +413,27 @@ Every step in this phase follows the same recipe:
   importing the moved helpers from the fixtures module. `npm run copy-cli`
   exit 0 with no `extension/cli` change. Full test command exit 0 —
   838 pass / 0 fail / 838 total (~257 s), unchanged from Phase 3.
-- [ ] 4.3 Move the remaining blocks: paths, session, publish, ship, and next go to
+- [x] 4.3 Move the remaining blocks: paths, session, publish, ship, and next go to
   their `scripts/commands/<module>.test.mjs`, and cross-command scenarios go to
   `scripts/commands/integration.test.mjs`. Delete the then-empty
   `scripts/agento.test.mjs` — verify: `test -e scripts/agento.test.mjs` fails;
   the full test command exits 0 with an unchanged total; the sorted TAP test names
   match the base exactly, saved as the final half of `evidence/test-names.txt`
+
+  Results (2026-10-31): `scripts/commands/{paths,session,publish,ship,next,integration}.test.mjs`
+  now hold the remaining families' tests (138 bodies byte-for-byte; the
+  model-pins cross-command section, including the `for (const mode of
+  ["apply", "adopt"])` test pair, moved to integration.test.mjs). The two
+  dashboard cross tests (`session, status --pr, initiative, metrics, and
+  dashboard …` and `status --pr probes gh --version once …`) joined
+  integration.test.mjs, and their dashboard helpers moved to the fixtures
+  module. Two more publish-pr helpers shared with the model-pins tests
+  (`publishPrRun`, `ciCheck`) moved to the fixtures module. `scripts/agento.test.mjs`
+  is deleted. `npm run copy-cli` exit 0 with no `extension/cli` change; the
+  extension CLI tree contains no `*.test.mjs` and no `test-helpers/`. Full test
+  command exit 0 — 838 pass / 0 fail / 838 total (~4 min). The sorted TAP test
+  names (838) match the base half exactly and are appended as the final half of
+  `evidence/test-names.txt`.
 - [ ] 4.4 Run the full test command three times in a row to check for
   parallel-file fixture collisions. Fix any collision only in
   `scripts/test-helpers/agento-fixtures.mjs` (unique temp roots or env), never in
