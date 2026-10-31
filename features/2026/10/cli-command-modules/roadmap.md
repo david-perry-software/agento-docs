@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "3.8 Move paths, workspace, windows, artifacts, and handoff to scripts/commands/paths.mjs"
+next-step: "3.9 Move session, start-session, and close-session to scripts/commands/session.mjs"
 artifact-pr: "#72"
 ```
 
@@ -253,9 +253,22 @@ Every step in this phase follows the same recipe:
   `doctor --for ship`, `policy --list`, `policy 9`, and `preflight new-feature`
   parity diffs empty; `evidence/parity.sh` exit 0 (21 invocations
   byte-identical).
-- [ ] 3.8 Move `paths`, `workspace`, `windows`, `artifacts`, and `handoff` to
+- [x] 3.8 Move `paths`, `workspace`, `windows`, `artifacts`, and `handoff` to
   `scripts/commands/paths.mjs` — verify: the full test command exits 0, ≥ 838
   tests; the parity diff is empty
+
+  Results (2026-10-31): `scripts/commands/paths.mjs` exports the `paths`,
+  `workspace`, `windows`, `artifacts`, and `handoff` handlers plus their
+  family-only helpers (`artifactsCommand`, `windowCheckouts`, `windowsCommand`,
+  `handoffCommand`). `scripts/lib/paths.mjs` holds the shared session-path
+  helpers (`managedWorktreePath`, `resolveSessionPaths`, `originOf`,
+  `writeSessionWorkspace`) used by start-session, close-session, and ship too;
+  `roadmapOnBranch` (shared by `artifacts` and `next`) moved into
+  `lib/layout.mjs`. `COMMAND_MODULES` gains `paths`/`workspace`/`windows`/
+  `artifacts`/`handoff` → `paths`; the five `case` bodies are deleted.
+  `npm run copy-cli` ships `lib/paths.mjs` and `commands/paths.mjs`. Full test
+  command exit 0 — 838 pass / 0 fail / 838 total (~451 s); `evidence/parity.sh`
+  exit 0 (21 invocations byte-identical).
 - [ ] 3.9 Move `session`, `start-session`, and `close-session` to
   `scripts/commands/session.mjs`. `sessionRecord`/`sessionContext`,
   `removeSessionPair`, and `branchVerdict` go to `lib/` if ship or next use them
