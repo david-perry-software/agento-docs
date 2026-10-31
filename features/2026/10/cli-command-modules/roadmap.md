@@ -2,13 +2,13 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "1.1 Record the baselines and write the output-parity harness"
+next-step: "2.1 Create scripts/lib/context.mjs"
 artifact-pr: "#72"
 ```
 
 ## Phase 1: Baseline
 
-- [ ] 1.1 Record the baselines and write the output-parity harness.
+- [x] 1.1 Record the baselines and write the output-parity harness.
   - Run the full test command and record the pass/fail/total counts. Save the
     sorted test names from `node --test --test-reporter=tap 'scripts/**/*.test.mjs'
     'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` as the base half of
@@ -27,6 +27,18 @@ artifact-pr: "#72"
   — verify: the full test command exits 0 with 838/838; shellcheck exits 0 with no
   findings; the extension build and unit tests exit 0; `evidence/parity.sh` exits 0
   with an empty diff. Record all results on this line.
+
+  Results (2026-10-31): full test command exit 0 — 838 pass / 0 fail / 838 total
+  (~368 s). TAP names saved as the base half of `evidence/test-names.txt` (838
+  sorted names). `shellcheck` (ShellCheck v0.10.0 binary from /tmp) exit 0, no
+  findings. Extension: `npm ci` (317 packages) → `npm run build` exit 0 →
+  `npm run test:unit` exit 0 — 251 pass / 0 fail. `evidence/parity.sh` exit 0:
+  all 21 invocations byte-identical (stdout, stderr, exit code) against the
+  unchanged branch. Harness faithfulness notes (evidence, not product code): the
+  base CLI's `skills/`, `.github/`, and `templates/` are symlinked into its temp
+  `PLUGIN_ROOT` for `policy`/`next`, every invocation passes `--plugin-root
+  <PRODUCT_ROOT>` so doctor/models/harness probe the real clone, and `metrics`'
+  `generatedAt`/`seconds` are normalized on both sides.
 
 ## Phase 2: Shared context and dispatcher scaffold
 
