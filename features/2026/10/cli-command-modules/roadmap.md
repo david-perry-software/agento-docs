@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "2.2 Add the COMMAND_MODULES table and lazy dispatch"
+next-step: "3.1 Move release to scripts/commands/release.mjs"
 artifact-pr: "#72"
 ```
 
@@ -68,7 +68,7 @@ artifact-pr: "#72"
   caches (`anchorListing`, `productWorktreeCache`, `worktreesDirByPrimary`,
   `companionWorktreesCache`) are private to context.mjs behind accessor functions;
   `usage()` now reads the header from `CLI_DIR/agento.mjs`.
-- [ ] 2.2 Add the `COMMAND_MODULES` table and the lazy `await import("./commands/<file>.mjs")`
+- [x] 2.2 Add the `COMMAND_MODULES` table and the lazy `await import("./commands/<file>.mjs")`
   dispatch in front of the legacy `switch`. The table starts empty; unlisted
   commands fall through to the `switch`.
   - Make `extension/scripts/copy-cli.mjs` copy `agento.mjs`, the flat modules,
@@ -82,6 +82,16 @@ artifact-pr: "#72"
   — verify: `cd extension && npm run copy-cli && npm run build` exits 0; the full
   test command exits 0, ≥ 838 tests; `node --test tests/extension-bundle.test.mjs`
   passes; `evidence/parity.sh` diff is empty
+
+  Results (2026-10-31): `cd extension && npm run copy-cli && npm run build` exit 0
+  (copy-cli now copies the flat modules plus `lib/*.mjs` and `commands/*.mjs`,
+  excluding `*.test.mjs` and `test-helpers/`, and prunes stale entries; the tree
+  holds `lib/context.mjs`). Full test command exit 0 — 838 pass / 0 fail / 838
+  total (~370 s). `node --test tests/extension-bundle.test.mjs` 4/4 pass.
+  `evidence/parity.sh` exit 0: all 21 invocations byte-identical.
+  `extension/scripts/assert-vsix.mjs` now requires `cli/lib/context.mjs` and at
+  least one `cli/commands/*.mjs` (dormant until Phase 3). `COMMAND_MODULES` is
+  empty; unlisted commands still fall through to the legacy switch.
 
 ## Phase 3: Move command families
 
