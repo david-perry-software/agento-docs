@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "3.4 Move models to scripts/commands/models.mjs"
+next-step: "3.5 Move config, resolve, find, and ports to scripts/commands/resolve.mjs"
 artifact-pr: "#72"
 ```
 
@@ -155,12 +155,35 @@ Every step in this phase follows the same recipe:
   `commands/harness.mjs`. Full test command exit 0 — 838 pass / 0 fail / 838
   total (~394 s). `node scripts/agento.mjs harness status` output identical to
   base; `evidence/parity.sh` exit 0 (21 invocations byte-identical).
-- [ ] 3.4 Move `models` to `scripts/commands/models.mjs`, with the model constants
+- [x] 3.4 Move `models` to `scripts/commands/models.mjs`, with the model constants
   and the filter/profile/pin helpers (~3775–4330). `currentWindowRole` and any
   helper doctor or preflight needs go to `lib/`. `MODEL_FILTER_FILES` keep
   resolving from `CLI_DIR` — verify: the full test command exits 0, ≥ 838 tests
   (the models-filter install/remove tests included); the `models list`/`models
   pins` parity diff is empty
+
+  Results (2026-10-31): `scripts/commands/models.mjs` exports the `models`
+  handler; `scripts/lib/models.mjs` holds the shared model constants and
+  filter/profile/pin helpers (`MODELS_HINT`, `MODEL_FILTER*`/`MODEL_ATTR*`/`MODEL_PINS_FILE`,
+  `modelFilterCommand`, `gitTooOld`, `modelCommonDir`, `stripAttributeBlock`,
+  `installModelFilter`, `removeModelFilter`, `modelTargetFiles`, `loadProfiles`,
+  `loadRoles`, `candidateErrors`, `nextProfilesObject`, `writeProfiles`,
+  `writeRoles`, `resolveProfile`, `gitShowHead`, `modelsState`,
+  `modelFilterStatus`, `parsePinLine`, `modelsReport`, `currentWindowRole`,
+  `secondaryProfileLookup`, `rolePins`, `modelsPins`, `agentTargetValue`,
+  `tierWarnings`, `pinWarnings`, `pinModels`), since the doctor
+  `model-profile` check shares `loadProfiles`/`loadRoles`/`modelsState`/
+  `resolveProfile`/`modelsPins`/`pinWarnings`; `scripts/lib/git.mjs` holds the
+  shared `gitRun` (moved so `lib/models.mjs` can use it). `currentWindowRole`
+  lives in `lib/models.mjs` per the step. `MODEL_FILTER_FILES` still resolves
+  from `CLI_DIR` (pinned in `lib/context.mjs`). `COMMAND_MODULES` gains
+  `models`; the `case "models"` body is deleted; the now-unused
+  `model-profiles.mjs`/`model-filter.mjs` imports are dropped from
+  `scripts/agento.mjs`. `npm run copy-cli` now ships `lib/git.mjs`,
+  `lib/models.mjs`, and `commands/models.mjs`. Full test command exit 0 —
+  838 pass / 0 fail / 838 total (~455 s); the models-filter install/remove
+  tests pass; `models list`/`models pins` parity diff empty;
+  `evidence/parity.sh` exit 0 (21 invocations byte-identical).
 - [ ] 3.5 Move `config`, `resolve`, `find`, and `ports` to
   `scripts/commands/resolve.mjs`. `resolveDocument`/`configDocument` go to `lib/`
   if preflight or next use them — verify: the full test command exits 0, ≥ 838
