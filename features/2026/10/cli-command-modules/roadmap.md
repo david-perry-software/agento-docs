@@ -1,5 +1,5 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
 next-step: ""
