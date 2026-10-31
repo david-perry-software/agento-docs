@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "3.3 Move harness to scripts/commands/harness.mjs"
+next-step: "3.4 Move models to scripts/commands/models.mjs"
 artifact-pr: "#72"
 ```
 
@@ -141,10 +141,20 @@ Every step in this phase follows the same recipe:
   Full test command exit 0 — 838 pass / 0 fail / 838 total (~382 s);
   extension-bundle test passes; `evidence/parity.sh` exit 0 (21 invocations
   byte-identical).
-- [ ] 3.3 Move `harness` to `scripts/commands/harness.mjs`. Keep `harnessFacts`
+- [x] 3.3 Move `harness` to `scripts/commands/harness.mjs`. Keep `harnessFacts`
   and the Copilot-dir helpers in `lib/` if doctor uses them — verify: the full test
   command exits 0, ≥ 838 tests; the `node scripts/agento.mjs harness status`
   output is identical to base via `evidence/parity.sh`
+
+  Results (2026-10-31): `scripts/commands/harness.mjs` exports the `harness`
+  handler; `scripts/lib/copilot.mjs` holds the shared helpers (`LOCAL_TAKEOVER`,
+  `copilotSkillsDir`, `copilotExtensionsDir`, `primaryCheckoutOf`,
+  `harnessFacts`) since the doctor `harness`/`canvas` checks and the models
+  filter also use them. `COMMAND_MODULES` gains `harness`; the `case "harness"`
+  body is deleted. `npm run copy-cli` now ships `lib/copilot.mjs` and
+  `commands/harness.mjs`. Full test command exit 0 — 838 pass / 0 fail / 838
+  total (~394 s). `node scripts/agento.mjs harness status` output identical to
+  base; `evidence/parity.sh` exit 0 (21 invocations byte-identical).
 - [ ] 3.4 Move `models` to `scripts/commands/models.mjs`, with the model constants
   and the filter/profile/pin helpers (~3775–4330). `currentWindowRole` and any
   helper doctor or preflight needs go to `lib/`. `MODEL_FILTER_FILES` keep
