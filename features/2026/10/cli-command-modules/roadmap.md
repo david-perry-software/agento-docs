@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "3.10 Move sync, step-commit, plan-publish, review-publish, and publish-pr to scripts/commands/publish.mjs"
+next-step: "3.11 Move ship, ship-preflight, and close-decision to scripts/commands/ship.mjs"
 artifact-pr: "#72"
 ```
 
@@ -287,11 +287,32 @@ Every step in this phase follows the same recipe:
   `npm run copy-cli` ships `commands/session.mjs`. Full test command exit 0 —
   838 pass / 0 fail / 838 total (~448 s); `evidence/parity.sh` exit 0 (21
   invocations byte-identical).
-- [ ] 3.10 Move `sync`, `step-commit`, `plan-publish`, `review-publish`, and
+- [x] 3.10 Move `sync`, `step-commit`, `plan-publish`, `review-publish`, and
   `publish-pr` to `scripts/commands/publish.mjs`. The delivery-run helpers
   (`buildWindow`, `deliveryRun`, `integrateHalves`, `pushHalves`, and others) go
   to `lib/` if ship uses them — verify: the full test command exits 0, ≥ 838 tests;
   the parity diff is empty
+
+  Results (2026-10-31): `scripts/commands/publish.mjs` exports the `sync`,
+  `step-commit`, `plan-publish`, `review-publish`, and `publish-pr` handlers
+  plus their family-only choreography (`STEP_EXIT`, `CONVENTIONAL`, `escapeRe`,
+  `buildWindow`, `deliveryRun`, `openDeliveryRun`, `integrateHalves`,
+  `pushHalves`, `deliveryArgs`, `sync`, `insideDir`, `withArtifactPr`,
+  `stepCommit`, `cleanHandoff`, `messageScratch`, `changedPaths`,
+  `rejectOutsideSlug`, `commitHalf`, `writeMessage`, `planPublish`,
+  `readBodyFile`, `ghJson`, `reviewPublish`, `ghFailOf`, `ensureDeliveryPrs`,
+  `normalizeRemote`, `publishPr`). `scripts/lib/delivery-run.mjs` holds the
+  shared integration helpers (`fetchOrigin`, `mergeRef`, `pushRef`, and
+  `SHIP_EXIT`) used by both publish and the ship teardown; `scripts/lib/ship.mjs`
+  holds the ship/publish-pr shared helpers (`SHIP_PR_FIELDS`, `waitForChecks`,
+  `shipPrLookup`, `prSummary`, `isConflicting`, `utcDate`, `stampChangelog`,
+  `confirmTokenFor`, `roadmapPathOnRef`, `parseRoadmapSteps`);
+  `scripts/lib/github.mjs` gains `ghRun`. `COMMAND_MODULES` gains
+  `sync`/`step-commit`/`plan-publish`/`review-publish`/`publish-pr` →
+  `publish`; the five `case` bodies are deleted. `npm run copy-cli` ships
+  `lib/delivery-run.mjs`, `lib/ship.mjs`, and `commands/publish.mjs`. Full test
+  command exit 0 — 838 pass / 0 fail / 838 total (~357 s); `evidence/parity.sh`
+  exit 0 (21 invocations byte-identical).
 - [ ] 3.11 Move `ship`, `ship-preflight`, and `close-decision` to
   `scripts/commands/ship.mjs` (`SHIP_EXIT`, `SHIP_PR_FIELDS`, `waitForChecks`,
   `shipArgs`, `shipPrLookup`, `ship`, `stampChangelog`, `confirmTokenFor`, the
