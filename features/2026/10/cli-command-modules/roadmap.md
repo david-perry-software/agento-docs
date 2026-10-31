@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "2.1 Create scripts/lib/context.mjs"
+next-step: "2.2 Add the COMMAND_MODULES table and lazy dispatch"
 artifact-pr: "#72"
 ```
 
@@ -42,7 +42,7 @@ artifact-pr: "#72"
 
 ## Phase 2: Shared context and dispatcher scaffold
 
-- [ ] 2.1 Create `scripts/lib/context.mjs`. Move the import-time state into it
+- [x] 2.1 Create `scripts/lib/context.mjs`. Move the import-time state into it
   unchanged and in the same order: `parseArgs` and `positional`/`options`/
   `command`/`rest`, `startDir`/`toplevel`, `anchorRoot`/`anchor`/`root`, worktree
   caches, `config`/`source`, `repoName`/`currentBranch`/`gitAdapter`,
@@ -59,6 +59,15 @@ artifact-pr: "#72"
   — verify: `cd extension && npm run copy-cli`, then the full test command exits 0,
   0 fail, ≥ 838 tests; `evidence/parity.sh` diff is empty (covers `harness status`
   and `models list`/`pins` paths)
+
+  Results (2026-10-31): `cd extension && npm run copy-cli` exit 0. Full test
+  command exit 0 — 838 pass / 0 fail / 838 total (~364 s). `evidence/parity.sh`
+  exit 0: all 21 invocations byte-identical. `scripts/lib/context.mjs` pins
+  `CLI_DIR` (scripts/) and `PLUGIN_ROOT` (its parent) per Approach rule 5;
+  `WAIT_FOR_CHECKS` and the models-filter copy paths derive from them. Mutable
+  caches (`anchorListing`, `productWorktreeCache`, `worktreesDirByPrimary`,
+  `companionWorktreesCache`) are private to context.mjs behind accessor functions;
+  `usage()` now reads the header from `CLI_DIR/agento.mjs`.
 - [ ] 2.2 Add the `COMMAND_MODULES` table and the lazy `await import("./commands/<file>.mjs")`
   dispatch in front of the legacy `switch`. The table starts empty; unlisted
   commands fall through to the `switch`.
