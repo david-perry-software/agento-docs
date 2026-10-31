@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "3.1 Move release to scripts/commands/release.mjs"
+next-step: "3.2 Move migrate to scripts/commands/migrate.mjs"
 artifact-pr: "#72"
 ```
 
@@ -105,11 +105,25 @@ Every step in this phase follows the same recipe:
   `npm run copy-cli`.
 - Never edit behavior. Record any bug you notice as a Follow-up.
 
-- [ ] 3.1 Move `release` to `scripts/commands/release.mjs` (`RELEASE_EXIT`,
+- [x] 3.1 Move `release` to `scripts/commands/release.mjs` (`RELEASE_EXIT`,
   `RELEASE_STATUS`, `ghApi`, `ghRequiredContexts`, `releaseContext`,
   `releaseSnapshot`, `releaseVerdict`, plus `once` if not yet shared) — verify: the
   full test command exits 0, ≥ 838 tests; `node scripts/agento.mjs release` still
   exits 1 with the same usage message; the extension-bundle test passes
+
+  Results (2026-10-31): `scripts/commands/release.mjs` exports the `release`
+  handler; `scripts/lib/release.mjs` holds the shared release/GitHub helpers
+  (`GhFailure`, `ghApi`, `ghRequiredContexts`, `runSummary`, `once`,
+  `releaseContext`, `releaseSnapshot`, `releaseVerdict`, `RELEASE_EXIT`,
+  `RELEASE_STATUS`) since `ship` also uses `releaseVerdict`/`ghRequiredContexts`/
+  `once`; `scripts/lib/probe.mjs` holds the shared probe block (`probe`,
+  `probeAsync`, `ghVersion`, `execAsync`). `COMMAND_MODULES = { release:
+  "release" }`; the `case "release"` body is deleted. `npm run copy-cli` now ships
+  `lib/probe.mjs`, `lib/release.mjs`, and `commands/release.mjs`. Full test
+  command exit 0 — 838 pass / 0 fail / 838 total (~366 s). `node
+  scripts/agento.mjs release` exits 1 with the same usage message;
+  extension-bundle test passes; `evidence/parity.sh` exit 0 (21 invocations
+  byte-identical).
 - [ ] 3.2 Move `migrate` to `scripts/commands/migrate.mjs` (`ROOT_KEYS`,
   `listFiles`, `recordsUnder`, `productName`, `writeCompanionName`,
   `appendMigrationNote`, `recordsDiff`, unless shared) — verify: the full test
