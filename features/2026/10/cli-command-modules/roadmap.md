@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "3.6 Move status, initiative, metrics, and dashboard to scripts/commands/status.mjs"
+next-step: "3.7 Move doctor, preflight, and policy to scripts/commands/doctor.mjs"
 artifact-pr: "#72"
 ```
 
@@ -202,12 +202,38 @@ Every step in this phase follows the same recipe:
   `lib/resolve.mjs`, and `commands/resolve.mjs`. Full test command exit 0 —
   838 pass / 0 fail / 838 total (~377 s); `evidence/parity.sh` exit 0 (21
   invocations byte-identical).
-- [ ] 3.6 Move `status`, `initiative`, `metrics`, and `dashboard` to
+- [x] 3.6 Move `status`, `initiative`, `metrics`, and `dashboard` to
   `scripts/commands/status.mjs`. The document builders (`statusDocument`,
   `initiative*Document`, `metricsDocument`, `doctorDocument`) go to
   `lib/documents.mjs` (or similar), since `dashboard`, `next`, and `preflight`
   share them. `dashboard` stays `async` and the dispatcher awaits it — verify:
   the full test command exits 0, ≥ 838 tests; the parity diff is empty
+
+  Results (2026-10-31): `scripts/commands/status.mjs` exports the `status`,
+  `initiative`, `metrics`, and `dashboard` handlers (`dashboard` is `async` and
+  the dispatcher awaits it). `scripts/lib/documents.mjs` holds the shared
+  document builders and their helpers: `statusDocument`, `initiativeRoadmaps`,
+  `initiativeListDocument`, `initiativeDetailDocument`, `metricsDocument`,
+  `dashboardDocument`, the initiatives helpers (`mergedAnomalies`,
+  `allBreakdowns`, `deriveInitiative`), the metrics helpers (`METRICS_PATCH`,
+  `METRICS_MAX_BUFFER`, `defaultRefIn`, `metricsPlan`, `gitLogText`,
+  `gitLogTextAsync`, `readMetricsLogs`, `readMetricsLogsAsync`), `refFor`, and
+  `STATUS_ORDER`/`byStatusOrder`. `scripts/lib/doctor.mjs` holds the doctor
+  machinery (`DOCTOR_CHECKS`, `CAPABILITY_CHECKS`, `COMMAND_NEEDS`, `checksFor`,
+  `runDoctor`, `LOCAL_DOCTOR_CHECKS`, `doctorProbes`, `capabilityOf`, and the
+  `doctorDocument` builder — its natural home, noted as a deviation from the
+  indicative `lib/documents.mjs` name) since preflight, start-session, and ship
+  share it. `scripts/lib/session.mjs` holds the session/companion/workspace
+  helpers (`describeCompanion`, `describeWorkspace`, `companionOfOwner`,
+  `managedHalves`, `companionHalfOf`, `sessionRecord`, `sessionContext`,
+  `canonicalizeJson`, `workspaceDocumentCurrent`), and `scripts/lib/github.mjs`
+  the PR-lookup helpers (`lookupPullRequest`, `lookupPullRequestAsync`,
+  `lookupPullRequests`, `prefetchedLookup`, `lookupCompanionPullRequest`).
+  `COMMAND_MODULES` gains `status`/`initiative`/`metrics`/`dashboard` →
+  `status`; the four `case` bodies are deleted. `npm run copy-cli` ships the
+  four new lib modules and `commands/status.mjs`. Full test command exit 0 —
+  838 pass / 0 fail / 838 total (~363 s); `evidence/parity.sh` exit 0 (21
+  invocations byte-identical).
 - [ ] 3.7 Move `doctor`, `preflight`, and `policy` to `scripts/commands/doctor.mjs`.
   `DOCTOR_CHECKS`/`CAPABILITY_CHECKS`/`COMMAND_NEEDS`/`runDoctor` go to `lib/`,
   since start-session and dashboard use them — verify: the full test command exits
