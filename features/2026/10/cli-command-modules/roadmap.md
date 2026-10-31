@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "5.1 Add tests/cli-layout.test.mjs per plan.md Approach rule 8"
+next-step: "5.2 Update AGENTS.md, docs/architecture.md, copilot-mechanic.agent.md"
 artifact-pr: "#72"
 ```
 
@@ -446,7 +446,7 @@ Every step in this phase follows the same recipe:
 
 ## Phase 5: Layout guard and documentation
 
-- [ ] 5.1 Add `tests/cli-layout.test.mjs` per plan.md Approach rule 8. It checks:
+- [x] 5.1 Add `tests/cli-layout.test.mjs` per plan.md Approach rule 8. It checks:
   - `scripts/agento.mjs` is at most 200 lines and declares no function besides
     the dispatcher.
   - `COMMAND_MODULES` ↔ the usage-header subcommands, both ways.
@@ -459,6 +459,12 @@ Every step in this phase follows the same recipe:
   — verify: `node --test tests/cli-layout.test.mjs` passes. Temporarily adding an
   unlisted command name to the usage header makes it fail (the change is
   reverted, not committed).
+
+  Results (2026-10-31): `tests/cli-layout.test.mjs` adds 5 tests covering all
+  five checks above. `node --test tests/cli-layout.test.mjs` passes 5/5.
+  Temporarily inserting `node scripts/agento.mjs zz-fake` into the usage header
+  made the bidirectional table test fail (1 fail), and reverting restored 5/5
+  (the temporary change was not committed).
 - [ ] 5.2 Update the docs per plan.md Approach rule 10:
   - AGENTS.md "Layout" `scripts/` bullet (dispatcher, `lib/`, `commands/`,
     `test-helpers/`, and the `extension/cli/` copy covering the subdirectories)
