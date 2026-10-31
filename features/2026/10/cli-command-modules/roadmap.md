@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/cli-command-modules
 last-updated: 2026-10-31
-next-step: "3.7 Move doctor, preflight, and policy to scripts/commands/doctor.mjs"
+next-step: "3.8 Move paths, workspace, windows, artifacts, and handoff to scripts/commands/paths.mjs"
 artifact-pr: "#72"
 ```
 
@@ -234,11 +234,25 @@ Every step in this phase follows the same recipe:
   four new lib modules and `commands/status.mjs`. Full test command exit 0 —
   838 pass / 0 fail / 838 total (~363 s); `evidence/parity.sh` exit 0 (21
   invocations byte-identical).
-- [ ] 3.7 Move `doctor`, `preflight`, and `policy` to `scripts/commands/doctor.mjs`.
+- [x] 3.7 Move `doctor`, `preflight`, and `policy` to `scripts/commands/doctor.mjs`.
   `DOCTOR_CHECKS`/`CAPABILITY_CHECKS`/`COMMAND_NEEDS`/`runDoctor` go to `lib/`,
   since start-session and dashboard use them — verify: the full test command exits
   0, ≥ 838 tests; the `doctor`, `doctor --for ship`, `policy --list`, `policy 9`,
   and `preflight new-feature` parity diff is empty
+
+  Results (2026-10-31): `scripts/commands/doctor.mjs` exports the `policy`,
+  `doctor`, and `preflight` handlers, plus the preflight document builders
+  (`opIdFor`, `preflightArgs`, `receiptLines`, `preflightDocument`) and the
+  `policySections` helper — all used only by this family. The doctor machinery
+  (`DOCTOR_CHECKS`/`CAPABILITY_CHECKS`/`COMMAND_NEEDS`/`runDoctor`/`checksFor`/
+  `LOCAL_DOCTOR_CHECKS`/`doctorProbes`/`capabilityOf`) was already extracted to
+  `lib/doctor.mjs` in step 3.6, so no new lib work was needed here.
+  `COMMAND_MODULES` gains `policy`/`doctor`/`preflight` → `doctor`; the three
+  `case` bodies are deleted. `npm run copy-cli` ships `commands/doctor.mjs`.
+  Full test command exit 0 — 838 pass / 0 fail / 838 total (~361 s); `doctor`,
+  `doctor --for ship`, `policy --list`, `policy 9`, and `preflight new-feature`
+  parity diffs empty; `evidence/parity.sh` exit 0 (21 invocations
+  byte-identical).
 - [ ] 3.8 Move `paths`, `workspace`, `windows`, `artifacts`, and `handoff` to
   `scripts/commands/paths.mjs` — verify: the full test command exits 0, ≥ 838
   tests; the parity diff is empty
