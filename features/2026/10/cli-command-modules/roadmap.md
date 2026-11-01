@@ -1,7 +1,7 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/cli-command-modules
-last-updated: 2026-10-31
+last-updated: 2026-11-01
 next-step: ""
 artifact-pr: "#72"
 ```
