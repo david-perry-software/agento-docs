@@ -1,0 +1,514 @@
+```yaml
+status: complete
+branch: feature/cli-command-modules
+last-updated: 2026-11-01
+next-step: ""
+artifact-pr: "#72"
+```
+
+## Phase 1: Baseline
+
+- [x] 1.1 Record the baselines and write the output-parity harness.
+  - Run the full test command and record the pass/fail/total counts. Save the
+    sorted test names from `node --test --test-reporter=tap 'scripts/**/*.test.mjs'
+    'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` as the base half of
+    `evidence/test-names.txt`.
+  - Run `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh`. If shellcheck
+    is not on PATH, use the ShellCheck v0.10.0 release binary as in plan.md
+    `## Research`.
+  - Run `cd extension && npm ci && npm run build && npm run test:unit` and record
+    the pass count.
+  - Write `evidence/parity.sh` per plan.md Approach rule 9. It extracts
+    `git archive ad9e8f3 scripts` to a temp dir, runs the fixed invocation list
+    against both CLIs from the product worktree with `--root`, normalizes the base
+    tree path, and diffs stdout and exit codes.
+  - Run it once against the unchanged branch.
+
+  — verify: the full test command exits 0 with 838/838; shellcheck exits 0 with no
+  findings; the extension build and unit tests exit 0; `evidence/parity.sh` exits 0
+  with an empty diff. Record all results on this line.
+
+  Results (2026-10-31): full test command exit 0 — 838 pass / 0 fail / 838 total
+  (~368 s). TAP names saved as the base half of `evidence/test-names.txt` (838
+  sorted names). `shellcheck` (ShellCheck v0.10.0 binary from /tmp) exit 0, no
+  findings. Extension: `npm ci` (317 packages) → `npm run build` exit 0 →
+  `npm run test:unit` exit 0 — 251 pass / 0 fail. `evidence/parity.sh` exit 0:
+  all 21 invocations byte-identical (stdout, stderr, exit code) against the
+  unchanged branch. Harness faithfulness notes (evidence, not product code): the
+  base CLI's `skills/`, `.github/`, and `templates/` are symlinked into its temp
+  `PLUGIN_ROOT` for `policy`/`next`, every invocation passes `--plugin-root
+  <PRODUCT_ROOT>` so doctor/models/harness probe the real clone, and `metrics`'
+  `generatedAt`/`seconds` are normalized on both sides.
+
+## Phase 2: Shared context and dispatcher scaffold
+
+- [x] 2.1 Create `scripts/lib/context.mjs`. Move the import-time state into it
+  unchanged and in the same order: `parseArgs` and `positional`/`options`/
+  `command`/`rest`, `startDir`/`toplevel`, `anchorRoot`/`anchor`/`root`, worktree
+  caches, `config`/`source`, `repoName`/`currentBranch`/`gitAdapter`,
+  `resolveArtifacts`/`artifacts`/`artifactsRoot`/`artifactsGit`/`agit`, and the
+  companion worktree cache. Move the helpers they need with them (`git`,
+  `samePath`, `hasCompanionConfig`, the `MANAGED_HALF` regex) and the output helpers
+  (`usage`, `emit`, `emitRaw`, `withExit`).
+  - Pin `CLI_DIR` (the `scripts/` dir) and `PLUGIN_ROOT` (its parent) per plan.md
+    Approach rule 5, and derive `WAIT_FOR_CHECKS` and the models-filter paths
+    from them.
+  - Keep mutable caches private behind accessor functions.
+  - `scripts/agento.mjs` imports what it uses from `./lib/context.mjs`.
+
+  — verify: `cd extension && npm run copy-cli`, then the full test command exits 0,
+  0 fail, ≥ 838 tests; `evidence/parity.sh` diff is empty (covers `harness status`
+  and `models list`/`pins` paths)
+
+  Results (2026-10-31): `cd extension && npm run copy-cli` exit 0. Full test
+  command exit 0 — 838 pass / 0 fail / 838 total (~364 s). `evidence/parity.sh`
+  exit 0: all 21 invocations byte-identical. `scripts/lib/context.mjs` pins
+  `CLI_DIR` (scripts/) and `PLUGIN_ROOT` (its parent) per Approach rule 5;
+  `WAIT_FOR_CHECKS` and the models-filter copy paths derive from them. Mutable
+  caches (`anchorListing`, `productWorktreeCache`, `worktreesDirByPrimary`,
+  `companionWorktreesCache`) are private to context.mjs behind accessor functions;
+  `usage()` now reads the header from `CLI_DIR/agento.mjs`.
+- [x] 2.2 Add the `COMMAND_MODULES` table and the lazy `await import("./commands/<file>.mjs")`
+  dispatch in front of the legacy `switch`. The table starts empty; unlisted
+  commands fall through to the `switch`.
+  - Make `extension/scripts/copy-cli.mjs` copy `agento.mjs`, the flat modules,
+    `lib/*.mjs`, and `commands/*.mjs`, excluding `*.test.mjs` and `test-helpers/`,
+    and still prune stale entries.
+  - Make `tests/extension-bundle.test.mjs` derive and byte-compare the same
+    recursive set.
+  - Make `extension/scripts/assert-vsix.mjs` require `cli/agento.mjs`,
+    `cli/lib/context.mjs`, and (from Phase 3 on) at least one `cli/commands/*.mjs`.
+
+  — verify: `cd extension && npm run copy-cli && npm run build` exits 0; the full
+  test command exits 0, ≥ 838 tests; `node --test tests/extension-bundle.test.mjs`
+  passes; `evidence/parity.sh` diff is empty
+
+  Results (2026-10-31): `cd extension && npm run copy-cli && npm run build` exit 0
+  (copy-cli now copies the flat modules plus `lib/*.mjs` and `commands/*.mjs`,
+  excluding `*.test.mjs` and `test-helpers/`, and prunes stale entries; the tree
+  holds `lib/context.mjs`). Full test command exit 0 — 838 pass / 0 fail / 838
+  total (~370 s). `node --test tests/extension-bundle.test.mjs` 4/4 pass.
+  `evidence/parity.sh` exit 0: all 21 invocations byte-identical.
+  `extension/scripts/assert-vsix.mjs` now requires `cli/lib/context.mjs` and at
+  least one `cli/commands/*.mjs` (dormant until Phase 3). `COMMAND_MODULES` is
+  empty; unlisted commands still fall through to the legacy switch.
+
+## Phase 3: Move command families
+
+Every step in this phase follows the same recipe:
+
+- Move the family's `case` bodies verbatim into handlers exported as
+  `commands = { <name>: … }` from `scripts/commands/<module>.mjs`.
+- Move helpers only that family uses into the module, and helpers it shares with
+  any remaining command into `scripts/lib/`.
+- Add the family's entries to `COMMAND_MODULES`, delete the moved cases, and run
+  `npm run copy-cli`.
+- Never edit behavior. Record any bug you notice as a Follow-up.
+
+- [x] 3.1 Move `release` to `scripts/commands/release.mjs` (`RELEASE_EXIT`,
+  `RELEASE_STATUS`, `ghApi`, `ghRequiredContexts`, `releaseContext`,
+  `releaseSnapshot`, `releaseVerdict`, plus `once` if not yet shared) — verify: the
+  full test command exits 0, ≥ 838 tests; `node scripts/agento.mjs release` still
+  exits 1 with the same usage message; the extension-bundle test passes
+
+  Results (2026-10-31): `scripts/commands/release.mjs` exports the `release`
+  handler; `scripts/lib/release.mjs` holds the shared release/GitHub helpers
+  (`GhFailure`, `ghApi`, `ghRequiredContexts`, `runSummary`, `once`,
+  `releaseContext`, `releaseSnapshot`, `releaseVerdict`, `RELEASE_EXIT`,
+  `RELEASE_STATUS`) since `ship` also uses `releaseVerdict`/`ghRequiredContexts`/
+  `once`; `scripts/lib/probe.mjs` holds the shared probe block (`probe`,
+  `probeAsync`, `ghVersion`, `execAsync`). `COMMAND_MODULES = { release:
+  "release" }`; the `case "release"` body is deleted. `npm run copy-cli` now ships
+  `lib/probe.mjs`, `lib/release.mjs`, and `commands/release.mjs`. Full test
+  command exit 0 — 838 pass / 0 fail / 838 total (~366 s). `node
+  scripts/agento.mjs release` exits 1 with the same usage message;
+  extension-bundle test passes; `evidence/parity.sh` exit 0 (21 invocations
+  byte-identical).
+- [x] 3.2 Move `migrate` to `scripts/commands/migrate.mjs` (`ROOT_KEYS`,
+  `listFiles`, `recordsUnder`, `productName`, `writeCompanionName`,
+  `appendMigrationNote`, `recordsDiff`, unless shared) — verify: the full test
+  command exits 0, ≥ 838 tests; the extension-bundle test passes
+
+  Results (2026-10-31): `scripts/commands/migrate.mjs` holds the `migrate` handler
+  and its migrate-only helpers (`ROOT_KEYS`, `listFiles`, `describeRoots`,
+  `recordsUnder`, `productName`, `writeCompanionName`, `appendMigrationNote`,
+  `recordsDiff`). The shared record machinery (`header`, `walkFiles`,
+  `walkRoadmaps`, `walkBreakdowns`, `describeContent`, `describe`,
+  `describeFromRef`, `recordBases`, `allRoadmaps`, `holdsArtifacts`,
+  `slugList`, `parseBreakdown`) moved to `scripts/lib/records.mjs`.
+  `COMMAND_MODULES` gains `migrate`; the `case "migrate"` body is deleted.
+  `npm run copy-cli` now ships `lib/records.mjs` and `commands/migrate.mjs`.
+  Full test command exit 0 — 838 pass / 0 fail / 838 total (~382 s);
+  extension-bundle test passes; `evidence/parity.sh` exit 0 (21 invocations
+  byte-identical).
+- [x] 3.3 Move `harness` to `scripts/commands/harness.mjs`. Keep `harnessFacts`
+  and the Copilot-dir helpers in `lib/` if doctor uses them — verify: the full test
+  command exits 0, ≥ 838 tests; the `node scripts/agento.mjs harness status`
+  output is identical to base via `evidence/parity.sh`
+
+  Results (2026-10-31): `scripts/commands/harness.mjs` exports the `harness`
+  handler; `scripts/lib/copilot.mjs` holds the shared helpers (`LOCAL_TAKEOVER`,
+  `copilotSkillsDir`, `copilotExtensionsDir`, `primaryCheckoutOf`,
+  `harnessFacts`) since the doctor `harness`/`canvas` checks and the models
+  filter also use them. `COMMAND_MODULES` gains `harness`; the `case "harness"`
+  body is deleted. `npm run copy-cli` now ships `lib/copilot.mjs` and
+  `commands/harness.mjs`. Full test command exit 0 — 838 pass / 0 fail / 838
+  total (~394 s). `node scripts/agento.mjs harness status` output identical to
+  base; `evidence/parity.sh` exit 0 (21 invocations byte-identical).
+- [x] 3.4 Move `models` to `scripts/commands/models.mjs`, with the model constants
+  and the filter/profile/pin helpers (~3775–4330). `currentWindowRole` and any
+  helper doctor or preflight needs go to `lib/`. `MODEL_FILTER_FILES` keep
+  resolving from `CLI_DIR` — verify: the full test command exits 0, ≥ 838 tests
+  (the models-filter install/remove tests included); the `models list`/`models
+  pins` parity diff is empty
+
+  Results (2026-10-31): `scripts/commands/models.mjs` exports the `models`
+  handler; `scripts/lib/models.mjs` holds the shared model constants and
+  filter/profile/pin helpers (`MODELS_HINT`, `MODEL_FILTER*`/`MODEL_ATTR*`/`MODEL_PINS_FILE`,
+  `modelFilterCommand`, `gitTooOld`, `modelCommonDir`, `stripAttributeBlock`,
+  `installModelFilter`, `removeModelFilter`, `modelTargetFiles`, `loadProfiles`,
+  `loadRoles`, `candidateErrors`, `nextProfilesObject`, `writeProfiles`,
+  `writeRoles`, `resolveProfile`, `gitShowHead`, `modelsState`,
+  `modelFilterStatus`, `parsePinLine`, `modelsReport`, `currentWindowRole`,
+  `secondaryProfileLookup`, `rolePins`, `modelsPins`, `agentTargetValue`,
+  `tierWarnings`, `pinWarnings`, `pinModels`), since the doctor
+  `model-profile` check shares `loadProfiles`/`loadRoles`/`modelsState`/
+  `resolveProfile`/`modelsPins`/`pinWarnings`; `scripts/lib/git.mjs` holds the
+  shared `gitRun` (moved so `lib/models.mjs` can use it). `currentWindowRole`
+  lives in `lib/models.mjs` per the step. `MODEL_FILTER_FILES` still resolves
+  from `CLI_DIR` (pinned in `lib/context.mjs`). `COMMAND_MODULES` gains
+  `models`; the `case "models"` body is deleted; the now-unused
+  `model-profiles.mjs`/`model-filter.mjs` imports are dropped from
+  `scripts/agento.mjs`. `npm run copy-cli` now ships `lib/git.mjs`,
+  `lib/models.mjs`, and `commands/models.mjs`. Full test command exit 0 —
+  838 pass / 0 fail / 838 total (~455 s); the models-filter install/remove
+  tests pass; `models list`/`models pins` parity diff empty;
+  `evidence/parity.sh` exit 0 (21 invocations byte-identical).
+- [x] 3.5 Move `config`, `resolve`, `find`, and `ports` to
+  `scripts/commands/resolve.mjs`. `resolveDocument`/`configDocument` go to `lib/`
+  if preflight or next use them — verify: the full test command exits 0, ≥ 838
+  tests; the parity diff is empty
+
+  Results (2026-10-31): `scripts/commands/resolve.mjs` exports the `config`,
+  `resolve`, `find`, and `ports` handlers. `scripts/lib/resolve.mjs` holds
+  `requireType`/`requireSlug` (shared arg validators) and the
+  `configDocument`/`resolveDocument` builders, which `preflight` also uses;
+  `scripts/lib/layout.mjs` holds the shared layout/discovery cluster
+  (`checkoutLayout`, `layoutFor`, `deliveryBranch`, `resolveWithLayout`,
+  `withLayout`, `decideWithLayout`) that `resolve`, `preflight`,
+  `close-decision`, `ship-preflight`, and `paths`/`session` share.
+  `COMMAND_MODULES` gains `config`/`resolve`/`find`/`ports` → `resolve`; the
+  four `case` bodies are deleted. `npm run copy-cli` now ships `lib/layout.mjs`,
+  `lib/resolve.mjs`, and `commands/resolve.mjs`. Full test command exit 0 —
+  838 pass / 0 fail / 838 total (~377 s); `evidence/parity.sh` exit 0 (21
+  invocations byte-identical).
+- [x] 3.6 Move `status`, `initiative`, `metrics`, and `dashboard` to
+  `scripts/commands/status.mjs`. The document builders (`statusDocument`,
+  `initiative*Document`, `metricsDocument`, `doctorDocument`) go to
+  `lib/documents.mjs` (or similar), since `dashboard`, `next`, and `preflight`
+  share them. `dashboard` stays `async` and the dispatcher awaits it — verify:
+  the full test command exits 0, ≥ 838 tests; the parity diff is empty
+
+  Results (2026-10-31): `scripts/commands/status.mjs` exports the `status`,
+  `initiative`, `metrics`, and `dashboard` handlers (`dashboard` is `async` and
+  the dispatcher awaits it). `scripts/lib/documents.mjs` holds the shared
+  document builders and their helpers: `statusDocument`, `initiativeRoadmaps`,
+  `initiativeListDocument`, `initiativeDetailDocument`, `metricsDocument`,
+  `dashboardDocument`, the initiatives helpers (`mergedAnomalies`,
+  `allBreakdowns`, `deriveInitiative`), the metrics helpers (`METRICS_PATCH`,
+  `METRICS_MAX_BUFFER`, `defaultRefIn`, `metricsPlan`, `gitLogText`,
+  `gitLogTextAsync`, `readMetricsLogs`, `readMetricsLogsAsync`), `refFor`, and
+  `STATUS_ORDER`/`byStatusOrder`. `scripts/lib/doctor.mjs` holds the doctor
+  machinery (`DOCTOR_CHECKS`, `CAPABILITY_CHECKS`, `COMMAND_NEEDS`, `checksFor`,
+  `runDoctor`, `LOCAL_DOCTOR_CHECKS`, `doctorProbes`, `capabilityOf`, and the
+  `doctorDocument` builder — its natural home, noted as a deviation from the
+  indicative `lib/documents.mjs` name) since preflight, start-session, and ship
+  share it. `scripts/lib/session.mjs` holds the session/companion/workspace
+  helpers (`describeCompanion`, `describeWorkspace`, `companionOfOwner`,
+  `managedHalves`, `companionHalfOf`, `sessionRecord`, `sessionContext`,
+  `canonicalizeJson`, `workspaceDocumentCurrent`), and `scripts/lib/github.mjs`
+  the PR-lookup helpers (`lookupPullRequest`, `lookupPullRequestAsync`,
+  `lookupPullRequests`, `prefetchedLookup`, `lookupCompanionPullRequest`).
+  `COMMAND_MODULES` gains `status`/`initiative`/`metrics`/`dashboard` →
+  `status`; the four `case` bodies are deleted. `npm run copy-cli` ships the
+  four new lib modules and `commands/status.mjs`. Full test command exit 0 —
+  838 pass / 0 fail / 838 total (~363 s); `evidence/parity.sh` exit 0 (21
+  invocations byte-identical).
+- [x] 3.7 Move `doctor`, `preflight`, and `policy` to `scripts/commands/doctor.mjs`.
+  `DOCTOR_CHECKS`/`CAPABILITY_CHECKS`/`COMMAND_NEEDS`/`runDoctor` go to `lib/`,
+  since start-session and dashboard use them — verify: the full test command exits
+  0, ≥ 838 tests; the `doctor`, `doctor --for ship`, `policy --list`, `policy 9`,
+  and `preflight new-feature` parity diff is empty
+
+  Results (2026-10-31): `scripts/commands/doctor.mjs` exports the `policy`,
+  `doctor`, and `preflight` handlers, plus the preflight document builders
+  (`opIdFor`, `preflightArgs`, `receiptLines`, `preflightDocument`) and the
+  `policySections` helper — all used only by this family. The doctor machinery
+  (`DOCTOR_CHECKS`/`CAPABILITY_CHECKS`/`COMMAND_NEEDS`/`runDoctor`/`checksFor`/
+  `LOCAL_DOCTOR_CHECKS`/`doctorProbes`/`capabilityOf`) was already extracted to
+  `lib/doctor.mjs` in step 3.6, so no new lib work was needed here.
+  `COMMAND_MODULES` gains `policy`/`doctor`/`preflight` → `doctor`; the three
+  `case` bodies are deleted. `npm run copy-cli` ships `commands/doctor.mjs`.
+  Full test command exit 0 — 838 pass / 0 fail / 838 total (~361 s); `doctor`,
+  `doctor --for ship`, `policy --list`, `policy 9`, and `preflight new-feature`
+  parity diffs empty; `evidence/parity.sh` exit 0 (21 invocations
+  byte-identical).
+- [x] 3.8 Move `paths`, `workspace`, `windows`, `artifacts`, and `handoff` to
+  `scripts/commands/paths.mjs` — verify: the full test command exits 0, ≥ 838
+  tests; the parity diff is empty
+
+  Results (2026-10-31): `scripts/commands/paths.mjs` exports the `paths`,
+  `workspace`, `windows`, `artifacts`, and `handoff` handlers plus their
+  family-only helpers (`artifactsCommand`, `windowCheckouts`, `windowsCommand`,
+  `handoffCommand`). `scripts/lib/paths.mjs` holds the shared session-path
+  helpers (`managedWorktreePath`, `resolveSessionPaths`, `originOf`,
+  `writeSessionWorkspace`) used by start-session, close-session, and ship too;
+  `roadmapOnBranch` (shared by `artifacts` and `next`) moved into
+  `lib/layout.mjs`. `COMMAND_MODULES` gains `paths`/`workspace`/`windows`/
+  `artifacts`/`handoff` → `paths`; the five `case` bodies are deleted.
+  `npm run copy-cli` ships `lib/paths.mjs` and `commands/paths.mjs`. Full test
+  command exit 0 — 838 pass / 0 fail / 838 total (~451 s); `evidence/parity.sh`
+  exit 0 (21 invocations byte-identical).
+- [x] 3.9 Move `session`, `start-session`, and `close-session` to
+  `scripts/commands/session.mjs`. `sessionRecord`/`sessionContext`,
+  `removeSessionPair`, and `branchVerdict` go to `lib/` if ship or next use them
+  — verify: the full test command exits 0, ≥ 838 tests; the parity diff is empty
+
+  Results (2026-10-31): `scripts/commands/session.mjs` exports the `session`,
+  `start-session`, and `close-session` handlers plus their family-only helpers
+  (`SESSION_ID`, `startSessionArgs`, `takenPlanIds`, `startSession`,
+  `closeSessionArgs`, `logLines`, `unpushedCommits`, `closeSession`).
+  `scripts/lib/session.mjs` gains the close/ship-teardown helpers
+  (`companionGaps`, `companionGapMessage`, `treeState`, `branchVerdict`,
+  `removeSessionPair`) since close-session and the ship teardown share them;
+  `scripts/lib/git.mjs` gains `isAncestor` and `reauthFor`; `scripts/lib/paths.mjs`
+  gains `registeredAt`. `COMMAND_MODULES` gains `session`/`start-session`/
+  `close-session` → `session`; the three `case` bodies are deleted.
+  `npm run copy-cli` ships `commands/session.mjs`. Full test command exit 0 —
+  838 pass / 0 fail / 838 total (~448 s); `evidence/parity.sh` exit 0 (21
+  invocations byte-identical).
+- [x] 3.10 Move `sync`, `step-commit`, `plan-publish`, `review-publish`, and
+  `publish-pr` to `scripts/commands/publish.mjs`. The delivery-run helpers
+  (`buildWindow`, `deliveryRun`, `integrateHalves`, `pushHalves`, and others) go
+  to `lib/` if ship uses them — verify: the full test command exits 0, ≥ 838 tests;
+  the parity diff is empty
+
+  Results (2026-10-31): `scripts/commands/publish.mjs` exports the `sync`,
+  `step-commit`, `plan-publish`, `review-publish`, and `publish-pr` handlers
+  plus their family-only choreography (`STEP_EXIT`, `CONVENTIONAL`, `escapeRe`,
+  `buildWindow`, `deliveryRun`, `openDeliveryRun`, `integrateHalves`,
+  `pushHalves`, `deliveryArgs`, `sync`, `insideDir`, `withArtifactPr`,
+  `stepCommit`, `cleanHandoff`, `messageScratch`, `changedPaths`,
+  `rejectOutsideSlug`, `commitHalf`, `writeMessage`, `planPublish`,
+  `readBodyFile`, `ghJson`, `reviewPublish`, `ghFailOf`, `ensureDeliveryPrs`,
+  `normalizeRemote`, `publishPr`). `scripts/lib/delivery-run.mjs` holds the
+  shared integration helpers (`fetchOrigin`, `mergeRef`, `pushRef`, and
+  `SHIP_EXIT`) used by both publish and the ship teardown; `scripts/lib/ship.mjs`
+  holds the ship/publish-pr shared helpers (`SHIP_PR_FIELDS`, `waitForChecks`,
+  `shipPrLookup`, `prSummary`, `isConflicting`, `utcDate`, `stampChangelog`,
+  `confirmTokenFor`, `roadmapPathOnRef`, `parseRoadmapSteps`);
+  `scripts/lib/github.mjs` gains `ghRun`. `COMMAND_MODULES` gains
+  `sync`/`step-commit`/`plan-publish`/`review-publish`/`publish-pr` →
+  `publish`; the five `case` bodies are deleted. `npm run copy-cli` ships
+  `lib/delivery-run.mjs`, `lib/ship.mjs`, and `commands/publish.mjs`. Full test
+  command exit 0 — 838 pass / 0 fail / 838 total (~357 s); `evidence/parity.sh`
+  exit 0 (21 invocations byte-identical).
+- [x] 3.11 Move `ship`, `ship-preflight`, and `close-decision` to
+  `scripts/commands/ship.mjs` (`SHIP_EXIT`, `SHIP_PR_FIELDS`, `waitForChecks`,
+  `shipArgs`, `shipPrLookup`, `ship`, `stampChangelog`, `confirmTokenFor`, the
+  roadmap-step parsers) — verify: the full test command exits 0, ≥ 838 tests; the
+  ship tests that drive `wait-for-checks.sh` pass, which proves `WAIT_FOR_CHECKS`
+  resolves
+
+  Results (2026-10-31): `scripts/commands/ship.mjs` exports the `ship`,
+  `ship-preflight`, and `close-decision` handlers plus the ship run
+  (`shipArgs`, `ship`, `ownerTreeOf`, `companionTreeOf`). The ship/publish-pr
+  shared helpers (`SHIP_PR_FIELDS`, `waitForChecks`, `shipPrLookup`,
+  `prSummary`, `isConflicting`, `utcDate`, `stampChangelog`, `confirmTokenFor`,
+  `roadmapPathOnRef`, `parseRoadmapSteps`) live in `lib/ship.mjs` (they were
+  extracted in step 3.10 because publish-pr shares them); `SHIP_EXIT` lives in
+  `lib/delivery-run.mjs`. `COMMAND_MODULES` gains `close-decision`/
+  `ship-preflight`/`ship` → `ship`; the three `case` bodies are deleted, so the
+  legacy switch now holds only `next`. `scripts/agento.mjs` imports were pruned
+  to the dispatcher + `next` set. One layout-driven guard update:
+  `tests/customizations.test.mjs` #88 now reads `scripts/commands/ship.mjs`
+  (the CLI's clean command moved there) instead of `scripts/agento.mjs`; its
+  "no git clean by hand" scan is unchanged. `npm run copy-cli` ships
+  `commands/ship.mjs`. Full test command exit 0 — 838 pass / 0 fail / 838
+  total (~375 s); the ship tests that drive `wait-for-checks.sh` pass (which
+  proves `WAIT_FOR_CHECKS` resolves in `lib/ship.mjs`); `evidence/parity.sh`
+  exit 0 (21 invocations byte-identical).
+- [x] 3.12 Move `next` to `scripts/commands/next.mjs` — verify: the full test
+  command exits 0, ≥ 838 tests; the `next` parity diff is empty
+
+  Results (2026-10-31): `scripts/commands/next.mjs` exports the `next` handler
+  plus its helpers (`reviewFreshness`, `dispatchFor`). `COMMAND_MODULES` gains
+  `next` → `next`; the `case "next"` body is deleted, leaving the legacy switch
+  with only its `default` case (removed next step). `npm run copy-cli` ships
+  `commands/next.mjs`. Full test command exit 0 — 838 pass / 0 fail / 838 total
+  (~383 s); `next` parity diff empty; `evidence/parity.sh` exit 0 (21
+  invocations byte-identical).
+- [x] 3.13 Delete the now-empty legacy `switch` and any orphaned helpers left in
+  `scripts/agento.mjs`, keeping the shebang and the unchanged usage header. Fall
+  through to `usage(command ? \`unknown command ${command}\` : "missing command")`
+  for unknown or missing commands — verify: `wc -l scripts/agento.mjs` ≤ 200;
+  `grep -c "^\s*case " scripts/agento.mjs` is 0; the full test command exits 0,
+  ≥ 838 tests; `evidence/parity.sh` diff is empty (the unknown and missing
+  command usage errors included), saved to `evidence/output-parity.txt`
+
+  Results (2026-10-31): `scripts/agento.mjs` is now the thin dispatcher — the
+  unchanged shebang + usage header, one eager
+  `import { command, usage } from "./lib/context.mjs"`, the `COMMAND_MODULES`
+  table, and lazy `import("./commands/<file>.mjs")` dispatch that falls through
+  to `usage(command ? \`unknown command ${command}\` : "missing command")` for
+  unknown/missing commands. `wc -l scripts/agento.mjs` = 88 (≤ 200);
+  `grep -c "^\s*case " scripts/agento.mjs` = 0; every one of the 32 subcommands
+  is dispatched through `COMMAND_MODULES`. `npm run copy-cli` ships the
+  dispatcher. Full test command exit 0 — 838 pass / 0 fail / 838 total (~370 s);
+  `evidence/parity.sh` diff empty (the unknown and missing command usage errors
+  included), saved to `evidence/output-parity.txt`.
+
+## Phase 4: Split the test file
+
+- [x] 4.1 Move the shared fixtures (lines ~14–110 of `scripts/agento.test.mjs`:
+  `makeRepo`, `cloneWithOrigin`, the roadmap/config writers, `runWith`, `baseEnv`,
+  the `cli` path) to `scripts/test-helpers/agento-fixtures.mjs`. That module
+  resolves `cli` from its own location as `scripts/agento.mjs`.
+  `scripts/agento.test.mjs` imports them — verify: the full test command exits 0
+  with the same total as Phase 3; `ls extension/cli` does not contain
+  `test-helpers`
+
+  Results (2026-10-31): `scripts/test-helpers/agento-fixtures.mjs` now holds the
+  shared fixtures (`git`, `makeRepo`, `cloneWithOrigin`, `companionOf`,
+  `writeRoadmap`, `writeBreakdown`, `run`, `runWith`, `baseEnv`,
+  `restrictedPath`) and exports `repoRoot`/`cli` too. It resolves `cli` as
+  `scripts/agento.mjs` from its own location (`path.dirname(path.dirname(cli))`
+  yields `repoRoot`), per Approach rule 7. `scripts/agento.test.mjs` now imports
+  those fixtures from `./test-helpers/agento-fixtures.mjs`; the old fixture
+  definitions (lines 14–110) were removed and the now-unused `fileURLToPath`
+  import dropped. `npm run copy-cli` exit 0 with no `extension/cli` change, and
+  `extension/cli` contains no `test-helpers`. Full test command exit 0 —
+  838 pass / 0 fail / 838 total (~359 s), unchanged from Phase 3.
+- [x] 4.2 Move the `test(...)` blocks for release, migrate, harness, models,
+  resolve, status, and doctor byte-for-byte into
+  `scripts/commands/<module>.test.mjs`, importing from the fixtures module —
+  verify: the full test command exits 0 with an unchanged total; no moved block
+  differs except in imports (`git diff --stat -M` plus a spot check)
+
+  Results (2026-10-31): `scripts/commands/{release,migrate,harness,models,resolve,status,doctor}.test.mjs`
+  now hold those families' tests byte-for-byte (171 test bodies; a scripted diff
+  against the original confirms every body appears verbatim). The shared
+  fixtures module (`scripts/test-helpers/agento-fixtures.mjs`) gained the
+  cross-family helpers the split requires: `makeFlipRepo`, `makePairRepo`,
+  `strip`, `okStubs`, `byId`, `harnessFixture`, `makeWorktreeRepo`, `prStub`,
+  `modelsFixture`, `commonDirOf`, `legacyPins`, `publishBranch`, `roadmapFor`,
+  `worktreeCount`, `cloneState`, `landBranch`, `shipStub`, `shipRun`,
+  `refState`, `inRepoDelivery`, `pairDelivery`, `DONE_STEPS`, `shipReady`,
+  `writeFile`, `both`, `codes`, `shippable`, `PASSING`, `stepsOf`, `commitAt`,
+  `T1`, `gitLoggingPath`, `worktreeListCalls`, `makeDashboardRepo`,
+  `stableMetrics`, `assertDashboardMatches`, `MERGE`, `PARENT`, `LATER`,
+  `RUNS`, `releaseRun`, `mergeCommitAt`, `workflowFile`, `releaseGh`,
+  `releaseRoutes` (57 exports total). `scripts/agento.test.mjs` retains only
+  the Phase-4.3 content (paths, session, publish, ship, next, integration),
+  importing the moved helpers from the fixtures module. `npm run copy-cli`
+  exit 0 with no `extension/cli` change. Full test command exit 0 —
+  838 pass / 0 fail / 838 total (~257 s), unchanged from Phase 3.
+- [x] 4.3 Move the remaining blocks: paths, session, publish, ship, and next go to
+  their `scripts/commands/<module>.test.mjs`, and cross-command scenarios go to
+  `scripts/commands/integration.test.mjs`. Delete the then-empty
+  `scripts/agento.test.mjs` — verify: `test -e scripts/agento.test.mjs` fails;
+  the full test command exits 0 with an unchanged total; the sorted TAP test names
+  match the base exactly, saved as the final half of `evidence/test-names.txt`
+
+  Results (2026-10-31): `scripts/commands/{paths,session,publish,ship,next,integration}.test.mjs`
+  now hold the remaining families' tests (138 bodies byte-for-byte; the
+  model-pins cross-command section, including the `for (const mode of
+  ["apply", "adopt"])` test pair, moved to integration.test.mjs). The two
+  dashboard cross tests (`session, status --pr, initiative, metrics, and
+  dashboard …` and `status --pr probes gh --version once …`) joined
+  integration.test.mjs, and their dashboard helpers moved to the fixtures
+  module. Two more publish-pr helpers shared with the model-pins tests
+  (`publishPrRun`, `ciCheck`) moved to the fixtures module. `scripts/agento.test.mjs`
+  is deleted. `npm run copy-cli` exit 0 with no `extension/cli` change; the
+  extension CLI tree contains no `*.test.mjs` and no `test-helpers/`. Full test
+  command exit 0 — 838 pass / 0 fail / 838 total (~4 min). The sorted TAP test
+  names (838) match the base half exactly and are appended as the final half of
+  `evidence/test-names.txt`.
+- [x] 4.4 Run the full test command three times in a row to check for
+  parallel-file fixture collisions. Fix any collision only in
+  `scripts/test-helpers/agento-fixtures.mjs` (unique temp roots or env), never in
+  test bodies or the documented command — verify: three consecutive runs exit 0
+  with 0 failures and identical totals, recorded on this line
+
+  Results (2026-10-31): three consecutive full test runs, each exit 0 —
+  838 pass / 0 fail / 838 total (identical). No parallel-file fixture collisions;
+  no fix needed.
+
+## Phase 5: Layout guard and documentation
+
+- [x] 5.1 Add `tests/cli-layout.test.mjs` per plan.md Approach rule 8. It checks:
+  - `scripts/agento.mjs` is at most 200 lines and declares no function besides
+    the dispatcher.
+  - `COMMAND_MODULES` ↔ the usage-header subcommands, both ways.
+  - Each table entry's module exports that handler.
+  - No `commands/` → `commands/` or `agento.mjs` import, and no `lib/` →
+    `commands/` import.
+  - No non-test module in `scripts/commands/` or `scripts/lib/` exceeds 1,500
+    lines.
+
+  — verify: `node --test tests/cli-layout.test.mjs` passes. Temporarily adding an
+  unlisted command name to the usage header makes it fail (the change is
+  reverted, not committed).
+
+  Results (2026-10-31): `tests/cli-layout.test.mjs` adds 5 tests covering all
+  five checks above. `node --test tests/cli-layout.test.mjs` passes 5/5.
+  Temporarily inserting `node scripts/agento.mjs zz-fake` into the usage header
+  made the bidirectional table test fail (1 fail), and reverting restored 5/5
+  (the temporary change was not committed).
+- [x] 5.2 Update the docs per plan.md Approach rule 10:
+  - AGENTS.md "Layout" `scripts/` bullet (dispatcher, `lib/`, `commands/`,
+    `test-helpers/`, and the `extension/cli/` copy covering the subdirectories)
+  - the `docs/architecture.md` "Scripts" paragraph
+  - `.github/agents/copilot-mechanic.agent.md`: the edit scope names
+    `scripts/agento.mjs`, `scripts/lib/`, and `scripts/commands/`, plus how to
+    locate a subcommand's module via `COMMAND_MODULES`
+
+  — verify: `node --test tests/customizations.test.mjs` passes; the changed
+  paragraphs name the three paths
+
+  Results (2026-10-31): AGENTS.md's `scripts/` bullet now describes the thin
+  dispatcher, `lib/`, `commands/` (+ `*.test.mjs`), and
+  `test-helpers/agento-fixtures.mjs`, and the `extension/` bullet notes the CLI
+  copy covers `lib/` and `commands/` while excluding tests and `test-helpers/`.
+  `docs/architecture.md`'s Scripts paragraph names the dispatcher, `lib/`,
+  `commands/`, and `test-helpers/`. `copilot-mechanic.agent.md`'s edit scope now
+  names `scripts/lib/` and `scripts/commands/`, and a new bullet explains
+  locating a subcommand via `COMMAND_MODULES`. `node --test
+  tests/customizations.test.mjs` passes 60/60.
+
+## Phase 6: Final verification
+
+- [x] 6.1 Run the complete gate on the integrated branch (after `agento.mjs sync`):
+  - the full test command, three times: exit 0, 0 fail, ≥ 838 tests
+  - `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh`: exit 0, no
+    findings (the same as the baseline)
+  - all five guard-smoke replays from AGENTS.md "Commands": exit 0
+  - `cd extension && npm run build && npm run test:unit && npm run test:electron &&
+    npm run package` (with `assert-vsix`): exit 0
+  - `evidence/parity.sh`: empty diff, refreshed in `evidence/output-parity.txt`
+
+  — verify: every command above exits 0 with the stated counts, recorded on this
+  line, and `git status --porcelain --untracked-files=all` is empty in both halves
+
+  Results (2026-10-31, after `agento.mjs sync` reported up-to-date): full test
+  command three times — each exit 0, 843 pass / 0 fail / 843 total (838 baseline
+  + 5 new `tests/cli-layout.test.mjs` checks), no fixture collisions.
+  `shellcheck` (ShellCheck v0.10.0 binary) exit 0, no findings. All five
+  guard-smoke replays exit 0. Extension gate: `npm run build` exit 0,
+  `npm run test:unit` exit 0 (251 pass / 0 fail), `npm run test:electron` exit 0
+  (all scenarios passed), `npm run package` exit 0 (VSIX assertion passed: 15
+  required entries, license bytes preserved, exclusions clean).
+  `evidence/parity.sh` exit 0 — all 21 invocations byte-identical, empty diff,
+  refreshed in `evidence/output-parity.txt` (invocation list, base `ad9e8f3`,
+  branch `feade39`). Both halves clean: `git status --porcelain
+  --untracked-files=all` empty in the product worktree and the companion half.
