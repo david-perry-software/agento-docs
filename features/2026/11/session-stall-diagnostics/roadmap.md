@@ -4,6 +4,7 @@ branch: feature/session-stall-diagnostics
 last-updated: 2026-11-03
 next-step: "1.1 Add parseCopilotEvents/deriveStalls to scripts/delivery-metrics.mjs"
 initiative: "agento-speed"
+artifact-pr: "#74"
 ```
 
 ## Phase 1: Pure parsers
