@@ -1,5 +1,5 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/session-stall-diagnostics
 last-updated: 2026-11-04
 next-step: ""
@@ -177,5 +177,11 @@ artifact-pr: "#74"
     /tmp, deleted afterwards); node suite 860 tests, 0 fail (baseline 843); 5/5 guard
     replay smokes exit 0; extension `npm ci` + `copy-cli` + `tsc` build clean + 252
     unit tests pass; both halves `git status --porcelain --untracked-files=all` empty.
+  - Re-gate after 2.3/5.3 (2026-11-04): `sync` merged: false (origin/main still
+    `065ae87`, an ancestor); shellcheck v0.10.0 exit 0, no findings (static binary
+    unpacked to /tmp, deleted afterwards); node suite 862 tests, 0 fail (baseline
+    843); 5/5 guard replay smokes exit 0; extension `copy-cli` idempotent + `tsc`
+    build clean + 252 unit tests pass; both halves `git status --porcelain
+    --untracked-files=all` empty.
 
 ## Follow-ups
