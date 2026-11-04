@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: complete
 branch: feature/session-stall-diagnostics
 last-updated: 2026-11-04
 next-step: ""
