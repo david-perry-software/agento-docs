@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "4.1 Update the docs"
+next-step: "4.2 Regenerate the CLI mirror and check the extension"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -103,17 +103,19 @@ artifact-pr: "#77"
 
 ## Phase 4: Docs and mirror
 
-- [ ] 4.1 Update the docs: `docs/install.md` Option A (the clone stays the source; register
+- [x] 4.1 Update the docs: `docs/install.md` Option A (the clone stays the source; register
   an export made with `plugin export --dest <dir>`) and "Updating" (`plugin export`
   replaces `git pull`; pins carry over; `prune-snapshots` reclaims space; VSIX builds run
   in the clone); `README.md:105–116` likewise; `docs/model-profiles.md` (pins on an
   export: no git filter, carried by `plugin export`); `docs/commands.md` CLI reference for
-  `plugin`; `docs/architecture.md` doctor check list (`plugin-snapshots`);
+  `plugin` and its doctor check list (`plugin-snapshots`; the documented check list
+  lives in commands.md, not architecture.md — repaired from the plan's stale
+  reference);
   `docs/copilot-harness.md` staged-copy note (naming rule from 1.1, snapshots kept until
   pruned); `CHANGELOG.md` entry — verify: `node --test tests/customizations.test.mjs`
   passes; `grep -n "plugin export" docs/install.md README.md docs/model-profiles.md
   docs/commands.md` matches in each file; `grep -n "plugin-snapshots"
-  docs/architecture.md` matches
+  docs/commands.md` matches
 
 - [ ] 4.2 Regenerate the CLI mirror and check the extension: `cd extension && npm run
   copy-cli && npm run build && npm run test:unit` — verify: all three exit 0; `git status
