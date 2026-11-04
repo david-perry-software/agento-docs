@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/startup-brief-command
 last-updated: 2026-11-04
-next-step: "2.2 Create pure scripts/lib/brief.mjs with the block model, budget, pagination, and renderers"
+next-step: "2.3 Create scripts/commands/brief.mjs and register the brief subcommand"
 initiative: "agento-speed"
 artifact-pr: "#75"
 ```
@@ -38,7 +38,7 @@ artifact-pr: "#75"
   mid-way, all-ticked, `(manual)`, `(manual, post-ship)`, `(added …)`, and multi-line
   steps — verify: `node --test scripts/delivery-roadmap-resolver.test.mjs` passes
 
-- [ ] 2.2 Create pure `scripts/lib/brief.mjs`: `BRIEF_BUDGET = 7000`, `DISPATCH_MODES`,
+- [x] 2.2 Create pure `scripts/lib/brief.mjs`: `BRIEF_BUDGET = 7000`, `DISPATCH_MODES`,
   `BRIEF_POLICY_PRIORITY` per agent, the block model of plan.md Approach §2.4,
   pagination (mandatory blocks paged at `##`/paragraph/line boundaries; policy blocks
   that do not fit go to `onDemand`), `More:` / `On demand:` footer, Markdown and JSON
