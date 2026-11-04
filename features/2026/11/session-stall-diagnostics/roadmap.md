@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/session-stall-diagnostics
 last-updated: 2026-11-03
-next-step: "2.2 Add mcp-servers and turn-stalls checks to scripts/lib/doctor.mjs"
+next-step: "3.1 Add stallsDocument and the stalls subcommand/dashboard section"
 initiative: "agento-speed"
 artifact-pr: "#74"
 ```
@@ -38,7 +38,7 @@ artifact-pr: "#74"
   `scripts/lib/copilot-runtime.test.mjs` pass (missing home, foreign-repo session
   excluded, current-session selection, oversize file tail-read)
 
-- [ ] 2.2 Add the `mcp-servers` and `turn-stalls` checks to `DOCTOR_CHECKS` and
+- [x] 2.2 Add the `mcp-servers` and `turn-stalls` checks to `DOCTOR_CHECKS` and
   `LOCAL_DOCTOR_CHECKS` in `scripts/lib/doctor.mjs` (no `CAPABILITY_CHECKS` group;
   warn rules per plan.md Approach §2 and the 60 min / still-configured timeout rule
   in Decisions; never `fail`; every error caught to `warn`), updating the id list at
