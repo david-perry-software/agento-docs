@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "7.5 deduplicate doctor export fallbacks (review round 1)"
+next-step: "7.6 re-run the gate (review round 1)"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -282,7 +282,7 @@ artifact-pr: "#77"
   `docs/commands.md` documents; add `[--force]` to that line and to the
   `docs/commands.md` plugin usage line — verify: `node --test tests/cli-layout.test.mjs`
   passes and the header line names `[--force]`
-- [ ] 7.5 Deduplicate the doctor `plugin-snapshots` export fallbacks (added
+- [x] 7.5 Deduplicate the doctor `plugin-snapshots` export fallbacks (added
   2026-11-04). Review round 1 Finding 6: a clone location whose newest snapshot
   is > 10 MB gets both `plugin export --dest X --replace-clone` and a no-op
   `plugin export --dest X`; emit the `--replace-clone` form for a clone in the
