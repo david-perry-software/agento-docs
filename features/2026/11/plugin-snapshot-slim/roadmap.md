@@ -4,6 +4,7 @@ branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
 next-step: "1.1 Confirm VS Code's snapshot naming rule and record the pre-change baseline"
 initiative: "agento-speed"
+artifact-pr: "#77"
 ```
 
 ## Phase 1: Snapshot facts and the shared model
