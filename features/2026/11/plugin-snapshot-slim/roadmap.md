@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "6.2 (added 2026-11-04) Executable bits on hook scripts"
+next-step: "6.3 (added 2026-11-04) Re-run the gate after 6.1-6.2"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -189,7 +189,7 @@ artifact-pr: "#77"
   /home/david/DP/agento-plugin --dry-run` exits 0 with `inUseDetection: true` and
   `removed: []` (deletes nothing)
 
-- [ ] 6.2 Executable bits on hook scripts. 5.3 observed VS Code's staged copy drops
+- [x] 6.2 Executable bits on hook scripts. 5.3 observed VS Code's staged copy drops
   the `+x` bit on `scripts/hooks/*.sh`. Confirm the cause and record it: `git
   ls-files -s` tracks the `.sh` files mode 100755 and the 5.2 live export at
   `/home/david/DP/agento-plugin` has `+x` on `scripts/hooks/*.sh` and
@@ -203,7 +203,16 @@ artifact-pr: "#77"
   scripts/commands/plugin.test.mjs` passes; `git ls-files -s scripts/hooks
   scripts/wait-for-checks.sh` shows 100755 for the `.sh` files; `node
   scripts/agento.mjs doctor` shows `plugin-snapshots` `ok` on this machine (its newest
-  snapshot's hooks are `+x` after the 5.3 restore)
+  snapshot's hooks are `+x` after the 5.3 restore). **Recorded:** cause is VS Code's
+  staged copy — `git ls-files -s` tracks `delivery-guard.sh`/`replay-guard.sh`/
+  `session-context.sh`/`wait-for-checks.sh` mode 100755, and the 5.2 live export at
+  `/home/david/DP/agento-plugin` has `-rwxrwxr-x` on all four, so `plugin export`
+  (git archive + tar) preserves 100755; the surviving snapshot `1a1a7fc067d` has
+  `-rwxrwxr-x` on its hooks only because 5.3 restored them by hand, and its
+  `scripts/wait-for-checks.sh` is still `-rw-rw-r--` — VS Code's staging is what
+  drops the `+x` bit. Documented in `docs/copilot-harness.md`; `doctor
+  plugin-snapshots` now warns when the newest snapshot's hook scripts are not
+  executable, with a reload/chmod fallback and a test
 
 - [ ] 6.3 Re-run the gate after 6.1–6.2: `cd extension && npm run copy-cli && npm run
   build && npm run test:unit`; shellcheck v0.10.0 on `scripts/hooks/*.sh
