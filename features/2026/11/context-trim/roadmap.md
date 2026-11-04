@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/context-trim
 last-updated: 2026-11-04
-next-step: "3.2 Confirm the Autopilot pin is unchanged"
+next-step: "3.3 Add Trimming per-call context to copilot-harness docs"
 initiative: "agento-speed"
 artifact-pr: "#76"
 ```
@@ -66,7 +66,7 @@ artifact-pr: "#76"
   0; `node --test scripts/model-profiles.test.mjs scripts/commands/models.test.mjs`
   passes
 
-- [ ] 3.2 Confirm the Autopilot pin is unchanged (Decision 3/4): `node
+- [x] 3.2 Confirm the Autopilot pin is unchanged (Decision 3/4): `node
   scripts/agento.mjs models pins` reports `autopilot` as `Claude Opus 5.5 (copilot)` —
   verify: that output, and `git diff origin/main -- .github/agents/` touches only
   `delivery-builder.agent.md` and no `model:` line
