@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/context-trim
 last-updated: 2026-11-04
-next-step: "2.1 Rewrite the Builder's three citations as pointers"
+next-step: "2.2 Set BRIEF_POLICY_PRIORITY for the Builder"
 initiative: "agento-speed"
 artifact-pr: "#76"
 ```
@@ -27,7 +27,7 @@ artifact-pr: "#76"
 
 ## Phase 2: Trim the Builder
 
-- [ ] 2.1 In `.github/agents/delivery-builder.agent.md` rewrite the three citations as
+- [x] 2.1 In `.github/agents/delivery-builder.agent.md` rewrite the three citations as
   pointers — post-ship exception (`agento.mjs policy 4`, `:109`), lint baseline gate
   (`agento.mjs policy 5`, `:112`), cross-window handoff (`agento.mjs policy 8`, `:162`)
   — and cite policy §6 in the long-command guidance (`:30–32`); set the `Policy:` line to
