@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/context-trim
 last-updated: 2026-11-04
-next-step: "2.2 Set BRIEF_POLICY_PRIORITY for the Builder"
+next-step: "2.3 Measure the trimmed Builder brief"
 initiative: "agento-speed"
 artifact-pr: "#76"
 ```
@@ -39,7 +39,7 @@ artifact-pr: "#76"
   .github/agents/delivery-builder.agent.md` matches nothing; `grep -c "agento.mjs policy
   [458]" .github/agents/delivery-builder.agent.md` prints 3
 
-- [ ] 2.2 Set `BRIEF_POLICY_PRIORITY["🔨 Agento Builder"]` in `scripts/lib/brief.mjs` to
+- [x] 2.2 Set `BRIEF_POLICY_PRIORITY["🔨 Agento Builder"]` in `scripts/lib/brief.mjs` to
   `["9","7","1","2","3","6","11","10","12"]`; change the Builder fixture in
   `scripts/lib/brief.test.mjs` ("paginateBrief honours the role's policy priority
   order") to sections `[1, 2, 3, 6, 7, 9, 10, 11, 12]`; add a test that every
