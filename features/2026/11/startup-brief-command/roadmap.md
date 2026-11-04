@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/startup-brief-command
 last-updated: 2026-11-04
-next-step: "3.2 Rewrite skills/agento/SKILL.md steps 4-5 around one brief call, keeping the dispatch table"
+next-step: "3.3 Rewire the 6 agents' opening brief sentence and the Builder/Reviewer initial_wait guidance"
 initiative: "agento-speed"
 artifact-pr: "#75"
 ```
@@ -73,7 +73,7 @@ artifact-pr: "#75"
   tests/customizations.test.mjs` passes and `grep -rn "load once with"
   .github/agents .github/prompts skills/agento` prints nothing
 
-- [ ] 3.2 Rewrite `skills/agento/SKILL.md` steps 4–5 around one `brief` call per plan.md
+- [x] 3.2 Rewrite `skills/agento/SKILL.md` steps 4–5 around one `brief` call per plan.md
   Approach §3 (exit 1 → relay names; `Dispatch:` → invoke the agent with the given
   prompt and pin; otherwise follow the printed bodies and every `More:` page; the
   never-`view`-under-`<agento-root>` rule; no `models pins`, no file reads, no policy
