@@ -2,14 +2,14 @@
 status: in-progress
 branch: feature/startup-brief-command
 last-updated: 2026-11-04
-next-step: "1.1 Extract policySections to scripts/lib/policy.mjs and pin the policy output hashes"
+next-step: "1.2 Split delivery-policy.instructions.md into per-section policy/ files and turn the original into an index"
 initiative: "agento-speed"
 artifact-pr: "#75"
 ```
 
 ## Phase 1: Policy split
 
-- [ ] 1.1 Move `policySections(root)` from `scripts/commands/doctor.mjs` to a new
+- [x] 1.1 Move `policySections(root)` from `scripts/commands/doctor.mjs` to a new
   `scripts/lib/policy.mjs` (plus `policyIndex(root)` → `{ n, title, bytes, file }`),
   route `commands.policy` and the §10-vocabulary reader in `scripts/lib/doctor.mjs`
   through it. Add `scripts/lib/policy.test.mjs` pinning the sha256 of each section's
