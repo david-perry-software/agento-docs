@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/context-trim
 last-updated: 2026-11-04
 next-step: "1.1 Record the Builder brief baseline"
