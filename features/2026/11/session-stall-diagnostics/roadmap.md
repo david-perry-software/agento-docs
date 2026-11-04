@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/session-stall-diagnostics
 last-updated: 2026-11-03
-next-step: "5.1 Regenerate the extension CLI copy and surface stalls in the Session & Doctor view"
+next-step: "5.2 Surface stalls in Mission Control canvas"
 initiative: "agento-speed"
 artifact-pr: "#74"
 ```
@@ -77,7 +77,7 @@ artifact-pr: "#74"
 
 ## Phase 5: Dashboards
 
-- [ ] 5.1 Regenerate the extension CLI copy and surface stalls in the Session & Doctor
+- [x] 5.1 Regenerate the extension CLI copy and surface stalls in the Session & Doctor
   view: `extension.ts` passes `dashboard.stalls`, `sessionDoctorModel.ts` parses it
   tolerantly (absent/error/malformed → no row), `sessionDoctorProvider.ts` renders a
   warning-icon "Stalls" row in the Session group; tests in
