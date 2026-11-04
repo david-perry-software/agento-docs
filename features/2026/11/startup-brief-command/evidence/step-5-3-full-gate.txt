@@ -1,0 +1,54 @@
+# Step 5.3 — full gate against the plan.md baseline
+
+Run date: 2026-11-04
+Worktree: /home/david/DP/agento-worktrees/plan-20261104-062019 (branch feature/startup-brief-command)
+
+Plan baseline (2026-11-04, commit 3f14f7f): 862 node tests, shellcheck exit 0
+with no findings, all five guard smokes exit 0, extension/cli byte-identical to
+scripts/, extension build + unit tests exit 0.
+
+A gate fix was committed during this step: `tests/cli-layout.test.mjs` requires
+command modules never import another command module, so `preflightDocument` /
+`receiptLines` / `opIdFor` / `preflightArgs` moved to the new
+`scripts/lib/preflight.mjs`; `brief` and `preflight` both import it from there.
+
+## 1. Full node suite
+
+Command: node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'
+Exit status: 0
+Result: 891 tests, 891 pass, 0 fail (baseline 862 — 29 new tests added by this delivery)
+
+## 2. Shell lint
+
+Command: /tmp/shellcheck-v0.10.0/shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh
+Exit status: 0
+Findings: none
+(shellcheck is not installed on PATH; the official static v0.10.0 binary at
+/tmp/shellcheck-v0.10.0/shellcheck was used, as the plan records.)
+
+## 3. Guard smokes (all five from AGENTS.md)
+
+1. ./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt                       → exit 0
+2. REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt → exit 0
+3. REPLAY_FORMAT=copilot ./scripts/hooks/replay-guard.sh < tests/guard-fixtures.txt  → exit 0
+4. REPLAY_FORMAT=copilot REPLAY_COMPANION=1 ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-companion.txt → exit 0
+5. REPLAY_FORMAT=copilot ./scripts/hooks/replay-guard.sh < tests/guard-fixtures-copilot.txt → exit 0
+
+## 4. extension/cli byte copy
+
+Command: cd extension && npm run copy-cli && git diff --exit-code extension/cli
+Exit status: 0 — no diff; extension/cli is byte-identical to scripts/.
+
+## 5. Extension build and unit tests
+
+- cd extension && npm ci        → exit 0
+- cd extension && npm run build → exit 0
+- cd extension && npm run test:unit → 252 tests, 252 pass, 0 fail (exit 0)
+
+## Verification summary
+
+- Full node suite: 0 failures (891 ≥ 862). ✓
+- shellcheck: exit 0, no findings. ✓
+- All five guard smokes: exit 0. ✓
+- extension/cli: no diff after copy-cli. ✓
+- Extension build and unit tests: exit 0. ✓
