@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/startup-brief-command
 last-updated: 2026-11-04
-next-step: "2.1 Export currentStep(content) from scripts/delivery-roadmap-resolver.mjs with unit tests"
+next-step: "2.2 Create pure scripts/lib/brief.mjs with the block model, budget, pagination, and renderers"
 initiative: "agento-speed"
 artifact-pr: "#75"
 ```
@@ -32,7 +32,7 @@ artifact-pr: "#75"
 
 ## Phase 2: The brief subcommand
 
-- [ ] 2.1 Export `currentStep(content)` from `scripts/delivery-roadmap-resolver.mjs`
+- [x] 2.1 Export `currentStep(content)` from `scripts/delivery-roadmap-resolver.mjs`
   (first unticked `N.M` step → `{ id, line, verify, manual, postShip }`, `null` when all
   ticked; obsolete `~…~` steps count as ticked), with unit tests covering planned,
   mid-way, all-ticked, `(manual)`, `(manual, post-ship)`, `(added …)`, and multi-line
