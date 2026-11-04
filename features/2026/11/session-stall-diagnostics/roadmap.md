@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/session-stall-diagnostics
 last-updated: 2026-11-03
-next-step: "2.1 Add bounded readers to scripts/lib/copilot-runtime.mjs"
+next-step: "2.2 Add mcp-servers and turn-stalls checks to scripts/lib/doctor.mjs"
 initiative: "agento-speed"
 artifact-pr: "#74"
 ```
@@ -28,7 +28,7 @@ artifact-pr: "#74"
 
 ## Phase 2: Readers and doctor checks
 
-- [ ] 2.1 Add the bounded readers to `scripts/lib/copilot-runtime.mjs`
+- [x] 2.1 Add the bounded readers to `scripts/lib/copilot-runtime.mjs`
   (`copilotHome()` honouring `$COPILOT_HOME`; `readSessions` with 24 h mtime filter,
   ≤ 50 sessions, 16 MB tail reads, repo membership via `workspace.yaml` `cwd`/`git_root`
   inside `productWorktrees()`/`managedHalves()`, current = newest with `cwd === root`;
