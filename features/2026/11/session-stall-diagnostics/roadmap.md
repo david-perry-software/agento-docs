@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/session-stall-diagnostics
 last-updated: 2026-11-03
-next-step: "3.2 Add the Stalls step to delivery-status.prompt.md and its mirror"
+next-step: "4.1 Drop browser from the Autopilot agent, COMMAND_NEEDS.ap, and ap.prompt.md"
 initiative: "agento-speed"
 artifact-pr: "#74"
 ```
@@ -58,7 +58,7 @@ artifact-pr: "#74"
   dashboard | node -e 'const d=JSON.parse(require("fs").readFileSync(0));process.exit(d.stalls&&d.timings.stalls>=0?0:1)'`
   exits 0
 
-- [ ] 3.2 Add the Stalls step to `.github/prompts/delivery-status.prompt.md` (run
+- [x] 3.2 Add the Stalls step to `.github/prompts/delivery-status.prompt.md` (run
   `agento.mjs stalls`; print `summary` as a **Stalls** line under the Session section
   when non-null) and copy it byte-for-byte to `skills/agento/commands/delivery-status.md`
   — verify: `node --test tests/customizations.test.mjs` passes
