@@ -2,14 +2,14 @@
 status: in-progress
 branch: feature/session-stall-diagnostics
 last-updated: 2026-11-03
-next-step: "1.1 Add parseCopilotEvents/deriveStalls to scripts/delivery-metrics.mjs"
+next-step: "1.2 Create scripts/lib/copilot-runtime.mjs with parseMcpConfig/countMcpTimeouts"
 initiative: "agento-speed"
 artifact-pr: "#74"
 ```
 
 ## Phase 1: Pure parsers
 
-- [ ] 1.1 Add `parseCopilotEvents(text)` and `deriveStalls(sessions, opts)` to
+- [x] 1.1 Add `parseCopilotEvents(text)` and `deriveStalls(sessions, opts)` to
   `scripts/delivery-metrics.mjs` per plan.md Approach §1 (turn gap =
   `tool.execution_complete` → next `assistant.turn_end`; start-up =
   `subagent.started` → `subagent.configured` paired by `agentId`; threshold 40 s,
