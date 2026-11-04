@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "3.2 Add the informational doctor plugin-snapshots check"
+next-step: "4.1 Update the docs"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -89,7 +89,7 @@ artifact-pr: "#77"
   scripts/commands/plugin.test.mjs` passes; `node scripts/agento.mjs plugin snapshots`
   on this machine lists the 7 live snapshots with the sizes recorded in 1.1 (read-only)
 
-- [ ] 3.2 Add the informational doctor check `plugin-snapshots` (not in
+- [x] 3.2 Add the informational doctor check `plugin-snapshots` (not in
   `CAPABILITY_CHECKS`; warn at most; every error caught as `warn`): warn on enabled
   `chat.pluginLocations` entries whose directory is missing (fallback: remove the entry
   from VS Code user settings), on an Agento location that is a git clone or whose newest
