@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "5.3 Trigger and check a fresh snapshot"
+next-step: "5.4 Prune the stale snapshots"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -147,10 +147,16 @@ artifact-pr: "#77"
   matches `/tmp/plugin-slim-pins-before.txt`; `node scripts/agento.mjs doctor
   --plugin-root /home/david/DP/agento-plugin` shows `harness` and `canvas` `ok`
 
-- [ ] 5.3 Trigger and check a fresh snapshot: `code --new-window <empty tmp dir>`, wait
+- [x] 5.3 Trigger and check a fresh snapshot: `code --new-window <empty tmp dir>`, wait
   for a new hex directory under
-  `~/.config/Code/agentPlugins/file-home-david-DP-agento-plugin/`, then close that window
-  — verify: the new snapshot's `du -sh` < 10 MB and its nonce matches the new
+  `~/.config/Code/agentPlugins/file-home-david-DP-agento-plugin/`, then close that window.
+  **Recorded:** fresh snapshot `1a1a7fc067d`, 5.2M (< 10 MB), nonce equals the new
+  `agento-plugin` mtime (±1 ms timestamp rounding); `replay-guard.sh` exits 0 and
+  `session-context.sh` prints `Agento CLI: node …/1a1a7fc067d/scripts/agento.mjs`;
+  `~/.copilot/skills/agento/SKILL.md` resolves through the link. Observation: VS
+  Code's staged copy drops the `+x` bit on `scripts/hooks/*.sh` (VS Code runs them
+  through a shell, so the plugin works); the guard smoke needed `chmod +x` inside
+  the staged snapshot — verify: the new snapshot's `du -sh` < 10 MB and its nonce matches the new
   `agento-plugin` mtime; inside it `./scripts/hooks/replay-guard.sh <
   tests/guard-fixtures.txt` passes; its `scripts/hooks/session-context.sh`, fed the
   SessionStart payload used by `tests/session-context.test.mjs`, prints the `Agento CLI:`
