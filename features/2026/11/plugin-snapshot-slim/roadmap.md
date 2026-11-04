@@ -2,7 +2,7 @@
 status: in-review
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "review"
+next-step: "7.1 in-use detection that sees idle open windows (review round 1)"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -224,3 +224,55 @@ artifact-pr: "#77"
   modified, no stray files), `build` and `test:unit` exit 0 (252 pass, 0 fail);
   shellcheck v0.10.0 exit 0, no findings; full suite 915 tests, 915 pass, 0 fail
   (baseline 894 in 5.1)
+
+## Phase 7: Review round 1 findings (added 2026-11-04)
+
+- [ ] 7.1 In-use detection must see idle open windows (added 2026-11-04). The 6.1
+  `/proc` path scan is empty for the very window the 5.4 incident hit: with
+  `1a1a7fc067d` loaded by the windows reloaded at 14:21/14:23 (`ps -o lstart` on the
+  `code` processes), `defaultProcessScan()` returned 322 paths, none under the
+  snapshot, and a manual scan of every `/proc/<pid>/{cwd,exe,cmdline,environ,fd,maps}`
+  found no process referencing `agentPlugins` at all — VS Code's agent host runs each
+  hook as a short-lived `/bin/sh -c` child, so nothing holds the path between hooks
+  and `inUseDetection: true` gives false assurance. Anchor detection on VS Code
+  process start times: for each running VS Code window / extension-host process
+  (`/proc/<pid>/stat` starttime or `ps -o lstart`), the snapshot it loaded is the
+  newest whose nonce (hex ms) ≤ its start time; keep every such snapshot (plus the
+  newest and the running CLI), keep the `/proc` path scan as an extra signal, report
+  which windows pin each kept snapshot (e.g. `usedBy`), and set `inUseDetection:
+  true` only when the process list was readable. Tests with an injectable process
+  list (pid, start ms) — verify: `node --test scripts/commands/plugin.test.mjs`
+  passes; on this machine with the build window open, `node scripts/agento.mjs plugin
+  prune-snapshots --dest /home/david/DP/agento-plugin --dry-run` names this window's
+  snapshot (`1a1a7fc067d` or its successor) as pinned by at least one window in its
+  output, rather than keeping it only because it is the newest
+- [ ] 7.2 Hooks must run from a freshly staged snapshot (added 2026-11-04). VS Code's
+  agent host runs every command hook as `/bin/sh -c "<path with
+  ${CLAUDE_PLUGIN_ROOT} expanded>"` (`/usr/share/code/resources/app/out/vs/platform/
+  agentHost/node/agentHostMain.js`, function `_R`), and staging drops `+x` on every
+  file (the snapshot's `scripts/agento.mjs` and `scripts/wait-for-checks.sh` are
+  `-rw-rw-r--` while the export has `-rwxrwxr-x`), so a hook in a fresh snapshot exits
+  126 `Permission denied` (reproduced with a `chmod 664` copy of
+  `session-context.sh` under `/bin/sh -c`). The `docs/copilot-harness.md:112–113`
+  claim "VS Code runs the hooks through a shell so the plugin still works" is wrong;
+  every `plugin export` changes the location mtime and so produces a snapshot whose
+  hooks are broken until someone runs `doctor` and `chmod`s. Make the hooks
+  mode-independent — `hooks/hooks.json` commands as `bash
+  ${CLAUDE_PLUGIN_ROOT}/scripts/hooks/<hook>.sh` (or an equivalent the Builder
+  justifies on the step line), keeping `hook-wiring`/customization tests green —
+  correct `docs/copilot-harness.md` (and any doc repeating the claim), and keep the
+  6.2 doctor warn — verify: `node --test 'tests/**/*.test.mjs'
+  scripts/commands/doctor.test.mjs` passes; in a temp copy of
+  `/home/david/DP/agento-plugin` with `chmod -x scripts/hooks/*.sh`, each
+  `hooks/hooks.json` command with `${CLAUDE_PLUGIN_ROOT}` substituted exits 0 under
+  `/bin/sh -c` (SessionStart payload for `session-context.sh`, a PreToolUse payload
+  for `delivery-guard.sh`); `grep -n "still works" docs/copilot-harness.md` matches
+  nothing
+- [ ] 7.3 Re-run the gate after 7.1–7.2 (added 2026-11-04): `cd extension && npm run
+  copy-cli && npm run build && npm run test:unit`; shellcheck v0.10.0 on
+  `scripts/hooks/*.sh scripts/wait-for-checks.sh`; the full suite `node --test
+  'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` — verify: the
+  three extension steps exit 0 with `git status --porcelain extension/cli` showing no
+  stray files, shellcheck exits 0 with no findings (baseline: exit 0, none), and the
+  full suite reports 0 failures with more than 915 tests; record the three results on
+  this line
