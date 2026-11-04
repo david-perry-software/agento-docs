@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/session-stall-diagnostics
 last-updated: 2026-11-03
-next-step: "5.2 Surface stalls in Mission Control canvas"
+next-step: "6.1 Document Known stall sources, extension.md, and CHANGELOG"
 initiative: "agento-speed"
 artifact-pr: "#74"
 ```
@@ -84,7 +84,7 @@ artifact-pr: "#74"
   `extension/test/unit/sessionDoctorModel.test.ts` — verify: `cd extension && npm ci
   && npm run copy-cli && npm run build && npm run test:unit` passes
 
-- [ ] 5.2 Surface stalls in Mission Control: `snapshot.mjs` `normalize()` exposes
+- [x] 5.2 Surface stalls in Mission Control: `snapshot.mjs` `normalize()` exposes
   `stalls` (`{ summary, stalledTurns, stalledMinutes } | null`), `public/panels/window.js`
   renders a warning tag in the window banner, `fixtures/dashboard.json` gains a
   `stalls` section, tests in `snapshot.test.mjs`/`window.test.mjs` — verify: `node
