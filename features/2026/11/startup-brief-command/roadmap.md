@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/startup-brief-command
 last-updated: 2026-11-04
-next-step: "5.2 Live subagent start: dispatch a Builder subagent from the Dispatch block and record the transcript"
+next-step: "5.3 Full gate against the plan.md baseline (node suite, shellcheck, guard smokes, extension build)"
 initiative: "agento-speed"
 artifact-pr: "#75"
 ```
@@ -124,7 +124,7 @@ artifact-pr: "#75"
   briefs open with `Receipt: accepted`; the router form prints only a `Dispatch:` block;
   the build brief's current step equals roadmap step 5.1
 
-- [ ] 5.2 Live subagent start: dispatch a Builder subagent (`task`, agent `🔨 Agento
+- [x] 5.2 Live subagent start: dispatch a Builder subagent (`task`, agent `🔨 Agento
   Builder`) with the exact prompt from the router-form `Dispatch:` block, told to stop
   after printing its receipt and current step, and save the transcript of its tool calls
   to `evidence/step-5-2-subagent-start.txt` — verify: the transcript shows exactly one

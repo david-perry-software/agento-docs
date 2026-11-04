@@ -1,0 +1,61 @@
+# Step 5.2 — live Builder subagent start transcript
+
+Run date: 2026-11-04
+Worktree: /home/david/DP/agento-worktrees/plan-20261104-062019 (branch feature/startup-brief-command)
+CLI: node /home/david/DP/agento-worktrees/plan-20261104-062019/scripts/agento.mjs
+
+## Dispatch
+
+The router-form `brief build-feature startup-brief-command` printed this
+`Dispatch:` block (from step 5.1 evidence):
+
+    Dispatch: 🔨 Agento Builder
+    copilotModel: deepseek/deepseek-v4-pro
+    subagentModel: DeepSeek V4 Pro (deepseek)
+    Prompt: Run `/agento build-feature startup-brief-command`: open with `node /home/david/DP/agento-worktrees/plan-20261104-062019/scripts/agento.mjs brief build-feature startup-brief-command --as-subagent`, print its receipt and `Preflight:` lines verbatim, and read every `More:` page before the first step.
+
+A Builder subagent was dispatched with the `task` tool, agent `🔨 Agento
+Builder`, model `deepseek/deepseek-v4-pro` (the `copilotModel` alias, per the
+Dispatch block — the harness's default pick of the display-name pin
+`DeepSeek V4 Pro (deepseek)` is not a valid `task` model, so the alias was passed
+explicitly). The prompt was the Dispatch prompt plus: "This is a one-step startup
+smoke test, not a real build. Run exactly one command (the brief call), then stop
+and report its receipt line and current step verbatim. Do not read any file under
+<agento-root>."
+
+## Subagent tool calls
+
+The subagent made exactly one tool call before reporting:
+
+1. bash: `node /home/david/DP/agento-worktrees/plan-20261104-062019/scripts/agento.mjs brief build-feature startup-brief-command --as-subagent`
+
+It made no `view`/read of any file under
+`/home/david/DP/agento-worktrees/plan-20261104-062019`, and no other command.
+
+## Subagent report (verbatim)
+
+1. **Receipt line:**
+
+    Receipt: accepted build-feature:startup-brief-command:90fa1ca
+
+2. **Current step** (the Delivery block's current-step lines):
+
+    - current step:
+
+    - [ ] 5.2 Live subagent start: dispatch a Builder subagent (`task`, agent `🔨 Agento
+      Builder`) with the exact prompt from the router-form `Dispatch:` block, told to stop
+      after printing its receipt and current step, and save the transcript of its tool calls
+      to `evidence/step-5-2-subagent-start.txt` — verify: the transcript shows exactly one
+      `agento.mjs brief … --as-subagent` call before the receipt and no `view` of any file
+      under the `<agento-root>` named by the session context's `Agento CLI:` line
+
+## Verification summary
+
+- Exactly one `agento.mjs brief … --as-subagent` call before the receipt. ✓
+- No `view` of any file under the `<agento-root>` named by the session context's
+  `Agento CLI:` line. ✓
+- The current step equals roadmap step 5.2. ✓
+- The only dispatch deviation: `task` auto-resolved the agent's display-name pin
+  (`DeepSeek V4 Pro (deepseek)`) which the harness rejects as a model; passing the
+  `copilotModel` alias (`deepseek/deepseek-v4-pro`) as `task`'s `model` succeeded,
+  exactly as the router's Dispatch block instructs.
