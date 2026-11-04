@@ -1,8 +1,8 @@
 ```yaml
-status: paused
+status: in-progress
 branch: feature/session-stall-diagnostics
-last-updated: 2026-11-03
-next-step: "7.1 (manual) Remove the railway entry from ~/.copilot/mcp-config.json, reload the window, screenshot"
+last-updated: 2026-11-04
+next-step: "7.2"
 initiative: "agento-speed"
 artifact-pr: "#74"
 ```
@@ -104,11 +104,12 @@ artifact-pr: "#74"
 
 ## Phase 7: Railway removal and live verification
 
-- [ ] 7.1 (manual) Remove the `railway` entry from `~/.copilot/mcp-config.json`, run
+- [x] 7.1 (manual) Remove the `railway` entry from `~/.copilot/mcp-config.json`, run
   **Developer: Reload Window** in VS Code, open a new chat in this worktree, send any
   short prompt, and screenshot the chat showing no "128 tools … not provided" warning
-  — verify: screenshot at `evidence/step-7-1-railway-removed.png`; note the removal
-  time (UTC) on the step line
+  — verify: [screenshot](evidence/step-7-1-railway-removed.png); completed 2026-11-04;
+  removal at 2026-11-04T05:05:06Z (backup `~/.copilot/mcp-config.json.bak-20261104T050506Z`,
+  mode 600; no other MCP servers remain)
 
 - [ ] 7.2 Verify the live state after removal in the session that runs this step —
   verify: `node scripts/agento.mjs doctor` reports `mcp-servers` `ok` (no configured
