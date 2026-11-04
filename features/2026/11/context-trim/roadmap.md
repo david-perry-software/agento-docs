@@ -2,18 +2,19 @@
 status: in-progress
 branch: feature/context-trim
 last-updated: 2026-11-04
-next-step: "1.1 Record the Builder brief baseline"
+next-step: "1.2 Add the on-demand pointer form to the Policy: contract"
 initiative: "agento-speed"
 artifact-pr: "#76"
 ```
 
 ## Phase 1: Baseline and the on-demand pointer contract
 
-- [ ] 1.1 Record the Builder brief baseline: in this build window run `node
+- [x] 1.1 Record the Builder brief baseline: in this build window run `node
   scripts/agento.mjs brief build-feature context-trim` and every `--page N` it lists;
   note the total bytes (`| wc -c` summed), the page count, and the included / on-demand
   section numbers on this step line — verify: the three numbers are written on this
   line and the output's policy sections are §1, §2, §3, §4, §5, §7, §8, §9, §10, §11, §12
+  — baseline: 5665 B, 1 page, sections §1 §2 §3 §4 §5 §7 §8 §9 §10 §11 §12 (§9 included, rest on demand)
 
 - [ ] 1.2 Add the on-demand pointer form to the `Policy:` contract: in
   `tests/customizations.test.mjs` add a test that every `` `agento.mjs policy N` ``
