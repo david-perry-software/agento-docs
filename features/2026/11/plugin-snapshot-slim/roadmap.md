@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "7.1 in-use detection that sees idle open windows (review round 1)"
+next-step: "7.2 hooks must run from a freshly staged snapshot (review round 1)"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -227,7 +227,7 @@ artifact-pr: "#77"
 
 ## Phase 7: Review round 1 findings (added 2026-11-04)
 
-- [ ] 7.1 In-use detection must see idle open windows (added 2026-11-04). The 6.1
+- [x] 7.1 In-use detection must see idle open windows (added 2026-11-04). The 6.1
   `/proc` path scan is empty for the very window the 5.4 incident hit: with
   `1a1a7fc067d` loaded by the windows reloaded at 14:21/14:23 (`ps -o lstart` on the
   `code` processes), `defaultProcessScan()` returned 322 paths, none under the
