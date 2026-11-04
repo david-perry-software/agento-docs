@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/session-stall-diagnostics
 last-updated: 2026-11-03
 next-step: "1.1 Add parseCopilotEvents/deriveStalls to scripts/delivery-metrics.mjs"
