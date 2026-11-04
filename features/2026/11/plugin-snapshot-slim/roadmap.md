@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "5.2 Convert the live plugin location"
+next-step: "5.3 Trigger and check a fresh snapshot"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -132,11 +132,16 @@ artifact-pr: "#77"
   exit 0 with no findings (baseline: exit 0, none); the
   suite reports 0 failures and more than the baseline's 894 tests
 
-- [ ] 5.2 Convert the live plugin location: record the pre-conversion pins (`node
+- [x] 5.2 Convert the live plugin location: record the pre-conversion pins (`node
   scripts/agento.mjs models --plugin-root /home/david/DP/agento-plugin` and `grep -rn
   "^model:" /home/david/DP/agento-plugin/.github`) to `/tmp/plugin-slim-pins-before.txt`,
   then run `node scripts/agento.mjs plugin export --dest /home/david/DP/agento-plugin
-  --replace-clone` from this worktree — verify: `du -sh /home/david/DP/agento-plugin` <
+  --replace-clone` from this worktree. **Recorded:** export is 5.2M, no `.git`/no
+  `extension/node_modules`, `source.commit` 20e8d0f equals `origin/main`; the 31
+  `^model:` pin lines match the pre-conversion capture; doctor `harness` and `canvas`
+  are `ok`. A maxBuffer fix in `archiveInto` (large repo archives exceeded the 1 MB
+  default) landed with a regression test and a regenerated mirror — verify: `du -sh
+  /home/david/DP/agento-plugin` <
   10 MB; no `.git` and no `extension/node_modules` in it; `.agento-export.json`
   `source.commit` equals `git rev-parse origin/main`; the same pin capture taken after
   matches `/tmp/plugin-slim-pins-before.txt`; `node scripts/agento.mjs doctor
