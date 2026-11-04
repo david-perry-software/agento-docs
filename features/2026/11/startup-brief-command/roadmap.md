@@ -131,7 +131,7 @@ artifact-pr: "#75"
   `agento.mjs brief … --as-subagent` call before the receipt and no `view` of any file
   under the `<agento-root>` named by the session context's `Agento CLI:` line
 
-- [ ] 5.3 Full gate against the plan.md baseline: integrate `origin/main` by merge (both
+- [x] 5.3 Full gate against the plan.md baseline: integrate `origin/main` by merge (both
   halves); run `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'
   'canvas/**/*.test.mjs'` (`initial_wait ≥ 300`), shellcheck (static v0.10.0 binary if
   not installed), all five guard smokes from AGENTS.md, `cd extension && npm run
