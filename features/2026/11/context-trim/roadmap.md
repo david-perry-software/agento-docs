@@ -84,7 +84,7 @@ artifact-pr: "#76"
 
 ## Phase 4: Final verification
 
-- [ ] 4.1 Run the full gate: `shellcheck scripts/hooks/delivery-guard.sh
+- [x] 4.1 Run the full gate: `shellcheck scripts/hooks/delivery-guard.sh
   scripts/hooks/session-context.sh scripts/hooks/replay-guard.sh
   scripts/wait-for-checks.sh` (install or download `shellcheck` if missing), the full
   suite `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'
@@ -92,3 +92,4 @@ artifact-pr: "#76"
   test:unit` — verify: shellcheck exit 0 with no findings (baseline: 0); full suite 0
   failures and ≥ 891 tests; extension build and unit tests exit 0; results noted on this
   line
+  — shellcheck v0.10.0 (downloaded, /tmp cleaned) exit 0, 0 findings; full suite 894 pass / 0 fail; extension npm ci + build + test:unit 252 pass / 0 fail
