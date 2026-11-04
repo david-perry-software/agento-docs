@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "3.1 Implement plugin snapshots and prune-snapshots"
+next-step: "3.2 Add the informational doctor plugin-snapshots check"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -80,7 +80,7 @@ artifact-pr: "#77"
 
 ## Phase 3: Snapshots, prune, and doctor
 
-- [ ] 3.1 Implement `plugin snapshots [--dest <dir>]` (count, per-snapshot bytes, newest,
+- [x] 3.1 Implement `plugin snapshots [--dest <dir>]` (count, per-snapshot bytes, newest,
   total) and `plugin prune-snapshots [--dest <dir>] [--dry-run]`: delete every hex-named
   snapshot of the Agento location except the newest and the one containing the running
   CLI (`PLUGIN_ROOT`); never touch `cache.json`, other locations, or non-hex names; report
