@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/startup-brief-command
 last-updated: 2026-11-04
-next-step: "3.1 Change the Policy: line contract in tests/customizations.test.mjs and rewrite all Policy: lines"
+next-step: "3.2 Rewrite skills/agento/SKILL.md steps 4-5 around one brief call, keeping the dispatch table"
 initiative: "agento-speed"
 artifact-pr: "#75"
 ```
@@ -64,7 +64,7 @@ artifact-pr: "#75"
 
 ## Phase 3: Rewire router, agents, and commands
 
-- [ ] 3.1 Change the `Policy:` line contract to the new form of plan.md Approach §3 in
+- [x] 3.1 Change the `Policy:` line contract to the new form of plan.md Approach §3 in
   `tests/customizations.test.mjs`: parse the § list from the new sentence, keep the
   declared-set rule, compute the 40,000 / 24,000 budget from the § list, add the
   `brief --json` (included ∪ onDemand) equality test, add the router-table ↔
