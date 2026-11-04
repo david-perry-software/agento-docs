@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "2.1 Register the plugin command family"
+next-step: "2.2 Implement the plugin export tree build"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -38,7 +38,7 @@ artifact-pr: "#77"
 
 ## Phase 2: `plugin export`
 
-- [ ] 2.1 Register the `plugin` command family: `scripts/commands/plugin.mjs` exporting
+- [x] 2.1 Register the `plugin` command family: `scripts/commands/plugin.mjs` exporting
   `commands.plugin` with subcommands `export | snapshots | prune-snapshots` (unknown
   subcommand → usage, exit 1), a `plugin: "plugin"` entry in `COMMAND_MODULES`, and a usage
   header line in `scripts/agento.mjs` — verify: `node --test tests/cli-layout.test.mjs`
