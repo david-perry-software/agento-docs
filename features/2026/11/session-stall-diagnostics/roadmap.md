@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/session-stall-diagnostics
 last-updated: 2026-11-03
-next-step: "1.2 Create scripts/lib/copilot-runtime.mjs with parseMcpConfig/countMcpTimeouts"
+next-step: "2.1 Add bounded readers to scripts/lib/copilot-runtime.mjs"
 initiative: "agento-speed"
 artifact-pr: "#74"
 ```
@@ -18,7 +18,7 @@ artifact-pr: "#74"
   bad lines and unknown types ignored, truncated first line tolerated) — verify:
   `node --test scripts/delivery-metrics.test.mjs` passes
 
-- [ ] 1.2 Create `scripts/lib/copilot-runtime.mjs` with the pure
+- [x] 1.2 Create `scripts/lib/copilot-runtime.mjs` with the pure
   `parseMcpConfig(json, source)` (wildcard/remote flags; keeps only name, type, tools,
   url-presence, mcp-remote flag) and `countMcpTimeouts(text, { since })` (both log-line
   shapes, per-server `{ count, lastAt }`), tested in
