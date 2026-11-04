@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "7.4 add --force to the plugin usage header (review round 1)"
+next-step: "7.5 deduplicate doctor export fallbacks (review round 1)"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -276,7 +276,7 @@ artifact-pr: "#77"
   (exit 3), the old destination is restored byte-identical, and no
   `<dest>.agento-*` temp/old directories remain — verify: `node --test
   scripts/commands/plugin.test.mjs` passes
-- [ ] 7.4 Add `--force` to the `plugin` usage header (added 2026-11-04). Review
+- [x] 7.4 Add `--force` to the `plugin` usage header (added 2026-11-04). Review
   round 1 Finding 5: `scripts/agento.mjs:39` lists `[--dest] [--dry-run] [--ref]
   [--source] [--replace-clone]` but not the `prune-snapshots --force` escape that
   `docs/commands.md` documents; add `[--force]` to that line and to the
