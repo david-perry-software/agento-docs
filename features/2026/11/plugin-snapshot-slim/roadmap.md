@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "6.1 (added 2026-11-04) Prune must not delete in-use snapshots"
+next-step: "6.2 (added 2026-11-04) Executable bits on hook scripts"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -174,7 +174,7 @@ artifact-pr: "#77"
 
 ## Phase 6: Defects found while pruning (added 2026-11-04)
 
-- [ ] 6.1 Prune must not delete snapshots in use by open windows. Keeping only the
+- [x] 6.1 Prune must not delete snapshots in use by open windows. Keeping only the
   newest snapshot and the one containing the running CLI deleted the snapshot
   already-open VS Code windows were running their plugin hooks from (5.4 took out
   `1a194a81a45`). Make `prune-snapshots` detect in-use snapshots — scan running
