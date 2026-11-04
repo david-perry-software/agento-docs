@@ -2,22 +2,29 @@
 status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "1.1 Confirm VS Code's snapshot naming rule and record the pre-change baseline"
+next-step: "1.2 Add scripts/lib/plugin.mjs with the shared snapshot model"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
 
 ## Phase 1: Snapshot facts and the shared model
 
-- [ ] 1.1 Confirm VS Code's snapshot naming rule on this machine: map each
+- [x] 1.1 Confirm VS Code's snapshot naming rule on this machine: map each
   `file://` uri in `~/.config/Code/agentPlugins/cache.json` to its directory under
   `~/.config/Code/agentPlugins/` and each `nonce` to a snapshot directory; check that the
   newest nonce equals the hex ms mtime of `/home/david/DP/agento-plugin`. Record the rule,
   the snapshot count, sizes (`du -sh`), and total on this step line, and save a small
   fixture (uri → directory name examples, hex nonces) under
-  `scripts/test-helpers/` for the tests — verify: the rule, count, and total are written
-  on this line; the fixture file exists and `node --test scripts/commands/doctor.test.mjs`
-  still passes
+  `scripts/test-helpers/` for the tests. **Recorded:** rule — a `file://` uri maps to
+  `file-` + its path with `/`→`-` and the leading `/` dropped
+  (`file:///home/david/DP/agento-plugin` → `file-home-david-DP-agento-plugin`); each
+  `cache.json` `nonce` is a hex-named snapshot dir whose nonce = hex ms mtime of the
+  location dir, and the newest nonce `1a194a81a45` equals
+  hex(floor(mtimeMs)) of `/home/david/DP/agento-plugin` (1793495407173 ms). Count: 7
+  snapshots; sizes: 1a14d7020a8 13M, 1a16a70f607 14M, 1a16ef0c88f 177M, 1a173994d66 178M,
+  1a1743ed22d 180M, 1a18e5b18c2 181M, 1a194a81a45 182M; total 922M — verify: the rule,
+  count, and total are written on this line; the fixture file exists and
+  `node --test scripts/commands/doctor.test.mjs` still passes
 
 - [ ] 1.2 Add `scripts/lib/plugin.mjs` with `agentPluginsDir(env)`
   (`AGENTO_VSCODE_AGENT_PLUGINS` override, `XDG_CONFIG_HOME`, macOS path),
