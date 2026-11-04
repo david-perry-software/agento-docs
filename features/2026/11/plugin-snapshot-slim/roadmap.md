@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "2.3 Add the destination safety rules"
+next-step: "2.4 Carry the model pins over"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -57,7 +57,7 @@ artifact-pr: "#77"
   destination byte-identical and no temp directory behind; a staged snapshot (non-git) as
   source is refused — verify: `node --test scripts/commands/plugin.test.mjs` passes
 
-- [ ] 2.3 Add the destination safety rules: refuse a non-empty destination that is
+- [x] 2.3 Add the destination safety rules: refuse a non-empty destination that is
   neither an export nor (with `--replace-clone`) an Agento git clone; with
   `--replace-clone` refuse a clone with changes beyond model pins
   (`modelsState().dirtyBeyondModel` or untracked non-ignored files), commits missing from
