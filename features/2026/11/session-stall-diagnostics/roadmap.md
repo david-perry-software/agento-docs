@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/session-stall-diagnostics
 last-updated: 2026-11-03
-next-step: "4.1 Drop browser from the Autopilot agent, COMMAND_NEEDS.ap, and ap.prompt.md"
+next-step: "5.1 Regenerate the extension CLI copy and surface stalls in the Session & Doctor view"
 initiative: "agento-speed"
 artifact-pr: "#74"
 ```
@@ -65,7 +65,7 @@ artifact-pr: "#74"
 
 ## Phase 4: Autopilot tool budget
 
-- [ ] 4.1 Drop `browser` from `.github/agents/delivery-autopilot.agent.md` (`tools:` and
+- [x] 4.1 Drop `browser` from `.github/agents/delivery-autopilot.agent.md` (`tools:` and
   `Needs:`, plus any `Fallback:` clause that only covered browser), from
   `COMMAND_NEEDS.ap` in `scripts/lib/doctor.mjs`, and from `.github/prompts/ap.prompt.md`
   `Needs:` with its byte-identical mirror `skills/agento/commands/ap.md`; Builder and
