@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/startup-brief-command
 last-updated: 2026-11-04
-next-step: "3.4 Rewire all 26 prompt/mirror opening brief sentences and add the no-opening-preflight text test"
+next-step: "3.5 Add the never-view bullet, shrink agento-init under 20 KB, and add the size-gate test"
 initiative: "agento-speed"
 artifact-pr: "#75"
 ```
@@ -88,7 +88,7 @@ artifact-pr: "#75"
   repository's full suite) sentence; the Mechanic's `Policy:` contract text (`:76`)
   describes the new form — verify: `node --test tests/customizations.test.mjs` passes
 
-- [ ] 3.4 Rewire all 26 `.github/prompts/*.prompt.md` and their
+- [x] 3.4 Rewire all 26 `.github/prompts/*.prompt.md` and their
   `skills/agento/commands/*.md` mirrors: the opening `brief <name> <argument>` sentence
   replaces the `preflight` sentence (argument forms per `briefArgs`). Add the text test
   that no agent, prompt, mirror, or the router contains an opening `preflight` sentence
