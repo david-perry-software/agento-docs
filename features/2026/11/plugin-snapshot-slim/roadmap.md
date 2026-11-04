@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "5.1 Run the lint gate and the full suite"
+next-step: "5.2 Convert the live plugin location"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -124,10 +124,12 @@ artifact-pr: "#77"
 
 ## Phase 5: Gate and live conversion
 
-- [ ] 5.1 Run the lint gate and the full suite: `shellcheck scripts/hooks/*.sh
+- [x] 5.1 Run the lint gate and the full suite: `shellcheck scripts/hooks/*.sh
   scripts/wait-for-checks.sh` (v0.10.0, as in the baseline) and `node --test
   'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'`; record both on
-  this line — verify: shellcheck exit 0 with no findings (baseline: exit 0, none); the
+  this line. **Recorded:** shellcheck v0.10.0 exit 0, no findings (baseline: exit 0,
+  none); full suite 911 tests, 911 pass, 0 fail (> baseline 894) — verify: shellcheck
+  exit 0 with no findings (baseline: exit 0, none); the
   suite reports 0 failures and more than the baseline's 894 tests
 
 - [ ] 5.2 Convert the live plugin location: record the pre-conversion pins (`node
