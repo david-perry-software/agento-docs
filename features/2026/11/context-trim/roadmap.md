@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/context-trim
 last-updated: 2026-11-04
-next-step: "1.2 Add the on-demand pointer form to the Policy: contract"
+next-step: "2.1 Rewrite the Builder's three citations as pointers"
 initiative: "agento-speed"
 artifact-pr: "#76"
 ```
@@ -16,7 +16,7 @@ artifact-pr: "#76"
   line and the output's policy sections are §1, §2, §3, §4, §5, §7, §8, §9, §10, §11, §12
   — baseline: 5665 B, 1 page, sections §1 §2 §3 §4 §5 §7 §8 §9 §10 §11 §12 (§9 included, rest on demand)
 
-- [ ] 1.2 Add the on-demand pointer form to the `Policy:` contract: in
+- [x] 1.2 Add the on-demand pointer form to the `Policy:` contract: in
   `tests/customizations.test.mjs` add a test that every `` `agento.mjs policy N` ``
   pointer in an agent, prompt, or mirror body names a section `policy --list` knows
   (`citedSections` keeps counting `§N` only, so pointers are not declared); update the
