@@ -2,7 +2,7 @@
 status: in-review
 branch: feature/session-stall-diagnostics
 last-updated: 2026-11-04
-next-step: ""
+next-step: "2.3"
 initiative: "agento-speed"
 artifact-pr: "#74"
 ```
@@ -46,6 +46,19 @@ artifact-pr: "#74"
   `COPILOT_HOME` dirs — verify: `node --test scripts/commands/doctor.test.mjs
   tests/customizations.test.mjs` passes and `node scripts/agento.mjs doctor` (live)
   lists both checks, with `mcp-servers` warning on the current `railway` wildcard entry
+
+- [ ] 2.3 (added 2026-11-04, review) Make the `mcp-servers` "timed out N× in 24 h"
+  count honour the 24 h window: `readMcpTimeouts` in `scripts/lib/copilot-runtime.mjs`
+  passes `since: now - hours` to `countMcpTimeouts` (the parser already supports it)
+  so the count covers lines timestamped in the window, not every line in the 16 MB
+  tail of any log modified in the window; drop the unused `copilotHome` import from
+  `scripts/lib/doctor.mjs`; make the `secret-header-value` assertion in
+  `scripts/lib/copilot-runtime.test.mjs` match a real fixture value; rerun `cd
+  extension && npm run copy-cli` — verify: a new case in
+  `scripts/lib/copilot-runtime.test.mjs` with one timeout line older than 24 h and
+  one inside, in a log file with a fresh mtime, counts 1; `node --test
+  scripts/lib/copilot-runtime.test.mjs scripts/commands/doctor.test.mjs` passes;
+  `git status --porcelain` is empty after `copy-cli`
 
 ## Phase 3: CLI surfaces
 
@@ -91,6 +104,21 @@ artifact-pr: "#74"
   --test 'canvas/**/*.test.mjs'` passes, and on local:3168 (`node
   canvas/agento-mission-control/dev.mjs --port 3168`) the browser shows the stall tag
   in the banner, captured as `evidence/step-5-2-canvas-stalls.png`
+
+- [ ] 5.3 (added 2026-11-04, review) Make the banner stall tag legible: in
+  `canvas/agento-mission-control/public/styles.css` `.mc-window-tag-warn` currently
+  sets `color: #8a6d00` on `rgba(255,193,7,.18)` over the role-coloured banner
+  (build window `#1e7b34`), ≈1.1:1 contrast — the word "Stalls" is unreadable in
+  both `evidence/step-5-2-canvas-stalls.png` and the review's
+  `evidence/review-5-2-banner-zoom.png`. Use a solid amber fill with dark text (for
+  example `background: #ffc107; color: #3b2e00; border-color: #ffc107`) or inherit
+  the banner's text colour like the `hosted` tag, so the label reaches ≥ 4.5:1 on
+  every `ROLE_COLORS` banner (all six role backgrounds); export a small
+  `stallsTag(state)` helper (or `render`) from `public/panels/window.js` and assert in
+  `window.test.mjs` that its HTML for the fixture contains the `mc-window-tag-warn`
+  span with the summary as `title` and nothing for `stalls: null` — verify: `node --test 'canvas/**/*.test.mjs'` passes
+  and a fresh local:3168 screenshot replaces `evidence/step-5-2-canvas-stalls.png`
+  with the "Stalls" label readable in the banner
 
 ## Phase 6: Docs
 
