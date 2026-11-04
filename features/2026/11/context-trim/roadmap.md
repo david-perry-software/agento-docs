@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: in-progress
 branch: feature/context-trim
 last-updated: 2026-11-04
-next-step: "review"
+next-step: "5.1"
 initiative: "agento-speed"
 artifact-pr: "#76"
 ```
@@ -93,3 +93,26 @@ artifact-pr: "#76"
   failures and ≥ 891 tests; extension build and unit tests exit 0; results noted on this
   line
   — shellcheck v0.10.0 (downloaded, /tmp cleaned) exit 0, 0 findings; full suite 894 pass / 0 fail; extension npm ci + build + test:unit 252 pass / 0 fail
+
+## Phase 5: Review round 1 fixes (added 2026-11-04)
+
+- [ ] 5.1 (added 2026-11-04) Finding 1 (moderate) — drop the three stray
+  `` `:109` ``/`` `:112` ``/`` `:162` `` locator tokens that step 2.1's wording
+  transcribed into `.github/agents/delivery-builder.agent.md` and restore line 162's
+  grammar; check every other file of this delivery (`git diff origin/main`) for the
+  same `` `:NNN` `` tokens and fix any — verify: `grep -c "agento.mjs policy [458]"
+  .github/agents/delivery-builder.agent.md` prints 3; `grep -n "§[458]"
+  .github/agents/delivery-builder.agent.md` matches nothing; `node --test
+  tests/customizations.test.mjs scripts/lib/brief.test.mjs scripts/commands/brief.test.mjs`
+  passes; full suite `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'
+  'canvas/**/*.test.mjs'` has 0 failures
+
+- [x] 5.2 (added 2026-11-04) Finding 2 (minor) — no change required: the permutation
+  test's location in `tests/customizations.test.mjs` (vs acceptance item 4's narrower
+  `verify:`) is intentional; the claim is covered by roadmap 2.2's wider verify command
+  and the full suite — no code or test change
+
+- [x] 5.3 (added 2026-11-04) Finding 3 (observation) — no change required: the
+  "≥ 2,000 B less" wording refers to the declared policy load, not the raw brief page;
+  roadmap 1.1/2.3 record both numbers and `docs/copilot-harness.md` states the saving
+  as "declared policy sections total" — no code or doc change
