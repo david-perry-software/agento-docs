@@ -140,3 +140,8 @@ artifact-pr: "#75"
   `evidence/step-5-3-full-gate.txt` — verify: full suite 0 failures (≥ 862 tests);
   shellcheck exit 0 with no findings; guard smokes exit 0; `extension/cli` has no diff;
   extension build and unit tests exit 0
+
+  (gate fix: `tests/cli-layout.test.mjs` requires command modules never import
+  another command module, so `preflightDocument`/`receiptLines`/`opIdFor`/
+  `preflightArgs` moved to the new `scripts/lib/preflight.mjs`; `brief` and
+  `preflight` both import it from there — committed before the gate re-run.)
