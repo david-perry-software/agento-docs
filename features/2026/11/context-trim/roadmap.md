@@ -4,6 +4,7 @@ branch: feature/context-trim
 last-updated: 2026-11-04
 next-step: "1.1 Record the Builder brief baseline"
 initiative: "agento-speed"
+artifact-pr: "#76"
 ```
 
 ## Phase 1: Baseline and the on-demand pointer contract
