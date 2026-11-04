@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "2.2 Implement the plugin export tree build"
+next-step: "2.3 Add the destination safety rules"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -44,7 +44,7 @@ artifact-pr: "#77"
   header line in `scripts/agento.mjs` — verify: `node --test tests/cli-layout.test.mjs`
   passes; `node scripts/agento.mjs plugin bogus; echo $?` prints a usage error and `1`
 
-- [ ] 2.2 Implement the `plugin export` tree build: resolve the source (the CLI's own git
+- [x] 2.2 Implement the `plugin export` tree build: resolve the source (the CLI's own git
   checkout or `--source`; refuse a non-git root naming `--source`), `git fetch`, default
   ref `origin/<default branch>` (`--ref` overrides), `git archive <commit>` into
   `<dest>.agento-export-<pid>`, write `.agento-export.json` (`source.remote`,
