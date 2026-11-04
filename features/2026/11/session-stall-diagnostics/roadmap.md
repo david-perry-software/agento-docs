@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/session-stall-diagnostics
 last-updated: 2026-11-03
-next-step: "6.1 Document Known stall sources, extension.md, and CHANGELOG"
+next-step: "8.1 Integrate origin/main and run the full gate (before the 7.1 manual step)"
 initiative: "agento-speed"
 artifact-pr: "#74"
 ```
@@ -94,7 +94,7 @@ artifact-pr: "#74"
 
 ## Phase 6: Docs
 
-- [ ] 6.1 Add `## Known stall sources` to `docs/copilot-harness.md` (MCP `tools/list`
+- [x] 6.1 Add `## Known stall sources` to `docs/copilot-harness.md` (MCP `tools/list`
   timeout mechanism, 60 s and 40–54 s signatures, subagent start-up stalls, 128-tool
   cap, observed `copilotVersion`, reading `doctor`/`stalls`, the fix), update
   `docs/extension.md` (Session & Doctor, Mission Control) and add a `CHANGELOG.md`
