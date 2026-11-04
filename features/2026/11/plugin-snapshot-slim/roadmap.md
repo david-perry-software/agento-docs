@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "1.2 Add scripts/lib/plugin.mjs with the shared snapshot model"
+next-step: "2.1 Register the plugin command family"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -26,7 +26,7 @@ artifact-pr: "#77"
   count, and total are written on this line; the fixture file exists and
   `node --test scripts/commands/doctor.test.mjs` still passes
 
-- [ ] 1.2 Add `scripts/lib/plugin.mjs` with `agentPluginsDir(env)`
+- [x] 1.2 Add `scripts/lib/plugin.mjs` with `agentPluginsDir(env)`
   (`AGENTO_VSCODE_AGENT_PLUGINS` override, `XDG_CONFIG_HOME`, macOS path),
   `snapshotDirName(location)`, `listSnapshots(location, env)` (hex-named children only,
   `{ nonce, path, bytes, mtime }`, newest = largest nonce), and `pluginLocations(env)`
