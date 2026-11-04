@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "4.2 Regenerate the CLI mirror and check the extension"
+next-step: "5.1 Run the lint gate and the full suite"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -117,7 +117,7 @@ artifact-pr: "#77"
   docs/commands.md` matches in each file; `grep -n "plugin-snapshots"
   docs/commands.md` matches
 
-- [ ] 4.2 Regenerate the CLI mirror and check the extension: `cd extension && npm run
+- [x] 4.2 Regenerate the CLI mirror and check the extension: `cd extension && npm run
   copy-cli && npm run build && npm run test:unit` — verify: all three exit 0; `git status
   --porcelain extension/cli` shows the new `lib/plugin.mjs` and `commands/plugin.mjs`
   and no stray files
