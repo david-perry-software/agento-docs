@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "6.3 (added 2026-11-04) Re-run the gate after 6.1-6.2"
+next-step: "review"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
