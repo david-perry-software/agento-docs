@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/startup-brief-command
 last-updated: 2026-11-04
-next-step: "2.3 Create scripts/commands/brief.mjs and register the brief subcommand"
+next-step: "3.1 Change the Policy: line contract in tests/customizations.test.mjs and rewrite all Policy: lines"
 initiative: "agento-speed"
 artifact-pr: "#75"
 ```
@@ -47,7 +47,7 @@ artifact-pr: "#75"
   the footer lists every continuation page, deterministic pages, priority order
   honoured — verify: `node --test scripts/lib/brief.test.mjs` passes
 
-- [ ] 2.3 Create `scripts/commands/brief.mjs` and register `brief` in
+- [x] 2.3 Create `scripts/commands/brief.mjs` and register `brief` in
   `COMMAND_MODULES` and the `scripts/agento.mjs` usage header: command lookup under
   `<PLUGIN_ROOT>/skills/agento/commands/` (unknown → exit 1 with every `/agento <name>`),
   dispatch mode from `agent:`, the subagent `Dispatch:` block (pin from the `models pins`
