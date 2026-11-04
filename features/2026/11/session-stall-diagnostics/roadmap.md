@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/session-stall-diagnostics
 last-updated: 2026-11-04
-next-step: "7.2"
+next-step: "8.1"
 initiative: "agento-speed"
 artifact-pr: "#74"
 ```
@@ -111,13 +111,20 @@ artifact-pr: "#74"
   removal at 2026-11-04T05:05:06Z (backup `~/.copilot/mcp-config.json.bak-20261104T050506Z`,
   mode 600; no other MCP servers remain)
 
-- [ ] 7.2 Verify the live state after removal in the session that runs this step —
+- [x] 7.2 Verify the live state after removal in the session that runs this step —
   verify: `node scripts/agento.mjs doctor` reports `mcp-servers` `ok` (no configured
   wildcard server, no timeout in the last 60 min) and `turn-stalls` `ok` or 0 stalled
   turns for the current session; `node scripts/agento.mjs stalls` shows `current.stalledTurns`
   0 after ≥ 10 turns; `grep -h "MCP request timed out\|Railway MCP proxy error"
   ~/.copilot/logs/process-*.log` finds no line timestamped after the 7.1 removal time;
   outputs recorded on this step line
+  - Results (2026-11-04): doctor `mcp-servers` ok — "no MCP servers configured; railway
+    timed out 590× in 24 h (last 22:09Z)"; doctor `turn-stalls` ok — "0 stalled turns in
+    session 135f7c19"; `agento.mjs stalls` current.sessionId
+    `135f7c19-bdca-450a-b9e5-395a0beef905` (newest session for this checkout),
+    current.stalledTurns 0, window 3 sessions / 0 stalled turns, summary null, exit 0;
+    log grep matched 20,242 historical lines, max timestamp 2026-11-03T22:09:41.829Z,
+    0 lines after 2026-11-04T05:05:06Z.
 
 ## Phase 8: Full gate
 
