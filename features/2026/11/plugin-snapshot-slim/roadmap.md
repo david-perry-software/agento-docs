@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "7.6 re-run the gate (review round 1)"
+next-step: "handoff to review"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -289,11 +289,14 @@ artifact-pr: "#77"
   > 10 MB branch so the Set dedupe collapses them, and report `droppedIgnoredBytes`
   with du-style allocated bytes like every other figure — verify: `node --test
   scripts/commands/doctor.test.mjs scripts/commands/plugin.test.mjs` passes
-- [ ] 7.6 Re-run the gate after 7.1–7.5 (added 2026-11-04): `cd extension && npm run
+- [x] 7.6 Re-run the gate after 7.1–7.5 (added 2026-11-04): `cd extension && npm run
   copy-cli && npm run build && npm run test:unit`; shellcheck v0.10.0 on
   `scripts/hooks/*.sh scripts/wait-for-checks.sh`; the full suite `node --test
   'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` — verify: the
   three extension steps exit 0 with `git status --porcelain extension/cli` showing no
   stray files, shellcheck exits 0 with no findings (baseline: exit 0, none), and the
   full suite reports 0 failures with more than 915 tests; record the three results on
-  this line
+  this line. **Recorded:** extension gate — `copy-cli` regenerated the mirror
+  byte-identically (`git status --porcelain extension/cli` empty, no stray files),
+  `build` and `test:unit` exit 0 (252 pass, 0 fail); shellcheck v0.10.0 exit 0, no
+  findings (baseline: exit 0, none); full suite 919 tests, 919 pass, 0 fail (> 915)
