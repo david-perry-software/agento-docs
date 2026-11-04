@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/startup-brief-command
 last-updated: 2026-11-04
-next-step: "3.5 Add the never-view bullet, shrink agento-init under 20 KB, and add the size-gate test"
+next-step: "4.1 Document brief and the policy split in docs/commands.md, docs/architecture.md, docs/copilot-harness.md, and README.md"
 initiative: "agento-speed"
 artifact-pr: "#75"
 ```
@@ -95,7 +95,7 @@ artifact-pr: "#75"
   or an instruction to read a file under `<agento-root>` — verify: `node --test
   tests/customizations.test.mjs` passes
 
-- [ ] 3.5 Add the never-`view` bullet to `.github/instructions/agento-core.instructions.md`;
+- [x] 3.5 Add the never-`view` bullet to `.github/instructions/agento-core.instructions.md`;
   bring `.github/prompts/agento-init.prompt.md` and its mirror under 20,000 B without
   dropping a rule; add the size-gate test (every file under `.github/agents/`,
   `.github/prompts/`, `.github/instructions/` recursive, and `skills/agento/` ≤ 20,000 B)
