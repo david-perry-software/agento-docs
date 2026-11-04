@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "2.4 Carry the model pins over"
+next-step: "3.1 Implement plugin snapshots and prune-snapshots"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -67,7 +67,7 @@ artifact-pr: "#77"
   `node_modules` being replaced — verify: `node --test scripts/commands/plugin.test.mjs`
   passes
 
-- [ ] 2.4 Carry the model pins over: before the swap read the frontmatter `model:` line
+- [x] 2.4 Carry the model pins over: before the swap read the frontmatter `model:` line
   and handoff model lines of every `modelTargetFiles()` file in the old destination
   (`readModel`, `handoffModelLines`) — including a git clone whose pins come from the
   `agento-models` filter — and write them into the new tree (`setModel`,
