@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/context-trim
 last-updated: 2026-11-04
-next-step: "3.3 Add Trimming per-call context to copilot-harness docs"
+next-step: "4.1 Run the full gate"
 initiative: "agento-speed"
 artifact-pr: "#76"
 ```
@@ -71,7 +71,7 @@ artifact-pr: "#76"
   verify: that output, and `git diff origin/main -- .github/agents/` touches only
   `delivery-builder.agent.md` and no `model:` line
 
-- [ ] 3.3 Add `## Trimming per-call context` to `docs/copilot-harness.md` after
+- [x] 3.3 Add `## Trimming per-call context` to `docs/copilot-harness.md` after
   `## Known stall sources`: the Builder's trimmed `Policy:` set and the pointer form with
   the 1.1/2.3 byte numbers; the Autopilot pin decision (stays `Claude Opus 5.5
   (copilot)`; how to switch); disabling the Python/Pylance synced customizations in
