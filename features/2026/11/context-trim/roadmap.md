@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/context-trim
 last-updated: 2026-11-04
-next-step: "2.3 Measure the trimmed Builder brief"
+next-step: "3.1 Add an explicit strong-model autopilot entry"
 initiative: "agento-speed"
 artifact-pr: "#76"
 ```
@@ -14,7 +14,7 @@ artifact-pr: "#76"
   note the total bytes (`| wc -c` summed), the page count, and the included / on-demand
   section numbers on this step line — verify: the three numbers are written on this
   line and the output's policy sections are §1, §2, §3, §4, §5, §7, §8, §9, §10, §11, §12
-  — baseline: 5665 B, 1 page, sections §1 §2 §3 §4 §5 §7 §8 §9 §10 §11 §12 (§9 included, rest on demand)
+  — baseline: policy load 17,736 B (brief output 5,665 B, 1 page), sections §1 §2 §3 §4 §5 §7 §8 §9 §10 §11 §12 (§9 included, rest on demand)
 
 - [x] 1.2 Add the on-demand pointer form to the `Policy:` contract: in
   `tests/customizations.test.mjs` add a test that every `` `agento.mjs policy N` ``
@@ -48,11 +48,12 @@ artifact-pr: "#76"
   --test scripts/lib/brief.test.mjs scripts/commands/brief.test.mjs
   tests/customizations.test.mjs tests/extension-bundle.test.mjs` passes
 
-- [ ] 2.3 Measure the trimmed Builder brief: rerun `node scripts/agento.mjs brief
+- [x] 2.3 Measure the trimmed Builder brief: rerun `node scripts/agento.mjs brief
   build-feature context-trim` and all its pages; note total bytes, page count, and
   sections on this line — verify: total is ≥ 2,000 B below the 1.1 baseline; §6 is
   included or listed on demand; the output contains no `policy 4`, `policy 5`, or
   `policy 8` footer entry and no `## 4.`, `## 5.`, or `## 8.` section
+  — trimmed: policy load 15,297 B (brief output 5,528 B, 1 page), sections §1 §2 §3 §6 §7 §9 §10 §11 §12 (§9 included, §6 on demand) — −2,439 B vs 1.1 baseline
 
 ## Phase 3: Autopilot pin and docs
 
