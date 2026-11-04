@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/startup-brief-command
 last-updated: 2026-11-04
-next-step: "5.3 Full gate against the plan.md baseline (node suite, shellcheck, guard smokes, extension build)"
+next-step: ""
 initiative: "agento-speed"
 artifact-pr: "#75"
 ```
