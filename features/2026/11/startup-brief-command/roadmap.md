@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/startup-brief-command
 last-updated: 2026-11-04
-next-step: "4.1 Document brief and the policy split in docs/commands.md, docs/architecture.md, docs/copilot-harness.md, and README.md"
+next-step: "5.1 Live CLI: run brief forms in this worktree and record byte counts into evidence"
 initiative: "agento-speed"
 artifact-pr: "#75"
 ```
@@ -105,7 +105,7 @@ artifact-pr: "#75"
 
 ## Phase 4: Documentation
 
-- [ ] 4.1 Document `brief` and the policy split: `docs/commands.md` (CLI reference:
+- [x] 4.1 Document `brief` and the policy split: `docs/commands.md` (CLI reference:
   arguments, `--as-subagent`, `--page`, `--json`, budget, exit codes),
   `docs/architecture.md:61-80` and `:266-270` (startup via `brief`, per-section policy
   files, new `Policy:` form), `docs/copilot-harness.md` (router flow, the measured ≈ 8 KB
