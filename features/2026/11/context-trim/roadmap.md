@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/context-trim
 last-updated: 2026-11-04
-next-step: "5.1"
+next-step: "review"
 initiative: "agento-speed"
 artifact-pr: "#76"
 ```
