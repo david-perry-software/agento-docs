@@ -96,7 +96,7 @@ artifact-pr: "#76"
 
 ## Phase 5: Review round 1 fixes (added 2026-11-04)
 
-- [ ] 5.1 (added 2026-11-04) Finding 1 (moderate) — drop the three stray
+- [x] 5.1 (added 2026-11-04) Finding 1 (moderate) — drop the three stray
   `` `:109` ``/`` `:112` ``/`` `:162` `` locator tokens that step 2.1's wording
   transcribed into `.github/agents/delivery-builder.agent.md` and restore line 162's
   grammar; check every other file of this delivery (`git diff origin/main`) for the
