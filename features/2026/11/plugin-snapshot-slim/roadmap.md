@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "7.2 hooks must run from a freshly staged snapshot (review round 1)"
+next-step: "7.3 add the swap() rollback test (review round 1)"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -246,7 +246,7 @@ artifact-pr: "#77"
   prune-snapshots --dest /home/david/DP/agento-plugin --dry-run` names this window's
   snapshot (`1a1a7fc067d` or its successor) as pinned by at least one window in its
   output, rather than keeping it only because it is the newest
-- [ ] 7.2 Hooks must run from a freshly staged snapshot (added 2026-11-04). VS Code's
+- [x] 7.2 Hooks must run from a freshly staged snapshot (added 2026-11-04). VS Code's
   agent host runs every command hook as `/bin/sh -c "<path with
   ${CLAUDE_PLUGIN_ROOT} expanded>"` (`/usr/share/code/resources/app/out/vs/platform/
   agentHost/node/agentHostMain.js`, function `_R`), and staging drops `+x` on every
