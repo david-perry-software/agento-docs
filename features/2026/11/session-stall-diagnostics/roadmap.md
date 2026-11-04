@@ -1,5 +1,5 @@
 ```yaml
-status: in-progress
+status: paused
 branch: feature/session-stall-diagnostics
 last-updated: 2026-11-03
 next-step: "7.1 (manual) Remove the railway entry from ~/.copilot/mcp-config.json, reload the window, screenshot"
