@@ -1,5 +1,5 @@
 ```yaml
-status: in-review
+status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
 next-step: "7.1 in-use detection that sees idle open windows (review round 1)"
@@ -268,7 +268,28 @@ artifact-pr: "#77"
   `/bin/sh -c` (SessionStart payload for `session-context.sh`, a PreToolUse payload
   for `delivery-guard.sh`); `grep -n "still works" docs/copilot-harness.md` matches
   nothing
-- [ ] 7.3 Re-run the gate after 7.1–7.2 (added 2026-11-04): `cd extension && npm run
+- [ ] 7.3 Add the missing `swap()` rollback test (added 2026-11-04). Review round 1
+  Finding 4: the atomicity test only exercises a bad `--ref`, refused before the
+  temp tree exists, so `swap()`'s `renameSync(old, dest)` recovery branch is
+  untested. Add a test seam in `swap()` that injects a failure at the final
+  `renameSync(tempDir, dest)`, and a test asserting the re-export is refused
+  (exit 3), the old destination is restored byte-identical, and no
+  `<dest>.agento-*` temp/old directories remain — verify: `node --test
+  scripts/commands/plugin.test.mjs` passes
+- [ ] 7.4 Add `--force` to the `plugin` usage header (added 2026-11-04). Review
+  round 1 Finding 5: `scripts/agento.mjs:39` lists `[--dest] [--dry-run] [--ref]
+  [--source] [--replace-clone]` but not the `prune-snapshots --force` escape that
+  `docs/commands.md` documents; add `[--force]` to that line and to the
+  `docs/commands.md` plugin usage line — verify: `node --test tests/cli-layout.test.mjs`
+  passes and the header line names `[--force]`
+- [ ] 7.5 Deduplicate the doctor `plugin-snapshots` export fallbacks (added
+  2026-11-04). Review round 1 Finding 6: a clone location whose newest snapshot
+  is > 10 MB gets both `plugin export --dest X --replace-clone` and a no-op
+  `plugin export --dest X`; emit the `--replace-clone` form for a clone in the
+  > 10 MB branch so the Set dedupe collapses them, and report `droppedIgnoredBytes`
+  with du-style allocated bytes like every other figure — verify: `node --test
+  scripts/commands/doctor.test.mjs scripts/commands/plugin.test.mjs` passes
+- [ ] 7.6 Re-run the gate after 7.1–7.5 (added 2026-11-04): `cd extension && npm run
   copy-cli && npm run build && npm run test:unit`; shellcheck v0.10.0 on
   `scripts/hooks/*.sh scripts/wait-for-checks.sh`; the full suite `node --test
   'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` — verify: the
