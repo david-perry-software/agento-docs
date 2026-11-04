@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/startup-brief-command
 last-updated: 2026-11-04
-next-step: "5.1 Live CLI: run brief forms in this worktree and record byte counts into evidence"
+next-step: "5.2 Live subagent start: dispatch a Builder subagent from the Dispatch block and record the transcript"
 initiative: "agento-speed"
 artifact-pr: "#75"
 ```
@@ -115,7 +115,7 @@ artifact-pr: "#75"
 
 ## Phase 5: Verification
 
-- [ ] 5.1 Live CLI in this build worktree: run `node scripts/agento.mjs brief
+- [x] 5.1 Live CLI in this build worktree: run `node scripts/agento.mjs brief
   build-feature startup-brief-command --as-subagent`, `… brief build-feature
   startup-brief-command` (router form), `… brief review-feature startup-brief-command
   --as-subagent`, `… brief ap startup-brief-command`, and `… brief delivery-status`,

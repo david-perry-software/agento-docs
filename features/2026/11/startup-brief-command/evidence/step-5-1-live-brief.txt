@@ -1,0 +1,50 @@
+# Step 5.1 — live `brief` in the build worktree
+
+Run date: 2026-11-04
+Worktree: /home/david/DP/agento-worktrees/plan-20261104-062019 (branch feature/startup-brief-command)
+CLI: node /home/david/DP/agento-worktrees/plan-20261104-062019/scripts/agento.mjs
+
+Each command was run from the product worktree root with the CLI above. Byte
+counts are `| wc -c` of stdout; page counts come from `--json` `pages`; the first
+line is the first line of stdout.
+
+## `brief build-feature startup-brief-command --as-subagent`
+
+- first line: Receipt: accepted build-feature:startup-brief-command:90fa1ca
+- byte count: 5918 (≤ 7000)
+- pages: 1
+- current step (from --json delivery.currentStep.id): 5.1 — equals roadmap step 5.1
+
+## `brief build-feature startup-brief-command` (router form, no --as-subagent)
+
+- first line: Dispatch: 🔨 Agento Builder
+- byte count: 418
+- output is only the Dispatch: block (agent, pin, prompt); no receipt, no preflight
+- copilotModel: deepseek/deepseek-v4-pro; subagentModel: DeepSeek V4 Pro (deepseek)
+
+## `brief review-feature startup-brief-command --as-subagent`
+
+- first line: Receipt: accepted review-feature:startup-brief-command:90fa1ca
+- byte count: 5538 (≤ 7000)
+- pages: 1
+
+## `brief ap startup-brief-command`
+
+- first line: Receipt: accepted ap:startup-brief-command:90fa1ca
+- byte count (page 1): 6553 (≤ 7000)
+- pages: 3 — page 1 6606 B, page 2 5724 B, page 3 3175 B (each ≤ 7000, via `--page N`)
+
+## `brief delivery-status`
+
+- first line: Receipt: accepted delivery-status:plan-20261104-062019:90fa1ca
+- byte count: 6099 (≤ 7000)
+- pages: 1
+
+## Verification summary
+
+- Every page of every run is ≤ 7,000 bytes.
+- The build-window briefs (`build-feature`, `review-feature`, `ap`) open with
+  `Receipt: accepted`.
+- The router form (`brief build-feature startup-brief-command`, no flag) prints only
+  a `Dispatch:` block.
+- The build brief's current step is roadmap step 5.1.
