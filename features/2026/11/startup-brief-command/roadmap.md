@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/startup-brief-command
 last-updated: 2026-11-04
 next-step: "1.1 Extract policySections to scripts/lib/policy.mjs and pin the policy output hashes"
