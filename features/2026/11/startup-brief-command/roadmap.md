@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/startup-brief-command
 last-updated: 2026-11-04
-next-step: "3.3 Rewire the 6 agents' opening brief sentence and the Builder/Reviewer initial_wait guidance"
+next-step: "3.4 Rewire all 26 prompt/mirror opening brief sentences and add the no-opening-preflight text test"
 initiative: "agento-speed"
 artifact-pr: "#75"
 ```
@@ -81,7 +81,7 @@ artifact-pr: "#75"
   passes and `grep -n "Read \`<agento-root>\|models pins\|commands/<name>.md\`"
   skills/agento/SKILL.md` finds no instruction to read files or run pins
 
-- [ ] 3.3 Rewire the 6 agents in `.github/agents/`: opening `brief` sentence replaces
+- [x] 3.3 Rewire the 6 agents in `.github/agents/`: opening `brief` sentence replaces
   the `preflight` sentence; the Builder and Reviewer drop their startup roadmap/plan
   reads in favour of the brief's Delivery block (plan.md sections read only when a step
   needs them); the Builder and Reviewer gain the `initial_wait ≥ 120` (≥ 300 for this
