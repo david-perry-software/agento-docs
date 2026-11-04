@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/startup-brief-command
 last-updated: 2026-11-04
-next-step: "1.2 Split delivery-policy.instructions.md into per-section policy/ files and turn the original into an index"
+next-step: "2.1 Export currentStep(content) from scripts/delivery-roadmap-resolver.mjs with unit tests"
 initiative: "agento-speed"
 artifact-pr: "#75"
 ```
@@ -18,7 +18,7 @@ artifact-pr: "#75"
   scripts/commands/doctor.test.mjs tests/customizations.test.mjs
   tests/extension-bundle.test.mjs` passes
 
-- [ ] 1.2 Split `.github/instructions/delivery-policy.instructions.md` into
+- [x] 1.2 Split `.github/instructions/delivery-policy.instructions.md` into
   `.github/instructions/policy/NN-<kebab-title>.md` (12 files, each starting with its
   `## N. Title` heading, text moved byte for byte). Turn the original into the index of
   plan.md Approach §1 (frontmatter and intro kept, one line per section, "read with
