@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: in-progress
 branch: feature/session-stall-diagnostics
 last-updated: 2026-11-04
-next-step: "2.3"
+next-step: "5.3"
 initiative: "agento-speed"
 artifact-pr: "#74"
 ```
@@ -47,7 +47,7 @@ artifact-pr: "#74"
   tests/customizations.test.mjs` passes and `node scripts/agento.mjs doctor` (live)
   lists both checks, with `mcp-servers` warning on the current `railway` wildcard entry
 
-- [ ] 2.3 (added 2026-11-04, review) Make the `mcp-servers` "timed out N× in 24 h"
+- [x] 2.3 (added 2026-11-04, review) Make the `mcp-servers` "timed out N× in 24 h"
   count honour the 24 h window: `readMcpTimeouts` in `scripts/lib/copilot-runtime.mjs`
   passes `since: now - hours` to `countMcpTimeouts` (the parser already supports it)
   so the count covers lines timestamped in the window, not every line in the 16 MB
