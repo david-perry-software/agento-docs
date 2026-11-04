@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/session-stall-diagnostics
 last-updated: 2026-11-04
-next-step: "5.3"
+next-step: ""
 initiative: "agento-speed"
 artifact-pr: "#74"
 ```
@@ -105,7 +105,7 @@ artifact-pr: "#74"
   canvas/agento-mission-control/dev.mjs --port 3168`) the browser shows the stall tag
   in the banner, captured as `evidence/step-5-2-canvas-stalls.png`
 
-- [ ] 5.3 (added 2026-11-04, review) Make the banner stall tag legible: in
+- [x] 5.3 (added 2026-11-04, review) Make the banner stall tag legible: in
   `canvas/agento-mission-control/public/styles.css` `.mc-window-tag-warn` currently
   sets `color: #8a6d00` on `rgba(255,193,7,.18)` over the role-coloured banner
   (build window `#1e7b34`), ≈1.1:1 contrast — the word "Stalls" is unreadable in
@@ -119,6 +119,10 @@ artifact-pr: "#74"
   span with the summary as `title` and nothing for `stalls: null` — verify: `node --test 'canvas/**/*.test.mjs'` passes
   and a fresh local:3168 screenshot replaces `evidence/step-5-2-canvas-stalls.png`
   with the "Stalls" label readable in the banner
+  - Result (2026-11-04): `node --test 'canvas/**/*.test.mjs'` 131/131 pass; fresh
+    local:3168 screenshot re-captured into `evidence/step-5-2-canvas-stalls.png` —
+    text "Stalls", `title` = the fixture summary, computed `rgb(59,46,0)` on
+    `rgb(255,193,7)` → 8.17:1 contrast (≥ 4.5:1).
 
 ## Phase 6: Docs
 
