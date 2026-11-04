@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "7.3 add the swap() rollback test (review round 1)"
+next-step: "7.4 add --force to the plugin usage header (review round 1)"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -268,7 +268,7 @@ artifact-pr: "#77"
   `/bin/sh -c` (SessionStart payload for `session-context.sh`, a PreToolUse payload
   for `delivery-guard.sh`); `grep -n "still works" docs/copilot-harness.md` matches
   nothing
-- [ ] 7.3 Add the missing `swap()` rollback test (added 2026-11-04). Review round 1
+- [x] 7.3 Add the missing `swap()` rollback test (added 2026-11-04). Review round 1
   Finding 4: the atomicity test only exercises a bad `--ref`, refused before the
   temp tree exists, so `swap()`'s `renameSync(old, dest)` recovery branch is
   untested. Add a test seam in `swap()` that injects a failure at the final
