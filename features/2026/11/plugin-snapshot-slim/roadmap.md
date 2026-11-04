@@ -214,9 +214,13 @@ artifact-pr: "#77"
   plugin-snapshots` now warns when the newest snapshot's hook scripts are not
   executable, with a reload/chmod fallback and a test
 
-- [ ] 6.3 Re-run the gate after 6.1–6.2: `cd extension && npm run copy-cli && npm run
+- [x] 6.3 Re-run the gate after 6.1–6.2: `cd extension && npm run copy-cli && npm run
   build && npm run test:unit`; shellcheck v0.10.0 on `scripts/hooks/*.sh
   scripts/wait-for-checks.sh`; the full suite `node --test 'scripts/**/*.test.mjs'
   'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` — verify: the three extension steps
   exit 0, shellcheck exits 0 with no findings, and the full suite reports 0 failures;
-  record the three results on this line
+  record the three results on this line. **Recorded:** extension gate — `copy-cli`
+  regenerated the mirror (`extension/cli/{commands/plugin.mjs,lib/doctor.mjs,lib/plugin.mjs}`
+  modified, no stray files), `build` and `test:unit` exit 0 (252 pass, 0 fail);
+  shellcheck v0.10.0 exit 0, no findings; full suite 915 tests, 915 pass, 0 fail
+  (baseline 894 in 5.1)
