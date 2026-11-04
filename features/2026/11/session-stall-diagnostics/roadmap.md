@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/session-stall-diagnostics
 last-updated: 2026-11-03
-next-step: "3.1 Add stallsDocument and the stalls subcommand/dashboard section"
+next-step: "3.2 Add the Stalls step to delivery-status.prompt.md and its mirror"
 initiative: "agento-speed"
 artifact-pr: "#74"
 ```
@@ -49,7 +49,7 @@ artifact-pr: "#74"
 
 ## Phase 3: CLI surfaces
 
-- [ ] 3.1 Add `stallsDocument()` and the `stalls` subcommand (`COMMAND_MODULES` →
+- [x] 3.1 Add `stallsDocument()` and the `stalls` subcommand (`COMMAND_MODULES` →
   `commands/status.mjs`, usage line) and a `stalls` section in `dashboardDocument()`
   through `section()` so `timings.stalls` exists; document both in `docs/commands.md`
   — verify: new tests in `scripts/commands/status.test.mjs` (or the existing status
