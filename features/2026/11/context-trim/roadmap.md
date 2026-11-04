@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/context-trim
 last-updated: 2026-11-04
-next-step: "3.1 Add an explicit strong-model autopilot entry"
+next-step: "3.2 Confirm the Autopilot pin is unchanged"
 initiative: "agento-speed"
 artifact-pr: "#76"
 ```
@@ -57,7 +57,7 @@ artifact-pr: "#76"
 
 ## Phase 3: Autopilot pin and docs
 
-- [ ] 3.1 Add `"autopilot": "<strong model: picker name (vendor)>"` to the `mixed`
+- [x] 3.1 Add `"autopilot": "<strong model: picker name (vendor)>"` to the `mixed`
   profile's `agents` in `templates/model-profiles.json`; add an `autopilot` entry to the
   `docs/model-profiles.md` example (`:20–40`) and a short "Autopilot model" note next to
   the BYOK tier warning (`:231–237`): keep the orchestrator on a strong Copilot model at
