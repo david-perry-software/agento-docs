@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: feature/session-stall-diagnostics
 last-updated: 2026-11-04
-next-step: "8.1"
+next-step: ""
 initiative: "agento-speed"
 artifact-pr: "#74"
 ```
@@ -140,5 +140,10 @@ artifact-pr: "#74"
     tests, 0 fail (baseline 843); 5/5 guard replay smokes exit 0; extension build
     (tsc) clean and 252 unit tests pass; both halves `git status --porcelain`
     empty. Ran before 7.1 per the Autopilot directive (8.1 does not depend on 7.x).
+  - Re-audit (2026-11-04): origin/main unmoved since (`sync` merged: false, product
+    head still `445902e`); shellcheck v0.10.0 exit 0, no findings (static binary in
+    /tmp, deleted afterwards); node suite 860 tests, 0 fail (baseline 843); 5/5 guard
+    replay smokes exit 0; extension `npm ci` + `copy-cli` + `tsc` build clean + 252
+    unit tests pass; both halves `git status --porcelain --untracked-files=all` empty.
 
 ## Follow-ups
