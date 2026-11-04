@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
 next-step: "1.1 Confirm VS Code's snapshot naming rule and record the pre-change baseline"
