@@ -2,7 +2,7 @@
 status: in-progress
 branch: feature/plugin-snapshot-slim
 last-updated: 2026-11-04
-next-step: "5.4 Prune the stale snapshots"
+next-step: "6.1 (added 2026-11-04) Prune must not delete in-use snapshots"
 initiative: "agento-speed"
 artifact-pr: "#77"
 ```
@@ -162,9 +162,52 @@ artifact-pr: "#77"
   SessionStart payload used by `tests/session-context.test.mjs`, prints the `Agento CLI:`
   context line; `~/.copilot/skills/agento/SKILL.md` resolves through the link
 
-- [ ] 5.4 Prune the stale snapshots: `node scripts/agento.mjs plugin prune-snapshots
+- [x] 5.4 Prune the stale snapshots: `node scripts/agento.mjs plugin prune-snapshots
   --dry-run`, then without `--dry-run` — verify: `node scripts/agento.mjs plugin
   snapshots` lists exactly one snapshot (the one from 5.3), the total under
   `~/.config/Code/agentPlugins/file-home-david-DP-agento-plugin/` is < 10 MB, and `node
   scripts/agento.mjs doctor` shows `plugin-snapshots` `ok`; record the freed bytes on this
-  line
+  line. **Recorded:** the prune ran for real in the earlier session and freed
+  949706752 B (it also deleted the in-use `1a194a81a45` — defect 6.1); re-verified now
+  without re-pruning: `plugin snapshots` lists exactly `1a1a7fc067d` (5353472 B, 5.1M),
+  the location total is 5.2M < 10 MB, and `doctor` shows `plugin-snapshots` `ok`
+
+## Phase 6: Defects found while pruning (added 2026-11-04)
+
+- [ ] 6.1 Prune must not delete snapshots in use by open windows. Keeping only the
+  newest snapshot and the one containing the running CLI deleted the snapshot
+  already-open VS Code windows were running their plugin hooks from (5.4 took out
+  `1a194a81a45`). Make `prune-snapshots` detect in-use snapshots — scan running
+  processes' `cwd`/`cmdline`/`environ` under `/proc` on Linux plus the
+  `CLAUDE_PLUGIN_ROOT`/`PLUGIN_ROOT` of the current process and its ancestors — and
+  skip them, reporting them as `inUse` with the reload advice; where detection is
+  unavailable (non-Linux) the default is safe: deleting requires `--force`. Make the
+  doctor `plugin-snapshots` stale fallback and the docs say "reload open VS Code
+  windows first". Tests with a fixture tree and an injectable process scanner —
+  verify: `node --test scripts/commands/plugin.test.mjs scripts/commands/doctor.test.mjs`
+  passes; `node scripts/agento.mjs plugin prune-snapshots --dest
+  /home/david/DP/agento-plugin --dry-run` exits 0 with `inUseDetection: true` and
+  `removed: []` (deletes nothing)
+
+- [ ] 6.2 Executable bits on hook scripts. 5.3 observed VS Code's staged copy drops
+  the `+x` bit on `scripts/hooks/*.sh`. Confirm the cause and record it: `git
+  ls-files -s` tracks the `.sh` files mode 100755 and the 5.2 live export at
+  `/home/david/DP/agento-plugin` has `+x` on `scripts/hooks/*.sh` and
+  `scripts/wait-for-checks.sh`, so `plugin export` (git archive) preserves modes and
+  VS Code's staging is what drops them (the surviving snapshot's `wait-for-checks.sh`
+  is still `-rw-rw-r--`; its hooks were restored `+x` by hand in 5.3). Document the
+  limitation in `docs/copilot-harness.md`, and add a doctor `plugin-snapshots` warn
+  when the newest snapshot's `scripts/hooks/*.sh` are not executable (fallback: reload
+  the open VS Code window so it re-stages, or `chmod +x` the scripts inside the
+  snapshot), with a test — verify: `node --test scripts/commands/doctor.test.mjs
+  scripts/commands/plugin.test.mjs` passes; `git ls-files -s scripts/hooks
+  scripts/wait-for-checks.sh` shows 100755 for the `.sh` files; `node
+  scripts/agento.mjs doctor` shows `plugin-snapshots` `ok` on this machine (its newest
+  snapshot's hooks are `+x` after the 5.3 restore)
+
+- [ ] 6.3 Re-run the gate after 6.1–6.2: `cd extension && npm run copy-cli && npm run
+  build && npm run test:unit`; shellcheck v0.10.0 on `scripts/hooks/*.sh
+  scripts/wait-for-checks.sh`; the full suite `node --test 'scripts/**/*.test.mjs'
+  'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` — verify: the three extension steps
+  exit 0, shellcheck exits 0 with no findings, and the full suite reports 0 failures;
+  record the three results on this line
