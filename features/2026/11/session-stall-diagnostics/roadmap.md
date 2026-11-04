@@ -1,0 +1,187 @@
+```yaml
+status: complete
+branch: feature/session-stall-diagnostics
+last-updated: 2026-11-04
+next-step: ""
+initiative: "agento-speed"
+artifact-pr: "#74"
+```
+
+## Phase 1: Pure parsers
+
+- [x] 1.1 Add `parseCopilotEvents(text)` and `deriveStalls(sessions, opts)` to
+  `scripts/delivery-metrics.mjs` per plan.md Approach §1 (turn gap =
+  `tool.execution_complete` → next `assistant.turn_end`; start-up =
+  `subagent.started` → `subagent.configured` paired by `agentId`; threshold 40 s,
+  slow start-up 60 s, `summary` string or `null`), with fixtures of the observed event
+  shapes in `scripts/delivery-metrics.test.mjs` (10 gaps ≥ 40 s, one 402 s start-up,
+  bad lines and unknown types ignored, truncated first line tolerated) — verify:
+  `node --test scripts/delivery-metrics.test.mjs` passes
+
+- [x] 1.2 Create `scripts/lib/copilot-runtime.mjs` with the pure
+  `parseMcpConfig(json, source)` (wildcard/remote flags; keeps only name, type, tools,
+  url-presence, mcp-remote flag) and `countMcpTimeouts(text, { since })` (both log-line
+  shapes, per-server `{ count, lastAt }`), tested in
+  `scripts/lib/copilot-runtime.test.mjs` with sanitized fixtures of the exact lines in
+  plan.md Research, including an assertion that `env`/`headers` values never reach the
+  output — verify: `node --test scripts/lib/copilot-runtime.test.mjs` passes
+
+## Phase 2: Readers and doctor checks
+
+- [x] 2.1 Add the bounded readers to `scripts/lib/copilot-runtime.mjs`
+  (`copilotHome()` honouring `$COPILOT_HOME`; `readSessions` with 24 h mtime filter,
+  ≤ 50 sessions, 16 MB tail reads, repo membership via `workspace.yaml` `cwd`/`git_root`
+  inside `productWorktrees()`/`managedHalves()`, current = newest with `cwd === root`;
+  `readMcpConfigs` for `~/.copilot/mcp-config.json` and `<root>/.vscode/mcp.json`;
+  `readMcpTimeouts` over `logs/process-*.log` modified in 24 h), each returning empty
+  results on missing data — verify: reader tests over a fixture `COPILOT_HOME` tree in
+  `scripts/lib/copilot-runtime.test.mjs` pass (missing home, foreign-repo session
+  excluded, current-session selection, oversize file tail-read)
+
+- [x] 2.2 Add the `mcp-servers` and `turn-stalls` checks to `DOCTOR_CHECKS` and
+  `LOCAL_DOCTOR_CHECKS` in `scripts/lib/doctor.mjs` (no `CAPABILITY_CHECKS` group;
+  warn rules per plan.md Approach §2 and the 60 min / still-configured timeout rule
+  in Decisions; never `fail`; every error caught to `warn`), updating the id list at
+  `scripts/commands/doctor.test.mjs:100` and adding warn/ok cases with fixture
+  `COPILOT_HOME` dirs — verify: `node --test scripts/commands/doctor.test.mjs
+  tests/customizations.test.mjs` passes and `node scripts/agento.mjs doctor` (live)
+  lists both checks, with `mcp-servers` warning on the current `railway` wildcard entry
+
+- [x] 2.3 (added 2026-11-04, review) Make the `mcp-servers` "timed out N× in 24 h"
+  count honour the 24 h window: `readMcpTimeouts` in `scripts/lib/copilot-runtime.mjs`
+  passes `since: now - hours` to `countMcpTimeouts` (the parser already supports it)
+  so the count covers lines timestamped in the window, not every line in the 16 MB
+  tail of any log modified in the window; drop the unused `copilotHome` import from
+  `scripts/lib/doctor.mjs`; make the `secret-header-value` assertion in
+  `scripts/lib/copilot-runtime.test.mjs` match a real fixture value; rerun `cd
+  extension && npm run copy-cli` — verify: a new case in
+  `scripts/lib/copilot-runtime.test.mjs` with one timeout line older than 24 h and
+  one inside, in a log file with a fresh mtime, counts 1; `node --test
+  scripts/lib/copilot-runtime.test.mjs scripts/commands/doctor.test.mjs` passes;
+  `git status --porcelain` is empty after `copy-cli`
+
+## Phase 3: CLI surfaces
+
+- [x] 3.1 Add `stallsDocument()` and the `stalls` subcommand (`COMMAND_MODULES` →
+  `commands/status.mjs`, usage line) and a `stalls` section in `dashboardDocument()`
+  through `section()` so `timings.stalls` exists; document both in `docs/commands.md`
+  — verify: new tests in `scripts/commands/status.test.mjs` (or the existing status
+  test file) pass for the shape and the dashboard section, `node scripts/agento.mjs
+  stalls` exits 0 with `current`/`window`/`summary`, and `node scripts/agento.mjs
+  dashboard | node -e 'const d=JSON.parse(require("fs").readFileSync(0));process.exit(d.stalls&&d.timings.stalls>=0?0:1)'`
+  exits 0
+
+- [x] 3.2 Add the Stalls step to `.github/prompts/delivery-status.prompt.md` (run
+  `agento.mjs stalls`; print `summary` as a **Stalls** line under the Session section
+  when non-null) and copy it byte-for-byte to `skills/agento/commands/delivery-status.md`
+  — verify: `node --test tests/customizations.test.mjs` passes
+
+## Phase 4: Autopilot tool budget
+
+- [x] 4.1 Drop `browser` from `.github/agents/delivery-autopilot.agent.md` (`tools:` and
+  `Needs:`, plus any `Fallback:` clause that only covered browser), from
+  `COMMAND_NEEDS.ap` in `scripts/lib/doctor.mjs`, and from `.github/prompts/ap.prompt.md`
+  `Needs:` with its byte-identical mirror `skills/agento/commands/ap.md`; Builder and
+  Reviewer agents keep `browser` — verify: `node --test tests/customizations.test.mjs
+  scripts/commands/doctor.test.mjs` passes, `node scripts/agento.mjs doctor --for ap`
+  lists no browser capability, and `grep -n browser
+  .github/agents/delivery-autopilot.agent.md` shows no tool or need entry (only
+  descriptive mentions of the subagents' browser use, if any)
+
+## Phase 5: Dashboards
+
+- [x] 5.1 Regenerate the extension CLI copy and surface stalls in the Session & Doctor
+  view: `extension.ts` passes `dashboard.stalls`, `sessionDoctorModel.ts` parses it
+  tolerantly (absent/error/malformed → no row), `sessionDoctorProvider.ts` renders a
+  warning-icon "Stalls" row in the Session group; tests in
+  `extension/test/unit/sessionDoctorModel.test.ts` — verify: `cd extension && npm ci
+  && npm run copy-cli && npm run build && npm run test:unit` passes
+
+- [x] 5.2 Surface stalls in Mission Control: `snapshot.mjs` `normalize()` exposes
+  `stalls` (`{ summary, stalledTurns, stalledMinutes } | null`), `public/panels/window.js`
+  renders a warning tag in the window banner, `fixtures/dashboard.json` gains a
+  `stalls` section, tests in `snapshot.test.mjs`/`window.test.mjs` — verify: `node
+  --test 'canvas/**/*.test.mjs'` passes, and on local:3168 (`node
+  canvas/agento-mission-control/dev.mjs --port 3168`) the browser shows the stall tag
+  in the banner, captured as `evidence/step-5-2-canvas-stalls.png`
+
+- [x] 5.3 (added 2026-11-04, review) Make the banner stall tag legible: in
+  `canvas/agento-mission-control/public/styles.css` `.mc-window-tag-warn` currently
+  sets `color: #8a6d00` on `rgba(255,193,7,.18)` over the role-coloured banner
+  (build window `#1e7b34`), ≈1.1:1 contrast — the word "Stalls" is unreadable in
+  both `evidence/step-5-2-canvas-stalls.png` and the review's
+  `evidence/review-5-2-banner-zoom.png`. Use a solid amber fill with dark text (for
+  example `background: #ffc107; color: #3b2e00; border-color: #ffc107`) or inherit
+  the banner's text colour like the `hosted` tag, so the label reaches ≥ 4.5:1 on
+  every `ROLE_COLORS` banner (all six role backgrounds); export a small
+  `stallsTag(state)` helper (or `render`) from `public/panels/window.js` and assert in
+  `window.test.mjs` that its HTML for the fixture contains the `mc-window-tag-warn`
+  span with the summary as `title` and nothing for `stalls: null` — verify: `node --test 'canvas/**/*.test.mjs'` passes
+  and a fresh local:3168 screenshot replaces `evidence/step-5-2-canvas-stalls.png`
+  with the "Stalls" label readable in the banner
+  - Result (2026-11-04): `node --test 'canvas/**/*.test.mjs'` 131/131 pass; fresh
+    local:3168 screenshot re-captured into `evidence/step-5-2-canvas-stalls.png` —
+    text "Stalls", `title` = the fixture summary, computed `rgb(59,46,0)` on
+    `rgb(255,193,7)` → 8.17:1 contrast (≥ 4.5:1).
+
+## Phase 6: Docs
+
+- [x] 6.1 Add `## Known stall sources` to `docs/copilot-harness.md` (MCP `tools/list`
+  timeout mechanism, 60 s and 40–54 s signatures, subagent start-up stalls, 128-tool
+  cap, observed `copilotVersion`, reading `doctor`/`stalls`, the fix), update
+  `docs/extension.md` (Session & Doctor, Mission Control) and add a `CHANGELOG.md`
+  entry under the next version heading per the file's convention — verify: `node
+  --test tests/customizations.test.mjs` passes (canonical-command spelling) and the
+  three sections read correctly
+
+## Phase 7: Railway removal and live verification
+
+- [x] 7.1 (manual) Remove the `railway` entry from `~/.copilot/mcp-config.json`, run
+  **Developer: Reload Window** in VS Code, open a new chat in this worktree, send any
+  short prompt, and screenshot the chat showing no "128 tools … not provided" warning
+  — verify: [screenshot](evidence/step-7-1-railway-removed.png); completed 2026-11-04;
+  removal at 2026-11-04T05:05:06Z (backup `~/.copilot/mcp-config.json.bak-20261104T050506Z`,
+  mode 600; no other MCP servers remain)
+
+- [x] 7.2 Verify the live state after removal in the session that runs this step —
+  verify: `node scripts/agento.mjs doctor` reports `mcp-servers` `ok` (no configured
+  wildcard server, no timeout in the last 60 min) and `turn-stalls` `ok` or 0 stalled
+  turns for the current session; `node scripts/agento.mjs stalls` shows `current.stalledTurns`
+  0 after ≥ 10 turns; `grep -h "MCP request timed out\|Railway MCP proxy error"
+  ~/.copilot/logs/process-*.log` finds no line timestamped after the 7.1 removal time;
+  outputs recorded on this step line
+  - Results (2026-11-04): doctor `mcp-servers` ok — "no MCP servers configured; railway
+    timed out 590× in 24 h (last 22:09Z)"; doctor `turn-stalls` ok — "0 stalled turns in
+    session 135f7c19"; `agento.mjs stalls` current.sessionId
+    `135f7c19-bdca-450a-b9e5-395a0beef905` (newest session for this checkout),
+    current.stalledTurns 0, window 3 sessions / 0 stalled turns, summary null, exit 0;
+    log grep matched 20,242 historical lines, max timestamp 2026-11-03T22:09:41.829Z,
+    0 lines after 2026-11-04T05:05:06Z.
+
+## Phase 8: Full gate
+
+- [x] 8.1 Integrate `origin/main` (both halves), then run the full gate and compare
+  against the plan.md baseline — verify: `shellcheck scripts/hooks/*.sh
+  scripts/wait-for-checks.sh` exits 0 with no findings (static v0.10.0 binary if not
+  installed); `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs'
+  'canvas/**/*.test.mjs'` ≥ 843 tests, 0 fail; every guard replay smoke listed in
+  AGENTS.md exits 0; `cd extension && npm run copy-cli && npm run build && npm run
+  test:unit` passes; `git status --porcelain --untracked-files=all` empty in both
+  halves; results recorded on this step line
+  - Results (2026-11-03): shellcheck v0.10.0 exit 0, no findings; node suite 860
+    tests, 0 fail (baseline 843); 5/5 guard replay smokes exit 0; extension build
+    (tsc) clean and 252 unit tests pass; both halves `git status --porcelain`
+    empty. Ran before 7.1 per the Autopilot directive (8.1 does not depend on 7.x).
+  - Re-audit (2026-11-04): origin/main unmoved since (`sync` merged: false, product
+    head still `445902e`); shellcheck v0.10.0 exit 0, no findings (static binary in
+    /tmp, deleted afterwards); node suite 860 tests, 0 fail (baseline 843); 5/5 guard
+    replay smokes exit 0; extension `npm ci` + `copy-cli` + `tsc` build clean + 252
+    unit tests pass; both halves `git status --porcelain --untracked-files=all` empty.
+  - Re-gate after 2.3/5.3 (2026-11-04): `sync` merged: false (origin/main still
+    `065ae87`, an ancestor); shellcheck v0.10.0 exit 0, no findings (static binary
+    unpacked to /tmp, deleted afterwards); node suite 862 tests, 0 fail (baseline
+    843); 5/5 guard replay smokes exit 0; extension `copy-cli` idempotent + `tsc`
+    build clean + 252 unit tests pass; both halves `git status --porcelain
+    --untracked-files=all` empty.
+
+## Follow-ups
