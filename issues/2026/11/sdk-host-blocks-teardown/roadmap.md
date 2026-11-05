@@ -4,6 +4,7 @@ branch: issue/sdk-host-blocks-teardown
 last-updated: 2026-11-04
 next-step: "1.1 Add the findOccupants regression test (#143) and extend fakeProc with cmdline/environ"
 github-issue: "#143"
+artifact-pr: "#78"
 ```
 
 ## Phase 1: Expose the defect
