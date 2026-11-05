@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/sdk-host-blocks-teardown
 last-updated: 2026-11-04
-next-step: "3.2 Wire the stop pass into ship teardown"
+next-step: "3.3 Regenerate the CLI copy and confirm the guard"
 github-issue: "#143"
 artifact-pr: "#78"
 ```
@@ -27,12 +27,12 @@ artifact-pr: "#78"
   - the existing `sleep`-occupant and `code --status` cases pass unchanged.
 
   — verify: `node --test scripts/commands/session.test.mjs` exit 0; record the counts — verified 2026-11-04: exit=0, `# not ok`=0, tests=37 pass=37 fail=0 skipped=0
-- [ ] 3.2 In `scripts/commands/ship.mjs` teardown, implement plan.md `## Approach` item 4: `teardown.stoppedHosts`, one `stop-host` action per stopped host, and the `kill` sentence appended to the paused-teardown message when it applies. Add Linux-only `scripts/commands/ship.test.mjs` cases, each spawning a stand-in host:
+- [x] 3.2 In `scripts/commands/ship.mjs` teardown, implement plan.md `## Approach` item 4: `teardown.stoppedHosts`, one `stop-host` action per stopped host, and the `kill` sentence appended to the paused-teardown message when it applies. Add Linux-only `scripts/commands/ship.test.mjs` cases, each spawning a stand-in host:
   - a foreign-extension host (`EXTENSION_PATH` under `extensions/other-ext/`) → `paused-teardown`; the message names `Copilot SDK extension host: other-ext` and contains `kill <pid>`; the child is still alive.
   - `SESSION_ID` equal to `COPILOT_AGENT_SESSION_ID` → `paused-teardown`; the child is still alive.
   - a Mission Control host plus a `code --status` stub listing `Folder (<half basename>)` → `paused-teardown`; the child is still alive.
 
-  — verify: `node --test scripts/commands/ship.test.mjs` exit 0 with the step 1.2 #143 test `ok` and the existing teardown tests unchanged; record the counts
+  — verify: `node --test scripts/commands/ship.test.mjs` exit 0 with the step 1.2 #143 test `ok` and the existing teardown tests unchanged; record the counts — verified 2026-11-04: exit=0, `# not ok`=0 (step 1.2 #143 test `ok`), tests=42 pass=42 fail=0 skipped=0
 - [ ] 3.3 Regenerate the CLI copy. Then confirm the guard inherits the labels without hook edits. — verify: `cd extension && npm run copy-cli` exit 0; `node --test tests/extension-bundle.test.mjs tests/guard.test.mjs` exit 0; `git diff --name-only origin/main...HEAD -- scripts/hooks .github/hooks` prints nothing; record the results
 
 ## Phase 4: Mission Control stops pinning its session cwd
