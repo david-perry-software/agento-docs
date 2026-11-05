@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: issue/sdk-host-blocks-teardown
-last-updated: 2026-11-04
-next-step: "review"
+last-updated: 2026-11-05
+next-step: ""
 github-issue: "#143"
 artifact-pr: "#78"
 ```
