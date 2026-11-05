@@ -1,0 +1,187 @@
+# extension_bootstrap.mjs hosts (comm code|node, safe keys only; capturing shell excluded)
+PID 1582678 comm=code cwd=/home/david/DP/soshiki
+  SESSION_ID=f84bb1fb-e570-4cf1-95af-5b4be4c8aa5e
+  EXTENSION_PATH=/home/david/.copilot/extensions/agento-mission-control/extension.mjs
+  COPILOT_EXTENSION_PARENT_PID=1249106
+PID 2027434 comm=code cwd=/home/david/DP/agento
+  SESSION_ID=90b6faff-ea16-4d6a-87d0-4b2170cf8155
+  EXTENSION_PATH=/home/david/.copilot/extensions/agento-mission-control/extension.mjs
+  COPILOT_EXTENSION_PARENT_PID=1249106
+PID 2280812 comm=code cwd=/home/david/DP/soshiki
+  SESSION_ID=f07181e9-c826-42ad-9acb-8451c0e6d091
+  EXTENSION_PATH=/home/david/.copilot/extensions/agento-mission-control/extension.mjs
+  COPILOT_EXTENSION_PARENT_PID=1249106
+PID 2337610 comm=code cwd=/home/david/DP/agento-worktrees/plan-20261105-000010
+  SESSION_ID=cc4781fe-9968-402f-9509-205354adad6a
+  EXTENSION_PATH=/home/david/.copilot/extensions/agento-mission-control/extension.mjs
+  COPILOT_EXTENSION_PARENT_PID=1249106
+PID 2338646 comm=code cwd=/home/david/DP/soshiki
+  SESSION_ID=c4554375-97db-4bb9-b929-73ac6749ce6e
+  EXTENSION_PATH=/home/david/.copilot/extensions/agento-mission-control/extension.mjs
+  COPILOT_EXTENSION_PARENT_PID=1249106
+PID 3728998 comm=code cwd=/home/david/DP/soshiki
+  SESSION_ID=f915083e-11dd-443b-a527-9ba1c6b43a8d
+  EXTENSION_PATH=/home/david/.copilot/extensions/agento-mission-control/extension.mjs
+  COPILOT_EXTENSION_PARENT_PID=1249106
+
+# code --status window lines
+Version:          Code 1.142.0 (6d62b1d5dace93a33b3a6d3eca1317bd5e15bcb1, 2026-10-15T03:02:17Z)
+OS Version:       Linux x64 6.14.0-37-generic
+CPUs:             Intel(R) Core(TM) Ultra 7 255HX (12 x 0)
+Memory (System):  31.30GB (18.38GB free)
+Load (avg):       0, 1, 1
+VM:               13%
+Screen Reader:    no
+Process Argv:     --force-device-scale-factor=1 --crash-reporter-id e418641a-925b-48f7-ab47-d02d3cac4167
+GPU Status:       2d_canvas:                              unavailable_software
+                  GPU0:                                   VENDOR= 0x15ad [Google Inc. (VMware, Inc.)], DEVICE=0x0405 [ANGLE (VMware Inc., SVGA3D; build: RELEASE;  LLVM;, OpenGL 4.3 (Core Profile) Mesa 25.0.7-0ubuntu0.24.04.2)], DRIVER_VENDOR=Mesa, DRIVER_VERSION=25.0.7 *ACTIVE*
+                  Machine model name:                     
+                  Machine model version:                  
+                  direct_rendering_display_compositor:    disabled_off_ok
+                  gpu_compositing:                        disabled_software
+                  multiple_raster_threads:                enabled_on
+                  opengl:                                 unavailable_off
+                  rasterization:                          unavailable_off
+                  raw_draw:                               disabled_off_ok
+                  skia_graphite:                          unavailable_off
+                  trees_in_viz:                           disabled_off
+                  video_decode:                           unavailable_off
+                  video_encode:                           disabled_software
+                  vulkan:                                 disabled_off
+                  webgl:                                  unavailable_off
+                  webgpu:                                 unavailable_software
+                  webgpu_on_vk_via_gl_interop:            disabled_off
+                  webnn:                                  disabled_off
+GPU Log Messages:
+[1248659:1102/090710.551121:ERROR:media/gpu/vaapi/vaapi_wrapper.cc:1796] : vaInitialize failed: unknown libva error
+
+[1248659:1103/134412.064503:WARNING:ui/gfx/x/connection.cc:61] : X error received.  Request: Shm::PutImageRequest, Error: DrawableError{.sequence = 51380, .bad_value = 41943065, .minor_opcode = 3, .major_opcode = 131}
+
+
+CPU %	Mem MB	   PID	Process
+    0	64624465265	1248622	code
+    0	     0	1248625	   zygote
+    0	43082976844	1248659	     gpu-process
+    0	     0	1248711	       broker
+    0	     0	1248626	   zygote
+    0	     0	1248628	     zygote
+    0	107707442109	1248687	window [1] (Welcome - agento (Workspace) - Visual Studio Code)
+    0	150790418953	1248695	window [2] (soshiki (Workspace) - Visual Studio Code)
+    1	183102651586	2108505	window [14] (Welcome - plan-20261105-000010 (Workspace) - Visual Studio Code)
+    0	32312232633	2302990	       window
+    0	21541488422	1248662	   utility-network-service
+    0	107707442109	1248914	agent-host
+    0	883201025295	1249106	     /usr/share/code/resources/app/node_modules.asar.unpacked/@github/copilot-sdk-linux-x64/prebuilds/linux-x64/copilot-runtime --headless --no-auto-update --log-level info --stdio --no-auto-login --remote
+    0	10770744211	1582678	       /usr/share/code/code /usr/share/code/resources/app/node_modules.asar.unpacked/@github/copilot-sdk-linux-x64/preloads/extension_bootstrap.mjs
+    0	32312232633	2027434	       /usr/share/code/code /usr/share/code/resources/app/node_modules.asar.unpacked/@github/copilot-sdk-linux-x64/preloads/extension_bootstrap.mjs
+    0	21541488422	2280812	       /usr/share/code/code /usr/share/code/resources/app/node_modules.asar.unpacked/@github/copilot-sdk-linux-x64/preloads/extension_bootstrap.mjs
+    0	32312232633	2337610	       /usr/share/code/code /usr/share/code/resources/app/node_modules.asar.unpacked/@github/copilot-sdk-linux-x64/preloads/extension_bootstrap.mjs
+    0	32312232633	2338646	       /usr/share/code/code /usr/share/code/resources/app/node_modules.asar.unpacked/@github/copilot-sdk-linux-x64/preloads/extension_bootstrap.mjs
+    0	10770744211	2611308	       node /tmp/sdk-repro-capture.mjs /home/david/DP/agento-docs-worktrees/plan-20261105-000010/issues/2026/11/sdk-host-blocks-teardown/evidence/reproduction-fixed.txt
+    0	     0	2611315	         sh /usr/bin/code --force-device-scale-factor=1 --status
+    0	32312232633	2611320	           electron-nodejs (cli.js)
+    0	43082976844	2611333	             /usr/share/code/code --force-device-scale-factor=1 --status
+    0	10770744211	2611336	               zygote
+    0	21541488422	2611370	                 gpu-process
+    0	10770744211	2611337	               zygote
+    0	     0	2611339	                 zygote
+    0	21541488422	2611373	               utility-network-service
+    0	     0	2611399	               /bin/sh -c /usr/bin/ps -ax -o pid=,ppid=,pcpu=,pmem=,command=
+    0	     0	2611400	                 /usr/bin/ps -ax -o pid=,ppid=,pcpu=,pmem=,command=
+    0	10770744211	3728998	       /usr/share/code/code /usr/share/code/resources/app/node_modules.asar.unpacked/@github/copilot-sdk-linux-x64/preloads/extension_bootstrap.mjs
+    0	32312232633	1252233	     fileWatcher
+    0	32312232633	1248962	shared-process
+    0	32312232633	1248964	file-watcher [1]
+    0	64624465265	1249072	extension-host [2]
+    0	     0	1249347	     /usr/share/code/code /usr/share/code/resources/app/extensions/markdown-language-features/dist/serverWorkerMain --node-ipc --clientProcessId=1249072
+    0	     0	1249796	     electron-nodejs (server-node.js)
+    0	10770744211	1250943	     /usr/share/code/code /usr/share/code/resources/app/extensions/json-language-features/server/dist/node/jsonServerMain --node-ipc --clientProcessId=1249072
+    0	53853721055	1249108	extension-host [1]
+    0	     0	1249746	     electron-nodejs (server-node.js)
+    0	10770744211	1250984	     /usr/share/code/code /usr/share/code/resources/app/extensions/json-language-features/server/dist/node/jsonServerMain --node-ipc --clientProcessId=1249108
+    0	     0	1249222	   dconf watch /system/proxy/
+    0	43082976844	1249233	file-watcher [2]
+    0	21541488422	1757284	   utility-process
+    0	32312232633	2108753	file-watcher [14]
+    0	118478186320	2108789	extension-host [14]
+    0	32312232633	2110484	     electron-nodejs (server-node.js)
+    0	32312232633	2111183	     /usr/share/code/code /usr/share/code/resources/app/extensions/json-language-features/server/dist/node/jsonServerMain --node-ipc --clientProcessId=2108789
+    0	10770744211	2280396	pty-host
+
+Workspace Stats: 
+|  Window (Welcome - plan-20261105-000010 (Workspace) - Visual Studio Code)
+|  Window (soshiki (Workspace) - Visual Studio Code)
+|  Window (Welcome - agento (Workspace) - Visual Studio Code)
+|    Folder (plan-20261105-000010): 456 files
+|      File types: mjs(164) md(103) json(75) ts(74) js(21) sh(4) txt(3)
+|                  html(2) css(2) git(1) other(7)
+|      Conf files: github-prompts-dir(26) github-instructions-dir(5)
+|                  package.json(3) github-actions(1) agents.md(1)
+|                  tsconfig.json(1)
+|    Folder (soshiki): more than 20000 files
+|      File types: json(13064) zst(6529) md(377) py(7) yml(6) pid(3) log(3)
+|                  png(2) sh(1) db(1) other(7)
+|      Conf files: github-actions(4) github-instructions-dir(3) agents.md(1)
+|                  github-prompts-dir(1)
+|    Folder (soshiki): more than 20000 files
+|      File types: json(13064) zst(6529) md(377) py(7) yml(6) pid(3) log(3)
+|                  png(2) sh(1) db(1) other(7)
+|      Conf files: github-actions(4) github-instructions-dir(3) agents.md(1)
+|                  github-prompts-dir(1)
+|    Folder (plan-20261105-000010): 580 files
+|      File types: md(310) png(171) txt(56) json(21) jsonl(5) mjs(5) sh(4)
+|                  gitkeep(3) jpg(2) log(2) other(1)
+|      Conf files: github-instructions-dir(2)
+|    Folder (agento-docs): 576 files
+|      File types: md(308) png(171) txt(55) json(21) jsonl(5) mjs(5) sh(4)
+|                  gitkeep(3) jpg(2) log(2)
+|      Conf files: github-instructions-dir(2)
+|    Folder (soshiki-docs): 3960 files
+|      File types: png(1029) log(931) md(792) json(640) txt(322) ndjson(176)
+|                  sh(13) mjs(11) ts(8) stderr(7) other(31)
+|      Conf files: github-instructions-dir(1)
+|    Folder (agento): 1943 files
+|      File types: json(474) js(209) md(179) mjs(165) log(152) svg(120)
+|                  map(82) ts(77) png(72) pak(58) other(355)
+|      Conf files: package.json(102) github-prompts-dir(26)
+|                  github-instructions-dir(5) agents.md(2) launch.json(2)
+|                  tsconfig.json(2) github-actions(1)
+
+
+# findOccupants(/tmp/agento-repro-EhUIGV)
+{
+  "processes": [
+    "PID 2611591 (Copilot SDK extension host: agento-mission-control, session orphan-0)"
+  ],
+  "folderWindow": false,
+  "workspaceWindow": false,
+  "details": [
+    "PID 2611591 (Copilot SDK extension host: agento-mission-control, session orphan-0)"
+  ],
+  "sdkHosts": [
+    {
+      "pid": 2611591,
+      "sessionId": "orphan-0000-session",
+      "extensionPath": "/tmp/agento-repro-EhUIGV/extensions/agento-mission-control/extension.mjs",
+      "extension": "agento-mission-control",
+      "parentPid": 2611308
+    }
+  ]
+}
+
+# stopOrphanSdkHosts(/tmp/agento-repro-EhUIGV, { dryRun: true })
+{
+  "stopped": [],
+  "skipped": [
+    {
+      "host": {
+        "pid": 2611591,
+        "sessionId": "orphan-0000-session",
+        "extensionPath": "/tmp/agento-repro-EhUIGV/extensions/agento-mission-control/extension.mjs",
+        "extension": "agento-mission-control",
+        "parentPid": 2611308
+      },
+      "reason": "would-stop"
+    }
+  ]
+}
