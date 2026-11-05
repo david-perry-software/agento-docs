@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/sdk-host-blocks-teardown
 last-updated: 2026-11-04
-next-step: "5.2 Update the docs and changelog"
+next-step: "6.1 Run the full lint gate"
 github-issue: "#143"
 artifact-pr: "#78"
 ```
@@ -59,7 +59,7 @@ artifact-pr: "#78"
   - `stopOrphanSdkHosts(<orphaned worktree>, { dryRun: true })`.
 
   When no orphaned host exists any more, spawn a stand-in host as in step 1.2 inside a temporary directory, and capture against that. Commit the capture as companion evidence `evidence/reproduction-fixed.txt`. — verify: the file shows `Copilot SDK extension host: agento-mission-control, session ` and a `would-stop` entry; `grep -ciE 'token|secret|password' evidence/reproduction-fixed.txt` prints 0 — verified 2026-11-04: `grep -c 'Copilot SDK extension host: agento-mission-control, session '`=2, `grep -c 'would-stop'`=1, `grep -ciE 'token|secret|password'`=0 (dryRun only; no real process signalled)
-- [ ] 5.2 Update the docs and the changelog:
+- [x] 5.2 Update the docs and the changelog:
   - `docs/commands.md` (close-session occupant check ~136-143, ship teardown ~245-253): the host label, the stop rule (Mission Control only, no window, not the caller, `SIGTERM`), the `kill` hint, and `stoppedHosts`.
   - `docs/architecture.md` (~94-110): SDK hosts in the shared occupant gate.
   - `docs/hooks.md` (~13, 132): the guard shows the host label and does not stop hosts.
@@ -67,7 +67,7 @@ artifact-pr: "#78"
   - The Mission Control canvas doc that describes its process: it leaves its start cwd.
   - `CHANGELOG.md`: a `Fixed.` bullet citing #143 under `## Unreleased`, created above `## 0.16.0` if absent.
 
-  — verify: `grep -l 'Copilot SDK extension host' docs/commands.md docs/architecture.md docs/hooks.md README.md` lists all four; `grep -c '#143' CHANGELOG.md` ≥ 1; `node --test tests/customizations.test.mjs` exit 0
+  — verify: `grep -l 'Copilot SDK extension host' docs/commands.md docs/architecture.md docs/hooks.md README.md` lists all four; `grep -c '#143' CHANGELOG.md` ≥ 1; `node --test tests/customizations.test.mjs` exit 0 — verified 2026-11-04: grep lists all four; `grep -c '#143' CHANGELOG.md`=1; `node --test tests/customizations.test.mjs` exit=0 (tests=67 pass=67 fail=0 skipped=0)
 
 ## Phase 6: Full gate
 
