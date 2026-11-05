@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/sdk-host-blocks-teardown
 last-updated: 2026-11-04
-next-step: "4.1 Leave the session cwd in the Mission Control canvas"
+next-step: "5.1 Capture the fixed reproduction evidence"
 github-issue: "#143"
 artifact-pr: "#78"
 ```
@@ -37,7 +37,7 @@ artifact-pr: "#78"
 
 ## Phase 4: Mission Control stops pinning its session cwd
 
-- [ ] 4.1 Implement plan.md `## Approach` item 5:
+- [x] 4.1 Implement plan.md `## Approach` item 5:
   - an exported `leaveSessionCwd({ cwd, chdir, homedir })`;
   - `extension.mjs` calls it before `joinSession` and passes `fallbackCwd` to `defineMissionControl`;
   - `canvas.mjs` uses `ctx.session?.workingDirectory ?? fallbackCwd ?? process.cwd()`.
@@ -48,7 +48,7 @@ artifact-pr: "#78"
   - `open` without `session.workingDirectory` uses `fallbackCwd` for the dashboard and windows calls;
   - the existing `workingDirectory` tests are unchanged.
 
-  — verify: `node --test 'canvas/**/*.test.mjs'` exit 0; `grep -n 'leaveSessionCwd' canvas/agento-mission-control/extension.mjs` shows the call placed before `joinSession`; record the counts
+  — verify: `node --test 'canvas/**/*.test.mjs'` exit 0; `grep -n 'leaveSessionCwd' canvas/agento-mission-control/extension.mjs` — verified 2026-11-04: exit=0, tests=134 pass=134 fail=0 skipped=0; grep shows `import … leaveSessionCwd …` (line 14) and `const fallbackCwd = leaveSessionCwd();` (line 20) shows the call placed before `joinSession`; record the counts
 
 ## Phase 5: Evidence and documentation
 
