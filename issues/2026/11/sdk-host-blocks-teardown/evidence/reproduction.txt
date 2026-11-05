@@ -1,0 +1,75 @@
+# Reproduction captured 2026-11-04T20:56:32-05:00 on Linux 6.14.0-37-generic
+
+## 1. Copilot SDK extension hosts (extension_bootstrap.mjs) and their cwd
+PID 1084104 comm=code ppid=1249106 (copilot-runtime) started=Wed Nov  4 16:46:34 2026 cwd=/home/david/DP/soshiki-worktrees/plan-20261104-163559
+  cmdline: /usr/share/code/code /usr/share/code/resources/app/node_modules.asar.unpacked/@github/copilot-sdk-linux-x64/preloads/extension_bootstrap.mjs 
+  env (safe keys only): COPILOT_EXTENSION_PARENT_PID=1249106 EXTENSION_PATH=/home/david/.copilot/extensions/agento-mission-control/extension.mjs SESSION_ID=e927bde1-9912-4cab-bb3c-7a245a38e240 
+PID 1582678 comm=code ppid=1249106 (copilot-runtime) started=Wed Nov  4 03:26:23 2026 cwd=/home/david/DP/soshiki
+  cmdline: /usr/share/code/code /usr/share/code/resources/app/node_modules.asar.unpacked/@github/copilot-sdk-linux-x64/preloads/extension_bootstrap.mjs 
+  env (safe keys only): COPILOT_EXTENSION_PARENT_PID=1249106 EXTENSION_PATH=/home/david/.copilot/extensions/agento-mission-control/extension.mjs SESSION_ID=f84bb1fb-e570-4cf1-95af-5b4be4c8aa5e 
+PID 2027434 comm=code ppid=1249106 (copilot-runtime) started=Wed Nov  4 18:24:44 2026 cwd=/home/david/DP/agento
+  cmdline: /usr/share/code/code /usr/share/code/resources/app/node_modules.asar.unpacked/@github/copilot-sdk-linux-x64/preloads/extension_bootstrap.mjs 
+  env (safe keys only): COPILOT_EXTENSION_PARENT_PID=1249106 EXTENSION_PATH=/home/david/.copilot/extensions/agento-mission-control/extension.mjs SESSION_ID=90b6faff-ea16-4d6a-87d0-4b2170cf8155 
+PID 2280812 comm=code ppid=1249106 (copilot-runtime) started=Mon Nov  2 23:27:17 2026 cwd=/home/david/DP/soshiki
+  cmdline: /usr/share/code/code /usr/share/code/resources/app/node_modules.asar.unpacked/@github/copilot-sdk-linux-x64/preloads/extension_bootstrap.mjs 
+  env (safe keys only): COPILOT_EXTENSION_PARENT_PID=1249106 EXTENSION_PATH=/home/david/.copilot/extensions/agento-mission-control/extension.mjs SESSION_ID=f07181e9-c826-42ad-9acb-8451c0e6d091 
+PID 2337610 comm=code ppid=1249106 (copilot-runtime) started=Wed Nov  4 20:49:42 2026 cwd=/home/david/DP/agento-worktrees/plan-20261105-000010
+  cmdline: /usr/share/code/code /usr/share/code/resources/app/node_modules.asar.unpacked/@github/copilot-sdk-linux-x64/preloads/extension_bootstrap.mjs 
+  env (safe keys only): COPILOT_EXTENSION_PARENT_PID=1249106 EXTENSION_PATH=/home/david/.copilot/extensions/agento-mission-control/extension.mjs SESSION_ID=cc4781fe-9968-402f-9509-205354adad6a 
+PID 2338646 comm=code ppid=1249106 (copilot-runtime) started=Wed Nov  4 20:49:59 2026 cwd=/home/david/DP/soshiki
+  cmdline: /usr/share/code/code /usr/share/code/resources/app/node_modules.asar.unpacked/@github/copilot-sdk-linux-x64/preloads/extension_bootstrap.mjs 
+  env (safe keys only): COPILOT_EXTENSION_PARENT_PID=1249106 EXTENSION_PATH=/home/david/.copilot/extensions/agento-mission-control/extension.mjs SESSION_ID=c4554375-97db-4bb9-b929-73ac6749ce6e 
+PID 3728998 comm=code ppid=1249106 (copilot-runtime) started=Tue Nov  3 14:08:40 2026 cwd=/home/david/DP/soshiki
+  cmdline: /usr/share/code/code /usr/share/code/resources/app/node_modules.asar.unpacked/@github/copilot-sdk-linux-x64/preloads/extension_bootstrap.mjs 
+  env (safe keys only): COPILOT_EXTENSION_PARENT_PID=1249106 EXTENSION_PATH=/home/david/.copilot/extensions/agento-mission-control/extension.mjs SESSION_ID=f915083e-11dd-443b-a527-9ba1c6b43a8d 
+
+## 2. The shared copilot-runtime parent
+PID 1249106 comm=copilot-runtime started=Mon Nov  2 14:29:40 2026
+  cmdline: /usr/share/code/resources/app/node_modules.asar.unpacked/@github/copilot-sdk-linux-x64/prebuilds/linux-x64/copilot-runtime --headless --no-auto-update --log-level info --stdio --no-auto-login --remote 
+
+## 3. VS Code windows/folders (code --status) — no window holds plan-20261104-163559
+|  Window (Welcome - plan-20261105-000010 (Workspace) - Visual Studio Code)
+|  Window (soshiki (Workspace) - Visual Studio Code)
+|  Window (Welcome - agento (Workspace) - Visual Studio Code)
+|    Folder (plan-20261105-000010): 456 files
+|    Folder (soshiki): more than 20000 files
+|    Folder (soshiki): more than 20000 files
+|    Folder (agento-docs): 576 files
+|    Folder (plan-20261105-000010): 578 files
+|    Folder (soshiki-docs): 3931 files
+|    Folder (agento): 1943 files
+
+## 4. git worktree registration of the target
+/home/david/DP/soshiki-worktrees/plan-20261104-163559              9652f34d [feature/oauth-byoa-surfaces]
+
+## 5. The occupant gate's verdict (scripts/worktree-occupants.mjs findOccupants, agento @ 0e8d36b)
+{
+ "processes": [
+  "PID 1084104 (code)",
+  "PID 2052821 (temporal)",
+  "PID 2052960 (node)",
+  "PID 2052972 (sh)",
+  "PID 2052973 (node)",
+  "PID 2053219 (node)",
+  "PID 2053256 (sh)",
+  "PID 2053258 (node)",
+  "PID 2053302 (next-server??v1)",
+  "PID 2157527 (node)",
+  "PID 2157536 (esbuild)",
+  "PID 2255086 (node)"
+ ],
+ "folderWindow": false,
+ "workspaceWindow": false,
+ "details": [
+  "PID 1084104 (code)",
+  "PID 2052821 (temporal)",
+  "PID 2052960 (node)",
+  "and 9 more processes"
+ ]
+}
+
+## 6. Message ship prints at teardown (scripts/commands/ship.mjs wording, details as computed above)
+paused at teardown (worktree /home/david/DP/soshiki-worktrees/plan-20261104-163559 still open): product half /home/david/DP/soshiki-worktrees/plan-20261104-163559: PID 1084104 (code), PID 2052821 (temporal), PID 2052960 (node), and 9 more processes; close that VS Code window or terminal, then re-send /agento ship <slug>
+
+## 7. The calling session's identity, available to the CLI
+COPILOT_AGENT_SESSION_ID=cc4781fe-9968-402f-9509-205354adad6a (equals SESSION_ID of this session's own host above)
