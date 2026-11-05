@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/sdk-host-blocks-teardown
 last-updated: 2026-11-04
-next-step: "5.1 Capture the fixed reproduction evidence"
+next-step: "5.2 Update the docs and changelog"
 github-issue: "#143"
 artifact-pr: "#78"
 ```
@@ -52,13 +52,13 @@ artifact-pr: "#78"
 
 ## Phase 5: Evidence and documentation
 
-- [ ] 5.1 Re-run the reproduction against this branch, read-only. Capture these items:
+- [x] 5.1 Re-run the reproduction against this branch, read-only. Capture these items:
   - every `extension_bootstrap.mjs` host's PID, cwd, and safe keys, filtered to `comm` `code`/`node` and excluding the capturing shell;
   - `code --status` window lines;
   - `findOccupants(<orphaned worktree>)` from this branch;
   - `stopOrphanSdkHosts(<orphaned worktree>, { dryRun: true })`.
 
-  When no orphaned host exists any more, spawn a stand-in host as in step 1.2 inside a temporary directory, and capture against that. Commit the capture as companion evidence `evidence/reproduction-fixed.txt`. — verify: the file shows `Copilot SDK extension host: agento-mission-control, session ` and a `would-stop` entry; `grep -ciE 'token|secret|password' evidence/reproduction-fixed.txt` prints 0
+  When no orphaned host exists any more, spawn a stand-in host as in step 1.2 inside a temporary directory, and capture against that. Commit the capture as companion evidence `evidence/reproduction-fixed.txt`. — verify: the file shows `Copilot SDK extension host: agento-mission-control, session ` and a `would-stop` entry; `grep -ciE 'token|secret|password' evidence/reproduction-fixed.txt` prints 0 — verified 2026-11-04: `grep -c 'Copilot SDK extension host: agento-mission-control, session '`=2, `grep -c 'would-stop'`=1, `grep -ciE 'token|secret|password'`=0 (dryRun only; no real process signalled)
 - [ ] 5.2 Update the docs and the changelog:
   - `docs/commands.md` (close-session occupant check ~136-143, ship teardown ~245-253): the host label, the stop rule (Mission Control only, no window, not the caller, `SIGTERM`), the `kill` hint, and `stoppedHosts`.
   - `docs/architecture.md` (~94-110): SDK hosts in the shared occupant gate.
