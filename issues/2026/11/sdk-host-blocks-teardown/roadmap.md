@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/sdk-host-blocks-teardown
 last-updated: 2026-11-04
-next-step: "3.3 Regenerate the CLI copy and confirm the guard"
+next-step: "4.1 Leave the session cwd in the Mission Control canvas"
 github-issue: "#143"
 artifact-pr: "#78"
 ```
@@ -33,7 +33,7 @@ artifact-pr: "#78"
   - a Mission Control host plus a `code --status` stub listing `Folder (<half basename>)` → `paused-teardown`; the child is still alive.
 
   — verify: `node --test scripts/commands/ship.test.mjs` exit 0 with the step 1.2 #143 test `ok` and the existing teardown tests unchanged; record the counts — verified 2026-11-04: exit=0, `# not ok`=0 (step 1.2 #143 test `ok`), tests=42 pass=42 fail=0 skipped=0
-- [ ] 3.3 Regenerate the CLI copy. Then confirm the guard inherits the labels without hook edits. — verify: `cd extension && npm run copy-cli` exit 0; `node --test tests/extension-bundle.test.mjs tests/guard.test.mjs` exit 0; `git diff --name-only origin/main...HEAD -- scripts/hooks .github/hooks` prints nothing; record the results
+- [x] 3.3 Regenerate the CLI copy. Then confirm the guard inherits the labels without hook edits. — verify: `cd extension && npm run copy-cli` exit 0; `node --test tests/extension-bundle.test.mjs tests/guard.test.mjs` exit 0; `git diff --name-only origin/main...HEAD -- scripts/hooks .github/hooks` prints nothing; record the results — verified 2026-11-04: `cd extension && npm run copy-cli` exit=0; `node --test tests/extension-bundle.test.mjs tests/guard.test.mjs` exit=0 (tests=53 pass=53 fail=0 skipped=0); `git diff --name-only origin/main...HEAD -- scripts/hooks .github/hooks` prints nothing
 
 ## Phase 4: Mission Control stops pinning its session cwd
 
