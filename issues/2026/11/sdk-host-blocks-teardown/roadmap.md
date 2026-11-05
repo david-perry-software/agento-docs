@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/sdk-host-blocks-teardown
 last-updated: 2026-11-04
-next-step: "3.1 Wire the stop pass into removeSessionPair and close-session"
+next-step: "3.2 Wire the stop pass into ship teardown"
 github-issue: "#143"
 artifact-pr: "#78"
 ```
@@ -20,13 +20,13 @@ artifact-pr: "#78"
 
 ## Phase 3: Wire into teardown and close-session
 
-- [ ] 3.1 In `scripts/lib/session.mjs` `removeSessionPair`, implement plan.md `## Approach` item 3: a stop pass per registered, on-disk half before the occupant gate, `out.stoppedHosts`, and the `kill <pid>` sentence for remaining `foreign-extension`/`still-running` hosts. In `scripts/commands/session.mjs`, surface `stoppedHosts` in close-session JSON. Add `scripts/commands/session.test.mjs` cases, Linux-only, using stand-in hosts spawned as in 1.2:
+- [x] 3.1 In `scripts/lib/session.mjs` `removeSessionPair`, implement plan.md `## Approach` item 3: a stop pass per registered, on-disk half before the occupant gate, `out.stoppedHosts`, and the `kill <pid>` sentence for remaining `foreign-extension`/`still-running` hosts. In `scripts/commands/session.mjs`, surface `stoppedHosts` in close-session JSON. Add `scripts/commands/session.test.mjs` cases, Linux-only, using stand-in hosts spawned as in 1.2:
   - an orphaned Mission Control host is stopped and the close proceeds;
   - `--dry-run` reports `would-stop` and the child stays alive;
   - a foreign-extension host blocks, naming the host label and ending with `kill <pid>.`;
   - the existing `sleep`-occupant and `code --status` cases pass unchanged.
 
-  — verify: `node --test scripts/commands/session.test.mjs` exit 0; record the counts
+  — verify: `node --test scripts/commands/session.test.mjs` exit 0; record the counts — verified 2026-11-04: exit=0, `# not ok`=0, tests=37 pass=37 fail=0 skipped=0
 - [ ] 3.2 In `scripts/commands/ship.mjs` teardown, implement plan.md `## Approach` item 4: `teardown.stoppedHosts`, one `stop-host` action per stopped host, and the `kill` sentence appended to the paused-teardown message when it applies. Add Linux-only `scripts/commands/ship.test.mjs` cases, each spawning a stand-in host:
   - a foreign-extension host (`EXTENSION_PATH` under `extensions/other-ext/`) → `paused-teardown`; the message names `Copilot SDK extension host: other-ext` and contains `kill <pid>`; the child is still alive.
   - `SESSION_ID` equal to `COPILOT_AGENT_SESSION_ID` → `paused-teardown`; the child is still alive.
