@@ -386,3 +386,58 @@ Affected files: `scripts/worktree-occupants.mjs` (+test), `scripts/lib/session.m
   nothing.
 - [ ] Docs and CHANGELOG describe the new host label, the stop rule, and the `kill`
   hint. Verify: roadmap step 5.2 greps.
+
+## Resolution
+
+**Root cause.** The shared occupant gate (`findOccupants` in
+`scripts/worktree-occupants.mjs`) classified every process by `comm` alone, so a
+Copilot SDK extension host (one `code …/preloads/extension_bootstrap.mjs` process
+per chat session under the shared `copilot-runtime`, shown as `(code)` or `(node)`)
+was indistinguishable from an editor process. Nothing read `cmdline`/`environ`, so
+an orphaned host whose VS Code window had closed still read as an anonymous
+occupant; and the Mission Control extension never left its inherited session cwd,
+so its host pinned the worktree for the life of the shared runtime. `removeSessionPair`
+(`scripts/lib/session.mjs`) therefore paused both `/agento ship` teardown and
+`close-session` with `PID <n> (code)` and no way forward.
+
+**What changed.**
+
+- `scripts/worktree-occupants.mjs`: `findOccupants` now reads `/proc/<pid>/cmdline`,
+  classifies an `extension_bootstrap.mjs` host by command line (not `comm`), keeps
+  only three safe environ keys (`SESSION_ID`, `EXTENSION_PATH`,
+  `COPILOT_EXTENSION_PARENT_PID`), labels the host
+  `PID <n> (Copilot SDK extension host: <extension>, session <id8>)`, lists hosts
+  first in `details`, and returns `sdkHosts`. A new `stopOrphanSdkHosts` sends
+  `SIGTERM` (never `SIGKILL`) only to an orphaned host running Agento's own
+  Mission Control extension, when `code --status` shows no window for the target
+  and the host is not the calling session; it re-verifies the PID's `cmdline` and
+  `SESSION_ID` immediately before signalling (PID-reuse guard), polls for exit
+  (zombie-aware, bounded by `waitMs`), and under `dryRun` reports `would-stop`.
+- `scripts/lib/session.mjs` `removeSessionPair`: a stop pass per registered,
+  on-disk half before the occupant gate, `out.stoppedHosts`, and a
+  ` Stop the orphaned Copilot SDK extension hosts with: kill <pid>…` sentence when a
+  `foreign-extension`/`still-running` host still blocks.
+- `scripts/commands/session.mjs` and `scripts/commands/ship.mjs`: close-session
+  surfaces `stoppedHosts`; ship teardown records one `stop-host` action per stopped
+  host and appends the same `kill` sentence to the paused-teardown message.
+- `canvas/agento-mission-control/`: an exported `leaveSessionCwd` records the start
+  cwd and chdirs to the home directory (failure tolerated); `extension.mjs` calls
+  it before `joinSession` and passes the recorded cwd to `defineMissionControl`,
+  and `canvas.mjs` uses `ctx.session?.workingDirectory ?? fallbackCwd ??
+  process.cwd()`. The host no longer pins the worktree it was started in.
+- `extension/cli/` regenerated; docs (`commands.md`, `architecture.md`, `hooks.md`,
+  `README.md`, `extension.md`) and `CHANGELOG.md` updated. No
+  `scripts/hooks/` or `.github/hooks/` edits.
+
+**Proof.** The two exposing regression tests fail before the fix (recorded in
+roadmap steps 1.1–1.3: the `findOccupants` #143 test and the ship-teardown #143
+test, 2 `not ok` in the combined run) and pass after it. Final gates:
+`node --test scripts/worktree-occupants.test.mjs scripts/commands/ship.test.mjs`
+exit 0; full suite
+`node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'`
+exit 0 with 942 tests, 0 fail; five guard smokes exit 0; shellcheck v0.10.0 exit 0
+with no findings; `cd extension && npm ci && npm run copy-cli && npm run test:unit
+&& npm run build` exit 0; and
+`git diff --name-only origin/main...HEAD -- scripts/hooks .github/hooks` is empty.
+The read-only reproduction capture in `evidence/reproduction-fixed.txt` shows the
+new host label and a `would-stop` entry with no secret material.

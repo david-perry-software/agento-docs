@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: issue/sdk-host-blocks-teardown
 last-updated: 2026-11-04
-next-step: "6.1 Run the full lint gate"
+next-step: "review"
 github-issue: "#143"
 artifact-pr: "#78"
 ```
@@ -71,14 +71,14 @@ artifact-pr: "#78"
 
 ## Phase 6: Full gate
 
-- [ ] 6.1 Run the full lint gate from plan.md `## Research` and compare it with the baseline. If `shellcheck` is still missing, use the v0.10.0 release binary the same way the baseline did.
+- [x] 6.1 Run the full lint gate from plan.md `## Research` and compare it with the baseline. If `shellcheck` is still missing, use the v0.10.0 release binary the same way the baseline did.
   - `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh`: exit 0, no findings.
   - The five AGENTS.md guard smokes: each exit 0.
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'`: exit 0, ≥ 919 tests, 0 fail.
   - `cd extension && npm ci && npm run copy-cli && npm run test:unit && npm run build`: exit 0.
   - `git status --porcelain --untracked-files=all` is empty in both halves after committing.
 
-  — verify: each command's exit status and counts recorded on this line; no new findings compared with the baseline
+  — verify: each command's exit status and counts recorded on this line; no new findings compared with the baseline — verified 2026-11-04: shellcheck v0.10.0 exit=0 no findings; 5 guard smokes exit=0; `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` exit=0 (tests=942 pass=942 fail=0 skipped=0, ≥ 919); `cd extension && npm ci && npm run copy-cli && npm run test:unit && npm run build` exit=0; `git status --porcelain --untracked-files=all` empty in both halves
 
 ## Follow-ups
 
