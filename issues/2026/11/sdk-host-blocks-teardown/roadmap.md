@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/sdk-host-blocks-teardown
 last-updated: 2026-11-04
-next-step: "2.2 Add stopOrphanSdkHosts"
+next-step: "3.1 Wire the stop pass into removeSessionPair and close-session"
 github-issue: "#143"
 artifact-pr: "#78"
 ```
@@ -16,7 +16,7 @@ artifact-pr: "#78"
 ## Phase 2: Classify and stop SDK hosts
 
 - [x] 2.1 In `scripts/worktree-occupants.mjs`, implement plan.md `## Approach` item 1. Read `cmdline`, and for hosts only `environ` with exactly three keys. Add the `sdkHosts` field and the host label, list hosts first in `details`, and export `isMissionControlHost`. Add tests: a host running as `node` (comm `node`) is still a host; an `environ` without `EXTENSION_PATH` gives `extension: "unknown"`; a non-host process with an `environ` is never read for keys (its `GITHUB_TOKEN` never appears); a host outside the target is ignored; `isMissionControlHost` is true only for `…/agento-mission-control/extension.mjs`. — verify: `node --test scripts/worktree-occupants.test.mjs` exit 0 with the step 1.1 #143 test `ok` and every pre-existing test unchanged and `ok`; record the counts — verified 2026-11-04: exit=0, `# not ok`=0 (step 1.1 #143 test `ok`), tests=15 pass=15 fail=0 skipped=0
-- [ ] 2.2 In the same module, add `stopOrphanSdkHosts` per plan.md `## Approach` item 2, with injectable `procDir`, `codeStatus`, `callerSessionId`, `signal`, `waitMs`, and `dryRun`. Add tests with a fake `/proc` and a `signal` spy. Eligible host → `signal(pid, "SIGTERM")` once and `stopped` (the fake removes its `/proc/<pid>` dir in the spy). Each of these sends no signal and records its reason: `code --status` Folder match → `window-open`; Workspace/Window match → `window-open`; `sessionId === callerSessionId` → `calling-session`; foreign `EXTENSION_PATH` → `foreign-extension`; `SESSION_ID` rewritten between scan and signal → `changed`; `dryRun` → `would-stop`. A survivor after `waitMs: 50` → `still-running`, with total elapsed under 1 s. The function never sends `SIGKILL`. — verify: `node --test scripts/worktree-occupants.test.mjs` exit 0 with the new tests `ok`; record the counts
+- [x] 2.2 In the same module, add `stopOrphanSdkHosts` per plan.md `## Approach` item 2, with injectable `procDir`, `codeStatus`, `callerSessionId`, `signal`, `waitMs`, and `dryRun`. Add tests with a fake `/proc` and a `signal` spy. Eligible host → `signal(pid, "SIGTERM")` once and `stopped` (the fake removes its `/proc/<pid>` dir in the spy). Each of these sends no signal and records its reason: `code --status` Folder match → `window-open`; Workspace/Window match → `window-open`; `sessionId === callerSessionId` → `calling-session`; foreign `EXTENSION_PATH` → `foreign-extension`; `SESSION_ID` rewritten between scan and signal → `changed`; `dryRun` → `would-stop`. A survivor after `waitMs: 50` → `still-running`, with total elapsed under 1 s. The function never sends `SIGKILL`. — verify: `node --test scripts/worktree-occupants.test.mjs` exit 0 with the new tests `ok`; record the counts — verified 2026-11-04: exit=0, `# not ok`=0 (new stopOrphanSdkHosts tests `ok`), tests=22 pass=22 fail=0 skipped=0
 
 ## Phase 3: Wire into teardown and close-session
 
