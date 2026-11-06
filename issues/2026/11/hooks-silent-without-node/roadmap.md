@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/hooks-silent-without-node
 last-updated: 2026-11-06
-next-step: "4.2 Run the full gate (§5) and compare with the plan.md ## Research baseline"
+next-step: "4.3 Write plan.md ## Resolution"
 github-issue: "#149"
 artifact-pr: "#81"
 ```
@@ -133,13 +133,17 @@ artifact-pr: "#81"
   Copilot format, Copilot companion, and Copilot fixtures. — verify: each exits 0
   with no mismatches. Record the five exit codes on this line.
   — recorded: plain=0, companion=0, Copilot=0, Copilot companion=0, Copilot fixtures=0.
-- [ ] 4.2 Run the full gate (§5) and compare it with the plan.md `## Research`
+- [x] 4.2 Run the full gate (§5) and compare it with the plan.md `## Research`
   baseline (945/945, shellcheck clean). — verify:
   - `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` exits 0 with no
     findings.
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'`
     exits 0 with fail 0, and the test count is 945 plus the new #149 tests.
   - Record the counts on this line.
+  — recorded: `shellcheck` exit 0, no findings; full suite `# tests 948 / pass 948 / fail 0`
+  (baseline 945 + 3 new #149 tests). Repair beyond plan.md: `restrictedPath` gained a
+  `bash` symlink for the hook-runtime probe, which made `shipStub`'s own bash symlink
+  collide (EEXIST); its coreutils loop is now idempotent (skips already-linked tools).
 - [ ] 4.3 Write plan.md `## Resolution`: the root cause (the silent `|| exit 0` with
   no version gate, and doctor inspecting its own process), what changed and why, and
   proof (the #149 test names `ok` in 4.2, `evidence/after-no-node.txt`, and the
