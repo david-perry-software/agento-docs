@@ -4,6 +4,7 @@ branch: issue/fixture-sanitizer-path-boundary
 last-updated: 2026-11-05
 next-step: "1.1 Add the makeSanitizeCtx overrides seam and the failing #145 boundary test"
 github-issue: "#145"
+artifact-pr: "#79"
 ```
 
 ## Phase 1: Expose the defect
