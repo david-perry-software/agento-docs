@@ -1,0 +1,18 @@
+# Reproduction — hooks silent without node (captured 2026-11-06 at origin/main c4db856)
+# PATH=<NONODE> holds only bash, git, cat, dirname symlinks (no node).
+
+$ printf '{"cwd":"<REPO>"}' | PATH=<NONODE> bash scripts/hooks/session-context.sh
+exit=0  stdout_bytes=0  stderr_bytes=0
+
+$ printf '{"cwd":"<REPO>","tool_name":"Bash","tool_input":{"command":"git push origin main"}}' | PATH=<NONODE> bash scripts/hooks/delivery-guard.sh
+exit=0  stdout_bytes=0  stderr_bytes=0
+
+# Same guard payload with node v22.23.2 on PATH (expected protection):
+$ ... | bash scripts/hooks/delivery-guard.sh
+{"permissionDecision": "deny", "permissionDecisionReason": "Direct commits/pushes to main are forbidden; use a work branch and a pull request.", "hookSpecificOutput": {"hookEventName": "PreToolUse", "permissionDecision": "deny", "permissionDecisionReason": "Direct commits/pushes to main are forbidden; use a work branch and a pull request."}}
+
+exit=0
+
+# doctor's node check reads process.versions.node of the node it runs on, so it can never observe a missing node:
+$ node scripts/agento.mjs doctor   (output filtered to the `node` check)
+{"id":"node","status":"ok","detail":"node v22.23.2","fallback":null}
