@@ -330,3 +330,57 @@ No user-visible UI is driven in a browser. Every check is a CLI command or a
     nothing.
 - [ ] Clean handoff: `git status --porcelain --untracked-files=all` prints nothing in
   both halves.
+
+## Resolution
+
+**Root cause.** Two hand-kept tables in `scripts/session-state.mjs` describe what a
+window may run: `CREATE`/`TABLE`/`FREEHAND` (fed to `deriveAllowed`, which fills the
+session record's `allowed[]`/`elsewhere[]`) and `WINDOW_ROLES` (the §11 window check
+rules applied by `windowVerdict`). Nothing tied the two together, so 13 of 111
+`allowed[]` entries named commands `windowVerdict` refused in that very window — most
+visibly the primary window recommending `/agento new-feature`/`/agento new-issue`
+that `brief` then rejected.
+
+**What changed, and why.**
+
+- `SLUG_COMMANDS` moved from `scripts/commands/brief.mjs` into
+  `scripts/session-state.mjs` as an exported frozen `Set` (one slug rule, shared; no
+  behavior change), so the table test can parse a slug the way `briefArgs` does
+  without importing the CLI module. `brief.mjs` imports it.
+- Primary rows: `new-feature`/`new-issue` dropped from `CREATE` (Decision 1 "drop");
+  both `primary.no-delivery` and `primary.shipped` gain one shared `PLAN_ELSEWHERE`
+  secondary-window pair whose reason names `/agento start-session` (the planner
+  refinement: the extension, canvas, and rejected receipts still show where planning
+  runs instead of silently dropping it).
+- Plan rows: `TABLE.plan` keeps only `no-delivery`, with the `roleForManaged`
+  comment (Decision 3 "remove") — a plan worktree on a delivery branch is role
+  `build`, so the plan role never has a delivery and derives
+  `{ allowed: [], elsewhere: [] }` for every other lifecycle.
+- Freehand row: `commit-current-changes` dropped — its §11 rule requires role primary
+  on a non-default branch.
+- `deriveNext` primary `none` reason reworded to point at `/agento start-session`
+  (Decision 5), keeping the `nothing is in flight` prefix.
+- `WINDOW_ROLES` comment extended to name the #147 test as the check that keeps
+  `TABLE` (and `CREATE`/`FREEHAND`) in agreement with the window rules.
+- Tests and docs followed the decisions: the two #147 regression tests were added to
+  `scripts/session-state.test.mjs`, the pinned rows in
+  `scripts/session-state.test.mjs`, `scripts/commands/session.test.mjs`, and
+  `tests/session-context.test.mjs` were updated to the new rows, and
+  `docs/extension.md`, `docs/architecture.md`, and `CHANGELOG.md` record the change.
+
+**Proof.**
+
+- Step 1.2 observed the exposing tests fail:
+  `every allowed[] entry passes windowVerdict for its role and every elsewhere[] entry passes in the window it names (#147 allowed-window-verdict-mismatch)`
+  listed all 13 mismatches (4 primary, 8 plan, 1 freehand), and
+  `deriveNext in an idle primary window points at /agento start-session (#147 allowed-window-verdict-mismatch)`
+  failed on the old reason naming `/agento new-feature`.
+- After step 2.1 both #147 tests are `ok`, and the full suite is 945/945 (the 943
+  baseline plus the two new tests).
+- [evidence/after-primary-window.txt](evidence/after-primary-window.txt) shows the
+  real primary window with neither command in `allowed`, both in `elsewhere` as
+  secondary entries whose reason names `/agento start-session`, and `brief
+  new-feature`/`brief new-issue` still rejected with the pair listed only as
+  `(secondary window)`.
+- [evidence/after-allowed-vs-verdict.txt](evidence/after-allowed-vs-verdict.txt)
+  ends with `checked 77 allowed entries; 0 mismatches`.

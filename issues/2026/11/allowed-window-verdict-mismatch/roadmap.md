@@ -130,7 +130,7 @@ artifact-pr: "#80"
   (252/252); hook diff empty. Also updated `tests/session-context.test.mjs` line 133
   (Session: line pin) to the new primary allowed/elsewhere — plan.md Research omitted
   it.
-- [ ] 3.3 Write plan.md `## Resolution`:
+- [x] 3.3 Write plan.md `## Resolution`:
   - the root cause: two hand-kept tables, `TABLE`/`CREATE`/`FREEHAND` vs
     `WINDOW_ROLES`, with no check tying them together;
   - what changed and why, per Decisions 1–5 and the planner refinement;
@@ -139,3 +139,7 @@ artifact-pr: "#80"
 
   — verify: `## Resolution` names `scripts/session-state.mjs`, both #147 test names,
   and both `evidence/after-*.txt` files, and every relative link in plan.md resolves.
+
+  Results: `## Resolution` names `scripts/session-state.mjs` (7×), both #147 test
+  names verbatim, and `evidence/after-primary-window.txt` +
+  `evidence/after-allowed-vs-verdict.txt`; all 5 relative links in plan.md resolve.
