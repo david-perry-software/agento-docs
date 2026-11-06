@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/allowed-window-verdict-mismatch
 last-updated: 2026-11-06
-next-step: "2.2 Re-run plan.md ## Evidence reproductions 1 and 2"
+next-step: "3.1 Docs, changelog, and the allowed/elsewhere invariant"
 github-issue: "#147"
 artifact-pr: "#80"
 ```
@@ -59,7 +59,7 @@ artifact-pr: "#80"
   158 pass, 0 fail (6 files); both #147 tests ok. Also updated the primary
   `elsewhere` pin in `scripts/commands/session.test.mjs` line 190 (plan.md item 7
   omitted it; the primary row now lists new-feature/new-issue as secondary).
-- [ ] 2.2 Re-run plan.md `## Evidence` reproductions 1 and 2 against this branch.
+- [x] 2.2 Re-run plan.md `## Evidence` reproductions 1 and 2 against this branch.
   - **Reproduction 1:** from the primary checkout `~/DP/agento`, run this worktree's
     `scripts/agento.mjs session`, `brief new-feature "demo description"`,
     `brief new-issue "demo description"`, and `next`. Use the same projection as
@@ -82,7 +82,15 @@ artifact-pr: "#80"
   - `git status --porcelain --untracked-files=all` in the product worktree prints
     nothing.
 
-  Record the results on this line.
+  Results: session `allowed` = continue, start-session, start-freehand, new-initiative,
+  delivery-status, next-feature (no new-feature/new-issue); `elsewhere` = new-feature +
+  new-issue, window secondary, reason "planning runs in a plan worktree; /agento
+  start-session opens one". Both briefs `Receipt: rejected … exit=3` with the pair
+  shown only as `(secondary window)`. `next` resolved to the in-progress delivery's
+  start-session transition (invocation `/agento start-session issue/… --resume`); the
+  idle none-reason naming `/agento start-session` is demonstrated in the evidence file
+  and asserted by the #147 next test. Probe: `checked 77 allowed entries; 0
+  mismatches`. Product worktree clean.
 
 ## Phase 3: Docs, gate, resolution
 
