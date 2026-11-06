@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: issue/hooks-silent-without-node
 last-updated: 2026-11-06
 next-step: "1.1 Add the #149 regression tests and verify they fail"
