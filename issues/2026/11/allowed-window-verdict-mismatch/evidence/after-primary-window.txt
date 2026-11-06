@@ -1,0 +1,41 @@
+# Reproduction 1 (after) — primary window (~/DP/agento, main @ 58c49fd), branch issue/allowed-window-verdict-mismatch @ d24f9fd, node v22.23.2, 2026-11-06
+$ agento.mjs session  (role, lifecycle, allowed, elsewhere)
+{
+ "role": "primary",
+ "lifecycle": "no-delivery",
+ "allowed": [
+  "/agento continue",
+  "/agento start-session",
+  "/agento start-freehand",
+  "/agento new-initiative",
+  "/agento delivery-status",
+  "/agento next-feature"
+ ],
+ "elsewhere": [
+  {
+   "command": "/agento new-feature",
+   "window": "secondary",
+   "reason": "planning runs in a plan worktree; /agento start-session opens one"
+  },
+  {
+   "command": "/agento new-issue",
+   "window": "secondary",
+   "reason": "planning runs in a plan worktree; /agento start-session opens one"
+  }
+ ]
+}
+$ agento.mjs brief new-feature "demo description"
+Receipt: rejected — wrong window: role=primary (~/DP/agento, branch main); allowed: /agento continue, /agento start-session, /agento start-freehand, /agento new-initiative, /agento delivery-status, /agento next-feature, /agento new-feature (secondary window), /agento new-issue (secondary window)
+exit=3
+$ agento.mjs brief new-issue "demo description"
+Receipt: rejected — wrong window: role=primary (~/DP/agento, branch main); allowed: /agento continue, /agento start-session, /agento start-freehand, /agento new-initiative, /agento delivery-status, /agento next-feature, /agento new-feature (secondary window), /agento new-issue (secondary window)
+exit=3
+$ agento.mjs next  (reason, invocation)
+reason: issue/allowed-window-verdict-mismatch is in-progress: reopen its worktree window, then continue there
+invocation: /agento start-session issue/allowed-window-verdict-mismatch --resume
+
+# The primary window is no longer idle (this very delivery is in flight), so `next`
+# resolves to the start-session transition above rather than the idle none-reason.
+# The idle none-reason wording, asserted by the #147 next test, names start-session:
+$ deriveNext  (idle primary, no candidates) — reason
+none: nothing is in flight and no initiative member is ready; open a plan worktree with /agento start-session (then /agento new-feature <description> or /agento new-issue there), or start an initiative with /agento new-initiative

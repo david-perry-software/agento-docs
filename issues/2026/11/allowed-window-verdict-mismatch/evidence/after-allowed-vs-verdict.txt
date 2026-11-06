@@ -1,0 +1,2 @@
+# Reproduction 2 (after) — every deriveAllowed row vs windowVerdict (issue/allowed-window-verdict-mismatch @ d24f9fd), 2026-11-06
+checked 77 allowed entries; 0 mismatches

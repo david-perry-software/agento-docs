@@ -1,0 +1,15 @@
+# Reproduction 2 — every deriveAllowed row vs windowVerdict (origin/main @ 58c49fd), 2026-11-06
+MISMATCH role=primary lifecycle=no-delivery "/agento new-feature" -> wrong window: role=primary (/x/primary, branch main)
+MISMATCH role=primary lifecycle=no-delivery "/agento new-issue" -> wrong window: role=primary (/x/primary, branch main)
+MISMATCH role=primary lifecycle=shipped "/agento new-feature" -> wrong window: role=primary (/x/primary, branch main)
+MISMATCH role=primary lifecycle=shipped "/agento new-issue" -> wrong window: role=primary (/x/primary, branch main)
+MISMATCH role=plan lifecycle=planned "/agento build-issue demo" -> wrong window: role=plan (/x/plan, branch detached)
+MISMATCH role=plan lifecycle=planned "/agento ap demo" -> wrong window: role=plan (/x/plan, branch detached)
+MISMATCH role=plan lifecycle=building "/agento build-issue demo" -> wrong window: role=plan (/x/plan, branch detached)
+MISMATCH role=plan lifecycle=building "/agento ap demo" -> wrong window: role=plan (/x/plan, branch detached)
+MISMATCH role=plan lifecycle=paused "/agento build-issue demo" -> wrong window: role=plan (/x/plan, branch detached)
+MISMATCH role=plan lifecycle=paused "/agento ap demo" -> wrong window: role=plan (/x/plan, branch detached)
+MISMATCH role=plan lifecycle=in-review "/agento review-issue demo" -> wrong window: role=plan (/x/plan, branch detached)
+MISMATCH role=plan lifecycle=in-review "/agento ap demo" -> wrong window: role=plan (/x/plan, branch detached)
+MISMATCH role=freehand lifecycle=no-delivery "/agento commit-current-changes" -> wrong window: role=freehand (/x/freehand, branch changes/demo)
+checked 111 allowed entries; 13 mismatches

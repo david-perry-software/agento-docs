@@ -1,0 +1,24 @@
+# Reproduction 1 — primary window (~/DP/agento, main @ 58c49fd), node v22.23.2, 2026-11-06
+$ agento.mjs session  (role, lifecycle, allowed)
+{
+ "role": "primary",
+ "lifecycle": "no-delivery",
+ "allowed": [
+  "/agento continue",
+  "/agento start-session",
+  "/agento start-freehand",
+  "/agento new-feature",
+  "/agento new-issue",
+  "/agento new-initiative",
+  "/agento delivery-status",
+  "/agento next-feature"
+ ]
+}
+$ agento.mjs brief new-feature "demo description"
+Receipt: rejected — wrong window: role=primary (~/DP/agento, branch main); allowed: /agento continue, /agento start-session, /agento start-freehand, /agento new-feature, /agento new-issue, /agento new-initiative, /agento delivery-status, /agento next-feature
+exit=3
+$ agento.mjs brief new-issue "demo description"
+Receipt: rejected — wrong window: role=primary (~/DP/agento, branch main); allowed: /agento continue, /agento start-session, /agento start-freehand, /agento new-feature, /agento new-issue, /agento new-initiative, /agento delivery-status, /agento next-feature
+exit=3
+$ agento.mjs next  (reason)
+none: nothing is in flight and no initiative member is ready; start with /agento new-feature <description>, /agento new-issue, or /agento new-initiative
