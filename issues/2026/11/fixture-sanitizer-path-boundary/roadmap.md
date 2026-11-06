@@ -1,8 +1,8 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: issue/fixture-sanitizer-path-boundary
 last-updated: 2026-11-05
-next-step: "3.3 Write plan.md Resolution and hand off to review"
+next-step: "review"
 github-issue: "#145"
 artifact-pr: "#79"
 ```
