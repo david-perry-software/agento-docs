@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/allowed-window-verdict-mismatch
 last-updated: 2026-11-06
-next-step: "3.2 Full gate (§5)"
+next-step: "3.3 Write plan.md ## Resolution"
 github-issue: "#147"
 artifact-pr: "#80"
 ```
@@ -114,7 +114,7 @@ artifact-pr: "#80"
   Line numbers: `docs/extension.md` — `commit-current-changes` no longer matches;
   `docs/architecture.md` 298–299 (invariant sentence); `CHANGELOG.md` 5–10 entry with
   #147 at lines 9–10; customizations test 67/67 pass, 0 fail.
-- [ ] 3.2 Run the full gate (§5) and compare it with the plan.md `## Research`
+- [x] 3.2 Run the full gate (§5) and compare it with the plan.md `## Research`
   baseline (943/943, shellcheck clean). — verify:
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'`
     exits 0 with fail 0, and the test count is 943 plus the new tests;
@@ -125,7 +125,11 @@ artifact-pr: "#80"
   - `git diff --name-only origin/main...HEAD -- scripts/hooks .github/hooks` prints
     nothing.
 
-  Record the results on this line.
+  Results: full suite 945/945 pass, fail 0 (943 baseline + the 2 new #147 tests);
+  shellcheck exit 0, no findings; `extension` npm ci + build + test:unit exit 0
+  (252/252); hook diff empty. Also updated `tests/session-context.test.mjs` line 133
+  (Session: line pin) to the new primary allowed/elsewhere — plan.md Research omitted
+  it.
 - [ ] 3.3 Write plan.md `## Resolution`:
   - the root cause: two hand-kept tables, `TABLE`/`CREATE`/`FREEHAND` vs
     `WINDOW_ROLES`, with no check tying them together;
