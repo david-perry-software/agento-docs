@@ -1,0 +1,19 @@
+# Reproduction 1 (after fix): repo clone at <dir>/agento, TMPDIR=<dir> (issue/fixture-sanitizer-path-boundary, node v22.23.2)
+$ TMPDIR=<dir> node --test --test-name-pattern="collect sanitizes" tests/harness-probe/probe.test.mjs
+TAP version 13
+# Subtest: collect sanitizes logs into fixtures and empties the log dir
+ok 1 - collect sanitizes logs into fixtures and empties the log dir
+  ---
+  duration_ms: 33.976642
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 78.785355
+exit=0

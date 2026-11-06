@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/fixture-sanitizer-path-boundary
 last-updated: 2026-11-05
-next-step: "2.2 Re-run the plan.md Evidence reproductions and save evidence/after-*.txt"
+next-step: "3.1 Add the docs paragraph and CHANGELOG #145 Fixed entry"
 github-issue: "#145"
 artifact-pr: "#79"
 ```
@@ -31,8 +31,10 @@ artifact-pr: "#79"
 
 - [x] 2.1 Implement plan.md `## Approach` items 2–3 in `tests/harness-probe/probe.mjs`. Path entries (REPO, PROBE_WS, HOME) are normalized with `path.resolve` and sorted longest first. Each is compiled to an escaped `RegExp` with the lookahead `(?![A-Za-z0-9._-])` and replaced through a function. The username stays the last, unbounded `split/join`. Committed fixtures are not touched. — verify: `node --test tests/harness-probe/probe.test.mjs` exit 0, with the step 1.1 #145 test `ok` and every pre-existing test unchanged and `ok`; `git diff --name-only origin/main...HEAD -- tests/harness-probe/fixtures` prints nothing. Record the counts on this line.
 
-Recorded 2026-11-05: `exit=0`, `# tests 24 / pass 24 / fail 0`; the #145 test is `ok 20 - makeSanitizeCtx replaces repo and HOME paths only at a path boundary (#145 fixture-sanitizer-path-boundary)`; `git diff --name-only origin/main...HEAD -- tests/harness-probe/fixtures` printed nothing.
-- [ ] 2.2 Re-run plan.md `## Evidence` reproductions 1 and 2 against this branch, using a fresh `git archive HEAD` copy at `<dir>/agento` with `TMPDIR=<dir>` and `HOME=/home/u USER=u` for reproduction 2. Save the outputs, with `<dir>` normalized, as `evidence/after-collect-test.txt` and `evidence/after-sanitize-ctx.txt` in the issue's artifact directory, then delete the temp copy. — verify: reproduction 1 prints `ok 1 - collect sanitizes logs into fixtures and empties the log dir` and exits 0. Reproduction 2 shows `siblingWorktree` and `siblingDocs` without a `<REPO>-` prefix, `homeSibling` as `/home/u2/project`, and `insideRepo` as `<REPO>/scripts/agento.mjs`. `git status --porcelain` in the product worktree is clean. Record the results on this line.
+  Recorded 2026-11-05: `exit=0`, `# tests 24 / pass 24 / fail 0`; the #145 test is `ok 20 - makeSanitizeCtx replaces repo and HOME paths only at a path boundary (#145 fixture-sanitizer-path-boundary)`; `git diff --name-only origin/main...HEAD -- tests/harness-probe/fixtures` printed nothing.
+- [x] 2.2 Re-run plan.md `## Evidence` reproductions 1 and 2 against this branch, using a fresh `git archive HEAD` copy at `<dir>/agento` with `TMPDIR=<dir>` and `HOME=/home/u USER=u` for reproduction 2. Save the outputs, with `<dir>` normalized, as `evidence/after-collect-test.txt` and `evidence/after-sanitize-ctx.txt` in the issue's artifact directory, then delete the temp copy. — verify: reproduction 1 prints `ok 1 - collect sanitizes logs into fixtures and empties the log dir` and exits 0. Reproduction 2 shows `siblingWorktree` and `siblingDocs` without a `<REPO>-` prefix, `homeSibling` as `/home/<USER>2/project` (not `<HOME>2/project`; the one-letter `USER=u` catch-all still over-matches the `u` in `u2`, per plan Decision 2), and `insideRepo` as `<REPO>/scripts/agento.mjs`. `git status --porcelain` in the product worktree is clean. Record the results on this line.
+
+Recorded 2026-11-05: reproduction 1 `exit=0`, `ok 1 - collect sanitizes logs into fixtures and empties the log dir` (`# tests 1 / pass 1 / fail 0`). Reproduction 2 — `siblingWorktree`: `<dir>/agento-worktrees/plan-x/scripts/agento.mjs`, `siblingDocs`: `<dir>/agento-docs/iss<USER>es`, `insideRepo`: `<REPO>/scripts/agento.mjs`, `homeSibling`: `/home/<USER>2/project`; both sibling fields have no `<REPO>-` prefix and `insideRepo` is `<REPO>/scripts/agento.mjs`. `git status --porcelain` in the product worktree printed nothing; the temp `<dir>` copy was deleted.
 
 ## Phase 3: Docs, gate, resolution
 
