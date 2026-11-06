@@ -2,14 +2,14 @@
 status: in-progress
 branch: issue/hooks-silent-without-node
 last-updated: 2026-11-06
-next-step: "1.1 Add the #149 regression tests and verify they fail"
+next-step: "2.1 Implement plan.md ## Approach items 1, 2, and 4 in scripts/hooks/delivery-guard.sh"
 github-issue: "#149"
 artifact-pr: "#81"
 ```
 
 ## Phase 1: Expose the defect
 
-- [ ] 1.1 Add the #149 regression tests, before any fix. Every new or rewritten test
+- [x] 1.1 Add the #149 regression tests, before any fix. Every new or rewritten test
   name contains `(#149 hooks-silent-without-node)`.
   1. **`tests/session-context.test.mjs`.**
      - Rewrite "without node on PATH the hook exits 0 and prints nothing". The new
@@ -40,6 +40,13 @@ artifact-pr: "#81"
   prints `exit=1`. `grep '^not ok' /tmp/hswn-1-1.txt` lists only #149 tests and the
   extended id-list test, and every other pre-existing test is `ok`. Record the
   `# tests/pass/fail` counts and the failing names on this line.
+  — recorded: `# tests 109 / pass 103 / fail 6`; failing (all `(#149 hooks-silent-without-node)`):
+  `doctor reports fifteen checks including hook-runtime after hook-wiring`,
+  `doctor hook-runtime reflects the hooks' node resolution and stays out of --for runs`,
+  `without node on PATH the guard fails open with a visible warning`,
+  `with node below 20 the guard fails open with a below-required warning`,
+  `without node on PATH the hook fails open with a visible warning`,
+  `with node below 20 the hook fails open with a below-required warning`.
 
 ## Phase 2: Make the wrappers fail open visibly
 
