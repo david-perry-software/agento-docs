@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/allowed-window-verdict-mismatch
 last-updated: 2026-11-06
-next-step: "1.2 Add the two #147 regression tests to scripts/session-state.test.mjs (observe them fail)"
+next-step: "2.1 Make allowed[] agree with the window check"
 github-issue: "#147"
 artifact-pr: "#80"
 ```
@@ -19,7 +19,7 @@ artifact-pr: "#80"
   `scripts/session-state.mjs`.
   `node --test scripts/commands/brief.test.mjs scripts/session-state.test.mjs tests/extension-bundle.test.mjs`
   exits 0. Counts: brief 9/9, session-state 56/56, extension-bundle 4/4 — 69 pass, 0 fail.
-- [ ] 1.2 Add the two #147 regression tests from plan.md `## Approach` item 6 to
+- [x] 1.2 Add the two #147 regression tests from plan.md `## Approach` item 6 to
   `scripts/session-state.test.mjs`:
   - `test("every allowed[] entry passes windowVerdict for its role and every elsewhere[] entry passes in the window it names (#147 allowed-window-verdict-mismatch)")`
     collects every failure as `<role>/<lifecycle> <command> → <reason>` and
@@ -34,7 +34,11 @@ artifact-pr: "#80"
   reproduction 2: 4 primary, 8 plan, 1 freehand. The test stops at that
   `deepEqual`, so its later plan-row assertion is not reached. The next test fails
   on its reason, which names `/agento new-feature`. Every pre-existing test is `ok`.
-  Record the counts and the mismatch count on this line.
+  Counts: session-state 58 tests, 56 pass, 2 fail (the two #147 tests). Table test
+  actual list: 13 mismatches — 4 primary (new-feature/new-issue × no-delivery+shipped),
+  8 plan (build-feature/ap × planned+building+paused, review-feature/ap × in-review),
+  1 freehand (commit-current-changes); next test failed on the old reason
+  "start with /agento new-feature …".
 
 ## Phase 2: Make allowed[] agree with the window check
 
