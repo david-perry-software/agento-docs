@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/hooks-silent-without-node
 last-updated: 2026-11-06
-next-step: "2.2 Implement plan.md ## Approach items 1, 3, and 4 in scripts/hooks/session-context.sh"
+next-step: "2.3 Re-run plan.md ## Evidence reproductions 1 and 2 and save evidence/after-no-node.txt"
 github-issue: "#149"
 artifact-pr: "#81"
 ```
@@ -67,7 +67,7 @@ artifact-pr: "#81"
   — recorded: 20 runs `git push origin main` — this branch (new gate) `real 1.409s`
     (~70.5 ms/call); `origin/main` (old wrapper) `real 1.267s` (~63.4 ms/call);
     delta ~7.1 ms/call = one `node --version` spawn.
-- [ ] 2.2 Implement plan.md `## Approach` items 1, 3, and 4 in
+- [x] 2.2 Implement plan.md `## Approach` items 1, 3, and 4 in
   `scripts/hooks/session-context.sh`, using an edit tool.
   - Apply the same gate.
   - On fallback print the static dual-shape JSON with `printf` on stdout and one
