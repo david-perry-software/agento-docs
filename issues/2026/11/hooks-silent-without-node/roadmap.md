@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/hooks-silent-without-node
 last-updated: 2026-11-06
-next-step: "2.3 Re-run plan.md ## Evidence reproductions 1 and 2 and save evidence/after-no-node.txt"
+next-step: "3.1 Implement plan.md ## Approach item 5 in scripts/lib/doctor.mjs"
 github-issue: "#149"
 artifact-pr: "#81"
 ```
@@ -78,7 +78,7 @@ artifact-pr: "#81"
   - `node --test tests/session-context.test.mjs` exits 0, with both #149 tests `ok`.
   - `shellcheck scripts/hooks/session-context.sh` exits 0.
   - The fallback stdout parses with `node -e 'JSON.parse(require("fs").readFileSync(0,"utf8"))'`.
-- [ ] 2.3 Re-run plan.md `## Evidence` reproductions 1 and 2 on this branch. Run
+- [x] 2.3 Re-run plan.md `## Evidence` reproductions 1 and 2 on this branch. Run
   each with `PATH=<NONODE>` and with a `v18.19.0` stub, and run reproduction 2 once
   more with real node. Print exit code, stdout, and stderr for each. Normalize paths
   to `<REPO>` / `<NONODE>` and save the result as
