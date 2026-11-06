@@ -1,5 +1,5 @@
 ```yaml
-status: planned
+status: in-progress
 branch: issue/allowed-window-verdict-mismatch
 last-updated: 2026-11-06
 next-step: "1.1 Move SLUG_COMMANDS into scripts/session-state.mjs (no behavior change)"
