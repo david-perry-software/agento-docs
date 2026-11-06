@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/hooks-silent-without-node
 last-updated: 2026-11-06
-next-step: "4.1 Run the five guard smoke commands listed in AGENTS.md"
+next-step: "4.2 Run the full gate (§5) and compare with the plan.md ## Research baseline"
 github-issue: "#149"
 artifact-pr: "#81"
 ```
@@ -129,9 +129,10 @@ artifact-pr: "#81"
 
 ## Phase 4: Gate and resolution
 
-- [ ] 4.1 Run all five guard smoke commands listed in AGENTS.md: plain, companion,
+- [x] 4.1 Run all five guard smoke commands listed in AGENTS.md: plain, companion,
   Copilot format, Copilot companion, and Copilot fixtures. — verify: each exits 0
   with no mismatches. Record the five exit codes on this line.
+  — recorded: plain=0, companion=0, Copilot=0, Copilot companion=0, Copilot fixtures=0.
 - [ ] 4.2 Run the full gate (§5) and compare it with the plan.md `## Research`
   baseline (945/945, shellcheck clean). — verify:
   - `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` exits 0 with no
