@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/hooks-silent-without-node
 last-updated: 2026-11-06
-next-step: "4.3 Write plan.md ## Resolution"
+next-step: ""
 github-issue: "#149"
 artifact-pr: "#81"
 ```
@@ -144,7 +144,7 @@ artifact-pr: "#81"
   (baseline 945 + 3 new #149 tests). Repair beyond plan.md: `restrictedPath` gained a
   `bash` symlink for the hook-runtime probe, which made `shipStub`'s own bash symlink
   collide (EEXIST); its coreutils loop is now idempotent (skips already-linked tools).
-- [ ] 4.3 Write plan.md `## Resolution`: the root cause (the silent `|| exit 0` with
+- [x] 4.3 Write plan.md `## Resolution`: the root cause (the silent `|| exit 0` with
   no version gate, and doctor inspecting its own process), what changed and why, and
   proof (the #149 test names `ok` in 4.2, `evidence/after-no-node.txt`, and the
   `hook-runtime` output from 3.1). — verify: `## Resolution` names both wrappers,

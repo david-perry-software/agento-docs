@@ -258,3 +258,49 @@ Affected files:
 - [ ] Full gate: `shellcheck scripts/hooks/*.sh scripts/wait-for-checks.sh` exits 0
       with no findings, and the full test command exits 0 with 0 failures and 945
       plus the new tests. Verify with step 4.2.
+
+## Resolution
+
+**Root cause.** Both hook wrappers ended in `command -v node >/dev/null 2>&1 ||
+exit 0` followed by `exec node <module>`. When `node` was absent from the `PATH` the
+hook inherited (common when VS Code is launched from a desktop launcher and node
+comes from a shell-rc-only version manager), the wrapper exited 0 with no stdout and
+no stderr: the delivery guard silently allowed every tool call and the SessionStart
+hook injected no context. A node older than the required 20 was never checked at
+all. `agento.mjs doctor` could not see either failure because its `node` check reads
+the node already running doctor (`process.versions.node`), not the node the wrappers
+resolve.
+
+**What changed and why.**
+- `scripts/hooks/delivery-guard.sh` and `scripts/hooks/session-context.sh` now gate
+  on `node --version` (major ≥ 20) before `exec node`; on the fallback path they fail
+  open **visibly** instead of silently. Each prints a one-line stderr notice; the
+  guard keeps stdout empty (allow) and exits 0, and the SessionStart wrapper prints
+  a static dual-shape JSON warning (`Agento hooks inactive: …` context the model sees
+  and relays) and exits 0. Fail-open is unchanged by design — only the invisibility
+  is fixed.
+- `scripts/lib/doctor.mjs` gains an informational `hook-runtime` check (after
+  `hook-wiring`, in `LOCAL_DOCTOR_CHECKS`, never in a `--for` run) that reproduces
+  the wrappers' resolution through `probe("bash", …)` with the inherited `PATH`:
+  `ok` on node ≥ 20, `fail` on no node or node < 20. The existing `node` check is
+  left unchanged, and `extension/cli/lib/doctor.mjs` was regenerated with
+  `npm run copy-cli`.
+- Docs (`docs/hooks.md`, `docs/install.md`, `docs/commands.md`,
+  `docs/architecture.md`, `README.md`) now describe the visible fail-open and the
+  `hook-runtime` check, and `CHANGELOG.md` carries a `**Fixed.**` entry citing #149.
+
+**Proof.**
+- The #149 regression tests — `without node on PATH the hook fails open with a
+  visible warning` and `with node below 20 the hook fails open with a below-required
+  warning` in `tests/session-context.test.mjs`, `without node on PATH the guard
+  fails open with a visible warning` and `with node below 20 the guard fails open
+  with a below-required warning` in `tests/guard.test.mjs`, and `doctor hook-runtime
+  reflects the hooks' node resolution and stays out of --for runs` in
+  `scripts/commands/doctor.test.mjs` — failed at step 1.1 (`# tests 109 / pass 103 /
+  fail 6`) and are `ok` in the step 4.2 full gate (`# tests 948 / pass 948 / fail 0`,
+  baseline 945 + 3).
+- `evidence/after-no-node.txt` records the evidence reproductions on this branch:
+  exit 0 everywhere, the context JSON and stderr notices for both reasons, the
+  guard's empty stdout without node, and the `deny` verdict with real node.
+- `node scripts/agento.mjs doctor` reports `hook-runtime` `ok` →
+  `hooks resolve /home/david/.local/bin/node (v22.23.2)`.
