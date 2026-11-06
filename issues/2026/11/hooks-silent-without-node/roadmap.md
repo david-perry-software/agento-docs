@@ -1,5 +1,5 @@
 ```yaml
-status: in-progress
+status: in-review
 branch: issue/hooks-silent-without-node
 last-updated: 2026-11-06
 next-step: ""
