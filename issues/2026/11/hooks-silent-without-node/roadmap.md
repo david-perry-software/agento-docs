@@ -4,6 +4,7 @@ branch: issue/hooks-silent-without-node
 last-updated: 2026-11-06
 next-step: "1.1 Add the #149 regression tests and verify they fail"
 github-issue: "#149"
+artifact-pr: "#81"
 ```
 
 ## Phase 1: Expose the defect
