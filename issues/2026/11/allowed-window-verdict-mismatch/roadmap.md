@@ -1,8 +1,8 @@
 ```yaml
-status: in-review
+status: complete
 branch: issue/allowed-window-verdict-mismatch
 last-updated: 2026-11-06
-next-step: "review the delivery"
+next-step: ""
 github-issue: "#147"
 artifact-pr: "#80"
 ```
