@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/hooks-silent-without-node
 last-updated: 2026-11-06
-next-step: "3.1 Implement plan.md ## Approach item 5 in scripts/lib/doctor.mjs"
+next-step: "3.2 Implement plan.md ## Approach item 8 (docs and CHANGELOG)"
 github-issue: "#149"
 artifact-pr: "#81"
 ```
@@ -89,7 +89,7 @@ artifact-pr: "#81"
 
 ## Phase 3: Doctor check and docs
 
-- [ ] 3.1 Implement plan.md `## Approach` item 5 in `scripts/lib/doctor.mjs`.
+- [x] 3.1 Implement plan.md `## Approach` item 5 in `scripts/lib/doctor.mjs`.
   - Add the `hook-runtime` check after `hook-wiring`, via `probe("bash", ["-c", …])`
     with the inherited env.
   - Leave it out of `CAPABILITY_CHECKS` and add it to `LOCAL_DOCTOR_CHECKS`.
@@ -102,6 +102,11 @@ artifact-pr: "#81"
     node path and version.
   - Re-running `npm run copy-cli` leaves `git status --porcelain extension/cli`
     empty.
+  — recorded: `hook-runtime` `ok` → `hooks resolve /home/david/.local/bin/node (v22.23.2)`,
+  directly after `hook-wiring`. Two supporting test-fixture adjustments beyond plan.md's
+  affected-files list: the "gh is missing" doctor test's hardcoded non-gh count went 13→14,
+  and `scripts/test-helpers/agento-fixtures.mjs` `restrictedPath` gained a `bash` symlink
+  so the all-checks-ok id-list test can run the hook-runtime bash probe.
 - [ ] 3.2 Implement plan.md `## Approach` item 8.
   - `docs/hooks.md:16-18`: visible fail-open plus `hook-runtime`, and drop the
     wrong `node`-check claim.
