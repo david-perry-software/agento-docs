@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/allowed-window-verdict-mismatch
 last-updated: 2026-11-06
-next-step: "2.1 Make allowed[] agree with the window check"
+next-step: "2.2 Re-run plan.md ## Evidence reproductions 1 and 2"
 github-issue: "#147"
 artifact-pr: "#80"
 ```
@@ -42,7 +42,7 @@ artifact-pr: "#80"
 
 ## Phase 2: Make allowed[] agree with the window check
 
-- [ ] 2.1 Implement plan.md `## Approach` items 2–5 in `scripts/session-state.mjs`:
+- [x] 2.1 Implement plan.md `## Approach` items 2–5 in `scripts/session-state.mjs`:
   - drop `new-feature` / `new-issue` from `CREATE`;
   - add one shared `secondary` elsewhere pair for them, whose reason names
     `/agento start-session`, to `primary.no-delivery` and `primary.shipped`;
@@ -55,8 +55,10 @@ artifact-pr: "#80"
   Apply `## Approach` item 7 to the pinned tests in `scripts/session-state.test.mjs`
   (lines 619/626, 642–643, 717). Run `cd extension && npm run copy-cli`. — verify:
   `node --test scripts/session-state.test.mjs scripts/commands/next.test.mjs scripts/commands/session.test.mjs scripts/commands/brief.test.mjs scripts/commands/ship.test.mjs tests/extension-bundle.test.mjs`
-  exits 0, with both #147 tests `ok` and every other test `ok`. Record the counts
-  on this line.
+  exits 0, with both #147 tests `ok` and every other test `ok`. Counts: 158 tests,
+  158 pass, 0 fail (6 files); both #147 tests ok. Also updated the primary
+  `elsewhere` pin in `scripts/commands/session.test.mjs` line 190 (plan.md item 7
+  omitted it; the primary row now lists new-feature/new-issue as secondary).
 - [ ] 2.2 Re-run plan.md `## Evidence` reproductions 1 and 2 against this branch.
   - **Reproduction 1:** from the primary checkout `~/DP/agento`, run this worktree's
     `scripts/agento.mjs session`, `brief new-feature "demo description"`,
