@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/fixture-sanitizer-path-boundary
 last-updated: 2026-11-05
-next-step: "3.2 Run the full gate and compare with the Research baseline"
+next-step: "3.3 Write plan.md Resolution and hand off to review"
 github-issue: "#145"
 artifact-pr: "#79"
 ```
@@ -41,5 +41,7 @@ Recorded 2026-11-05: reproduction 1 `exit=0`, `ok 1 - collect sanitizes logs int
 - [x] 3.1 Implement plan.md `## Approach` item 5. Add one short paragraph to `docs/copilot-harness.md` after the "Fixture files are the sanitized captures…" sentence (line ~168) on the placeholder rules: path entries are replaced longest first and only at a path boundary; the username is replaced last, everywhere. Add a `**Fixed.**` entry citing #145 at the top of `CHANGELOG.md` `## Unreleased`. — verify: `grep -n '#145' CHANGELOG.md` shows the entry, and `grep -n 'path boundary' docs/copilot-harness.md` shows the paragraph. `node --test tests/harness-probe/probe.test.mjs tests/customizations.test.mjs` exits 0. Record the counts on this line.
 
 Recorded 2026-11-05: `grep -n '#145' CHANGELOG.md` shows line 8; `grep -n 'path boundary' docs/copilot-harness.md` shows line 172; `node --test tests/harness-probe/probe.test.mjs tests/customizations.test.mjs` `exit=0`, `# tests 91 / pass 91 / fail 0`.
-- [ ] 3.2 Run the full gate (§5) and compare it with the plan.md `## Research` baseline (942/942, shellcheck clean). — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` exits 0 with fail 0, and the test count is 942 plus the new tests. `git ls-files '*.sh' | xargs pnpm dlx shellcheck` exits 0 with no findings. `git diff --name-only origin/main...HEAD -- scripts extension .github/hooks tests/harness-probe/fixtures` prints nothing. Record the results on this line.
+- [x] 3.2 Run the full gate (§5) and compare it with the plan.md `## Research` baseline (942/942, shellcheck clean). — verify: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` exits 0 with fail 0, and the test count is 942 plus the new tests. `git ls-files '*.sh' | xargs pnpm dlx shellcheck` exits 0 with no findings. `git diff --name-only origin/main...HEAD -- scripts extension .github/hooks tests/harness-probe/fixtures` prints nothing. Record the results on this line.
+
+Recorded 2026-11-05: `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'` `exit=0`, `# tests 943 / pass 943 / fail 0` (942 baseline + 1 new #145 test); `git ls-files '*.sh' | xargs pnpm dlx shellcheck` `exit=0`, 4 files, no findings; the protected-path diff printed nothing.
 - [ ] 3.3 Write plan.md `## Resolution`: the root cause (`scrubStrings` `split/join` with no boundary and a fixed order), what changed and why (the boundary lookahead, longest first, `path.resolve`, the username catch-all kept per Decision 2, the test seam), and proof (the step 2.1 #145 test `ok`, the step 2.2 evidence files). — verify: plan.md `## Resolution` names `tests/harness-probe/probe.mjs`, the #145 test name, and both `evidence/after-*.txt` files, and every relative link in plan.md resolves.
