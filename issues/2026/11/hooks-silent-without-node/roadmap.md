@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/hooks-silent-without-node
 last-updated: 2026-11-06
-next-step: "3.2 Implement plan.md ## Approach item 8 (docs and CHANGELOG)"
+next-step: "4.1 Run the five guard smoke commands listed in AGENTS.md"
 github-issue: "#149"
 artifact-pr: "#81"
 ```
@@ -107,7 +107,7 @@ artifact-pr: "#81"
   affected-files list: the "gh is missing" doctor test's hardcoded non-gh count went 13→14,
   and `scripts/test-helpers/agento-fixtures.mjs` `restrictedPath` gained a `bash` symlink
   so the all-checks-ok id-list test can run the hook-runtime bash probe.
-- [ ] 3.2 Implement plan.md `## Approach` item 8.
+- [x] 3.2 Implement plan.md `## Approach` item 8.
   - `docs/hooks.md:16-18`: visible fail-open plus `hook-runtime`, and drop the
     wrong `node`-check claim.
   - `docs/install.md:16-18` and `README.md:518-519`: the notice and context
@@ -124,6 +124,8 @@ artifact-pr: "#81"
   - `grep -rnE 'print nothing|exit silently|is silent and exits|fails its .node. check' docs README.md scripts/hooks`
     prints nothing.
   - `node --test tests/customizations.test.mjs` exits 0.
+  — recorded: `tests/customizations.test.mjs` 67/67 pass. Also fixed the second stale
+  "hooks are silent" claim at `docs/architecture.md:249` (plan.md only named 90-95).
 
 ## Phase 4: Gate and resolution
 
