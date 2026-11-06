@@ -2,14 +2,14 @@
 status: in-progress
 branch: issue/fixture-sanitizer-path-boundary
 last-updated: 2026-11-05
-next-step: "1.1 Add the makeSanitizeCtx overrides seam and the failing #145 boundary test"
+next-step: "2.1 Add boundary-aware path entries (longest first) and keep the username catch-all"
 github-issue: "#145"
 artifact-pr: "#79"
 ```
 
 ## Phase 1: Expose the defect
 
-- [ ] 1.1 Implement plan.md `## Approach` item 1 in `tests/harness-probe/probe.mjs`: `makeSanitizeCtx(overrides = {})` with optional `repoRoot`, `homeDir`, `username`, `probeWs`. Defaults stay exactly as today, and there is no other behavior change. In `tests/harness-probe/probe.test.mjs`, add `test("makeSanitizeCtx replaces repo and HOME paths only at a path boundary (#145 fixture-sanitizer-path-boundary)")`. It calls `sanitizeRecord(<object of the inputs>, ctx)` and `deepEqual`s the result. Context A is `makeSanitizeCtx({ repoRoot: "/h/me/DP/agento", homeDir: "/h/me", username: "zq9user" })`, and each case gets a fresh ctx where needed:
+- [x] 1.1 Implement plan.md `## Approach` item 1 in `tests/harness-probe/probe.mjs`: `makeSanitizeCtx(overrides = {})` with optional `repoRoot`, `homeDir`, `username`, `probeWs`. Defaults stay exactly as today, and there is no other behavior change. In `tests/harness-probe/probe.test.mjs`, add `test("makeSanitizeCtx replaces repo and HOME paths only at a path boundary (#145 fixture-sanitizer-path-boundary)")`. It calls `sanitizeRecord(<object of the inputs>, ctx)` and `deepEqual`s the result. Context A is `makeSanitizeCtx({ repoRoot: "/h/me/DP/agento", homeDir: "/h/me", username: "zq9user" })`, and each case gets a fresh ctx where needed:
   - `/h/me/DP/agento/scripts/agento.mjs` → `<REPO>/scripts/agento.mjs`
   - `/h/me/DP/agento` → `<REPO>`
   - `cd /h/me/DP/agento && ls` → `cd <REPO> && ls`
@@ -24,6 +24,8 @@ artifact-pr: "#79"
   - Context C, longest first (`repoRoot: "/h/me/.cache/agento-harness-probe"`, `homeDir: "/h/me"`): `/h/me/.cache/agento-harness-probe/workspace/a` → `<PROBE_WS>/a`
 
   — verify: `node --test tests/harness-probe/probe.test.mjs > /tmp/fsb-1-1.txt 2>&1; echo "exit=$?"` prints `exit=1`. `grep '^not ok' /tmp/fsb-1-1.txt` shows only the #145 test, with actuals including `<REPO>-worktrees/plan-x`, `<HOME>2/project`, `<HOME>x`, and `<REPO>/workspace/a`. Every pre-existing test is `ok`. Record the `# tests/pass/fail` counts and the actuals on this line.
+
+  Recorded 2026-11-05: `exit=1`, `# tests 24 / pass 23 / fail 1`; `grep '^not ok'` shows only test 20 `makeSanitizeCtx replaces repo and HOME paths only at a path boundary (#145 fixture-sanitizer-path-boundary)`; actuals — `sibling: '<REPO>-worktrees/plan-x'`, `bak: '<REPO>.bak/x'`, `other: '<HOME>2/project'`, `b.home: '<HOME>x'`, `c.ws: '<REPO>/workspace/a'`. All 23 pre-existing tests `ok`.
 
 ## Phase 2: Replace only at a path boundary
 
