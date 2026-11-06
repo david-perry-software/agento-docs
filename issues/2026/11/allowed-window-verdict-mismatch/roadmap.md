@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/allowed-window-verdict-mismatch
 last-updated: 2026-11-06
-next-step: "3.1 Docs, changelog, and the allowed/elsewhere invariant"
+next-step: "3.2 Full gate (§5)"
 github-issue: "#147"
 artifact-pr: "#80"
 ```
@@ -94,7 +94,7 @@ artifact-pr: "#80"
 
 ## Phase 3: Docs, gate, resolution
 
-- [ ] 3.1 Implement plan.md `## Approach` item 8 docs:
+- [x] 3.1 Implement plan.md `## Approach` item 8 docs:
   - `docs/extension.md` line 355: the freehand header actions are only
     `finish-freehand`;
   - `docs/architecture.md`, by the record description (lines 292–296): one sentence
@@ -111,7 +111,9 @@ artifact-pr: "#80"
   - `grep -n '#147' CHANGELOG.md` shows the entry;
   - `node --test tests/customizations.test.mjs` exits 0.
 
-  Record the line numbers on this line.
+  Line numbers: `docs/extension.md` — `commit-current-changes` no longer matches;
+  `docs/architecture.md` 298–299 (invariant sentence); `CHANGELOG.md` 5–10 entry with
+  #147 at lines 9–10; customizations test 67/67 pass, 0 fail.
 - [ ] 3.2 Run the full gate (§5) and compare it with the plan.md `## Research`
   baseline (943/943, shellcheck clean). — verify:
   - `node --test 'scripts/**/*.test.mjs' 'tests/**/*.test.mjs' 'canvas/**/*.test.mjs'`
