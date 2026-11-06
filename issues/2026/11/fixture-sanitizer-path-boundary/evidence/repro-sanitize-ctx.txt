@@ -1,0 +1,19 @@
+# Reproduction 2: makeSanitizeCtx + sanitizeRecord on sibling and nested paths (repo at <dir>/agento, HOME=/home/u)
+input:
+{
+  "siblingWorktree": "<dir>/agento-worktrees/plan-x/scripts/agento.mjs",
+  "siblingDocs": "<dir>/agento-docs/issues",
+  "insideRepo": "<dir>/agento/scripts/agento.mjs",
+  "repoThenSpace": "cd <dir>/agento && ls",
+  "homeCache": "/home/u/.cache/x",
+  "homeSibling": "/home/u2/project"
+}
+sanitized:
+{
+  "siblingWorktree": "<REPO>-worktrees/plan-x/scripts/agento.mjs",
+  "siblingDocs": "<REPO>-docs/iss<USER>es",
+  "insideRepo": "<REPO>/scripts/agento.mjs",
+  "repoThenSpace": "cd <REPO> && ls",
+  "homeCache": "<HOME>/.cache/x",
+  "homeSibling": "<HOME>2/project"
+}

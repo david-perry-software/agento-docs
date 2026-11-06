@@ -1,0 +1,29 @@
+# Reproduction 1: repo clone at <dir>/agento, TMPDIR=<dir> (origin/main ba7e323, node v22.23.2)
+$ TMPDIR=<dir> node --test --test-name-pattern="collect sanitizes" tests/harness-probe/probe.test.mjs
+TAP version 13
+# Subtest: collect sanitizes logs into fixtures and empties the log dir
+not ok 1 - collect sanitizes logs into fixtures and empties the log dir
+  ---
+  duration_ms: 32.887295
+  type: 'test'
+  location: '<dir>/agento/tests/harness-probe/probe.test.mjs:282:1'
+  failureType: 'testCodeFailure'
+  error: 'home path not replaced with <HOME>'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file://<dir>/agento/tests/harness-probe/probe.test.mjs:321:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+exit=1
