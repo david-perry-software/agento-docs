@@ -1,0 +1,29 @@
+# Hooks fail-open — evidence after the fix (#149)
+
+## reproduction 1 (session-context), PATH=<NONODE>
+exit=0
+stdout={"additionalContext":"Agento hooks inactive: node not found on PATH (Node >= 20 required). The delivery guard allows every tool call unchecked and no Agento session context is available — tell the user before doing any delivery work.","hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"Agento hooks inactive: node not found on PATH (Node >= 20 required). The delivery guard allows every tool call unchecked and no Agento session context is available — tell the user before doing any delivery work."}}
+
+stderr=Agento: session context unavailable — node not found on PATH (install Node >= 20; see agento.mjs doctor hook-runtime).
+
+## reproduction 1 (session-context), v18.19.0 stub
+exit=0
+stdout={"additionalContext":"Agento hooks inactive: node v18.19.0 is below the required 20 (Node >= 20 required). The delivery guard allows every tool call unchecked and no Agento session context is available — tell the user before doing any delivery work.","hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"Agento hooks inactive: node v18.19.0 is below the required 20 (Node >= 20 required). The delivery guard allows every tool call unchecked and no Agento session context is available — tell the user before doing any delivery work."}}
+
+stderr=Agento: session context unavailable — node v18.19.0 is below the required 20 (install Node >= 20; see agento.mjs doctor hook-runtime).
+
+## reproduction 2 (delivery-guard), PATH=<NONODE>
+exit=0
+stdout=
+stderr=Agento: delivery guard inactive — node not found on PATH; tool calls are not checked (install Node >= 20; see agento.mjs doctor hook-runtime).
+
+## reproduction 2 (delivery-guard), v18.19.0 stub
+exit=0
+stdout=
+stderr=Agento: delivery guard inactive — node v18.19.0 is below the required 20; tool calls are not checked (install Node >= 20; see agento.mjs doctor hook-runtime).
+
+## reproduction 2 (delivery-guard), real node
+exit=0
+stdout={"permissionDecision": "deny", "permissionDecisionReason": "Direct commits/pushes to main are forbidden; use a work branch and a pull request.", "hookSpecificOutput": {"hookEventName": "PreToolUse", "permissionDecision": "deny", "permissionDecisionReason": "Direct commits/pushes to main are forbidden; use a work branch and a pull request."}}
+
+stderr=
