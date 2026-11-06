@@ -234,4 +234,34 @@ All code changes are in `tests/harness-probe/probe.mjs` and
 
 ## Resolution
 
-_Written by the Builder at completion._
+Root cause: `scrubStrings` in `tests/harness-probe/probe.mjs` replaced each known
+path with an unbounded `split/join` in a fixed order (repo root → probe workspace →
+HOME → username) and never checked where the match ended, so a path that only
+*starts with* a known path — `…/agento-worktrees/…` beside the clone, or
+`/home/u2/…` beside HOME — was rewritten as if it were inside it (`<REPO>-…`,
+`<HOME>2…`). A later `<HOME>` could then never match a prefix `<REPO>` had already
+consumed, which made the `collect sanitizes logs into fixtures and empties the log
+dir` test fail whenever the temp HOME started with the repo root (clone at
+`<dir>/agento`, `TMPDIR=<dir>`).
+
+What changed and why: `makeSanitizeCtx` in `tests/harness-probe/probe.mjs` now
+normalizes the repo, probe-workspace, and HOME path entries with `path.resolve`
+(so a trailing slash cannot defeat the boundary), drops empty entries, sorts them
+longest first, and compiles each into an escaped `RegExp` with the lookahead
+`(?![A-Za-z0-9._-])`, replaced through a function so `$` is never interpreted.
+`scrubStrings` applies the username as the last, unbounded `split/join` catch-all,
+kept per Decision 2 (privacy of VS Code's encoded `file-home-<user>-…` dirs), so a
+one-letter username can still over-match inside words. `makeSanitizeCtx(overrides =
+{})` gained the `repoRoot`, `homeDir`, `username`, and `probeWs` test seam with
+defaults unchanged, and the #145 regression test
+`makeSanitizeCtx replaces repo and HOME paths only at a path boundary (#145
+fixture-sanitizer-path-boundary)` covers siblings, nested paths, quotes/spaces, the
+trailing-slash HOME, and longest-first ordering. Committed fixtures are untouched.
+
+Proof: the #145 test is `ok` from step 2.1 onward
+(`node --test tests/harness-probe/probe.test.mjs` — 24/24); reproduction 1 passes
+(`ok 1 - collect sanitizes logs into fixtures and empties the log dir`, see
+[evidence/after-collect-test.txt](evidence/after-collect-test.txt)); reproduction 2
+maps siblings to non-`<REPO>-` values and `insideRepo` to `<REPO>/scripts/agento.mjs`
+(see [evidence/after-sanitize-ctx.txt](evidence/after-sanitize-ctx.txt)); and the full
+gate is green at 943 tests with shellcheck clean.
