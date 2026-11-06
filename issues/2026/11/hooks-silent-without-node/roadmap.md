@@ -2,7 +2,7 @@
 status: in-progress
 branch: issue/hooks-silent-without-node
 last-updated: 2026-11-06
-next-step: "2.1 Implement plan.md ## Approach items 1, 2, and 4 in scripts/hooks/delivery-guard.sh"
+next-step: "2.2 Implement plan.md ## Approach items 1, 3, and 4 in scripts/hooks/session-context.sh"
 github-issue: "#149"
 artifact-pr: "#81"
 ```
@@ -50,7 +50,7 @@ artifact-pr: "#81"
 
 ## Phase 2: Make the wrappers fail open visibly
 
-- [ ] 2.1 Implement plan.md `## Approach` items 1, 2, and 4 in
+- [x] 2.1 Implement plan.md `## Approach` items 1, 2, and 4 in
   `scripts/hooks/delivery-guard.sh`. Use an edit tool; the guard asks for approval on
   hook-file edits.
   - Gate on `node --version` with a major ≥ 20, with a JSON-safe reason.
@@ -64,6 +64,9 @@ artifact-pr: "#81"
     node on PATH (`time` around a loop), on `origin/main` and on this branch. Record
     both totals on this line; the per-call delta should be one `node --version`
     spawn.
+  — recorded: 20 runs `git push origin main` — this branch (new gate) `real 1.409s`
+    (~70.5 ms/call); `origin/main` (old wrapper) `real 1.267s` (~63.4 ms/call);
+    delta ~7.1 ms/call = one `node --version` spawn.
 - [ ] 2.2 Implement plan.md `## Approach` items 1, 3, and 4 in
   `scripts/hooks/session-context.sh`, using an edit tool.
   - Apply the same gate.
