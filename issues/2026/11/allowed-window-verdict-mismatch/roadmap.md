@@ -2,14 +2,14 @@
 status: in-progress
 branch: issue/allowed-window-verdict-mismatch
 last-updated: 2026-11-06
-next-step: "1.1 Move SLUG_COMMANDS into scripts/session-state.mjs (no behavior change)"
+next-step: "1.2 Add the two #147 regression tests to scripts/session-state.test.mjs (observe them fail)"
 github-issue: "#147"
 artifact-pr: "#80"
 ```
 
 ## Phase 1: Expose the defect
 
-- [ ] 1.1 Implement plan.md `## Approach` item 1, with no behavior change. Move
+- [x] 1.1 Implement plan.md `## Approach` item 1, with no behavior change. Move
   `SLUG_COMMANDS` from `scripts/commands/brief.mjs` (line 77) into
   `scripts/session-state.mjs` as an exported frozen `Set`, with a one-line comment
   saying these are the commands whose argument the brief passes to the §11 window
@@ -18,7 +18,7 @@ artifact-pr: "#80"
   `grep -rn "SLUG_COMMANDS = " scripts` prints exactly one line, in
   `scripts/session-state.mjs`.
   `node --test scripts/commands/brief.test.mjs scripts/session-state.test.mjs tests/extension-bundle.test.mjs`
-  exits 0. Record the counts on this line.
+  exits 0. Counts: brief 9/9, session-state 56/56, extension-bundle 4/4 — 69 pass, 0 fail.
 - [ ] 1.2 Add the two #147 regression tests from plan.md `## Approach` item 6 to
   `scripts/session-state.test.mjs`:
   - `test("every allowed[] entry passes windowVerdict for its role and every elsewhere[] entry passes in the window it names (#147 allowed-window-verdict-mismatch)")`
